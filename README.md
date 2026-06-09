@@ -184,6 +184,15 @@ the spec itself ships in the package: `import spec from 'podengine/openapi.json'
 
 See the full interactive reference at <https://www.podengine.ai/api-docs>.
 
+## Contributing & issues
+
+Found a bug or want an endpoint added? Please
+[open an issue](https://github.com/podengine/podcast-api-client-js/issues) — we read every one.
+
+This SDK is generated from the Pod Engine API's OpenAPI spec, and this repository is an
+automatically-synced mirror, so direct pull requests to generated files are overwritten on the next
+sync. See [CONTRIBUTING.md](./CONTRIBUTING.md) for how to get a change landed.
+
 ## License
 
 [MIT](./LICENSE)
