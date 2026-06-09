@@ -1,0 +1,70 @@
+{
+  "name": "podengine",
+  "version": "0.1.0",
+  "description": "Official TypeScript SDK for the Pod Engine podcast intelligence API — search 4M+ podcasts, fetch metadata, transcripts, charts and more.",
+  "keywords": [
+    "podcast",
+    "podengine",
+    "podcast-api",
+    "transcripts",
+    "podcast-charts",
+    "sdk",
+    "typescript"
+  ],
+  "homepage": "https://www.podengine.ai/api-docs",
+  "bugs": {
+    "url": "https://github.com/podengine/podcast-api-client-js/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/podengine/podcast-api-client-js.git"
+  },
+  "license": "MIT",
+  "author": "Pod Engine",
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./openapi.json": "./openapi.json",
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "openapi.json",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,md,css}\" \"**/package.json\" --ignore-unknown",
+    "gen:client": "bun run scripts/generate-client.ts",
+    "generate": "bun run scripts/generate-client.ts && prettier --write \"src/generated/**/*.ts\"",
+    "lint": "eslint",
+    "prepublishOnly": "bun run build",
+    "test": "bun test tests/",
+    "type-check": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/bun": "^1.3.14",
+    "@types/node": "^24.13.1",
+    "eslint": "^10.4.1",
+    "eslint-config-prettier": "10.1.8",
+    "openapi-typescript": "^7.9.1",
+    "prettier": "^3.6.2",
+    "tsup": "8.5.1",
+    "typescript": "6.0.3",
+    "typescript-eslint": "^8.60.1"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
