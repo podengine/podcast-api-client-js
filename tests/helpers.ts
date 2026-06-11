@@ -19,9 +19,7 @@ export interface MockResponseSpec {
  * Build a `FetchLike` stub that replays a queue of responses and records every request.
  * If the queue is exhausted, the last spec is reused (handy for retry tests).
  */
-export const mockFetch = (
-  responses: MockResponseSpec[]
-): { fetch: FetchLike; calls: CapturedRequest[] } => {
+export const mockFetch = (responses: MockResponseSpec[]): { fetch: FetchLike; calls: CapturedRequest[] } => {
   const calls: CapturedRequest[] = [];
   let index = 0;
 

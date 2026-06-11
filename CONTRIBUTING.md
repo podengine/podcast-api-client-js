@@ -6,7 +6,7 @@ Thanks for your interest in the Pod Engine TypeScript SDK!
 
 This repo is an **automatically-synced mirror**. The SDK is generated from the Pod Engine API's
 OpenAPI specification in our internal monorepo, which is the source of truth. The published
-`podengine` npm package is released from here, but the source is synced automatically —
+`@podengine/sdk` npm package is released from here, but the source is synced automatically —
 **direct commits to mirrored files are overwritten on the next sync.**
 
 ## How to help

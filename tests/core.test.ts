@@ -43,19 +43,18 @@ describe('PodEngineCore — request building', () => {
   test('substitutes and encodes path params', async () => {
     const { fetch, calls } = mockFetch([{ json: { data: {} } }]);
     const core = new PodEngineCore({ apiKey: 'k', fetch, baseUrl: 'https://api.test' });
-    await core.request(
-      desc({ path: '/api/v1/episodes/{episodeId}/details', pathParams: ['episodeId'] }),
-      { episodeId: 'a b/c' }
-    );
+    await core.request(desc({ path: '/api/v1/episodes/{episodeId}/details', pathParams: ['episodeId'] }), {
+      episodeId: 'a b/c',
+    });
     expect(calls[0]!.url).toBe('https://api.test/api/v1/episodes/a%20b%2Fc/details');
   });
 
   test('throws if a required path param is missing', async () => {
     const { fetch } = mockFetch([{ json: { data: {} } }]);
     const core = new PodEngineCore({ apiKey: 'k', fetch });
-    await expect(
-      core.request(desc({ path: '/api/v1/x/{id}', pathParams: ['id'] }), {})
-    ).rejects.toThrow(/Missing required path parameter "id"/);
+    await expect(core.request(desc({ path: '/api/v1/x/{id}', pathParams: ['id'] }), {})).rejects.toThrow(
+      /Missing required path parameter "id"/
+    );
   });
 
   test('serializes query params and ignores non-query keys', async () => {
@@ -87,10 +86,10 @@ describe('PodEngineCore — request building', () => {
   test('field body mode sends params.body verbatim', async () => {
     const { fetch, calls } = mockFetch([{ json: { data: {} } }]);
     const core = new PodEngineCore({ apiKey: 'k', fetch });
-    await core.request(
-      desc({ method: 'PUT', path: '/api/v1/x/{id}/links', pathParams: ['id'], body: 'field' }),
-      { id: '1', body: [{ socialMediaType: 'twitter', url: 'https://x.com/a' }] }
-    );
+    await core.request(desc({ method: 'PUT', path: '/api/v1/x/{id}/links', pathParams: ['id'], body: 'field' }), {
+      id: '1',
+      body: [{ socialMediaType: 'twitter', url: 'https://x.com/a' }],
+    });
     expect(JSON.parse(calls[0]!.body!)).toEqual([{ socialMediaType: 'twitter', url: 'https://x.com/a' }]);
   });
 

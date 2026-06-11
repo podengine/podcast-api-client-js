@@ -1,4 +1,4 @@
-# podengine
+# @podengine/sdk
 
 Official TypeScript/JavaScript SDK for the [Pod Engine](https://www.podengine.ai) podcast
 intelligence API — search 4M+ podcasts, pull rich metadata, transcripts, charts, reviews,
@@ -15,8 +15,8 @@ guest profiles and more, with full type safety.
 ## Install
 
 ```bash
-npm install podengine
-# or: pnpm add podengine / yarn add podengine / bun add podengine
+npm install @podengine/sdk
+# or: pnpm add @podengine/sdk / yarn add @podengine/sdk / bun add @podengine/sdk
 ```
 
 Requires Node 18+ (or any runtime with a global `fetch`).
@@ -24,7 +24,7 @@ Requires Node 18+ (or any runtime with a global `fetch`).
 ## Quick start
 
 ```ts
-import { PodEngine } from 'podengine';
+import { PodEngine } from '@podengine/sdk';
 
 const pe = new PodEngine({ apiKey: process.env.PODENGINE_API_KEY! });
 
@@ -52,7 +52,7 @@ const { podcast } = await pe.podcasts.getPodcast({ podcastIdOrSlug: 'the-tim-fer
 const episodes = await pe.podcasts.getPodcastEpisodes({ podcastIdOrSlug: podcast.id });
 ```
 
-Get an API key at <https://www.podengine.ai/get-started>.
+Get an API key at <https://www.podengine.ai/solutions/podcast-api>.
 
 ## Authentication
 
@@ -68,11 +68,11 @@ const pe = new PodEngine({ apiKey: 'pe_live_...' });
 const pe = new PodEngine({
   apiKey: process.env.PODENGINE_API_KEY!,
   baseUrl: 'https://api.podengine.ai', // override for staging/self-host
-  source: 'my-app',                    // sent as the x-source header for attribution
-  timeout: 30_000,                     // per-request timeout in ms (default: none)
-  maxRetries: 2,                       // retries for 429/5xx/network (default: 2)
-  headers: { 'x-team': 'growth' },     // extra headers on every request
-  fetch: customFetch,                  // inject a custom fetch implementation
+  source: 'my-app', // sent as the x-source header for attribution
+  timeout: 30_000, // per-request timeout in ms (default: none)
+  maxRetries: 2, // retries for 429/5xx/network (default: 2)
+  headers: { 'x-team': 'growth' }, // extra headers on every request
+  fetch: customFetch, // inject a custom fetch implementation
 });
 ```
 
@@ -134,16 +134,16 @@ await pe.guestProfiles.updateGuestProfileSocialMediaLinks({
 All failures throw a `PodEngineError` subclass:
 
 ```ts
-import { PodEngine, PodEngineApiError, PodEngineConnectionError } from 'podengine';
+import { PodEngine, PodEngineApiError, PodEngineConnectionError } from '@podengine/sdk';
 
 try {
   await pe.podcasts.getPodcast({ podcastIdOrSlug: 'does-not-exist' });
 } catch (err) {
   if (err instanceof PodEngineApiError) {
-    console.error(err.status);      // e.g. 404
-    console.error(err.message);     // server-provided message
-    console.error(err.requestId);   // x-request-id, if present
-    console.error(err.body);        // raw parsed error body
+    console.error(err.status); // e.g. 404
+    console.error(err.message); // server-provided message
+    console.error(err.requestId); // x-request-id, if present
+    console.error(err.body); // raw parsed error body
   } else if (err instanceof PodEngineConnectionError) {
     console.error('Network/timeout:', err.message);
   }
@@ -156,7 +156,7 @@ Parameter and response types are exported for every operation, named `<Operation
 `<Operation>Response`:
 
 ```ts
-import type { SearchPodcastsParams, GetLatestChartResponse } from 'podengine';
+import type { SearchPodcastsParams, GetLatestChartResponse } from '@podengine/sdk';
 
 function buildQuery(): SearchPodcastsParams {
   return {
@@ -173,7 +173,7 @@ function buildQuery(): SearchPodcastsParams {
 }
 ```
 
-The raw OpenAPI types are also available via `import type { schema } from 'podengine'`, and
+The raw OpenAPI types are also available via `import type { schema } from '@podengine/sdk'`, and
 the spec itself ships in the package: `import spec from 'podengine/openapi.json'`.
 
 ## Resources

@@ -3,7 +3,7 @@
  *
  * @example
  * ```ts
- * import { PodEngine } from 'podengine';
+ * import { PodEngine } from '@podengine/sdk';
  *
  * const pe = new PodEngine({ apiKey: process.env.PODENGINE_API_KEY! });
  *

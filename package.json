@@ -1,5 +1,5 @@
 {
-  "name": "podengine",
+  "name": "@podengine/sdk",
   "version": "0.1.0",
   "description": "Official TypeScript SDK for the Pod Engine podcast intelligence API — search 4M+ podcasts, fetch metadata, transcripts, charts and more.",
   "keywords": [
@@ -17,10 +17,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/podengine/podcast-api-client-js.git"
+    "url": "git+https://github.com/podengine/podcast-api-client-js.git"
   },
   "license": "MIT",
   "author": "Pod Engine",
+  "publishConfig": {
+    "access": "public"
+  },
   "sideEffects": false,
   "type": "module",
   "exports": {
@@ -59,7 +62,7 @@
     "eslint": "^10.4.1",
     "eslint-config-prettier": "10.1.8",
     "openapi-typescript": "^7.9.1",
-    "prettier": "^3.6.2",
+    "prettier": "^3.8.4",
     "tsup": "8.5.1",
     "typescript": "6.0.3",
     "typescript-eslint": "^8.60.1"

@@ -22,9 +22,7 @@ describe('generated client is in sync with openapi.json', () => {
   });
 
   test('every operationId has a descriptor and a method in the generated client', () => {
-    const missing = operationIds.filter(
-      (id) => !clientSource.includes(`${id}: {`) || !clientSource.includes(`${id}(`)
-    );
+    const missing = operationIds.filter((id) => !clientSource.includes(`${id}: {`) || !clientSource.includes(`${id}(`));
     expect(missing).toEqual([]);
   });
 

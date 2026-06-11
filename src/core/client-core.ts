@@ -141,8 +141,7 @@ export class PodEngineCore {
         status: 0,
         method: 'CONFIG',
         url: '',
-        message:
-          'No global `fetch` found. Use Node 18+, or pass a `fetch` implementation via the client options.',
+        message: 'No global `fetch` found. Use Node 18+, or pass a `fetch` implementation via the client options.',
       });
     }
     this.fetchImpl = resolvedFetch;
@@ -258,7 +257,7 @@ export class PodEngineCore {
   private async parseSuccess<TResult>(
     response: Response,
     descriptor: EndpointDescriptor,
-    url: string,
+    url: string
   ): Promise<TResult> {
     if (descriptor.binary) {
       return (await response.blob()) as TResult;
