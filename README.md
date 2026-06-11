@@ -1,5 +1,8 @@
 # @podengine/sdk
 
+[![npm](https://img.shields.io/npm/v/@podengine/sdk)](https://www.npmjs.com/package/@podengine/sdk)
+[![license](https://img.shields.io/npm/l/@podengine/sdk)](./LICENSE)
+
 Official TypeScript/JavaScript SDK for the [Pod Engine](https://www.podengine.ai) podcast
 intelligence API — search 4M+ podcasts, pull rich metadata, transcripts, charts, reviews,
 guest profiles and more, with full type safety.
