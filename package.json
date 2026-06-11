@@ -21,9 +21,6 @@
   },
   "license": "MIT",
   "author": "Pod Engine",
-  "publishConfig": {
-    "access": "public"
-  },
   "sideEffects": false,
   "type": "module",
   "exports": {
@@ -69,5 +66,8 @@
   },
   "engines": {
     "node": ">=18"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
