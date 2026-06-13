@@ -5436,6 +5436,32 @@ export interface operations {
                     fourStarCount: number;
                     fiveStarCount: number;
                   } | null;
+                  applePodcastsReviewsByCountry: {
+                    appleId: number;
+                    scrapedAt: unknown;
+                    country: string;
+                    reviewsCount: number;
+                    rating: number | null;
+                    oneStarCount: number;
+                    twoStarCount: number;
+                    threeStarCount: number;
+                    fourStarCount: number;
+                    fiveStarCount: number;
+                  }[];
+                  applePodcastsReviewText: {
+                    country: string | null;
+                    total: number;
+                    limit: number;
+                    offset: number;
+                    reviews: {
+                      country: string;
+                      rating: number;
+                      title: string;
+                      body: string;
+                      author: string;
+                      reviewedAt: unknown;
+                    }[];
+                  } | null;
                   spotifyReview: {
                     spotifyId: string;
                     scrapedAt: unknown;
@@ -6362,7 +6388,11 @@ export interface operations {
   };
   getPodcastReviews: {
     parameters: {
-      query?: never;
+      query?: {
+        country?: 'us' | 'gb' | 'au' | 'ca';
+        limit?: number;
+        offset?: number;
+      };
       header?: never;
       path: {
         podcastIdOrSlug: string;
@@ -6420,6 +6450,32 @@ export interface operations {
                   threeStarCount: number;
                   fourStarCount: number;
                   fiveStarCount: number;
+                } | null;
+                applePodcastsReviewsByCountry: {
+                  appleId: number;
+                  scrapedAt: unknown;
+                  country: string;
+                  reviewsCount: number;
+                  rating: number | null;
+                  oneStarCount: number;
+                  twoStarCount: number;
+                  threeStarCount: number;
+                  fourStarCount: number;
+                  fiveStarCount: number;
+                }[];
+                applePodcastsReviewText: {
+                  country: string | null;
+                  total: number;
+                  limit: number;
+                  offset: number;
+                  reviews: {
+                    country: string;
+                    rating: number;
+                    title: string;
+                    body: string;
+                    author: string;
+                    reviewedAt: unknown;
+                  }[];
                 } | null;
                 spotifyReview: {
                   spotifyId: string;

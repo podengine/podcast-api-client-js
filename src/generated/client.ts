@@ -146,7 +146,8 @@ export type GetPodcastRelatedPodcastsParams = NonNullable<
 >;
 export type GetPodcastRelatedPodcastsResponse =
   operations['getPodcastRelatedPodcasts']['responses']['200']['content']['application/json']['data'];
-export type GetPodcastReviewsParams = NonNullable<operations['getPodcastReviews']['parameters']['path']>;
+export type GetPodcastReviewsParams = NonNullable<operations['getPodcastReviews']['parameters']['path']> &
+  NonNullable<operations['getPodcastReviews']['parameters']['query']>;
 export type GetPodcastReviewsResponse =
   operations['getPodcastReviews']['responses']['200']['content']['application/json']['data'];
 export type GetPodcastSocialMediaDetailsParams = NonNullable<
@@ -543,7 +544,7 @@ const descriptors = {
     method: 'GET',
     path: '/api/v1/podcasts/{podcastIdOrSlug}/reviews',
     pathParams: ['podcastIdOrSlug'],
-    queryParams: [],
+    queryParams: ['country', 'limit', 'offset'],
     body: 'none',
     binary: false,
   },

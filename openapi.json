@@ -9844,6 +9844,122 @@
                                   ],
                                   "additionalProperties": false
                                 },
+                                "applePodcastsReviewsByCountry": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "appleId": {
+                                        "type": "number"
+                                      },
+                                      "scrapedAt": {},
+                                      "country": {
+                                        "type": "string"
+                                      },
+                                      "reviewsCount": {
+                                        "type": "number"
+                                      },
+                                      "rating": {
+                                        "type": [
+                                          "number",
+                                          "null"
+                                        ]
+                                      },
+                                      "oneStarCount": {
+                                        "type": "number"
+                                      },
+                                      "twoStarCount": {
+                                        "type": "number"
+                                      },
+                                      "threeStarCount": {
+                                        "type": "number"
+                                      },
+                                      "fourStarCount": {
+                                        "type": "number"
+                                      },
+                                      "fiveStarCount": {
+                                        "type": "number"
+                                      }
+                                    },
+                                    "required": [
+                                      "appleId",
+                                      "scrapedAt",
+                                      "country",
+                                      "reviewsCount",
+                                      "rating",
+                                      "oneStarCount",
+                                      "twoStarCount",
+                                      "threeStarCount",
+                                      "fourStarCount",
+                                      "fiveStarCount"
+                                    ],
+                                    "additionalProperties": false
+                                  }
+                                },
+                                "applePodcastsReviewText": {
+                                  "type": [
+                                    "object",
+                                    "null"
+                                  ],
+                                  "properties": {
+                                    "country": {
+                                      "type": [
+                                        "string",
+                                        "null"
+                                      ]
+                                    },
+                                    "total": {
+                                      "type": "number"
+                                    },
+                                    "limit": {
+                                      "type": "number"
+                                    },
+                                    "offset": {
+                                      "type": "number"
+                                    },
+                                    "reviews": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "object",
+                                        "properties": {
+                                          "country": {
+                                            "type": "string"
+                                          },
+                                          "rating": {
+                                            "type": "number"
+                                          },
+                                          "title": {
+                                            "type": "string"
+                                          },
+                                          "body": {
+                                            "type": "string"
+                                          },
+                                          "author": {
+                                            "type": "string"
+                                          },
+                                          "reviewedAt": {}
+                                        },
+                                        "required": [
+                                          "country",
+                                          "rating",
+                                          "title",
+                                          "body",
+                                          "author",
+                                          "reviewedAt"
+                                        ],
+                                        "additionalProperties": false
+                                      }
+                                    }
+                                  },
+                                  "required": [
+                                    "country",
+                                    "total",
+                                    "limit",
+                                    "offset",
+                                    "reviews"
+                                  ],
+                                  "additionalProperties": false
+                                },
                                 "spotifyReview": {
                                   "type": [
                                     "object",
@@ -9899,6 +10015,8 @@
                                 "appleId",
                                 "spotifyId",
                                 "applePodcastsReview",
+                                "applePodcastsReviewsByCountry",
+                                "applePodcastsReviewText",
                                 "spotifyReview",
                                 "castbox"
                               ],
@@ -12515,6 +12633,42 @@
               "type": "string",
               "description": "Podengine ID, Apple ID, or slug"
             }
+          },
+          {
+            "name": "country",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "description": "Apple storefront to scope the aggregate ratings and review text to (us, gb, au, ca). Omit for all storefronts.",
+              "type": "string",
+              "enum": [
+                "us",
+                "gb",
+                "au",
+                "ca"
+              ]
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "description": "Maximum number of review-text rows to return (default 25, max 100).",
+              "type": "number",
+              "minimum": 1,
+              "maximum": 100
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "description": "Number of review-text rows to skip, for pagination (default 0).",
+              "type": "number",
+              "minimum": 0
+            }
           }
         ],
         "responses": {
@@ -12691,6 +12845,122 @@
                               ],
                               "additionalProperties": false
                             },
+                            "applePodcastsReviewsByCountry": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "appleId": {
+                                    "type": "number"
+                                  },
+                                  "scrapedAt": {},
+                                  "country": {
+                                    "type": "string"
+                                  },
+                                  "reviewsCount": {
+                                    "type": "number"
+                                  },
+                                  "rating": {
+                                    "type": [
+                                      "number",
+                                      "null"
+                                    ]
+                                  },
+                                  "oneStarCount": {
+                                    "type": "number"
+                                  },
+                                  "twoStarCount": {
+                                    "type": "number"
+                                  },
+                                  "threeStarCount": {
+                                    "type": "number"
+                                  },
+                                  "fourStarCount": {
+                                    "type": "number"
+                                  },
+                                  "fiveStarCount": {
+                                    "type": "number"
+                                  }
+                                },
+                                "required": [
+                                  "appleId",
+                                  "scrapedAt",
+                                  "country",
+                                  "reviewsCount",
+                                  "rating",
+                                  "oneStarCount",
+                                  "twoStarCount",
+                                  "threeStarCount",
+                                  "fourStarCount",
+                                  "fiveStarCount"
+                                ],
+                                "additionalProperties": false
+                              }
+                            },
+                            "applePodcastsReviewText": {
+                              "type": [
+                                "object",
+                                "null"
+                              ],
+                              "properties": {
+                                "country": {
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ]
+                                },
+                                "total": {
+                                  "type": "number"
+                                },
+                                "limit": {
+                                  "type": "number"
+                                },
+                                "offset": {
+                                  "type": "number"
+                                },
+                                "reviews": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "country": {
+                                        "type": "string"
+                                      },
+                                      "rating": {
+                                        "type": "number"
+                                      },
+                                      "title": {
+                                        "type": "string"
+                                      },
+                                      "body": {
+                                        "type": "string"
+                                      },
+                                      "author": {
+                                        "type": "string"
+                                      },
+                                      "reviewedAt": {}
+                                    },
+                                    "required": [
+                                      "country",
+                                      "rating",
+                                      "title",
+                                      "body",
+                                      "author",
+                                      "reviewedAt"
+                                    ],
+                                    "additionalProperties": false
+                                  }
+                                }
+                              },
+                              "required": [
+                                "country",
+                                "total",
+                                "limit",
+                                "offset",
+                                "reviews"
+                              ],
+                              "additionalProperties": false
+                            },
                             "spotifyReview": {
                               "type": [
                                 "object",
@@ -12746,6 +13016,8 @@
                             "appleId",
                             "spotifyId",
                             "applePodcastsReview",
+                            "applePodcastsReviewsByCountry",
+                            "applePodcastsReviewText",
                             "spotifyReview",
                             "castbox"
                           ],
