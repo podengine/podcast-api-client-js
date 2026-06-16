@@ -4088,6 +4088,18 @@
                                     "hasTranscript": {
                                       "type": "boolean"
                                     },
+                                    "hasVideo": {
+                                      "type": "boolean",
+                                      "description": "Whether the podcast RSS feed declares a directly-downloadable video file for this episode. This does not include YouTube videos or Apple Podcasts HLS streams."
+                                    },
+                                    "videoUrl": {
+                                      "description": "A direct, downloadable URL to the episode video file when hasVideo is true; otherwise null. HLS playlists and streaming-only sources are excluded.",
+                                      "type": [
+                                        "string",
+                                        "null"
+                                      ],
+                                      "format": "uri"
+                                    },
                                     "imageUrl": {
                                       "type": [
                                         "string",
@@ -4278,6 +4290,8 @@
                                     "episodeShortDescription",
                                     "episodeSponsors",
                                     "hasTranscript",
+                                    "hasVideo",
+                                    "videoUrl",
                                     "imageUrl",
                                     "episodeThumbnailRssUrl",
                                     "podcastId",
@@ -4458,6 +4472,18 @@
                             },
                             "hasTranscript": {
                               "type": "boolean"
+                            },
+                            "hasVideo": {
+                              "type": "boolean",
+                              "description": "Whether the podcast RSS feed declares a directly-downloadable video file for this episode. This does not include YouTube videos or Apple Podcasts HLS streams."
+                            },
+                            "videoUrl": {
+                              "description": "A direct, downloadable URL to the episode video file when hasVideo is true; otherwise null. HLS playlists and streaming-only sources are excluded.",
+                              "type": [
+                                "string",
+                                "null"
+                              ],
+                              "format": "uri"
                             },
                             "imageUrl": {
                               "type": [
@@ -4649,6 +4675,8 @@
                             "episodeShortDescription",
                             "episodeSponsors",
                             "hasTranscript",
+                            "hasVideo",
+                            "videoUrl",
                             "imageUrl",
                             "episodeThumbnailRssUrl",
                             "podcastId",
@@ -9360,6 +9388,18 @@
                                   "hasTranscript": {
                                     "type": "boolean"
                                   },
+                                  "hasVideo": {
+                                    "type": "boolean",
+                                    "description": "Whether the podcast RSS feed declares a directly-downloadable video file for this episode. This does not include YouTube videos or Apple Podcasts HLS streams."
+                                  },
+                                  "videoUrl": {
+                                    "description": "A direct, downloadable URL to the episode video file when hasVideo is true; otherwise null. HLS playlists and streaming-only sources are excluded.",
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ],
+                                    "format": "uri"
+                                  },
                                   "imageUrl": {
                                     "type": [
                                       "string",
@@ -9550,6 +9590,8 @@
                                   "episodeShortDescription",
                                   "episodeSponsors",
                                   "hasTranscript",
+                                  "hasVideo",
+                                  "videoUrl",
                                   "imageUrl",
                                   "episodeThumbnailRssUrl",
                                   "podcastId",
@@ -12091,6 +12133,18 @@
                                   "hasTranscript": {
                                     "type": "boolean"
                                   },
+                                  "hasVideo": {
+                                    "type": "boolean",
+                                    "description": "Whether the podcast RSS feed declares a directly-downloadable video file for this episode. This does not include YouTube videos or Apple Podcasts HLS streams."
+                                  },
+                                  "videoUrl": {
+                                    "description": "A direct, downloadable URL to the episode video file when hasVideo is true; otherwise null. HLS playlists and streaming-only sources are excluded.",
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ],
+                                    "format": "uri"
+                                  },
                                   "imageUrl": {
                                     "type": [
                                       "string",
@@ -12281,6 +12335,8 @@
                                   "episodeShortDescription",
                                   "episodeSponsors",
                                   "hasTranscript",
+                                  "hasVideo",
+                                  "videoUrl",
                                   "imageUrl",
                                   "episodeThumbnailRssUrl",
                                   "podcastId",

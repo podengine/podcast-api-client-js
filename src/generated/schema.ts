@@ -2843,6 +2843,13 @@ export interface operations {
                   episodeShortDescription: string | null;
                   episodeSponsors: string[] | null;
                   hasTranscript: boolean;
+                  /** @description Whether the podcast RSS feed declares a directly-downloadable video file for this episode. This does not include YouTube videos or Apple Podcasts HLS streams. */
+                  hasVideo: boolean;
+                  /**
+                   * Format: uri
+                   * @description A direct, downloadable URL to the episode video file when hasVideo is true; otherwise null. HLS playlists and streaming-only sources are excluded.
+                   */
+                  videoUrl: string | null;
                   imageUrl: string | null;
                   episodeThumbnailRssUrl: string | null;
                   /** Format: uuid */
@@ -2993,6 +3000,13 @@ export interface operations {
                 episodeShortDescription: string | null;
                 episodeSponsors: string[] | null;
                 hasTranscript: boolean;
+                /** @description Whether the podcast RSS feed declares a directly-downloadable video file for this episode. This does not include YouTube videos or Apple Podcasts HLS streams. */
+                hasVideo: boolean;
+                /**
+                 * Format: uri
+                 * @description A direct, downloadable URL to the episode video file when hasVideo is true; otherwise null. HLS playlists and streaming-only sources are excluded.
+                 */
+                videoUrl: string | null;
                 imageUrl: string | null;
                 episodeThumbnailRssUrl: string | null;
                 /** Format: uuid */
@@ -5298,6 +5312,13 @@ export interface operations {
                       episodeShortDescription: string | null;
                       episodeSponsors: string[] | null;
                       hasTranscript: boolean;
+                      /** @description Whether the podcast RSS feed declares a directly-downloadable video file for this episode. This does not include YouTube videos or Apple Podcasts HLS streams. */
+                      hasVideo: boolean;
+                      /**
+                       * Format: uri
+                       * @description A direct, downloadable URL to the episode video file when hasVideo is true; otherwise null. HLS playlists and streaming-only sources are excluded.
+                       */
+                      videoUrl: string | null;
                       imageUrl: string | null;
                       episodeThumbnailRssUrl: string | null;
                       /** Format: uuid */
@@ -6163,6 +6184,13 @@ export interface operations {
                   episodeShortDescription: string | null;
                   episodeSponsors: string[] | null;
                   hasTranscript: boolean;
+                  /** @description Whether the podcast RSS feed declares a directly-downloadable video file for this episode. This does not include YouTube videos or Apple Podcasts HLS streams. */
+                  hasVideo: boolean;
+                  /**
+                   * Format: uri
+                   * @description A direct, downloadable URL to the episode video file when hasVideo is true; otherwise null. HLS playlists and streaming-only sources are excluded.
+                   */
+                  videoUrl: string | null;
                   imageUrl: string | null;
                   episodeThumbnailRssUrl: string | null;
                   /** Format: uuid */
