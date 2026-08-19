@@ -4735,7 +4735,7 @@
           "episodes"
         ],
         "summary": "Episode Transcript Text",
-        "description": "Get the transcript text of an episode",
+        "description": "Get the full transcript text of an episode. Counts as one transcript download.",
         "operationId": "getEpisodeTranscriptText",
         "parameters": [
           {
@@ -4793,6 +4793,120 @@
                             "episodeId",
                             "transcriptId",
                             "text"
+                          ],
+                          "additionalProperties": false
+                        }
+                      },
+                      "required": [
+                        "episodeTranscriptText"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "data"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Forbidden — plan does not include this endpoint"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/episodes/{episodeId}/transcript-text/preview": {
+      "get": {
+        "tags": [
+          "episodes"
+        ],
+        "summary": "Episode Transcript Text Preview",
+        "description": "Get a short, free excerpt of an episode transcript. Does not count against your transcript downloads. `totalCharacters` reports the length of the full transcript.",
+        "operationId": "getEpisodeTranscriptTextPreview",
+        "parameters": [
+          {
+            "name": "episodeId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "episodeTranscriptText": {
+                          "type": "object",
+                          "properties": {
+                            "podcastId": {
+                              "type": "string",
+                              "format": "uuid",
+                              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                            },
+                            "episodeId": {
+                              "type": "string",
+                              "format": "uuid",
+                              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                            },
+                            "transcriptId": {
+                              "type": "string",
+                              "format": "uuid",
+                              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                            },
+                            "text": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "truncated": {
+                              "type": "boolean"
+                            },
+                            "totalCharacters": {
+                              "type": "number"
+                            }
+                          },
+                          "required": [
+                            "podcastId",
+                            "episodeId",
+                            "transcriptId",
+                            "text",
+                            "truncated",
+                            "totalCharacters"
                           ],
                           "additionalProperties": false
                         }
@@ -4989,7 +5103,7 @@
           "episodes"
         ],
         "summary": "Episode Transcript Timestamps",
-        "description": "Get the transcript of an episode with word-level timestamps in a structured JSON format",
+        "description": "Get the full transcript of an episode with word-level timestamps in a structured JSON format. Counts as one transcript download.",
         "operationId": "getEpisodeTranscriptTimestamps",
         "parameters": [
           {
@@ -5054,6 +5168,121 @@
                         "episodeId",
                         "podcastId",
                         "sentences"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "data"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Forbidden — plan does not include this endpoint"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/episodes/{episodeId}/transcript-timestamps/preview": {
+      "get": {
+        "tags": [
+          "episodes"
+        ],
+        "summary": "Episode Transcript Timestamps Preview",
+        "description": "Get the first few timestamped sentences of an episode transcript, free. Does not count against your transcript downloads. `totalSentences` reports how many sentences the full transcript has.",
+        "operationId": "getEpisodeTranscriptTimestampsPreview",
+        "parameters": [
+          {
+            "name": "episodeId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "OK"
+                      ]
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "episodeId": {
+                          "type": "string"
+                        },
+                        "podcastId": {
+                          "type": "string"
+                        },
+                        "sentences": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "text": {
+                                "type": "string"
+                              },
+                              "startSecond": {
+                                "type": "number"
+                              },
+                              "endSecond": {
+                                "type": "number"
+                              }
+                            },
+                            "required": [
+                              "text",
+                              "startSecond",
+                              "endSecond"
+                            ],
+                            "additionalProperties": false
+                          }
+                        },
+                        "totalSentences": {
+                          "type": "number"
+                        },
+                        "truncated": {
+                          "type": "boolean"
+                        }
+                      },
+                      "required": [
+                        "episodeId",
+                        "podcastId",
+                        "sentences",
+                        "totalSentences",
+                        "truncated"
                       ],
                       "additionalProperties": false
                     }
@@ -6542,7 +6771,10 @@
                       "type": "object",
                       "properties": {
                         "result": {
-                          "type": "object",
+                          "type": [
+                            "object",
+                            "null"
+                          ],
                           "properties": {
                             "answer": {
                               "type": "object",
@@ -6573,6 +6805,23 @@
                             "answer"
                           ],
                           "additionalProperties": false
+                        },
+                        "failureReason": {
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "enum": [
+                            "no-source-material",
+                            "empty-result",
+                            "generation-error"
+                          ]
+                        },
+                        "failureMessage": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         }
                       },
                       "required": [
@@ -7929,7 +8178,7 @@
             "in": "query",
             "required": false,
             "schema": {
-              "description": "Spotify ID",
+              "description": "The Spotify show ID of the podcast",
               "type": "string"
             }
           },
@@ -11899,7 +12148,9 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "number"
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
             }
           },
           {
@@ -11907,7 +12158,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "number",
+              "type": "integer",
+              "minimum": 1,
               "maximum": 100
             }
           }
@@ -11936,10 +12188,13 @@
                               "type": "boolean"
                             },
                             "skip": {
-                              "type": "number"
+                              "type": "integer",
+                              "minimum": 0,
+                              "maximum": 9007199254740991
                             },
                             "limit": {
-                              "type": "number",
+                              "type": "integer",
+                              "minimum": 1,
                               "maximum": 100
                             }
                           },
@@ -16454,6 +16709,12 @@
                                       "null"
                                     ]
                                   },
+                                  "companyName": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
                                   "appearancesCount": {
                                     "type": "number"
                                   }
@@ -16465,6 +16726,7 @@
                                   "status",
                                   "imageUrl",
                                   "linkedinUrl",
+                                  "companyName",
                                   "appearancesCount"
                                 ],
                                 "additionalProperties": false
@@ -16803,6 +17065,12 @@
                                     "null"
                                   ]
                                 },
+                                "companyName": {
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ]
+                                },
                                 "appearancesCount": {
                                   "type": "number"
                                 }
@@ -16814,6 +17082,7 @@
                                 "status",
                                 "imageUrl",
                                 "linkedinUrl",
+                                "companyName",
                                 "appearancesCount"
                               ],
                               "additionalProperties": false
@@ -17434,6 +17703,12 @@
                                     "null"
                                   ]
                                 },
+                                "companyName": {
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ]
+                                },
                                 "appearancesCount": {
                                   "type": "number"
                                 }
@@ -17445,6 +17720,7 @@
                                 "status",
                                 "imageUrl",
                                 "linkedinUrl",
+                                "companyName",
                                 "appearancesCount"
                               ],
                               "additionalProperties": false

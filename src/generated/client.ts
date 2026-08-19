@@ -66,11 +66,21 @@ export type GetEpisodeDetailsByIdResponse =
 export type GetEpisodeTranscriptTextParams = NonNullable<operations['getEpisodeTranscriptText']['parameters']['path']>;
 export type GetEpisodeTranscriptTextResponse =
   operations['getEpisodeTranscriptText']['responses']['200']['content']['application/json']['data'];
+export type GetEpisodeTranscriptTextPreviewParams = NonNullable<
+  operations['getEpisodeTranscriptTextPreview']['parameters']['path']
+>;
+export type GetEpisodeTranscriptTextPreviewResponse =
+  operations['getEpisodeTranscriptTextPreview']['responses']['200']['content']['application/json']['data'];
 export type GetEpisodeTranscriptTimestampsParams = NonNullable<
   operations['getEpisodeTranscriptTimestamps']['parameters']['path']
 >;
 export type GetEpisodeTranscriptTimestampsResponse =
   operations['getEpisodeTranscriptTimestamps']['responses']['200']['content']['application/json']['data'];
+export type GetEpisodeTranscriptTimestampsPreviewParams = NonNullable<
+  operations['getEpisodeTranscriptTimestampsPreview']['parameters']['path']
+>;
+export type GetEpisodeTranscriptTimestampsPreviewResponse =
+  operations['getEpisodeTranscriptTimestampsPreview']['responses']['200']['content']['application/json']['data'];
 export type GetLatestEpisodesParams = NonNullable<operations['getLatestEpisodes']['parameters']['query']>;
 export type GetLatestEpisodesResponse =
   operations['getLatestEpisodes']['responses']['200']['content']['application/json']['data'];
@@ -372,9 +382,25 @@ const descriptors = {
     body: 'none',
     binary: false,
   },
+  getEpisodeTranscriptTextPreview: {
+    method: 'GET',
+    path: '/api/v1/episodes/{episodeId}/transcript-text/preview',
+    pathParams: ['episodeId'],
+    queryParams: [],
+    body: 'none',
+    binary: false,
+  },
   getEpisodeTranscriptTimestamps: {
     method: 'GET',
     path: '/api/v1/episodes/{episodeId}/transcript-timestamps',
+    pathParams: ['episodeId'],
+    queryParams: [],
+    body: 'none',
+    binary: false,
+  },
+  getEpisodeTranscriptTimestampsPreview: {
+    method: 'GET',
+    path: '/api/v1/episodes/{episodeId}/transcript-timestamps/preview',
     pathParams: ['episodeId'],
     queryParams: [],
     body: 'none',
@@ -923,7 +949,7 @@ class EpisodesResource {
 
   /**
    * Episode Transcript Text
-   * Get the transcript text of an episode
+   * Get the full transcript text of an episode. Counts as one transcript download.
    */
   getEpisodeTranscriptText(
     params: GetEpisodeTranscriptTextParams,
@@ -933,14 +959,40 @@ class EpisodesResource {
   }
 
   /**
+   * Episode Transcript Text Preview
+   * Get a short, free excerpt of an episode transcript. Does not count against your transcript downloads. `totalCharacters` reports the length of the full transcript.
+   */
+  getEpisodeTranscriptTextPreview(
+    params: GetEpisodeTranscriptTextPreviewParams,
+    options?: RequestOptions
+  ): Promise<GetEpisodeTranscriptTextPreviewResponse> {
+    return this.core.request(descriptors.getEpisodeTranscriptTextPreview, params as Record<string, unknown>, options);
+  }
+
+  /**
    * Episode Transcript Timestamps
-   * Get the transcript of an episode with word-level timestamps in a structured JSON format
+   * Get the full transcript of an episode with word-level timestamps in a structured JSON format. Counts as one transcript download.
    */
   getEpisodeTranscriptTimestamps(
     params: GetEpisodeTranscriptTimestampsParams,
     options?: RequestOptions
   ): Promise<GetEpisodeTranscriptTimestampsResponse> {
     return this.core.request(descriptors.getEpisodeTranscriptTimestamps, params as Record<string, unknown>, options);
+  }
+
+  /**
+   * Episode Transcript Timestamps Preview
+   * Get the first few timestamped sentences of an episode transcript, free. Does not count against your transcript downloads. `totalSentences` reports how many sentences the full transcript has.
+   */
+  getEpisodeTranscriptTimestampsPreview(
+    params: GetEpisodeTranscriptTimestampsPreviewParams,
+    options?: RequestOptions
+  ): Promise<GetEpisodeTranscriptTimestampsPreviewResponse> {
+    return this.core.request(
+      descriptors.getEpisodeTranscriptTimestampsPreview,
+      params as Record<string, unknown>,
+      options
+    );
   }
 
   /**

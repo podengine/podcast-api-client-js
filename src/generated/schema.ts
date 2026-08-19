@@ -260,9 +260,29 @@ export interface paths {
     };
     /**
      * Episode Transcript Text
-     * @description Get the transcript text of an episode
+     * @description Get the full transcript text of an episode. Counts as one transcript download.
      */
     get: operations['getEpisodeTranscriptText'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/api/v1/episodes/{episodeId}/transcript-text/preview': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /**
+     * Episode Transcript Text Preview
+     * @description Get a short, free excerpt of an episode transcript. Does not count against your transcript downloads. `totalCharacters` reports the length of the full transcript.
+     */
+    get: operations['getEpisodeTranscriptTextPreview'];
     put?: never;
     post?: never;
     delete?: never;
@@ -320,9 +340,29 @@ export interface paths {
     };
     /**
      * Episode Transcript Timestamps
-     * @description Get the transcript of an episode with word-level timestamps in a structured JSON format
+     * @description Get the full transcript of an episode with word-level timestamps in a structured JSON format. Counts as one transcript download.
      */
     get: operations['getEpisodeTranscriptTimestamps'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/api/v1/episodes/{episodeId}/transcript-timestamps/preview': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /**
+     * Episode Transcript Timestamps Preview
+     * @description Get the first few timestamped sentences of an episode transcript, free. Does not count against your transcript downloads. `totalSentences` reports how many sentences the full transcript has.
+     */
+    get: operations['getEpisodeTranscriptTimestampsPreview'];
     put?: never;
     post?: never;
     delete?: never;
@@ -3186,6 +3226,78 @@ export interface operations {
       };
     };
   };
+  getEpisodeTranscriptTextPreview: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        episodeId: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Success */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': {
+            status: string;
+            data: {
+              episodeTranscriptText: {
+                /** Format: uuid */
+                podcastId: string;
+                /** Format: uuid */
+                episodeId: string;
+                /** Format: uuid */
+                transcriptId: string;
+                text: string | null;
+                truncated: boolean;
+                totalCharacters: number;
+              };
+            };
+          };
+        };
+      };
+      /** @description Bad request */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Authentication required */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Forbidden — plan does not include this endpoint */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Not found */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Rate limit exceeded */
+      429: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+    };
+  };
   requestEpisodeTranscription: {
     parameters: {
       query?: never;
@@ -3336,6 +3448,77 @@ export interface operations {
                 startSecond: number;
                 endSecond: number;
               }[];
+            };
+          };
+        };
+      };
+      /** @description Bad request */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Authentication required */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Forbidden — plan does not include this endpoint */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Not found */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Rate limit exceeded */
+      429: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+    };
+  };
+  getEpisodeTranscriptTimestampsPreview: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        episodeId: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Success */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': {
+            /** @enum {string} */
+            status: 'OK';
+            data: {
+              episodeId: string;
+              podcastId: string;
+              sentences: {
+                text: string;
+                startSecond: number;
+                endSecond: number;
+              }[];
+              totalSentences: number;
+              truncated: boolean;
             };
           };
         };
@@ -4115,7 +4298,10 @@ export interface operations {
                   areasOfExpertise: unknown;
                   topicsToDiscuss: unknown;
                 };
-              };
+              } | null;
+              /** @enum {string|null} */
+              failureReason?: 'no-source-material' | 'empty-result' | 'generation-error' | null;
+              failureMessage?: string | null;
             };
           };
         };
@@ -7818,6 +8004,7 @@ export interface operations {
                   status: 'ACTIVE' | 'DRAFT' | 'PENDING' | 'ARCHIVED' | 'ERROR';
                   imageUrl: string | null;
                   linkedinUrl: string | null;
+                  companyName: string | null;
                   appearancesCount: number;
                 } | null;
                 stateCounts: {
@@ -7942,6 +8129,7 @@ export interface operations {
                   status: 'ACTIVE' | 'DRAFT' | 'PENDING' | 'ARCHIVED' | 'ERROR';
                   imageUrl: string | null;
                   linkedinUrl: string | null;
+                  companyName: string | null;
                   appearancesCount: number;
                 } | null;
                 stateCounts: {
@@ -8171,6 +8359,7 @@ export interface operations {
                   status: 'ACTIVE' | 'DRAFT' | 'PENDING' | 'ARCHIVED' | 'ERROR';
                   imageUrl: string | null;
                   linkedinUrl: string | null;
+                  companyName: string | null;
                   appearancesCount: number;
                 } | null;
                 stateCounts: {
