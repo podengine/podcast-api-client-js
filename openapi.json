@@ -22583,10 +22583,17 @@
                     "data": {
                       "type": "object",
                       "properties": {
-                        "month": {
+                        "periodStart": {
                           "type": "string",
-                          "pattern": "^\\d{4}-\\d{2}$",
-                          "description": "Current month in YYYY-MM format"
+                          "format": "date-time",
+                          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$",
+                          "description": "Inclusive start of the usage period (ISO 8601, UTC)"
+                        },
+                        "periodEnd": {
+                          "type": "string",
+                          "format": "date-time",
+                          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$",
+                          "description": "Exclusive end of the usage period — the reset instant (ISO 8601, UTC)"
                         },
                         "plan": {
                           "type": "string",
@@ -22640,10 +22647,10 @@
                               "used": {
                                 "type": "number",
                                 "minimum": 0,
-                                "description": "Number of requests used this month"
+                                "description": "Number of requests used in the current usage period"
                               },
                               "limit": {
-                                "description": "Monthly limit (null = unlimited, 0 = disabled)",
+                                "description": "Limit per usage period (null = unlimited, 0 = disabled)",
                                 "type": [
                                   "number",
                                   "null"
@@ -22663,7 +22670,7 @@
                         },
                         "totalUsed": {
                           "type": "number",
-                          "description": "Total requests used across all categories this month"
+                          "description": "Total requests used across all categories in the current usage period"
                         },
                         "projectUsage": {
                           "description": "Monthly active project and guest profile usage",
@@ -22716,7 +22723,8 @@
                         }
                       },
                       "required": [
-                        "month",
+                        "periodStart",
+                        "periodEnd",
                         "plan",
                         "featureFlags",
                         "aliases",
@@ -22851,7 +22859,7 @@
                             "transcriptDownloadCount",
                             "transcriptionRequests"
                           ],
-                          "description": "Current monthly limits per alias"
+                          "description": "Current per-period limits per alias"
                         }
                       },
                       "required": [
@@ -22937,15 +22945,22 @@
                           "items": {
                             "type": "object",
                             "properties": {
-                              "month": {
+                              "periodStart": {
                                 "type": "string",
-                                "pattern": "^\\d{4}-\\d{2}$",
-                                "description": "Month in YYYY-MM format"
+                                "format": "date-time",
+                                "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$",
+                                "description": "Inclusive start of the usage period (ISO 8601, UTC)"
+                              },
+                              "periodEnd": {
+                                "type": "string",
+                                "format": "date-time",
+                                "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$",
+                                "description": "Exclusive end of the usage period — the reset instant (ISO 8601, UTC)"
                               },
                               "totalUsage": {
                                 "type": "number",
                                 "minimum": 0,
-                                "description": "Total requests in this month"
+                                "description": "Total requests in this usage period"
                               },
                               "usageByAlias": {
                                 "type": "object",
@@ -22953,17 +22968,18 @@
                                   "type": "number",
                                   "minimum": 0
                                 },
-                                "description": "Usage count per alias for this month"
+                                "description": "Usage count per alias for this usage period"
                               }
                             },
                             "required": [
-                              "month",
+                              "periodStart",
+                              "periodEnd",
                               "totalUsage",
                               "usageByAlias"
                             ],
                             "additionalProperties": false
                           },
-                          "description": "Monthly usage entries sorted by month ascending"
+                          "description": "Usage period entries sorted by period start ascending"
                         },
                         "limits": {
                           "type": "object",
@@ -22984,7 +23000,7 @@
                             "transcriptDownloadCount",
                             "transcriptionRequests"
                           ],
-                          "description": "Current monthly limits per alias"
+                          "description": "Current per-period limits per alias"
                         }
                       },
                       "required": [

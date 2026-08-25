@@ -10260,8 +10260,16 @@ export interface operations {
             /** @enum {string} */
             status: 'OK';
             data: {
-              /** @description Current month in YYYY-MM format */
-              month: string;
+              /**
+               * Format: date-time
+               * @description Inclusive start of the usage period (ISO 8601, UTC)
+               */
+              periodStart: Date;
+              /**
+               * Format: date-time
+               * @description Exclusive end of the usage period — the reset instant (ISO 8601, UTC)
+               */
+              periodEnd: Date;
               /** @description Current team plan tier */
               plan: string;
               /** @description Enabled feature flags for the team */
@@ -10289,12 +10297,12 @@ export interface operations {
                   | 'transcriptionRequests';
                 /** @description Human-readable label for this usage category */
                 label: string;
-                /** @description Number of requests used this month */
+                /** @description Number of requests used in the current usage period */
                 used: number;
-                /** @description Monthly limit (null = unlimited, 0 = disabled) */
+                /** @description Limit per usage period (null = unlimited, 0 = disabled) */
                 limit: number | null;
               }[];
-              /** @description Total requests used across all categories this month */
+              /** @description Total requests used across all categories in the current usage period */
               totalUsed: number;
               /** @description Monthly active project and guest profile usage */
               projectUsage?: {
@@ -10380,7 +10388,7 @@ export interface operations {
                   [key: string]: number;
                 };
               }[];
-              /** @description Current monthly limits per alias */
+              /** @description Current per-period limits per alias */
               limits: {
                 [key: string]: number | null;
               };
@@ -10446,18 +10454,26 @@ export interface operations {
             /** @enum {string} */
             status: 'OK';
             data: {
-              /** @description Monthly usage entries sorted by month ascending */
+              /** @description Usage period entries sorted by period start ascending */
               months: {
-                /** @description Month in YYYY-MM format */
-                month: string;
-                /** @description Total requests in this month */
+                /**
+                 * Format: date-time
+                 * @description Inclusive start of the usage period (ISO 8601, UTC)
+                 */
+                periodStart: Date;
+                /**
+                 * Format: date-time
+                 * @description Exclusive end of the usage period — the reset instant (ISO 8601, UTC)
+                 */
+                periodEnd: Date;
+                /** @description Total requests in this usage period */
                 totalUsage: number;
-                /** @description Usage count per alias for this month */
+                /** @description Usage count per alias for this usage period */
                 usageByAlias: {
                   [key: string]: number;
                 };
               }[];
-              /** @description Current monthly limits per alias */
+              /** @description Current per-period limits per alias */
               limits: {
                 [key: string]: number | null;
               };
