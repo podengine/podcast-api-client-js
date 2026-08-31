@@ -1032,7 +1032,12 @@
                               "type": "string"
                             }
                           },
-                          "publishedSince": {},
+                          "publishedSince": {
+                            "description": "Only episodes published on or after this date (inclusive)"
+                          },
+                          "publishedBefore": {
+                            "description": "Only episodes published strictly before this date (exclusive). Combine with publishedSince for a bounded window, e.g. publishedSince=90 days ago + publishedBefore=30 days ago."
+                          },
                           "hasTranscript": {
                             "type": "boolean"
                           },
@@ -20439,7 +20444,12 @@
                       "type": "string"
                     }
                   },
-                  "publishedSince": {},
+                  "publishedSince": {
+                    "description": "Only episodes published on or after this date (inclusive)"
+                  },
+                  "publishedBefore": {
+                    "description": "Only episodes published strictly before this date (exclusive). Combine with publishedSince for a bounded window, e.g. publishedSince=90 days ago + publishedBefore=30 days ago."
+                  },
                   "hasTranscript": {
                     "type": "boolean"
                   },
@@ -20956,7 +20966,12 @@
                                 "type": "string"
                               }
                             },
-                            "publishedSince": {},
+                            "publishedSince": {
+                              "description": "Only episodes published on or after this date (inclusive)"
+                            },
+                            "publishedBefore": {
+                              "description": "Only episodes published strictly before this date (exclusive). Combine with publishedSince for a bounded window, e.g. publishedSince=90 days ago + publishedBefore=30 days ago."
+                            },
                             "hasTranscript": {
                               "type": "boolean"
                             },

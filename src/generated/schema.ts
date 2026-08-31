@@ -1598,7 +1598,10 @@ export interface operations {
                 transcriptSnippetLength?: number;
                 transcriptHighlightLength?: number;
                 includeEpisodeIds?: string[];
+                /** @description Only episodes published on or after this date (inclusive) */
                 publishedSince?: unknown;
+                /** @description Only episodes published strictly before this date (exclusive). Combine with publishedSince for a bounded window, e.g. publishedSince=90 days ago + publishedBefore=30 days ago. */
+                publishedBefore?: unknown;
                 hasTranscript?: boolean;
                 episodeUpdatedSince?: unknown;
                 episodeCreatedSince?: unknown;
@@ -9387,7 +9390,10 @@ export interface operations {
           transcriptSnippetLength?: number;
           transcriptHighlightLength?: number;
           includeEpisodeIds?: string[];
+          /** @description Only episodes published on or after this date (inclusive) */
           publishedSince?: unknown;
+          /** @description Only episodes published strictly before this date (exclusive). Combine with publishedSince for a bounded window, e.g. publishedSince=90 days ago + publishedBefore=30 days ago. */
+          publishedBefore?: unknown;
           hasTranscript?: boolean;
           episodeUpdatedSince?: unknown;
           episodeCreatedSince?: unknown;
@@ -9569,7 +9575,10 @@ export interface operations {
                 transcriptSnippetLength?: number;
                 transcriptHighlightLength?: number;
                 includeEpisodeIds?: string[];
+                /** @description Only episodes published on or after this date (inclusive) */
                 publishedSince?: unknown;
+                /** @description Only episodes published strictly before this date (exclusive). Combine with publishedSince for a bounded window, e.g. publishedSince=90 days ago + publishedBefore=30 days ago. */
+                publishedBefore?: unknown;
                 hasTranscript?: boolean;
                 episodeUpdatedSince?: unknown;
                 episodeCreatedSince?: unknown;
