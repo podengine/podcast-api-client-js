@@ -9143,7 +9143,7 @@ export interface operations {
                   nullOrder?: 'first' | 'last';
                 }[];
               };
-              seachResultsStats: {
+              searchResultsStats: {
                 time: {
                   totalTimeTakenMs: number;
                   totalSearchTimeMs: number;
@@ -9574,7 +9574,7 @@ export interface operations {
                 episodeUpdatedSince?: unknown;
                 episodeCreatedSince?: unknown;
               };
-              seachResultsStats: {
+              searchResultsStats: {
                 time: {
                   totalTimeTakenMs: number;
                   totalSearchTimeMs: number;

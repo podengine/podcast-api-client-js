@@ -19773,7 +19773,7 @@
                           },
                           "additionalProperties": false
                         },
-                        "seachResultsStats": {
+                        "searchResultsStats": {
                           "type": "object",
                           "properties": {
                             "time": {
@@ -19909,7 +19909,7 @@
                         "searchMode",
                         "searchId",
                         "searchOptions",
-                        "seachResultsStats",
+                        "searchResultsStats",
                         "result",
                         "cursor"
                       ],
@@ -20965,7 +20965,7 @@
                           },
                           "additionalProperties": false
                         },
-                        "seachResultsStats": {
+                        "searchResultsStats": {
                           "type": "object",
                           "properties": {
                             "time": {
@@ -21101,7 +21101,7 @@
                         "searchMode",
                         "searchId",
                         "searchOptions",
-                        "seachResultsStats",
+                        "searchResultsStats",
                         "result",
                         "cursor"
                       ],
