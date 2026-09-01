@@ -1325,7 +1325,7 @@ class SearchResource {
 
   /**
    * Search Episodes
-   * Search for episodes by title, description, or transcript text
+   * Search for episodes by title, description, or transcript text, with optional filters on guest, host, and sponsor names
    */
   searchEpisodes(params?: SearchEpisodesParams, options?: RequestOptions): Promise<SearchEpisodesResponse> {
     return this.core.request(descriptors.searchEpisodes, params as Record<string, unknown>, options);

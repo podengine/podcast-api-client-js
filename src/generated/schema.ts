@@ -1066,7 +1066,7 @@ export interface paths {
     put?: never;
     /**
      * Search Episodes
-     * @description Search for episodes by title, description, or transcript text
+     * @description Search for episodes by title, description, or transcript text, with optional filters on guest, host, and sponsor names
      */
     post: operations['searchEpisodes'];
     delete?: never;
@@ -1605,6 +1605,43 @@ export interface operations {
                 hasTranscript?: boolean;
                 episodeUpdatedSince?: unknown;
                 episodeCreatedSince?: unknown;
+                /** @description Filter episodes by the people on them. Entries are ANDed together, e.g. [{ "name": "Elon Musk", "type": "guest" }, { "name": "Joe Rogan", "type": "host" }] returns only episodes where Elon Musk appeared as a guest and Joe Rogan was a host. An entry with matchMode "not" instead excludes episodes featuring that person. */
+                personFilters?: {
+                  /** @description The name to match */
+                  name: string;
+                  /**
+                   * @description 'must' (default) only returns episodes matching this entry; 'not' excludes episodes matching this entry
+                   * @enum {string}
+                   */
+                  matchMode?: 'must' | 'not';
+                  /** @description Whether to match the name as a phrase (all words, in order). Defaults to true; set false for a loose per-word match. */
+                  phraseMatch?: boolean;
+                  /** @description How many words apart tokens can appear in a name to still count as a phrase match */
+                  slop?: number;
+                  /** @description Whether to tolerate close spellings. Uses per-word fuzzy matching with all words required, so it ignores word order and cannot be combined with slop. */
+                  fuzzy?: boolean;
+                  /**
+                   * @description Whether the person must appear on the episode as a 'guest' or a 'host'
+                   * @enum {string}
+                   */
+                  type: 'guest' | 'host';
+                }[];
+                /** @description Filter episodes by sponsor / advertiser name. Entries are ANDed together; an entry with matchMode "not" instead excludes episodes with that sponsor. */
+                sponsorFilters?: {
+                  /** @description The name to match */
+                  name: string;
+                  /**
+                   * @description 'must' (default) only returns episodes matching this entry; 'not' excludes episodes matching this entry
+                   * @enum {string}
+                   */
+                  matchMode?: 'must' | 'not';
+                  /** @description Whether to match the name as a phrase (all words, in order). Defaults to true; set false for a loose per-word match. */
+                  phraseMatch?: boolean;
+                  /** @description How many words apart tokens can appear in a name to still count as a phrase match */
+                  slop?: number;
+                  /** @description Whether to tolerate close spellings. Uses per-word fuzzy matching with all words required, so it ignores word order and cannot be combined with slop. */
+                  fuzzy?: boolean;
+                }[];
               };
           forceRegenerate?: boolean;
         };
@@ -5753,7 +5790,7 @@ export interface operations {
                     linkedInUrl: string;
                     name: string;
                     countryCode: string | null;
-                    followers: number;
+                    followers: number | null;
                     employeesInLinkedin: number;
                     about: string | null;
                     description: string | null;
@@ -7107,7 +7144,7 @@ export interface operations {
                   linkedInUrl: string;
                   name: string;
                   countryCode: string | null;
-                  followers: number;
+                  followers: number | null;
                   employeesInLinkedin: number;
                   about: string | null;
                   description: string | null;
@@ -9397,6 +9434,43 @@ export interface operations {
           hasTranscript?: boolean;
           episodeUpdatedSince?: unknown;
           episodeCreatedSince?: unknown;
+          /** @description Filter episodes by the people on them. Entries are ANDed together, e.g. [{ "name": "Elon Musk", "type": "guest" }, { "name": "Joe Rogan", "type": "host" }] returns only episodes where Elon Musk appeared as a guest and Joe Rogan was a host. An entry with matchMode "not" instead excludes episodes featuring that person. */
+          personFilters?: {
+            /** @description The name to match */
+            name: string;
+            /**
+             * @description 'must' (default) only returns episodes matching this entry; 'not' excludes episodes matching this entry
+             * @enum {string}
+             */
+            matchMode?: 'must' | 'not';
+            /** @description Whether to match the name as a phrase (all words, in order). Defaults to true; set false for a loose per-word match. */
+            phraseMatch?: boolean;
+            /** @description How many words apart tokens can appear in a name to still count as a phrase match */
+            slop?: number;
+            /** @description Whether to tolerate close spellings. Uses per-word fuzzy matching with all words required, so it ignores word order and cannot be combined with slop. */
+            fuzzy?: boolean;
+            /**
+             * @description Whether the person must appear on the episode as a 'guest' or a 'host'
+             * @enum {string}
+             */
+            type: 'guest' | 'host';
+          }[];
+          /** @description Filter episodes by sponsor / advertiser name. Entries are ANDed together; an entry with matchMode "not" instead excludes episodes with that sponsor. */
+          sponsorFilters?: {
+            /** @description The name to match */
+            name: string;
+            /**
+             * @description 'must' (default) only returns episodes matching this entry; 'not' excludes episodes matching this entry
+             * @enum {string}
+             */
+            matchMode?: 'must' | 'not';
+            /** @description Whether to match the name as a phrase (all words, in order). Defaults to true; set false for a loose per-word match. */
+            phraseMatch?: boolean;
+            /** @description How many words apart tokens can appear in a name to still count as a phrase match */
+            slop?: number;
+            /** @description Whether to tolerate close spellings. Uses per-word fuzzy matching with all words required, so it ignores word order and cannot be combined with slop. */
+            fuzzy?: boolean;
+          }[];
         };
       };
     };
@@ -9582,6 +9656,43 @@ export interface operations {
                 hasTranscript?: boolean;
                 episodeUpdatedSince?: unknown;
                 episodeCreatedSince?: unknown;
+                /** @description Filter episodes by the people on them. Entries are ANDed together, e.g. [{ "name": "Elon Musk", "type": "guest" }, { "name": "Joe Rogan", "type": "host" }] returns only episodes where Elon Musk appeared as a guest and Joe Rogan was a host. An entry with matchMode "not" instead excludes episodes featuring that person. */
+                personFilters?: {
+                  /** @description The name to match */
+                  name: string;
+                  /**
+                   * @description 'must' (default) only returns episodes matching this entry; 'not' excludes episodes matching this entry
+                   * @enum {string}
+                   */
+                  matchMode?: 'must' | 'not';
+                  /** @description Whether to match the name as a phrase (all words, in order). Defaults to true; set false for a loose per-word match. */
+                  phraseMatch?: boolean;
+                  /** @description How many words apart tokens can appear in a name to still count as a phrase match */
+                  slop?: number;
+                  /** @description Whether to tolerate close spellings. Uses per-word fuzzy matching with all words required, so it ignores word order and cannot be combined with slop. */
+                  fuzzy?: boolean;
+                  /**
+                   * @description Whether the person must appear on the episode as a 'guest' or a 'host'
+                   * @enum {string}
+                   */
+                  type: 'guest' | 'host';
+                }[];
+                /** @description Filter episodes by sponsor / advertiser name. Entries are ANDed together; an entry with matchMode "not" instead excludes episodes with that sponsor. */
+                sponsorFilters?: {
+                  /** @description The name to match */
+                  name: string;
+                  /**
+                   * @description 'must' (default) only returns episodes matching this entry; 'not' excludes episodes matching this entry
+                   * @enum {string}
+                   */
+                  matchMode?: 'must' | 'not';
+                  /** @description Whether to match the name as a phrase (all words, in order). Defaults to true; set false for a loose per-word match. */
+                  phraseMatch?: boolean;
+                  /** @description How many words apart tokens can appear in a name to still count as a phrase match */
+                  slop?: number;
+                  /** @description Whether to tolerate close spellings. Uses per-word fuzzy matching with all words required, so it ignores word order and cannot be combined with slop. */
+                  fuzzy?: boolean;
+                }[];
               };
               searchResultsStats: {
                 time: {

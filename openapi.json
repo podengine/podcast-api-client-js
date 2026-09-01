@@ -1042,7 +1042,92 @@
                             "type": "boolean"
                           },
                           "episodeUpdatedSince": {},
-                          "episodeCreatedSince": {}
+                          "episodeCreatedSince": {},
+                          "personFilters": {
+                            "description": "Filter episodes by the people on them. Entries are ANDed together, e.g. [{ \"name\": \"Elon Musk\", \"type\": \"guest\" }, { \"name\": \"Joe Rogan\", \"type\": \"host\" }] returns only episodes where Elon Musk appeared as a guest and Joe Rogan was a host. An entry with matchMode \"not\" instead excludes episodes featuring that person.",
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "name": {
+                                  "type": "string",
+                                  "minLength": 2,
+                                  "description": "The name to match"
+                                },
+                                "matchMode": {
+                                  "description": "'must' (default) only returns episodes matching this entry; 'not' excludes episodes matching this entry",
+                                  "type": "string",
+                                  "enum": [
+                                    "must",
+                                    "not"
+                                  ]
+                                },
+                                "phraseMatch": {
+                                  "description": "Whether to match the name as a phrase (all words, in order). Defaults to true; set false for a loose per-word match.",
+                                  "type": "boolean"
+                                },
+                                "slop": {
+                                  "description": "How many words apart tokens can appear in a name to still count as a phrase match",
+                                  "type": "number"
+                                },
+                                "fuzzy": {
+                                  "description": "Whether to tolerate close spellings. Uses per-word fuzzy matching with all words required, so it ignores word order and cannot be combined with slop.",
+                                  "type": "boolean"
+                                },
+                                "type": {
+                                  "type": "string",
+                                  "enum": [
+                                    "guest",
+                                    "host"
+                                  ],
+                                  "description": "Whether the person must appear on the episode as a 'guest' or a 'host'"
+                                }
+                              },
+                              "required": [
+                                "name",
+                                "type"
+                              ],
+                              "additionalProperties": false
+                            }
+                          },
+                          "sponsorFilters": {
+                            "description": "Filter episodes by sponsor / advertiser name. Entries are ANDed together; an entry with matchMode \"not\" instead excludes episodes with that sponsor.",
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "name": {
+                                  "type": "string",
+                                  "minLength": 2,
+                                  "description": "The name to match"
+                                },
+                                "matchMode": {
+                                  "description": "'must' (default) only returns episodes matching this entry; 'not' excludes episodes matching this entry",
+                                  "type": "string",
+                                  "enum": [
+                                    "must",
+                                    "not"
+                                  ]
+                                },
+                                "phraseMatch": {
+                                  "description": "Whether to match the name as a phrase (all words, in order). Defaults to true; set false for a loose per-word match.",
+                                  "type": "boolean"
+                                },
+                                "slop": {
+                                  "description": "How many words apart tokens can appear in a name to still count as a phrase match",
+                                  "type": "number"
+                                },
+                                "fuzzy": {
+                                  "description": "Whether to tolerate close spellings. Uses per-word fuzzy matching with all words required, so it ignores word order and cannot be combined with slop.",
+                                  "type": "boolean"
+                                }
+                              },
+                              "required": [
+                                "name"
+                              ],
+                              "additionalProperties": false
+                            }
+                          }
                         },
                         "additionalProperties": false
                       }
@@ -10507,7 +10592,10 @@
                                         ]
                                       },
                                       "followers": {
-                                        "type": "number"
+                                        "type": [
+                                          "number",
+                                          "null"
+                                        ]
                                       },
                                       "employeesInLinkedin": {
                                         "type": "number"
@@ -14293,7 +14381,10 @@
                                     ]
                                   },
                                   "followers": {
-                                    "type": "number"
+                                    "type": [
+                                      "number",
+                                      "null"
+                                    ]
                                   },
                                   "employeesInLinkedin": {
                                     "type": "number"
@@ -19959,7 +20050,7 @@
           "search"
         ],
         "summary": "Search Episodes",
-        "description": "Search for episodes by title, description, or transcript text",
+        "description": "Search for episodes by title, description, or transcript text, with optional filters on guest, host, and sponsor names",
         "operationId": "searchEpisodes",
         "requestBody": {
           "required": true,
@@ -20454,7 +20545,92 @@
                     "type": "boolean"
                   },
                   "episodeUpdatedSince": {},
-                  "episodeCreatedSince": {}
+                  "episodeCreatedSince": {},
+                  "personFilters": {
+                    "description": "Filter episodes by the people on them. Entries are ANDed together, e.g. [{ \"name\": \"Elon Musk\", \"type\": \"guest\" }, { \"name\": \"Joe Rogan\", \"type\": \"host\" }] returns only episodes where Elon Musk appeared as a guest and Joe Rogan was a host. An entry with matchMode \"not\" instead excludes episodes featuring that person.",
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string",
+                          "minLength": 2,
+                          "description": "The name to match"
+                        },
+                        "matchMode": {
+                          "description": "'must' (default) only returns episodes matching this entry; 'not' excludes episodes matching this entry",
+                          "type": "string",
+                          "enum": [
+                            "must",
+                            "not"
+                          ]
+                        },
+                        "phraseMatch": {
+                          "description": "Whether to match the name as a phrase (all words, in order). Defaults to true; set false for a loose per-word match.",
+                          "type": "boolean"
+                        },
+                        "slop": {
+                          "description": "How many words apart tokens can appear in a name to still count as a phrase match",
+                          "type": "number"
+                        },
+                        "fuzzy": {
+                          "description": "Whether to tolerate close spellings. Uses per-word fuzzy matching with all words required, so it ignores word order and cannot be combined with slop.",
+                          "type": "boolean"
+                        },
+                        "type": {
+                          "type": "string",
+                          "enum": [
+                            "guest",
+                            "host"
+                          ],
+                          "description": "Whether the person must appear on the episode as a 'guest' or a 'host'"
+                        }
+                      },
+                      "required": [
+                        "name",
+                        "type"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "sponsorFilters": {
+                    "description": "Filter episodes by sponsor / advertiser name. Entries are ANDed together; an entry with matchMode \"not\" instead excludes episodes with that sponsor.",
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string",
+                          "minLength": 2,
+                          "description": "The name to match"
+                        },
+                        "matchMode": {
+                          "description": "'must' (default) only returns episodes matching this entry; 'not' excludes episodes matching this entry",
+                          "type": "string",
+                          "enum": [
+                            "must",
+                            "not"
+                          ]
+                        },
+                        "phraseMatch": {
+                          "description": "Whether to match the name as a phrase (all words, in order). Defaults to true; set false for a loose per-word match.",
+                          "type": "boolean"
+                        },
+                        "slop": {
+                          "description": "How many words apart tokens can appear in a name to still count as a phrase match",
+                          "type": "number"
+                        },
+                        "fuzzy": {
+                          "description": "Whether to tolerate close spellings. Uses per-word fuzzy matching with all words required, so it ignores word order and cannot be combined with slop.",
+                          "type": "boolean"
+                        }
+                      },
+                      "required": [
+                        "name"
+                      ],
+                      "additionalProperties": false
+                    }
+                  }
                 },
                 "additionalProperties": false
               }
@@ -20976,7 +21152,92 @@
                               "type": "boolean"
                             },
                             "episodeUpdatedSince": {},
-                            "episodeCreatedSince": {}
+                            "episodeCreatedSince": {},
+                            "personFilters": {
+                              "description": "Filter episodes by the people on them. Entries are ANDed together, e.g. [{ \"name\": \"Elon Musk\", \"type\": \"guest\" }, { \"name\": \"Joe Rogan\", \"type\": \"host\" }] returns only episodes where Elon Musk appeared as a guest and Joe Rogan was a host. An entry with matchMode \"not\" instead excludes episodes featuring that person.",
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "name": {
+                                    "type": "string",
+                                    "minLength": 2,
+                                    "description": "The name to match"
+                                  },
+                                  "matchMode": {
+                                    "description": "'must' (default) only returns episodes matching this entry; 'not' excludes episodes matching this entry",
+                                    "type": "string",
+                                    "enum": [
+                                      "must",
+                                      "not"
+                                    ]
+                                  },
+                                  "phraseMatch": {
+                                    "description": "Whether to match the name as a phrase (all words, in order). Defaults to true; set false for a loose per-word match.",
+                                    "type": "boolean"
+                                  },
+                                  "slop": {
+                                    "description": "How many words apart tokens can appear in a name to still count as a phrase match",
+                                    "type": "number"
+                                  },
+                                  "fuzzy": {
+                                    "description": "Whether to tolerate close spellings. Uses per-word fuzzy matching with all words required, so it ignores word order and cannot be combined with slop.",
+                                    "type": "boolean"
+                                  },
+                                  "type": {
+                                    "type": "string",
+                                    "enum": [
+                                      "guest",
+                                      "host"
+                                    ],
+                                    "description": "Whether the person must appear on the episode as a 'guest' or a 'host'"
+                                  }
+                                },
+                                "required": [
+                                  "name",
+                                  "type"
+                                ],
+                                "additionalProperties": false
+                              }
+                            },
+                            "sponsorFilters": {
+                              "description": "Filter episodes by sponsor / advertiser name. Entries are ANDed together; an entry with matchMode \"not\" instead excludes episodes with that sponsor.",
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "name": {
+                                    "type": "string",
+                                    "minLength": 2,
+                                    "description": "The name to match"
+                                  },
+                                  "matchMode": {
+                                    "description": "'must' (default) only returns episodes matching this entry; 'not' excludes episodes matching this entry",
+                                    "type": "string",
+                                    "enum": [
+                                      "must",
+                                      "not"
+                                    ]
+                                  },
+                                  "phraseMatch": {
+                                    "description": "Whether to match the name as a phrase (all words, in order). Defaults to true; set false for a loose per-word match.",
+                                    "type": "boolean"
+                                  },
+                                  "slop": {
+                                    "description": "How many words apart tokens can appear in a name to still count as a phrase match",
+                                    "type": "number"
+                                  },
+                                  "fuzzy": {
+                                    "description": "Whether to tolerate close spellings. Uses per-word fuzzy matching with all words required, so it ignores word order and cannot be combined with slop.",
+                                    "type": "boolean"
+                                  }
+                                },
+                                "required": [
+                                  "name"
+                                ],
+                                "additionalProperties": false
+                              }
+                            }
                           },
                           "additionalProperties": false
                         },
