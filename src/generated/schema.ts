@@ -1822,8 +1822,19 @@ export interface operations {
                 /** @enum {string} */
                 alertType: 'person' | 'company' | 'custom-keyword';
                 enabled: boolean;
-                alertSettings: (
+                alertSettings:
                   | {
+                      genresToSkip?: string[];
+                      genresToInclude?: string[];
+                      otherSpellings?: string[];
+                      otherEmails?: string[];
+                      contextAwareQuestion?: string;
+                      contextAwareDetails?: {
+                        what?: string;
+                        relevantClues?: string;
+                        commonFalsePositives?: string;
+                      };
+                      filterAdvertisements?: boolean;
                       /** @enum {string} */
                       type: 'person';
                       value: string;
@@ -1832,28 +1843,37 @@ export interface operations {
                       trackMentions?: boolean;
                     }
                   | {
+                      genresToSkip?: string[];
+                      genresToInclude?: string[];
+                      otherSpellings?: string[];
+                      otherEmails?: string[];
+                      contextAwareQuestion?: string;
+                      contextAwareDetails?: {
+                        what?: string;
+                        relevantClues?: string;
+                        commonFalsePositives?: string;
+                      };
+                      filterAdvertisements?: boolean;
                       /** @enum {string} */
                       type: 'company';
                       value: string;
                     }
                   | {
+                      genresToSkip?: string[];
+                      genresToInclude?: string[];
+                      otherSpellings?: string[];
+                      otherEmails?: string[];
+                      contextAwareQuestion?: string;
+                      contextAwareDetails?: {
+                        what?: string;
+                        relevantClues?: string;
+                        commonFalsePositives?: string;
+                      };
+                      filterAdvertisements?: boolean;
                       /** @enum {string} */
                       type: 'custom-keyword';
                       value: string;
-                    }
-                ) & {
-                  genresToSkip?: string[];
-                  genresToInclude?: string[];
-                  otherSpellings?: string[];
-                  otherEmails?: string[];
-                  contextAwareQuestion?: string;
-                  contextAwareDetails?: {
-                    what?: string;
-                    relevantClues?: string;
-                    commonFalsePositives?: string;
-                  };
-                  filterAdvertisements?: boolean;
-                };
+                    };
                 emailSettings: {
                   /** @enum {string} */
                   frequency: 'hourly' | 'daily' | 'weekly';
@@ -1943,8 +1963,19 @@ export interface operations {
                 /** @enum {string} */
                 alertType: 'person' | 'company' | 'custom-keyword';
                 enabled: boolean;
-                alertSettings: (
+                alertSettings:
                   | {
+                      genresToSkip?: string[];
+                      genresToInclude?: string[];
+                      otherSpellings?: string[];
+                      otherEmails?: string[];
+                      contextAwareQuestion?: string;
+                      contextAwareDetails?: {
+                        what?: string;
+                        relevantClues?: string;
+                        commonFalsePositives?: string;
+                      };
+                      filterAdvertisements?: boolean;
                       /** @enum {string} */
                       type: 'person';
                       value: string;
@@ -1953,28 +1984,37 @@ export interface operations {
                       trackMentions?: boolean;
                     }
                   | {
+                      genresToSkip?: string[];
+                      genresToInclude?: string[];
+                      otherSpellings?: string[];
+                      otherEmails?: string[];
+                      contextAwareQuestion?: string;
+                      contextAwareDetails?: {
+                        what?: string;
+                        relevantClues?: string;
+                        commonFalsePositives?: string;
+                      };
+                      filterAdvertisements?: boolean;
                       /** @enum {string} */
                       type: 'company';
                       value: string;
                     }
                   | {
+                      genresToSkip?: string[];
+                      genresToInclude?: string[];
+                      otherSpellings?: string[];
+                      otherEmails?: string[];
+                      contextAwareQuestion?: string;
+                      contextAwareDetails?: {
+                        what?: string;
+                        relevantClues?: string;
+                        commonFalsePositives?: string;
+                      };
+                      filterAdvertisements?: boolean;
                       /** @enum {string} */
                       type: 'custom-keyword';
                       value: string;
-                    }
-                ) & {
-                  genresToSkip?: string[];
-                  genresToInclude?: string[];
-                  otherSpellings?: string[];
-                  otherEmails?: string[];
-                  contextAwareQuestion?: string;
-                  contextAwareDetails?: {
-                    what?: string;
-                    relevantClues?: string;
-                    commonFalsePositives?: string;
-                  };
-                  filterAdvertisements?: boolean;
-                };
+                    };
                 emailSettings: {
                   /** @enum {string} */
                   frequency: 'hourly' | 'daily' | 'weekly';
@@ -2053,8 +2093,19 @@ export interface operations {
                 /** @enum {string} */
                 alertType: 'person' | 'company' | 'custom-keyword';
                 enabled: boolean;
-                alertSettings: (
+                alertSettings:
                   | {
+                      genresToSkip?: string[];
+                      genresToInclude?: string[];
+                      otherSpellings?: string[];
+                      otherEmails?: string[];
+                      contextAwareQuestion?: string;
+                      contextAwareDetails?: {
+                        what?: string;
+                        relevantClues?: string;
+                        commonFalsePositives?: string;
+                      };
+                      filterAdvertisements?: boolean;
                       /** @enum {string} */
                       type: 'person';
                       value: string;
@@ -2063,28 +2114,37 @@ export interface operations {
                       trackMentions?: boolean;
                     }
                   | {
+                      genresToSkip?: string[];
+                      genresToInclude?: string[];
+                      otherSpellings?: string[];
+                      otherEmails?: string[];
+                      contextAwareQuestion?: string;
+                      contextAwareDetails?: {
+                        what?: string;
+                        relevantClues?: string;
+                        commonFalsePositives?: string;
+                      };
+                      filterAdvertisements?: boolean;
                       /** @enum {string} */
                       type: 'company';
                       value: string;
                     }
                   | {
+                      genresToSkip?: string[];
+                      genresToInclude?: string[];
+                      otherSpellings?: string[];
+                      otherEmails?: string[];
+                      contextAwareQuestion?: string;
+                      contextAwareDetails?: {
+                        what?: string;
+                        relevantClues?: string;
+                        commonFalsePositives?: string;
+                      };
+                      filterAdvertisements?: boolean;
                       /** @enum {string} */
                       type: 'custom-keyword';
                       value: string;
-                    }
-                ) & {
-                  genresToSkip?: string[];
-                  genresToInclude?: string[];
-                  otherSpellings?: string[];
-                  otherEmails?: string[];
-                  contextAwareQuestion?: string;
-                  contextAwareDetails?: {
-                    what?: string;
-                    relevantClues?: string;
-                    commonFalsePositives?: string;
-                  };
-                  filterAdvertisements?: boolean;
-                };
+                    };
                 emailSettings: {
                   /** @enum {string} */
                   frequency: 'hourly' | 'daily' | 'weekly';
@@ -2213,8 +2273,19 @@ export interface operations {
               /** @enum {string} */
               frequency: 'hourly' | 'daily' | 'weekly';
             };
-            alertSettings?: (
+            alertSettings?:
               | {
+                  genresToSkip?: string[];
+                  genresToInclude?: string[];
+                  otherSpellings?: string[];
+                  otherEmails?: string[];
+                  contextAwareQuestion?: string;
+                  contextAwareDetails?: {
+                    what?: string;
+                    relevantClues?: string;
+                    commonFalsePositives?: string;
+                  };
+                  filterAdvertisements?: boolean;
                   /** @enum {string} */
                   type: 'person';
                   value: string;
@@ -2223,28 +2294,37 @@ export interface operations {
                   trackMentions?: boolean;
                 }
               | {
+                  genresToSkip?: string[];
+                  genresToInclude?: string[];
+                  otherSpellings?: string[];
+                  otherEmails?: string[];
+                  contextAwareQuestion?: string;
+                  contextAwareDetails?: {
+                    what?: string;
+                    relevantClues?: string;
+                    commonFalsePositives?: string;
+                  };
+                  filterAdvertisements?: boolean;
                   /** @enum {string} */
                   type: 'company';
                   value: string;
                 }
               | {
+                  genresToSkip?: string[];
+                  genresToInclude?: string[];
+                  otherSpellings?: string[];
+                  otherEmails?: string[];
+                  contextAwareQuestion?: string;
+                  contextAwareDetails?: {
+                    what?: string;
+                    relevantClues?: string;
+                    commonFalsePositives?: string;
+                  };
+                  filterAdvertisements?: boolean;
                   /** @enum {string} */
                   type: 'custom-keyword';
                   value: string;
-                }
-            ) & {
-              genresToSkip?: string[];
-              genresToInclude?: string[];
-              otherSpellings?: string[];
-              otherEmails?: string[];
-              contextAwareQuestion?: string;
-              contextAwareDetails?: {
-                what?: string;
-                relevantClues?: string;
-                commonFalsePositives?: string;
-              };
-              filterAdvertisements?: boolean;
-            };
+                };
             enabled?: boolean;
           };
         };
@@ -2271,8 +2351,19 @@ export interface operations {
                 /** @enum {string} */
                 alertType: 'person' | 'company' | 'custom-keyword';
                 enabled: boolean;
-                alertSettings: (
+                alertSettings:
                   | {
+                      genresToSkip?: string[];
+                      genresToInclude?: string[];
+                      otherSpellings?: string[];
+                      otherEmails?: string[];
+                      contextAwareQuestion?: string;
+                      contextAwareDetails?: {
+                        what?: string;
+                        relevantClues?: string;
+                        commonFalsePositives?: string;
+                      };
+                      filterAdvertisements?: boolean;
                       /** @enum {string} */
                       type: 'person';
                       value: string;
@@ -2281,28 +2372,37 @@ export interface operations {
                       trackMentions?: boolean;
                     }
                   | {
+                      genresToSkip?: string[];
+                      genresToInclude?: string[];
+                      otherSpellings?: string[];
+                      otherEmails?: string[];
+                      contextAwareQuestion?: string;
+                      contextAwareDetails?: {
+                        what?: string;
+                        relevantClues?: string;
+                        commonFalsePositives?: string;
+                      };
+                      filterAdvertisements?: boolean;
                       /** @enum {string} */
                       type: 'company';
                       value: string;
                     }
                   | {
+                      genresToSkip?: string[];
+                      genresToInclude?: string[];
+                      otherSpellings?: string[];
+                      otherEmails?: string[];
+                      contextAwareQuestion?: string;
+                      contextAwareDetails?: {
+                        what?: string;
+                        relevantClues?: string;
+                        commonFalsePositives?: string;
+                      };
+                      filterAdvertisements?: boolean;
                       /** @enum {string} */
                       type: 'custom-keyword';
                       value: string;
-                    }
-                ) & {
-                  genresToSkip?: string[];
-                  genresToInclude?: string[];
-                  otherSpellings?: string[];
-                  otherEmails?: string[];
-                  contextAwareQuestion?: string;
-                  contextAwareDetails?: {
-                    what?: string;
-                    relevantClues?: string;
-                    commonFalsePositives?: string;
-                  };
-                  filterAdvertisements?: boolean;
-                };
+                    };
                 emailSettings: {
                   /** @enum {string} */
                   frequency: 'hourly' | 'daily' | 'weekly';
@@ -2379,31 +2479,7 @@ export interface operations {
                 sinceDate?: unknown;
               };
               totalAlertMatches: number;
-              alertMatches: ({
-                advertisementLLMHistoryId: number | null;
-                contextLLMHistoryId: number | null;
-                episodeDate: unknown;
-                episodeId: string;
-                filteredOutReason: string | null;
-                podcastId: string;
-                processedDate: unknown;
-                id: string;
-                alertConfig: {
-                  id: string;
-                  name: string;
-                  value: string;
-                  teamId: string;
-                  createdByUserId: string;
-                };
-                emailHistoryId: number | null;
-                episodeSlug: string;
-                episodeTitle: string;
-                filteredOut: boolean;
-                imageUrl: string | null;
-                podcastSlug: string;
-                podcastTitle: string;
-                text: string;
-              } & (
+              alertMatches: (
                 | {
                     advertisementLLMHistoryId: number | null;
                     contextLLMHistoryId: number | null;
@@ -2412,6 +2488,22 @@ export interface operations {
                     filteredOutReason: string | null;
                     podcastId: string;
                     processedDate: unknown;
+                    id: string;
+                    alertConfig: {
+                      id: string;
+                      name: string;
+                      value: string;
+                      teamId: string;
+                      createdByUserId: string;
+                    };
+                    emailHistoryId: number | null;
+                    episodeSlug: string;
+                    episodeTitle: string;
+                    filteredOut: boolean;
+                    imageUrl: string | null;
+                    podcastSlug: string;
+                    podcastTitle: string;
+                    text: string;
                     /** @enum {string} */
                     type: 'EPISODE';
                   }
@@ -2423,6 +2515,22 @@ export interface operations {
                     filteredOutReason: string | null;
                     podcastId: string;
                     processedDate: unknown;
+                    id: string;
+                    alertConfig: {
+                      id: string;
+                      name: string;
+                      value: string;
+                      teamId: string;
+                      createdByUserId: string;
+                    };
+                    emailHistoryId: number | null;
+                    episodeSlug: string;
+                    episodeTitle: string;
+                    filteredOut: boolean;
+                    imageUrl: string | null;
+                    podcastSlug: string;
+                    podcastTitle: string;
+                    text: string;
                     /** @enum {string} */
                     type: 'TRANSCRIPT';
                     endSecond: number;
@@ -2431,7 +2539,7 @@ export interface operations {
                     transcriptId: string;
                     transcriptionDate: unknown;
                   }
-              ))[];
+              )[];
             };
           };
         };
@@ -8207,12 +8315,6 @@ export interface operations {
                 isPublicListicle: boolean;
                 publicPodcastLimit: number;
                 isPublicForTeam: boolean;
-                goHighLevelIntegration: {
-                  locationId: string;
-                  hasApiKey: boolean;
-                  enabled: boolean;
-                  onlyPushRelevantPodcasts: boolean;
-                } | null;
               };
             };
           };
@@ -10398,7 +10500,6 @@ export interface operations {
                 airtableIntegration?: boolean;
                 automatedSearch?: boolean;
                 applyPage?: boolean;
-                goHighLevelIntegration?: boolean;
               };
               /** @description Usage breakdown per category */
               aliases: {

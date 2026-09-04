@@ -1451,76 +1451,81 @@
                               "type": "boolean"
                             },
                             "alertSettings": {
-                              "allOf": [
+                              "oneOf": [
                                 {
-                                  "oneOf": [
-                                    {
+                                  "type": "object",
+                                  "properties": {
+                                    "genresToSkip": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "genresToInclude": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "otherSpellings": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "otherEmails": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "pattern": "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+                                      }
+                                    },
+                                    "contextAwareQuestion": {
+                                      "type": "string"
+                                    },
+                                    "contextAwareDetails": {
                                       "type": "object",
                                       "properties": {
-                                        "type": {
-                                          "type": "string",
-                                          "enum": [
-                                            "person"
-                                          ]
-                                        },
-                                        "value": {
+                                        "what": {
                                           "type": "string"
                                         },
-                                        "trackGuestAppearances": {
-                                          "type": "boolean"
+                                        "relevantClues": {
+                                          "type": "string"
                                         },
-                                        "trackHostAppearances": {
-                                          "type": "boolean"
-                                        },
-                                        "trackMentions": {
-                                          "type": "boolean"
+                                        "commonFalsePositives": {
+                                          "type": "string"
                                         }
                                       },
-                                      "required": [
-                                        "type",
-                                        "value"
-                                      ],
                                       "additionalProperties": false
                                     },
-                                    {
-                                      "type": "object",
-                                      "properties": {
-                                        "type": {
-                                          "type": "string",
-                                          "enum": [
-                                            "company"
-                                          ]
-                                        },
-                                        "value": {
-                                          "type": "string"
-                                        }
-                                      },
-                                      "required": [
-                                        "type",
-                                        "value"
-                                      ],
-                                      "additionalProperties": false
+                                    "filterAdvertisements": {
+                                      "type": "boolean"
                                     },
-                                    {
-                                      "type": "object",
-                                      "properties": {
-                                        "type": {
-                                          "type": "string",
-                                          "enum": [
-                                            "custom-keyword"
-                                          ]
-                                        },
-                                        "value": {
-                                          "type": "string"
-                                        }
-                                      },
-                                      "required": [
-                                        "type",
-                                        "value"
-                                      ],
-                                      "additionalProperties": false
+                                    "type": {
+                                      "type": "string",
+                                      "enum": [
+                                        "person"
+                                      ]
+                                    },
+                                    "value": {
+                                      "type": "string"
+                                    },
+                                    "trackGuestAppearances": {
+                                      "type": "boolean"
+                                    },
+                                    "trackHostAppearances": {
+                                      "type": "boolean"
+                                    },
+                                    "trackMentions": {
+                                      "type": "boolean"
                                     }
-                                  ]
+                                  },
+                                  "required": [
+                                    "type",
+                                    "value"
+                                  ],
+                                  "additionalProperties": false
                                 },
                                 {
                                   "type": "object",
@@ -1571,8 +1576,87 @@
                                     },
                                     "filterAdvertisements": {
                                       "type": "boolean"
+                                    },
+                                    "type": {
+                                      "type": "string",
+                                      "enum": [
+                                        "company"
+                                      ]
+                                    },
+                                    "value": {
+                                      "type": "string"
                                     }
                                   },
+                                  "required": [
+                                    "type",
+                                    "value"
+                                  ],
+                                  "additionalProperties": false
+                                },
+                                {
+                                  "type": "object",
+                                  "properties": {
+                                    "genresToSkip": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "genresToInclude": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "otherSpellings": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "otherEmails": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "pattern": "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+                                      }
+                                    },
+                                    "contextAwareQuestion": {
+                                      "type": "string"
+                                    },
+                                    "contextAwareDetails": {
+                                      "type": "object",
+                                      "properties": {
+                                        "what": {
+                                          "type": "string"
+                                        },
+                                        "relevantClues": {
+                                          "type": "string"
+                                        },
+                                        "commonFalsePositives": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "additionalProperties": false
+                                    },
+                                    "filterAdvertisements": {
+                                      "type": "boolean"
+                                    },
+                                    "type": {
+                                      "type": "string",
+                                      "enum": [
+                                        "custom-keyword"
+                                      ]
+                                    },
+                                    "value": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "required": [
+                                    "type",
+                                    "value"
+                                  ],
                                   "additionalProperties": false
                                 }
                               ]
@@ -1781,76 +1865,81 @@
                                 "type": "boolean"
                               },
                               "alertSettings": {
-                                "allOf": [
+                                "oneOf": [
                                   {
-                                    "oneOf": [
-                                      {
+                                    "type": "object",
+                                    "properties": {
+                                      "genresToSkip": {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "genresToInclude": {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "otherSpellings": {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "otherEmails": {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "string",
+                                          "format": "email",
+                                          "pattern": "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+                                        }
+                                      },
+                                      "contextAwareQuestion": {
+                                        "type": "string"
+                                      },
+                                      "contextAwareDetails": {
                                         "type": "object",
                                         "properties": {
-                                          "type": {
-                                            "type": "string",
-                                            "enum": [
-                                              "person"
-                                            ]
-                                          },
-                                          "value": {
+                                          "what": {
                                             "type": "string"
                                           },
-                                          "trackGuestAppearances": {
-                                            "type": "boolean"
+                                          "relevantClues": {
+                                            "type": "string"
                                           },
-                                          "trackHostAppearances": {
-                                            "type": "boolean"
-                                          },
-                                          "trackMentions": {
-                                            "type": "boolean"
+                                          "commonFalsePositives": {
+                                            "type": "string"
                                           }
                                         },
-                                        "required": [
-                                          "type",
-                                          "value"
-                                        ],
                                         "additionalProperties": false
                                       },
-                                      {
-                                        "type": "object",
-                                        "properties": {
-                                          "type": {
-                                            "type": "string",
-                                            "enum": [
-                                              "company"
-                                            ]
-                                          },
-                                          "value": {
-                                            "type": "string"
-                                          }
-                                        },
-                                        "required": [
-                                          "type",
-                                          "value"
-                                        ],
-                                        "additionalProperties": false
+                                      "filterAdvertisements": {
+                                        "type": "boolean"
                                       },
-                                      {
-                                        "type": "object",
-                                        "properties": {
-                                          "type": {
-                                            "type": "string",
-                                            "enum": [
-                                              "custom-keyword"
-                                            ]
-                                          },
-                                          "value": {
-                                            "type": "string"
-                                          }
-                                        },
-                                        "required": [
-                                          "type",
-                                          "value"
-                                        ],
-                                        "additionalProperties": false
+                                      "type": {
+                                        "type": "string",
+                                        "enum": [
+                                          "person"
+                                        ]
+                                      },
+                                      "value": {
+                                        "type": "string"
+                                      },
+                                      "trackGuestAppearances": {
+                                        "type": "boolean"
+                                      },
+                                      "trackHostAppearances": {
+                                        "type": "boolean"
+                                      },
+                                      "trackMentions": {
+                                        "type": "boolean"
                                       }
-                                    ]
+                                    },
+                                    "required": [
+                                      "type",
+                                      "value"
+                                    ],
+                                    "additionalProperties": false
                                   },
                                   {
                                     "type": "object",
@@ -1901,8 +1990,87 @@
                                       },
                                       "filterAdvertisements": {
                                         "type": "boolean"
+                                      },
+                                      "type": {
+                                        "type": "string",
+                                        "enum": [
+                                          "company"
+                                        ]
+                                      },
+                                      "value": {
+                                        "type": "string"
                                       }
                                     },
+                                    "required": [
+                                      "type",
+                                      "value"
+                                    ],
+                                    "additionalProperties": false
+                                  },
+                                  {
+                                    "type": "object",
+                                    "properties": {
+                                      "genresToSkip": {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "genresToInclude": {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "otherSpellings": {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "otherEmails": {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "string",
+                                          "format": "email",
+                                          "pattern": "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+                                        }
+                                      },
+                                      "contextAwareQuestion": {
+                                        "type": "string"
+                                      },
+                                      "contextAwareDetails": {
+                                        "type": "object",
+                                        "properties": {
+                                          "what": {
+                                            "type": "string"
+                                          },
+                                          "relevantClues": {
+                                            "type": "string"
+                                          },
+                                          "commonFalsePositives": {
+                                            "type": "string"
+                                          }
+                                        },
+                                        "additionalProperties": false
+                                      },
+                                      "filterAdvertisements": {
+                                        "type": "boolean"
+                                      },
+                                      "type": {
+                                        "type": "string",
+                                        "enum": [
+                                          "custom-keyword"
+                                        ]
+                                      },
+                                      "value": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "type",
+                                      "value"
+                                    ],
                                     "additionalProperties": false
                                   }
                                 ]
@@ -2053,76 +2221,81 @@
                               "type": "boolean"
                             },
                             "alertSettings": {
-                              "allOf": [
+                              "oneOf": [
                                 {
-                                  "oneOf": [
-                                    {
+                                  "type": "object",
+                                  "properties": {
+                                    "genresToSkip": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "genresToInclude": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "otherSpellings": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "otherEmails": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "pattern": "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+                                      }
+                                    },
+                                    "contextAwareQuestion": {
+                                      "type": "string"
+                                    },
+                                    "contextAwareDetails": {
                                       "type": "object",
                                       "properties": {
-                                        "type": {
-                                          "type": "string",
-                                          "enum": [
-                                            "person"
-                                          ]
-                                        },
-                                        "value": {
+                                        "what": {
                                           "type": "string"
                                         },
-                                        "trackGuestAppearances": {
-                                          "type": "boolean"
+                                        "relevantClues": {
+                                          "type": "string"
                                         },
-                                        "trackHostAppearances": {
-                                          "type": "boolean"
-                                        },
-                                        "trackMentions": {
-                                          "type": "boolean"
+                                        "commonFalsePositives": {
+                                          "type": "string"
                                         }
                                       },
-                                      "required": [
-                                        "type",
-                                        "value"
-                                      ],
                                       "additionalProperties": false
                                     },
-                                    {
-                                      "type": "object",
-                                      "properties": {
-                                        "type": {
-                                          "type": "string",
-                                          "enum": [
-                                            "company"
-                                          ]
-                                        },
-                                        "value": {
-                                          "type": "string"
-                                        }
-                                      },
-                                      "required": [
-                                        "type",
-                                        "value"
-                                      ],
-                                      "additionalProperties": false
+                                    "filterAdvertisements": {
+                                      "type": "boolean"
                                     },
-                                    {
-                                      "type": "object",
-                                      "properties": {
-                                        "type": {
-                                          "type": "string",
-                                          "enum": [
-                                            "custom-keyword"
-                                          ]
-                                        },
-                                        "value": {
-                                          "type": "string"
-                                        }
-                                      },
-                                      "required": [
-                                        "type",
-                                        "value"
-                                      ],
-                                      "additionalProperties": false
+                                    "type": {
+                                      "type": "string",
+                                      "enum": [
+                                        "person"
+                                      ]
+                                    },
+                                    "value": {
+                                      "type": "string"
+                                    },
+                                    "trackGuestAppearances": {
+                                      "type": "boolean"
+                                    },
+                                    "trackHostAppearances": {
+                                      "type": "boolean"
+                                    },
+                                    "trackMentions": {
+                                      "type": "boolean"
                                     }
-                                  ]
+                                  },
+                                  "required": [
+                                    "type",
+                                    "value"
+                                  ],
+                                  "additionalProperties": false
                                 },
                                 {
                                   "type": "object",
@@ -2173,8 +2346,87 @@
                                     },
                                     "filterAdvertisements": {
                                       "type": "boolean"
+                                    },
+                                    "type": {
+                                      "type": "string",
+                                      "enum": [
+                                        "company"
+                                      ]
+                                    },
+                                    "value": {
+                                      "type": "string"
                                     }
                                   },
+                                  "required": [
+                                    "type",
+                                    "value"
+                                  ],
+                                  "additionalProperties": false
+                                },
+                                {
+                                  "type": "object",
+                                  "properties": {
+                                    "genresToSkip": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "genresToInclude": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "otherSpellings": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "otherEmails": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "pattern": "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+                                      }
+                                    },
+                                    "contextAwareQuestion": {
+                                      "type": "string"
+                                    },
+                                    "contextAwareDetails": {
+                                      "type": "object",
+                                      "properties": {
+                                        "what": {
+                                          "type": "string"
+                                        },
+                                        "relevantClues": {
+                                          "type": "string"
+                                        },
+                                        "commonFalsePositives": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "additionalProperties": false
+                                    },
+                                    "filterAdvertisements": {
+                                      "type": "boolean"
+                                    },
+                                    "type": {
+                                      "type": "string",
+                                      "enum": [
+                                        "custom-keyword"
+                                      ]
+                                    },
+                                    "value": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "required": [
+                                    "type",
+                                    "value"
+                                  ],
                                   "additionalProperties": false
                                 }
                               ]
@@ -2306,76 +2558,81 @@
                         "additionalProperties": false
                       },
                       "alertSettings": {
-                        "allOf": [
+                        "oneOf": [
                           {
-                            "oneOf": [
-                              {
+                            "type": "object",
+                            "properties": {
+                              "genresToSkip": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                }
+                              },
+                              "genresToInclude": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                }
+                              },
+                              "otherSpellings": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                }
+                              },
+                              "otherEmails": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string",
+                                  "format": "email",
+                                  "pattern": "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+                                }
+                              },
+                              "contextAwareQuestion": {
+                                "type": "string"
+                              },
+                              "contextAwareDetails": {
                                 "type": "object",
                                 "properties": {
-                                  "type": {
-                                    "type": "string",
-                                    "enum": [
-                                      "person"
-                                    ]
-                                  },
-                                  "value": {
+                                  "what": {
                                     "type": "string"
                                   },
-                                  "trackGuestAppearances": {
-                                    "type": "boolean"
+                                  "relevantClues": {
+                                    "type": "string"
                                   },
-                                  "trackHostAppearances": {
-                                    "type": "boolean"
-                                  },
-                                  "trackMentions": {
-                                    "type": "boolean"
+                                  "commonFalsePositives": {
+                                    "type": "string"
                                   }
                                 },
-                                "required": [
-                                  "type",
-                                  "value"
-                                ],
                                 "additionalProperties": false
                               },
-                              {
-                                "type": "object",
-                                "properties": {
-                                  "type": {
-                                    "type": "string",
-                                    "enum": [
-                                      "company"
-                                    ]
-                                  },
-                                  "value": {
-                                    "type": "string"
-                                  }
-                                },
-                                "required": [
-                                  "type",
-                                  "value"
-                                ],
-                                "additionalProperties": false
+                              "filterAdvertisements": {
+                                "type": "boolean"
                               },
-                              {
-                                "type": "object",
-                                "properties": {
-                                  "type": {
-                                    "type": "string",
-                                    "enum": [
-                                      "custom-keyword"
-                                    ]
-                                  },
-                                  "value": {
-                                    "type": "string"
-                                  }
-                                },
-                                "required": [
-                                  "type",
-                                  "value"
-                                ],
-                                "additionalProperties": false
+                              "type": {
+                                "type": "string",
+                                "enum": [
+                                  "person"
+                                ]
+                              },
+                              "value": {
+                                "type": "string"
+                              },
+                              "trackGuestAppearances": {
+                                "type": "boolean"
+                              },
+                              "trackHostAppearances": {
+                                "type": "boolean"
+                              },
+                              "trackMentions": {
+                                "type": "boolean"
                               }
-                            ]
+                            },
+                            "required": [
+                              "type",
+                              "value"
+                            ],
+                            "additionalProperties": false
                           },
                           {
                             "type": "object",
@@ -2426,8 +2683,87 @@
                               },
                               "filterAdvertisements": {
                                 "type": "boolean"
+                              },
+                              "type": {
+                                "type": "string",
+                                "enum": [
+                                  "company"
+                                ]
+                              },
+                              "value": {
+                                "type": "string"
                               }
                             },
+                            "required": [
+                              "type",
+                              "value"
+                            ],
+                            "additionalProperties": false
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "genresToSkip": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                }
+                              },
+                              "genresToInclude": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                }
+                              },
+                              "otherSpellings": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                }
+                              },
+                              "otherEmails": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string",
+                                  "format": "email",
+                                  "pattern": "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+                                }
+                              },
+                              "contextAwareQuestion": {
+                                "type": "string"
+                              },
+                              "contextAwareDetails": {
+                                "type": "object",
+                                "properties": {
+                                  "what": {
+                                    "type": "string"
+                                  },
+                                  "relevantClues": {
+                                    "type": "string"
+                                  },
+                                  "commonFalsePositives": {
+                                    "type": "string"
+                                  }
+                                },
+                                "additionalProperties": false
+                              },
+                              "filterAdvertisements": {
+                                "type": "boolean"
+                              },
+                              "type": {
+                                "type": "string",
+                                "enum": [
+                                  "custom-keyword"
+                                ]
+                              },
+                              "value": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "value"
+                            ],
                             "additionalProperties": false
                           }
                         ]
@@ -2493,76 +2829,81 @@
                               "type": "boolean"
                             },
                             "alertSettings": {
-                              "allOf": [
+                              "oneOf": [
                                 {
-                                  "oneOf": [
-                                    {
+                                  "type": "object",
+                                  "properties": {
+                                    "genresToSkip": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "genresToInclude": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "otherSpellings": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "otherEmails": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "pattern": "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+                                      }
+                                    },
+                                    "contextAwareQuestion": {
+                                      "type": "string"
+                                    },
+                                    "contextAwareDetails": {
                                       "type": "object",
                                       "properties": {
-                                        "type": {
-                                          "type": "string",
-                                          "enum": [
-                                            "person"
-                                          ]
-                                        },
-                                        "value": {
+                                        "what": {
                                           "type": "string"
                                         },
-                                        "trackGuestAppearances": {
-                                          "type": "boolean"
+                                        "relevantClues": {
+                                          "type": "string"
                                         },
-                                        "trackHostAppearances": {
-                                          "type": "boolean"
-                                        },
-                                        "trackMentions": {
-                                          "type": "boolean"
+                                        "commonFalsePositives": {
+                                          "type": "string"
                                         }
                                       },
-                                      "required": [
-                                        "type",
-                                        "value"
-                                      ],
                                       "additionalProperties": false
                                     },
-                                    {
-                                      "type": "object",
-                                      "properties": {
-                                        "type": {
-                                          "type": "string",
-                                          "enum": [
-                                            "company"
-                                          ]
-                                        },
-                                        "value": {
-                                          "type": "string"
-                                        }
-                                      },
-                                      "required": [
-                                        "type",
-                                        "value"
-                                      ],
-                                      "additionalProperties": false
+                                    "filterAdvertisements": {
+                                      "type": "boolean"
                                     },
-                                    {
-                                      "type": "object",
-                                      "properties": {
-                                        "type": {
-                                          "type": "string",
-                                          "enum": [
-                                            "custom-keyword"
-                                          ]
-                                        },
-                                        "value": {
-                                          "type": "string"
-                                        }
-                                      },
-                                      "required": [
-                                        "type",
-                                        "value"
-                                      ],
-                                      "additionalProperties": false
+                                    "type": {
+                                      "type": "string",
+                                      "enum": [
+                                        "person"
+                                      ]
+                                    },
+                                    "value": {
+                                      "type": "string"
+                                    },
+                                    "trackGuestAppearances": {
+                                      "type": "boolean"
+                                    },
+                                    "trackHostAppearances": {
+                                      "type": "boolean"
+                                    },
+                                    "trackMentions": {
+                                      "type": "boolean"
                                     }
-                                  ]
+                                  },
+                                  "required": [
+                                    "type",
+                                    "value"
+                                  ],
+                                  "additionalProperties": false
                                 },
                                 {
                                   "type": "object",
@@ -2613,8 +2954,87 @@
                                     },
                                     "filterAdvertisements": {
                                       "type": "boolean"
+                                    },
+                                    "type": {
+                                      "type": "string",
+                                      "enum": [
+                                        "company"
+                                      ]
+                                    },
+                                    "value": {
+                                      "type": "string"
                                     }
                                   },
+                                  "required": [
+                                    "type",
+                                    "value"
+                                  ],
+                                  "additionalProperties": false
+                                },
+                                {
+                                  "type": "object",
+                                  "properties": {
+                                    "genresToSkip": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "genresToInclude": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "otherSpellings": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "otherEmails": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "pattern": "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+                                      }
+                                    },
+                                    "contextAwareQuestion": {
+                                      "type": "string"
+                                    },
+                                    "contextAwareDetails": {
+                                      "type": "object",
+                                      "properties": {
+                                        "what": {
+                                          "type": "string"
+                                        },
+                                        "relevantClues": {
+                                          "type": "string"
+                                        },
+                                        "commonFalsePositives": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "additionalProperties": false
+                                    },
+                                    "filterAdvertisements": {
+                                      "type": "boolean"
+                                    },
+                                    "type": {
+                                      "type": "string",
+                                      "enum": [
+                                        "custom-keyword"
+                                      ]
+                                    },
+                                    "value": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "required": [
+                                    "type",
+                                    "value"
+                                  ],
                                   "additionalProperties": false
                                 }
                               ]
@@ -2842,7 +3262,7 @@
                         "alertMatches": {
                           "type": "array",
                           "items": {
-                            "allOf": [
+                            "oneOf": [
                               {
                                 "type": "object",
                                 "properties": {
@@ -2932,6 +3352,12 @@
                                   },
                                   "text": {
                                     "type": "string"
+                                  },
+                                  "type": {
+                                    "type": "string",
+                                    "enum": [
+                                      "EPISODE"
+                                    ]
                                   }
                                 },
                                 "required": [
@@ -2951,127 +3377,147 @@
                                   "imageUrl",
                                   "podcastSlug",
                                   "podcastTitle",
-                                  "text"
+                                  "text",
+                                  "type"
                                 ],
                                 "additionalProperties": false
                               },
                               {
-                                "oneOf": [
-                                  {
+                                "type": "object",
+                                "properties": {
+                                  "advertisementLLMHistoryId": {
+                                    "type": [
+                                      "number",
+                                      "null"
+                                    ]
+                                  },
+                                  "contextLLMHistoryId": {
+                                    "type": [
+                                      "number",
+                                      "null"
+                                    ]
+                                  },
+                                  "episodeDate": {},
+                                  "episodeId": {
+                                    "type": "string"
+                                  },
+                                  "filteredOutReason": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "podcastId": {
+                                    "type": "string"
+                                  },
+                                  "processedDate": {},
+                                  "id": {
+                                    "type": "string"
+                                  },
+                                  "alertConfig": {
                                     "type": "object",
                                     "properties": {
-                                      "advertisementLLMHistoryId": {
-                                        "type": [
-                                          "number",
-                                          "null"
-                                        ]
-                                      },
-                                      "contextLLMHistoryId": {
-                                        "type": [
-                                          "number",
-                                          "null"
-                                        ]
-                                      },
-                                      "episodeDate": {},
-                                      "episodeId": {
+                                      "id": {
                                         "type": "string"
                                       },
-                                      "filteredOutReason": {
-                                        "type": [
-                                          "string",
-                                          "null"
-                                        ]
-                                      },
-                                      "podcastId": {
+                                      "name": {
                                         "type": "string"
                                       },
-                                      "processedDate": {},
-                                      "type": {
-                                        "type": "string",
-                                        "enum": [
-                                          "EPISODE"
-                                        ]
+                                      "value": {
+                                        "type": "string"
+                                      },
+                                      "teamId": {
+                                        "type": "string"
+                                      },
+                                      "createdByUserId": {
+                                        "type": "string"
                                       }
                                     },
                                     "required": [
-                                      "advertisementLLMHistoryId",
-                                      "contextLLMHistoryId",
-                                      "episodeDate",
-                                      "episodeId",
-                                      "filteredOutReason",
-                                      "podcastId",
-                                      "processedDate",
-                                      "type"
+                                      "id",
+                                      "name",
+                                      "value",
+                                      "teamId",
+                                      "createdByUserId"
                                     ],
                                     "additionalProperties": false
                                   },
-                                  {
-                                    "type": "object",
-                                    "properties": {
-                                      "advertisementLLMHistoryId": {
-                                        "type": [
-                                          "number",
-                                          "null"
-                                        ]
-                                      },
-                                      "contextLLMHistoryId": {
-                                        "type": [
-                                          "number",
-                                          "null"
-                                        ]
-                                      },
-                                      "episodeDate": {},
-                                      "episodeId": {
-                                        "type": "string"
-                                      },
-                                      "filteredOutReason": {
-                                        "type": [
-                                          "string",
-                                          "null"
-                                        ]
-                                      },
-                                      "podcastId": {
-                                        "type": "string"
-                                      },
-                                      "processedDate": {},
-                                      "type": {
-                                        "type": "string",
-                                        "enum": [
-                                          "TRANSCRIPT"
-                                        ]
-                                      },
-                                      "endSecond": {
-                                        "type": "number"
-                                      },
-                                      "startSecond": {
-                                        "type": "number"
-                                      },
-                                      "transcriptEmbeddingId": {
-                                        "type": "string"
-                                      },
-                                      "transcriptId": {
-                                        "type": "string"
-                                      },
-                                      "transcriptionDate": {}
-                                    },
-                                    "required": [
-                                      "advertisementLLMHistoryId",
-                                      "contextLLMHistoryId",
-                                      "episodeDate",
-                                      "episodeId",
-                                      "filteredOutReason",
-                                      "podcastId",
-                                      "processedDate",
-                                      "type",
-                                      "endSecond",
-                                      "startSecond",
-                                      "transcriptEmbeddingId",
-                                      "transcriptId",
-                                      "transcriptionDate"
-                                    ],
-                                    "additionalProperties": false
-                                  }
-                                ]
+                                  "emailHistoryId": {
+                                    "type": [
+                                      "number",
+                                      "null"
+                                    ]
+                                  },
+                                  "episodeSlug": {
+                                    "type": "string"
+                                  },
+                                  "episodeTitle": {
+                                    "type": "string"
+                                  },
+                                  "filteredOut": {
+                                    "type": "boolean"
+                                  },
+                                  "imageUrl": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "podcastSlug": {
+                                    "type": "string"
+                                  },
+                                  "podcastTitle": {
+                                    "type": "string"
+                                  },
+                                  "text": {
+                                    "type": "string"
+                                  },
+                                  "type": {
+                                    "type": "string",
+                                    "enum": [
+                                      "TRANSCRIPT"
+                                    ]
+                                  },
+                                  "endSecond": {
+                                    "type": "number"
+                                  },
+                                  "startSecond": {
+                                    "type": "number"
+                                  },
+                                  "transcriptEmbeddingId": {
+                                    "type": "string"
+                                  },
+                                  "transcriptId": {
+                                    "type": "string"
+                                  },
+                                  "transcriptionDate": {}
+                                },
+                                "required": [
+                                  "advertisementLLMHistoryId",
+                                  "contextLLMHistoryId",
+                                  "episodeDate",
+                                  "episodeId",
+                                  "filteredOutReason",
+                                  "podcastId",
+                                  "processedDate",
+                                  "id",
+                                  "alertConfig",
+                                  "emailHistoryId",
+                                  "episodeSlug",
+                                  "episodeTitle",
+                                  "filteredOut",
+                                  "imageUrl",
+                                  "podcastSlug",
+                                  "podcastTitle",
+                                  "text",
+                                  "type",
+                                  "endSecond",
+                                  "startSecond",
+                                  "transcriptEmbeddingId",
+                                  "transcriptId",
+                                  "transcriptionDate"
+                                ],
+                                "additionalProperties": false
                               }
                             ]
                           }
@@ -16130,7 +16576,7 @@
               "description": "ISO 8601 timestamp. Return events after this point. Ignored if cursor is provided. Max lookback: 30 days.",
               "type": "string",
               "format": "date-time",
-              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
+              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
             }
           },
           {
@@ -16223,7 +16669,7 @@
                             "null"
                           ],
                           "format": "date-time",
-                          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
+                          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
                         },
                         "cursor": {
                           "description": "The cursor provided in this request, if any.",
@@ -16300,7 +16746,7 @@
                                   "occurredAt": {
                                     "type": "string",
                                     "format": "date-time",
-                                    "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$",
+                                    "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$",
                                     "description": "When this event occurred (ISO 8601)."
                                   },
                                   "eventType": {
@@ -16343,7 +16789,7 @@
                                       "completedAt": {
                                         "type": "string",
                                         "format": "date-time",
-                                        "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
+                                        "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
                                       },
                                       "error": {
                                         "type": [
@@ -16382,7 +16828,7 @@
                                   "occurredAt": {
                                     "type": "string",
                                     "format": "date-time",
-                                    "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$",
+                                    "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$",
                                     "description": "When this event occurred (ISO 8601)."
                                   },
                                   "eventType": {
@@ -16418,7 +16864,7 @@
                                       "createdAt": {
                                         "type": "string",
                                         "format": "date-time",
-                                        "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
+                                        "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
                                       }
                                     },
                                     "required": [
@@ -16450,7 +16896,7 @@
                                   "occurredAt": {
                                     "type": "string",
                                     "format": "date-time",
-                                    "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$",
+                                    "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$",
                                     "description": "When this event occurred (ISO 8601)."
                                   },
                                   "eventType": {
@@ -16485,7 +16931,7 @@
                                       "createdAt": {
                                         "type": "string",
                                         "format": "date-time",
-                                        "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
+                                        "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
                                       }
                                     },
                                     "required": [
@@ -16516,7 +16962,7 @@
                                   "occurredAt": {
                                     "type": "string",
                                     "format": "date-time",
-                                    "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$",
+                                    "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$",
                                     "description": "When this event occurred (ISO 8601)."
                                   },
                                   "eventType": {
@@ -16553,7 +16999,7 @@
                                       "createdAt": {
                                         "type": "string",
                                         "format": "date-time",
-                                        "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
+                                        "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
                                       }
                                     },
                                     "required": [
@@ -17356,33 +17802,6 @@
                             },
                             "isPublicForTeam": {
                               "type": "boolean"
-                            },
-                            "goHighLevelIntegration": {
-                              "type": [
-                                "object",
-                                "null"
-                              ],
-                              "properties": {
-                                "locationId": {
-                                  "type": "string"
-                                },
-                                "hasApiKey": {
-                                  "type": "boolean"
-                                },
-                                "enabled": {
-                                  "type": "boolean"
-                                },
-                                "onlyPushRelevantPodcasts": {
-                                  "type": "boolean"
-                                }
-                              },
-                              "required": [
-                                "locationId",
-                                "hasApiKey",
-                                "enabled",
-                                "onlyPushRelevantPodcasts"
-                              ],
-                              "additionalProperties": false
                             }
                           },
                           "required": [
@@ -17408,8 +17827,7 @@
                             "publicSlug",
                             "isPublicListicle",
                             "publicPodcastLimit",
-                            "isPublicForTeam",
-                            "goHighLevelIntegration"
+                            "isPublicForTeam"
                           ],
                           "additionalProperties": false
                         }
@@ -22862,13 +23280,13 @@
                         "periodStart": {
                           "type": "string",
                           "format": "date-time",
-                          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$",
+                          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$",
                           "description": "Inclusive start of the usage period (ISO 8601, UTC)"
                         },
                         "periodEnd": {
                           "type": "string",
                           "format": "date-time",
-                          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$",
+                          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$",
                           "description": "Exclusive end of the usage period — the reset instant (ISO 8601, UTC)"
                         },
                         "plan": {
@@ -22888,9 +23306,6 @@
                               "type": "boolean"
                             },
                             "applyPage": {
-                              "type": "boolean"
-                            },
-                            "goHighLevelIntegration": {
                               "type": "boolean"
                             }
                           },
@@ -23224,13 +23639,13 @@
                               "periodStart": {
                                 "type": "string",
                                 "format": "date-time",
-                                "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$",
+                                "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$",
                                 "description": "Inclusive start of the usage period (ISO 8601, UTC)"
                               },
                               "periodEnd": {
                                 "type": "string",
                                 "format": "date-time",
-                                "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$",
+                                "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$",
                                 "description": "Exclusive end of the usage period — the reset instant (ISO 8601, UTC)"
                               },
                               "totalUsage": {
