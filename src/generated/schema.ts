@@ -771,6 +771,46 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  '/api/v1/podcasts/{podcastIdOrSlug}/guests': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /**
+     * Podcast Guests
+     * @description Get a summary of the guests and hosts appearing on a podcast — by default from its last 10 episodes, or from a time window with sinceDays
+     */
+    get: operations['getPodcastGuests'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/api/v1/podcasts/{podcastIdOrSlug}/sponsors': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /**
+     * Podcast Sponsors
+     * @description Get a summary of the sponsors and advertisers on a podcast — by default from its last 10 episodes, or from a time window with sinceDays
+     */
+    get: operations['getPodcastSponsors'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   '/api/v1/podcasts/{podcastIdOrSlug}/charts': {
     parameters: {
       query?: never;
@@ -5766,9 +5806,10 @@ export interface operations {
                 } | null;
                 guests: {
                   episodesCount: number;
+                  /** @description Number of analysed episodes containing guests, independent of the role filter on the returned people. */
                   episodesWithGuestsCount: number;
-                  mostRecentEpisodeDate: unknown;
-                  oldestEpisodeDate: unknown;
+                  mostRecentEpisodeDate: unknown | null;
+                  oldestEpisodeDate: unknown | null;
                   guests: {
                     name: string;
                     /** @enum {string} */
@@ -5974,8 +6015,8 @@ export interface operations {
                 sponsors: {
                   episodesCount: number;
                   episodesWithSponsorsCount: number;
-                  mostRecentEpisodeDate: unknown;
-                  oldestEpisodeDate: unknown;
+                  mostRecentEpisodeDate: unknown | null;
+                  oldestEpisodeDate: unknown | null;
                   sponsors: {
                     name: string;
                     imageUrl: string | null;
@@ -6981,6 +7022,212 @@ export interface operations {
                   url: string;
                   verified: boolean;
                   contactUrls: string[];
+                }[];
+              };
+            };
+          };
+        };
+      };
+      /** @description Bad request */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Authentication required */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Forbidden — plan does not include this endpoint */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Not found */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Rate limit exceeded */
+      429: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+    };
+  };
+  getPodcastGuests: {
+    parameters: {
+      query?: {
+        sinceDays?: number;
+        role?: 'guest' | 'host';
+      };
+      header?: never;
+      path: {
+        podcastIdOrSlug: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Success */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': {
+            /** @enum {string} */
+            status: 'OK';
+            data: {
+              podcast: {
+                author: string | null;
+                authorityScore: {
+                  calculatedAt: unknown;
+                  /** @description This is the weighted total authority score of the podcast, out of 100 */
+                  authorityScore: number;
+                  /** @description This is the quality score of the podcast, out of 100 */
+                  qualityScore: number;
+                  /** @description This is the YouTube score of the podcast, out of 100 */
+                  youtubeScore: number;
+                  /** @description This is the social score of the podcast, out of 100 */
+                  socialScore: number;
+                  /** @description This is the engagement score of the podcast, out of 100 */
+                  engagementScore: number;
+                } | null;
+                genres: string[];
+                id: string;
+                imageUrl: string | null;
+                language: string;
+                lastEpisodePublishedAt: unknown;
+                slug: string;
+                title: string;
+                titleLatest: string;
+              };
+              guests: {
+                episodesCount: number;
+                /** @description Number of analysed episodes containing guests, independent of the role filter on the returned people. */
+                episodesWithGuestsCount: number;
+                mostRecentEpisodeDate: unknown | null;
+                oldestEpisodeDate: unknown | null;
+                guests: {
+                  name: string;
+                  /** @enum {string} */
+                  type: 'host' | 'guest' | 'unknown' | 'mentioned';
+                  imageUrl: string | null;
+                  appearancesCount: number;
+                  mostRecentAppearanceDate: unknown;
+                  oldestAppearanceDate: unknown;
+                }[];
+              };
+            };
+          };
+        };
+      };
+      /** @description Bad request */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Authentication required */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Forbidden — plan does not include this endpoint */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Not found */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Rate limit exceeded */
+      429: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+    };
+  };
+  getPodcastSponsors: {
+    parameters: {
+      query?: {
+        sinceDays?: number;
+      };
+      header?: never;
+      path: {
+        podcastIdOrSlug: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Success */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': {
+            /** @enum {string} */
+            status: 'OK';
+            data: {
+              podcast: {
+                author: string | null;
+                authorityScore: {
+                  calculatedAt: unknown;
+                  /** @description This is the weighted total authority score of the podcast, out of 100 */
+                  authorityScore: number;
+                  /** @description This is the quality score of the podcast, out of 100 */
+                  qualityScore: number;
+                  /** @description This is the YouTube score of the podcast, out of 100 */
+                  youtubeScore: number;
+                  /** @description This is the social score of the podcast, out of 100 */
+                  socialScore: number;
+                  /** @description This is the engagement score of the podcast, out of 100 */
+                  engagementScore: number;
+                } | null;
+                genres: string[];
+                id: string;
+                imageUrl: string | null;
+                language: string;
+                lastEpisodePublishedAt: unknown;
+                slug: string;
+                title: string;
+                titleLatest: string;
+              };
+              sponsors: {
+                episodesCount: number;
+                episodesWithSponsorsCount: number;
+                mostRecentEpisodeDate: unknown | null;
+                oldestEpisodeDate: unknown | null;
+                sponsors: {
+                  name: string;
+                  imageUrl: string | null;
+                  appearancesCount: number;
+                  mostRecentAppearanceDate: unknown;
+                  oldestAppearanceDate: unknown;
                 }[];
               };
             };
@@ -9839,6 +10086,7 @@ export interface operations {
                   };
                 };
               };
+              /** @description Search results. Each hit in result.hits combines episode and parent-podcast fields, including podcastId, episodeGuestsAndHosts (array of {name, type: guest|host|unknown|mentioned, roles[], organizations[], image_url}) and episodeSponsorsAndAdvertisers (array of {name, snippet, coupon_codes: string|null, urls[]}). The roles and organizations arrays are currently always empty. An empty array for either episodeGuestsAndHosts or episodeSponsorsAndAdvertisers can mean analysis is missing or completed analysis found no matching people or sponsors; these cases cannot be distinguished from the array alone. Responses with populated sponsor snippets can be large. */
               result: unknown;
               cursor: string | null;
             };

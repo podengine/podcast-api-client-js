@@ -148,6 +148,10 @@ export type GetPodcastEpisodesParams = NonNullable<operations['getPodcastEpisode
   NonNullable<operations['getPodcastEpisodes']['parameters']['query']>;
 export type GetPodcastEpisodesResponse =
   operations['getPodcastEpisodes']['responses']['200']['content']['application/json']['data'];
+export type GetPodcastGuestsParams = NonNullable<operations['getPodcastGuests']['parameters']['path']> &
+  NonNullable<operations['getPodcastGuests']['parameters']['query']>;
+export type GetPodcastGuestsResponse =
+  operations['getPodcastGuests']['responses']['200']['content']['application/json']['data'];
 export type GetPodcastIdLookupParams = NonNullable<operations['getPodcastIdLookup']['parameters']['query']>;
 export type GetPodcastIdLookupResponse =
   operations['getPodcastIdLookup']['responses']['200']['content']['application/json']['data'];
@@ -165,6 +169,10 @@ export type GetPodcastSocialMediaDetailsParams = NonNullable<
 >;
 export type GetPodcastSocialMediaDetailsResponse =
   operations['getPodcastSocialMediaDetails']['responses']['200']['content']['application/json']['data'];
+export type GetPodcastSponsorsParams = NonNullable<operations['getPodcastSponsors']['parameters']['path']> &
+  NonNullable<operations['getPodcastSponsors']['parameters']['query']>;
+export type GetPodcastSponsorsResponse =
+  operations['getPodcastSponsors']['responses']['200']['content']['application/json']['data'];
 export type GetPodcastYoutubeDetailsParams = NonNullable<operations['getPodcastYoutubeDetails']['parameters']['path']>;
 export type GetPodcastYoutubeDetailsResponse =
   operations['getPodcastYoutubeDetails']['responses']['200']['content']['application/json']['data'];
@@ -550,6 +558,14 @@ const descriptors = {
     body: 'none',
     binary: false,
   },
+  getPodcastGuests: {
+    method: 'GET',
+    path: '/api/v1/podcasts/{podcastIdOrSlug}/guests',
+    pathParams: ['podcastIdOrSlug'],
+    queryParams: ['sinceDays', 'role'],
+    body: 'none',
+    binary: false,
+  },
   getPodcastIdLookup: {
     method: 'GET',
     path: '/api/v1/podcasts/id/lookup',
@@ -579,6 +595,14 @@ const descriptors = {
     path: '/api/v1/podcasts/{podcastIdOrSlug}/social-media',
     pathParams: ['podcastIdOrSlug'],
     queryParams: [],
+    body: 'none',
+    binary: false,
+  },
+  getPodcastSponsors: {
+    method: 'GET',
+    path: '/api/v1/podcasts/{podcastIdOrSlug}/sponsors',
+    pathParams: ['podcastIdOrSlug'],
+    queryParams: ['sinceDays'],
     body: 'none',
     binary: false,
   },
@@ -1179,6 +1203,14 @@ class PodcastsResource {
   }
 
   /**
+   * Podcast Guests
+   * Get a summary of the guests and hosts appearing on a podcast — by default from its last 10 episodes, or from a time window with sinceDays
+   */
+  getPodcastGuests(params: GetPodcastGuestsParams, options?: RequestOptions): Promise<GetPodcastGuestsResponse> {
+    return this.core.request(descriptors.getPodcastGuests, params as Record<string, unknown>, options);
+  }
+
+  /**
    * Podcast ID Lookup
    * Lookup a podcast by ID
    */
@@ -1214,6 +1246,14 @@ class PodcastsResource {
     options?: RequestOptions
   ): Promise<GetPodcastSocialMediaDetailsResponse> {
     return this.core.request(descriptors.getPodcastSocialMediaDetails, params as Record<string, unknown>, options);
+  }
+
+  /**
+   * Podcast Sponsors
+   * Get a summary of the sponsors and advertisers on a podcast — by default from its last 10 episodes, or from a time window with sinceDays
+   */
+  getPodcastSponsors(params: GetPodcastSponsorsParams, options?: RequestOptions): Promise<GetPodcastSponsorsResponse> {
+    return this.core.request(descriptors.getPodcastSponsors, params as Record<string, unknown>, options);
   }
 
   /**

@@ -10550,10 +10550,25 @@
                                   "type": "number"
                                 },
                                 "episodesWithGuestsCount": {
-                                  "type": "number"
+                                  "type": "number",
+                                  "description": "Number of analysed episodes containing guests, independent of the role filter on the returned people."
                                 },
-                                "mostRecentEpisodeDate": {},
-                                "oldestEpisodeDate": {},
+                                "mostRecentEpisodeDate": {
+                                  "anyOf": [
+                                    {},
+                                    {
+                                      "type": "null"
+                                    }
+                                  ]
+                                },
+                                "oldestEpisodeDate": {
+                                  "anyOf": [
+                                    {},
+                                    {
+                                      "type": "null"
+                                    }
+                                  ]
+                                },
                                 "guests": {
                                   "type": "array",
                                   "items": {
@@ -11404,8 +11419,22 @@
                                 "episodesWithSponsorsCount": {
                                   "type": "number"
                                 },
-                                "mostRecentEpisodeDate": {},
-                                "oldestEpisodeDate": {},
+                                "mostRecentEpisodeDate": {
+                                  "anyOf": [
+                                    {},
+                                    {
+                                      "type": "null"
+                                    }
+                                  ]
+                                },
+                                "oldestEpisodeDate": {
+                                  "anyOf": [
+                                    {},
+                                    {
+                                      "type": "null"
+                                    }
+                                  ]
+                                },
                                 "sponsors": {
                                   "type": "array",
                                   "items": {
@@ -14193,6 +14222,516 @@
                       "required": [
                         "podcast",
                         "podcastContacts"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "data"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Forbidden — plan does not include this endpoint"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/podcasts/{podcastIdOrSlug}/guests": {
+      "get": {
+        "tags": [
+          "podcasts"
+        ],
+        "summary": "Podcast Guests",
+        "description": "Get a summary of the guests and hosts appearing on a podcast — by default from its last 10 episodes, or from a time window with sinceDays",
+        "operationId": "getPodcastGuests",
+        "parameters": [
+          {
+            "name": "podcastIdOrSlug",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "Podengine ID, Apple ID, or slug"
+            }
+          },
+          {
+            "name": "sinceDays",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "description": "Summarise episodes published in the last N days (max 365) instead of the default last 10 episodes. Windowed requests are read-only: they only include episodes that have already been analysed, covering at most the 500 most recently published episodes in the window, so shows with sparse analysis coverage may return incomplete windowed summaries.",
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 365
+            }
+          },
+          {
+            "name": "role",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "description": "Only include people with this role. Default: guests, hosts, and mentioned people.",
+              "type": "string",
+              "enum": [
+                "guest",
+                "host"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "OK"
+                      ]
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "podcast": {
+                          "type": "object",
+                          "properties": {
+                            "author": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "authorityScore": {
+                              "type": [
+                                "object",
+                                "null"
+                              ],
+                              "properties": {
+                                "calculatedAt": {},
+                                "authorityScore": {
+                                  "type": "number",
+                                  "description": "This is the weighted total authority score of the podcast, out of 100"
+                                },
+                                "qualityScore": {
+                                  "type": "number",
+                                  "description": "This is the quality score of the podcast, out of 100"
+                                },
+                                "youtubeScore": {
+                                  "type": "number",
+                                  "description": "This is the YouTube score of the podcast, out of 100"
+                                },
+                                "socialScore": {
+                                  "type": "number",
+                                  "description": "This is the social score of the podcast, out of 100"
+                                },
+                                "engagementScore": {
+                                  "type": "number",
+                                  "description": "This is the engagement score of the podcast, out of 100"
+                                }
+                              },
+                              "required": [
+                                "calculatedAt",
+                                "authorityScore",
+                                "qualityScore",
+                                "youtubeScore",
+                                "socialScore",
+                                "engagementScore"
+                              ],
+                              "additionalProperties": false
+                            },
+                            "genres": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              }
+                            },
+                            "id": {
+                              "type": "string"
+                            },
+                            "imageUrl": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "language": {
+                              "type": "string"
+                            },
+                            "lastEpisodePublishedAt": {},
+                            "slug": {
+                              "type": "string"
+                            },
+                            "title": {
+                              "type": "string"
+                            },
+                            "titleLatest": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "author",
+                            "authorityScore",
+                            "genres",
+                            "id",
+                            "imageUrl",
+                            "language",
+                            "lastEpisodePublishedAt",
+                            "slug",
+                            "title",
+                            "titleLatest"
+                          ],
+                          "additionalProperties": false
+                        },
+                        "guests": {
+                          "type": "object",
+                          "properties": {
+                            "episodesCount": {
+                              "type": "number"
+                            },
+                            "episodesWithGuestsCount": {
+                              "type": "number",
+                              "description": "Number of analysed episodes containing guests, independent of the role filter on the returned people."
+                            },
+                            "mostRecentEpisodeDate": {
+                              "anyOf": [
+                                {},
+                                {
+                                  "type": "null"
+                                }
+                              ]
+                            },
+                            "oldestEpisodeDate": {
+                              "anyOf": [
+                                {},
+                                {
+                                  "type": "null"
+                                }
+                              ]
+                            },
+                            "guests": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "name": {
+                                    "type": "string"
+                                  },
+                                  "type": {
+                                    "type": "string",
+                                    "enum": [
+                                      "host",
+                                      "guest",
+                                      "unknown",
+                                      "mentioned"
+                                    ]
+                                  },
+                                  "imageUrl": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "appearancesCount": {
+                                    "type": "number",
+                                    "minimum": 1
+                                  },
+                                  "mostRecentAppearanceDate": {},
+                                  "oldestAppearanceDate": {}
+                                },
+                                "required": [
+                                  "name",
+                                  "type",
+                                  "imageUrl",
+                                  "appearancesCount",
+                                  "mostRecentAppearanceDate",
+                                  "oldestAppearanceDate"
+                                ],
+                                "additionalProperties": false
+                              }
+                            }
+                          },
+                          "required": [
+                            "episodesCount",
+                            "episodesWithGuestsCount",
+                            "mostRecentEpisodeDate",
+                            "oldestEpisodeDate",
+                            "guests"
+                          ],
+                          "additionalProperties": false
+                        }
+                      },
+                      "required": [
+                        "podcast",
+                        "guests"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "data"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Forbidden — plan does not include this endpoint"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/podcasts/{podcastIdOrSlug}/sponsors": {
+      "get": {
+        "tags": [
+          "podcasts"
+        ],
+        "summary": "Podcast Sponsors",
+        "description": "Get a summary of the sponsors and advertisers on a podcast — by default from its last 10 episodes, or from a time window with sinceDays",
+        "operationId": "getPodcastSponsors",
+        "parameters": [
+          {
+            "name": "podcastIdOrSlug",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "Podengine ID, Apple ID, or slug"
+            }
+          },
+          {
+            "name": "sinceDays",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "description": "Summarise episodes published in the last N days (max 365) instead of the default last 10 episodes. Windowed requests are read-only: they only include episodes that have already been analysed, covering at most the 500 most recently published episodes in the window, so shows with sparse analysis coverage may return incomplete windowed summaries.",
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 365
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "OK"
+                      ]
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "podcast": {
+                          "type": "object",
+                          "properties": {
+                            "author": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "authorityScore": {
+                              "type": [
+                                "object",
+                                "null"
+                              ],
+                              "properties": {
+                                "calculatedAt": {},
+                                "authorityScore": {
+                                  "type": "number",
+                                  "description": "This is the weighted total authority score of the podcast, out of 100"
+                                },
+                                "qualityScore": {
+                                  "type": "number",
+                                  "description": "This is the quality score of the podcast, out of 100"
+                                },
+                                "youtubeScore": {
+                                  "type": "number",
+                                  "description": "This is the YouTube score of the podcast, out of 100"
+                                },
+                                "socialScore": {
+                                  "type": "number",
+                                  "description": "This is the social score of the podcast, out of 100"
+                                },
+                                "engagementScore": {
+                                  "type": "number",
+                                  "description": "This is the engagement score of the podcast, out of 100"
+                                }
+                              },
+                              "required": [
+                                "calculatedAt",
+                                "authorityScore",
+                                "qualityScore",
+                                "youtubeScore",
+                                "socialScore",
+                                "engagementScore"
+                              ],
+                              "additionalProperties": false
+                            },
+                            "genres": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              }
+                            },
+                            "id": {
+                              "type": "string"
+                            },
+                            "imageUrl": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "language": {
+                              "type": "string"
+                            },
+                            "lastEpisodePublishedAt": {},
+                            "slug": {
+                              "type": "string"
+                            },
+                            "title": {
+                              "type": "string"
+                            },
+                            "titleLatest": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "author",
+                            "authorityScore",
+                            "genres",
+                            "id",
+                            "imageUrl",
+                            "language",
+                            "lastEpisodePublishedAt",
+                            "slug",
+                            "title",
+                            "titleLatest"
+                          ],
+                          "additionalProperties": false
+                        },
+                        "sponsors": {
+                          "type": "object",
+                          "properties": {
+                            "episodesCount": {
+                              "type": "number"
+                            },
+                            "episodesWithSponsorsCount": {
+                              "type": "number"
+                            },
+                            "mostRecentEpisodeDate": {
+                              "anyOf": [
+                                {},
+                                {
+                                  "type": "null"
+                                }
+                              ]
+                            },
+                            "oldestEpisodeDate": {
+                              "anyOf": [
+                                {},
+                                {
+                                  "type": "null"
+                                }
+                              ]
+                            },
+                            "sponsors": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "name": {
+                                    "type": "string"
+                                  },
+                                  "imageUrl": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "appearancesCount": {
+                                    "type": "number",
+                                    "minimum": 1
+                                  },
+                                  "mostRecentAppearanceDate": {},
+                                  "oldestAppearanceDate": {}
+                                },
+                                "required": [
+                                  "name",
+                                  "imageUrl",
+                                  "appearancesCount",
+                                  "mostRecentAppearanceDate",
+                                  "oldestAppearanceDate"
+                                ],
+                                "additionalProperties": false
+                              }
+                            }
+                          },
+                          "required": [
+                            "episodesCount",
+                            "episodesWithSponsorsCount",
+                            "mostRecentEpisodeDate",
+                            "oldestEpisodeDate",
+                            "sponsors"
+                          ],
+                          "additionalProperties": false
+                        }
+                      },
+                      "required": [
+                        "podcast",
+                        "sponsors"
                       ],
                       "additionalProperties": false
                     }
@@ -21795,7 +22334,9 @@
                           ],
                           "additionalProperties": false
                         },
-                        "result": {},
+                        "result": {
+                          "description": "Search results. Each hit in result.hits combines episode and parent-podcast fields, including podcastId, episodeGuestsAndHosts (array of {name, type: guest|host|unknown|mentioned, roles[], organizations[], image_url}) and episodeSponsorsAndAdvertisers (array of {name, snippet, coupon_codes: string|null, urls[]}). The roles and organizations arrays are currently always empty. An empty array for either episodeGuestsAndHosts or episodeSponsorsAndAdvertisers can mean analysis is missing or completed analysis found no matching people or sponsors; these cases cannot be distinguished from the array alone. Responses with populated sponsor snippets can be large."
+                        },
                         "cursor": {
                           "type": [
                             "string",
