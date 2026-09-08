@@ -8364,7 +8364,9 @@
                                               "podcast-website",
                                               "podchaser",
                                               "rephonic",
-                                              "rss"
+                                              "rss",
+                                              "youtube-channel-links",
+                                              "youtube-episode-search"
                                             ]
                                           }
                                         }
@@ -9799,7 +9801,9 @@
                                             "podcast-website",
                                             "podchaser",
                                             "rephonic",
-                                            "rss"
+                                            "rss",
+                                            "youtube-channel-links",
+                                            "youtube-episode-search"
                                           ]
                                         }
                                       }
@@ -10909,7 +10913,9 @@
                                             "podcast-website",
                                             "podchaser",
                                             "rephonic",
-                                            "rss"
+                                            "rss",
+                                            "youtube-channel-links",
+                                            "youtube-episode-search"
                                           ]
                                         }
                                       }
@@ -12335,7 +12341,9 @@
                                         "podcast-website",
                                         "podchaser",
                                         "rephonic",
-                                        "rss"
+                                        "rss",
+                                        "youtube-channel-links",
+                                        "youtube-episode-search"
                                       ]
                                     }
                                   }
@@ -14698,7 +14706,9 @@
                                         "podcast-website",
                                         "podchaser",
                                         "rephonic",
-                                        "rss"
+                                        "rss",
+                                        "youtube-channel-links",
+                                        "youtube-episode-search"
                                       ]
                                     }
                                   }
@@ -16193,7 +16203,9 @@
                                             "podcast-website",
                                             "podchaser",
                                             "rephonic",
-                                            "rss"
+                                            "rss",
+                                            "youtube-channel-links",
+                                            "youtube-episode-search"
                                           ]
                                         }
                                       }

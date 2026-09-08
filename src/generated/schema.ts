@@ -4964,6 +4964,8 @@ export interface operations {
                         | 'podchaser'
                         | 'rephonic'
                         | 'rss'
+                        | 'youtube-channel-links'
+                        | 'youtube-episode-search'
                       )[];
                     }[];
                     spotifyId: string | null;
@@ -5544,6 +5546,8 @@ export interface operations {
                       | 'podchaser'
                       | 'rephonic'
                       | 'rss'
+                      | 'youtube-channel-links'
+                      | 'youtube-episode-search'
                     )[];
                   }[];
                   spotifyId: string | null;
@@ -5870,6 +5874,8 @@ export interface operations {
                       | 'podchaser'
                       | 'rephonic'
                       | 'rss'
+                      | 'youtube-channel-links'
+                      | 'youtube-episode-search'
                     )[];
                   }[];
                   facebookPageData: {
@@ -6319,6 +6325,8 @@ export interface operations {
                     | 'podchaser'
                     | 'rephonic'
                     | 'rss'
+                    | 'youtube-channel-links'
+                    | 'youtube-episode-search'
                   )[];
                 }[];
                 spotifyId: string | null;
@@ -7224,6 +7232,8 @@ export interface operations {
                     | 'podchaser'
                     | 'rephonic'
                     | 'rss'
+                    | 'youtube-channel-links'
+                    | 'youtube-episode-search'
                   )[];
                 }[];
                 facebookPageData: {
@@ -7775,6 +7785,8 @@ export interface operations {
                         | 'podchaser'
                         | 'rephonic'
                         | 'rss'
+                        | 'youtube-channel-links'
+                        | 'youtube-episode-search'
                       )[];
                     }[];
                     spotifyId: string | null;
