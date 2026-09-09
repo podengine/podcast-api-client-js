@@ -5006,6 +5006,8 @@ export interface operations {
                         | 'rss'
                         | 'youtube-channel-links'
                         | 'youtube-episode-search'
+                        | 'youtube-serp'
+                        | 'youtube-api-search'
                       )[];
                     }[];
                     spotifyId: string | null;
@@ -5588,6 +5590,8 @@ export interface operations {
                       | 'rss'
                       | 'youtube-channel-links'
                       | 'youtube-episode-search'
+                      | 'youtube-serp'
+                      | 'youtube-api-search'
                     )[];
                   }[];
                   spotifyId: string | null;
@@ -5917,6 +5921,8 @@ export interface operations {
                       | 'rss'
                       | 'youtube-channel-links'
                       | 'youtube-episode-search'
+                      | 'youtube-serp'
+                      | 'youtube-api-search'
                     )[];
                   }[];
                   facebookPageData: {
@@ -6368,6 +6374,8 @@ export interface operations {
                     | 'rss'
                     | 'youtube-channel-links'
                     | 'youtube-episode-search'
+                    | 'youtube-serp'
+                    | 'youtube-api-search'
                   )[];
                 }[];
                 spotifyId: string | null;
@@ -7481,6 +7489,8 @@ export interface operations {
                     | 'rss'
                     | 'youtube-channel-links'
                     | 'youtube-episode-search'
+                    | 'youtube-serp'
+                    | 'youtube-api-search'
                   )[];
                 }[];
                 facebookPageData: {
@@ -8034,6 +8044,8 @@ export interface operations {
                         | 'rss'
                         | 'youtube-channel-links'
                         | 'youtube-episode-search'
+                        | 'youtube-serp'
+                        | 'youtube-api-search'
                       )[];
                     }[];
                     spotifyId: string | null;

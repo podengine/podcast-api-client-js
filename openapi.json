@@ -8366,7 +8366,9 @@
                                               "rephonic",
                                               "rss",
                                               "youtube-channel-links",
-                                              "youtube-episode-search"
+                                              "youtube-episode-search",
+                                              "youtube-serp",
+                                              "youtube-api-search"
                                             ]
                                           }
                                         }
@@ -9803,7 +9805,9 @@
                                             "rephonic",
                                             "rss",
                                             "youtube-channel-links",
-                                            "youtube-episode-search"
+                                            "youtube-episode-search",
+                                            "youtube-serp",
+                                            "youtube-api-search"
                                           ]
                                         }
                                       }
@@ -10930,7 +10934,9 @@
                                             "rephonic",
                                             "rss",
                                             "youtube-channel-links",
-                                            "youtube-episode-search"
+                                            "youtube-episode-search",
+                                            "youtube-serp",
+                                            "youtube-api-search"
                                           ]
                                         }
                                       }
@@ -12372,7 +12378,9 @@
                                         "rephonic",
                                         "rss",
                                         "youtube-channel-links",
-                                        "youtube-episode-search"
+                                        "youtube-episode-search",
+                                        "youtube-serp",
+                                        "youtube-api-search"
                                       ]
                                     }
                                   }
@@ -15247,7 +15255,9 @@
                                         "rephonic",
                                         "rss",
                                         "youtube-channel-links",
-                                        "youtube-episode-search"
+                                        "youtube-episode-search",
+                                        "youtube-serp",
+                                        "youtube-api-search"
                                       ]
                                     }
                                   }
@@ -16744,7 +16754,9 @@
                                             "rephonic",
                                             "rss",
                                             "youtube-channel-links",
-                                            "youtube-episode-search"
+                                            "youtube-episode-search",
+                                            "youtube-serp",
+                                            "youtube-api-search"
                                           ]
                                         }
                                       }
