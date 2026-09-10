@@ -5038,6 +5038,74 @@ export interface operations {
                           transcribeSince: unknown;
                         };
                     websiteUrl: string | null;
+                    audienceBeta?: {
+                      /** @enum {number} */
+                      schema_version: 1;
+                      audio:
+                        | {
+                            /** @enum {string} */
+                            unit: 'downloads';
+                            /** @enum {string} */
+                            source: 'op3';
+                            /** @enum {string} */
+                            basis: 'trailing_30_days';
+                            /** Format: date-time */
+                            last_synced_at: Date | null;
+                            /** Format: date-time */
+                            source_as_of: Date | null;
+                            /** Format: date-time */
+                            measurement_recorded_at: Date | null;
+                            /** @enum {string} */
+                            coverage: 'unknown';
+                            /** @enum {string} */
+                            freshness: 'fresh' | 'stale' | 'unknown';
+                            /** @enum {string} */
+                            status: 'available';
+                            value: number;
+                            /** @enum {string|null} */
+                            reason: null;
+                          }
+                        | {
+                            /** @enum {string} */
+                            unit: 'downloads';
+                            /** @enum {string} */
+                            source: 'op3';
+                            /** @enum {string} */
+                            basis: 'trailing_30_days';
+                            /** Format: date-time */
+                            last_synced_at: Date | null;
+                            /** Format: date-time */
+                            source_as_of: Date | null;
+                            /** Format: date-time */
+                            measurement_recorded_at: Date | null;
+                            /** @enum {string} */
+                            coverage: 'unknown';
+                            /** @enum {string} */
+                            freshness: 'fresh' | 'stale' | 'unknown';
+                            /** @enum {string} */
+                            status: 'unavailable';
+                            /** @enum {string|null} */
+                            value: null;
+                            /** @enum {string} */
+                            reason: 'no_measurement' | 'invalid_measurement' | 'history_mismatch';
+                          };
+                      youtube: {
+                        /** @enum {string} */
+                        status: 'unavailable';
+                        /** @enum {string|null} */
+                        value: null;
+                        /** @enum {string} */
+                        unit: 'views';
+                        /** @enum {string} */
+                        reason: 'validation_pending';
+                      };
+                      /** @enum {string|null} */
+                      audience_estimate_monthly_listeners: null;
+                      /** @enum {string|null} */
+                      unique_viewers: null;
+                      /** @enum {string|null} */
+                      combined_audience: null;
+                    };
                     audienceEstimate?: {
                       audienceDemographics: {
                         /**
@@ -5622,6 +5690,74 @@ export interface operations {
                         transcribeSince: unknown;
                       };
                   websiteUrl: string | null;
+                  audienceBeta?: {
+                    /** @enum {number} */
+                    schema_version: 1;
+                    audio:
+                      | {
+                          /** @enum {string} */
+                          unit: 'downloads';
+                          /** @enum {string} */
+                          source: 'op3';
+                          /** @enum {string} */
+                          basis: 'trailing_30_days';
+                          /** Format: date-time */
+                          last_synced_at: Date | null;
+                          /** Format: date-time */
+                          source_as_of: Date | null;
+                          /** Format: date-time */
+                          measurement_recorded_at: Date | null;
+                          /** @enum {string} */
+                          coverage: 'unknown';
+                          /** @enum {string} */
+                          freshness: 'fresh' | 'stale' | 'unknown';
+                          /** @enum {string} */
+                          status: 'available';
+                          value: number;
+                          /** @enum {string|null} */
+                          reason: null;
+                        }
+                      | {
+                          /** @enum {string} */
+                          unit: 'downloads';
+                          /** @enum {string} */
+                          source: 'op3';
+                          /** @enum {string} */
+                          basis: 'trailing_30_days';
+                          /** Format: date-time */
+                          last_synced_at: Date | null;
+                          /** Format: date-time */
+                          source_as_of: Date | null;
+                          /** Format: date-time */
+                          measurement_recorded_at: Date | null;
+                          /** @enum {string} */
+                          coverage: 'unknown';
+                          /** @enum {string} */
+                          freshness: 'fresh' | 'stale' | 'unknown';
+                          /** @enum {string} */
+                          status: 'unavailable';
+                          /** @enum {string|null} */
+                          value: null;
+                          /** @enum {string} */
+                          reason: 'no_measurement' | 'invalid_measurement' | 'history_mismatch';
+                        };
+                    youtube: {
+                      /** @enum {string} */
+                      status: 'unavailable';
+                      /** @enum {string|null} */
+                      value: null;
+                      /** @enum {string} */
+                      unit: 'views';
+                      /** @enum {string} */
+                      reason: 'validation_pending';
+                    };
+                    /** @enum {string|null} */
+                    audience_estimate_monthly_listeners: null;
+                    /** @enum {string|null} */
+                    unique_viewers: null;
+                    /** @enum {string|null} */
+                    combined_audience: null;
+                  };
                   audienceEstimate?: {
                     audienceDemographics: {
                       /**
@@ -6406,6 +6542,74 @@ export interface operations {
                       transcribeSince: unknown;
                     };
                 websiteUrl: string | null;
+                audienceBeta?: {
+                  /** @enum {number} */
+                  schema_version: 1;
+                  audio:
+                    | {
+                        /** @enum {string} */
+                        unit: 'downloads';
+                        /** @enum {string} */
+                        source: 'op3';
+                        /** @enum {string} */
+                        basis: 'trailing_30_days';
+                        /** Format: date-time */
+                        last_synced_at: Date | null;
+                        /** Format: date-time */
+                        source_as_of: Date | null;
+                        /** Format: date-time */
+                        measurement_recorded_at: Date | null;
+                        /** @enum {string} */
+                        coverage: 'unknown';
+                        /** @enum {string} */
+                        freshness: 'fresh' | 'stale' | 'unknown';
+                        /** @enum {string} */
+                        status: 'available';
+                        value: number;
+                        /** @enum {string|null} */
+                        reason: null;
+                      }
+                    | {
+                        /** @enum {string} */
+                        unit: 'downloads';
+                        /** @enum {string} */
+                        source: 'op3';
+                        /** @enum {string} */
+                        basis: 'trailing_30_days';
+                        /** Format: date-time */
+                        last_synced_at: Date | null;
+                        /** Format: date-time */
+                        source_as_of: Date | null;
+                        /** Format: date-time */
+                        measurement_recorded_at: Date | null;
+                        /** @enum {string} */
+                        coverage: 'unknown';
+                        /** @enum {string} */
+                        freshness: 'fresh' | 'stale' | 'unknown';
+                        /** @enum {string} */
+                        status: 'unavailable';
+                        /** @enum {string|null} */
+                        value: null;
+                        /** @enum {string} */
+                        reason: 'no_measurement' | 'invalid_measurement' | 'history_mismatch';
+                      };
+                  youtube: {
+                    /** @enum {string} */
+                    status: 'unavailable';
+                    /** @enum {string|null} */
+                    value: null;
+                    /** @enum {string} */
+                    unit: 'views';
+                    /** @enum {string} */
+                    reason: 'validation_pending';
+                  };
+                  /** @enum {string|null} */
+                  audience_estimate_monthly_listeners: null;
+                  /** @enum {string|null} */
+                  unique_viewers: null;
+                  /** @enum {string|null} */
+                  combined_audience: null;
+                };
                 audienceEstimate?: {
                   audienceDemographics: {
                     /**
@@ -8076,6 +8280,74 @@ export interface operations {
                           transcribeSince: unknown;
                         };
                     websiteUrl: string | null;
+                    audienceBeta?: {
+                      /** @enum {number} */
+                      schema_version: 1;
+                      audio:
+                        | {
+                            /** @enum {string} */
+                            unit: 'downloads';
+                            /** @enum {string} */
+                            source: 'op3';
+                            /** @enum {string} */
+                            basis: 'trailing_30_days';
+                            /** Format: date-time */
+                            last_synced_at: Date | null;
+                            /** Format: date-time */
+                            source_as_of: Date | null;
+                            /** Format: date-time */
+                            measurement_recorded_at: Date | null;
+                            /** @enum {string} */
+                            coverage: 'unknown';
+                            /** @enum {string} */
+                            freshness: 'fresh' | 'stale' | 'unknown';
+                            /** @enum {string} */
+                            status: 'available';
+                            value: number;
+                            /** @enum {string|null} */
+                            reason: null;
+                          }
+                        | {
+                            /** @enum {string} */
+                            unit: 'downloads';
+                            /** @enum {string} */
+                            source: 'op3';
+                            /** @enum {string} */
+                            basis: 'trailing_30_days';
+                            /** Format: date-time */
+                            last_synced_at: Date | null;
+                            /** Format: date-time */
+                            source_as_of: Date | null;
+                            /** Format: date-time */
+                            measurement_recorded_at: Date | null;
+                            /** @enum {string} */
+                            coverage: 'unknown';
+                            /** @enum {string} */
+                            freshness: 'fresh' | 'stale' | 'unknown';
+                            /** @enum {string} */
+                            status: 'unavailable';
+                            /** @enum {string|null} */
+                            value: null;
+                            /** @enum {string} */
+                            reason: 'no_measurement' | 'invalid_measurement' | 'history_mismatch';
+                          };
+                      youtube: {
+                        /** @enum {string} */
+                        status: 'unavailable';
+                        /** @enum {string|null} */
+                        value: null;
+                        /** @enum {string} */
+                        unit: 'views';
+                        /** @enum {string} */
+                        reason: 'validation_pending';
+                      };
+                      /** @enum {string|null} */
+                      audience_estimate_monthly_listeners: null;
+                      /** @enum {string|null} */
+                      unique_viewers: null;
+                      /** @enum {string|null} */
+                      combined_audience: null;
+                    };
                     audienceEstimate?: {
                       audienceDemographics: {
                         /**
@@ -8217,7 +8489,7 @@ export interface operations {
                * Format: date-time
                * @description The resolved since timestamp used for this query.
                */
-              since: Date;
+              since: Date | null;
               /** @description The cursor provided in this request, if any. */
               cursor: string | null;
               /** @description The event types included in this query. */

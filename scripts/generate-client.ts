@@ -250,9 +250,11 @@ const main = async () => {
   const DateRef = ts.factory.createTypeReferenceNode('Date');
   const NullKeyword = ts.factory.createLiteralTypeNode(ts.factory.createNull());
   const ast = await openapiTS(spec as never, {
-    transform(schemaObject: { format?: string; nullable?: boolean }) {
+    transform(schemaObject: { format?: string; nullable?: boolean; type?: string | string[] }) {
       if (schemaObject.format === 'date-time') {
-        return schemaObject.nullable ? ts.factory.createUnionTypeNode([DateRef, NullKeyword]) : DateRef;
+        const nullable =
+          schemaObject.nullable || (Array.isArray(schemaObject.type) && schemaObject.type.includes('null'));
+        return nullable ? ts.factory.createUnionTypeNode([DateRef, NullKeyword]) : DateRef;
       }
       return undefined;
     },
