@@ -8515,6 +8515,238 @@
                                           1
                                         ]
                                       },
+                                      "monthly_consumption": {
+                                        "type": "object",
+                                        "properties": {
+                                          "schemaVersion": {
+                                            "type": "number",
+                                            "enum": [
+                                              1
+                                            ]
+                                          },
+                                          "audio": {
+                                            "type": "object",
+                                            "properties": {
+                                              "value": {
+                                                "type": [
+                                                  "integer",
+                                                  "null"
+                                                ],
+                                                "minimum": 0,
+                                                "maximum": 9007199254740991
+                                              },
+                                              "basis": {
+                                                "type": "string",
+                                                "enum": [
+                                                  "op3_measured",
+                                                  "experimental_audio_model",
+                                                  "measured_counter_gains",
+                                                  "experimental_90_day_views_divided_by_3",
+                                                  "unavailable"
+                                                ]
+                                              },
+                                              "asOf": {
+                                                "type": [
+                                                  "string",
+                                                  "null"
+                                                ],
+                                                "format": "date-time",
+                                                "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                                              },
+                                              "unit": {
+                                                "type": "string",
+                                                "enum": [
+                                                  "downloads"
+                                                ]
+                                              },
+                                              "p10": {
+                                                "type": [
+                                                  "integer",
+                                                  "null"
+                                                ],
+                                                "minimum": 0,
+                                                "maximum": 9007199254740991
+                                              },
+                                              "p90": {
+                                                "type": [
+                                                  "integer",
+                                                  "null"
+                                                ],
+                                                "minimum": 0,
+                                                "maximum": 9007199254740991
+                                              },
+                                              "modelVersion": {
+                                                "type": [
+                                                  "string",
+                                                  "null"
+                                                ]
+                                              }
+                                            },
+                                            "required": [
+                                              "value",
+                                              "basis",
+                                              "asOf",
+                                              "unit",
+                                              "p10",
+                                              "p90",
+                                              "modelVersion"
+                                            ],
+                                            "additionalProperties": false
+                                          },
+                                          "youtube": {
+                                            "type": "object",
+                                            "properties": {
+                                              "value": {
+                                                "type": [
+                                                  "integer",
+                                                  "null"
+                                                ],
+                                                "minimum": 0,
+                                                "maximum": 9007199254740991
+                                              },
+                                              "basis": {
+                                                "type": "string",
+                                                "enum": [
+                                                  "op3_measured",
+                                                  "experimental_audio_model",
+                                                  "measured_counter_gains",
+                                                  "experimental_90_day_views_divided_by_3",
+                                                  "unavailable"
+                                                ]
+                                              },
+                                              "asOf": {
+                                                "type": [
+                                                  "string",
+                                                  "null"
+                                                ],
+                                                "format": "date-time",
+                                                "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                                              },
+                                              "unit": {
+                                                "type": "string",
+                                                "enum": [
+                                                  "views"
+                                                ]
+                                              },
+                                              "qualifiedVideos": {
+                                                "type": "integer",
+                                                "minimum": 0,
+                                                "maximum": 9007199254740991
+                                              },
+                                              "measuredVideos": {
+                                                "type": "integer",
+                                                "minimum": 0,
+                                                "maximum": 9007199254740991
+                                              },
+                                              "estimatedVideos": {
+                                                "type": "integer",
+                                                "minimum": 0,
+                                                "maximum": 9007199254740991
+                                              },
+                                              "measuredPartialViews": {
+                                                "type": [
+                                                  "integer",
+                                                  "null"
+                                                ],
+                                                "minimum": 0,
+                                                "maximum": 9007199254740991
+                                              },
+                                              "periods": {
+                                                "type": "array",
+                                                "items": {
+                                                  "type": "object",
+                                                  "properties": {
+                                                    "videoId": {
+                                                      "type": "string"
+                                                    },
+                                                    "start": {
+                                                      "type": "string",
+                                                      "format": "date-time",
+                                                      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                                                    },
+                                                    "end": {
+                                                      "type": "string",
+                                                      "format": "date-time",
+                                                      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                                                    },
+                                                    "elapsedDays": {
+                                                      "type": "number",
+                                                      "exclusiveMinimum": 0
+                                                    },
+                                                    "views": {
+                                                      "type": "integer",
+                                                      "minimum": 0,
+                                                      "maximum": 9007199254740991
+                                                    }
+                                                  },
+                                                  "required": [
+                                                    "videoId",
+                                                    "start",
+                                                    "end",
+                                                    "elapsedDays",
+                                                    "views"
+                                                  ],
+                                                  "additionalProperties": false
+                                                }
+                                              }
+                                            },
+                                            "required": [
+                                              "value",
+                                              "basis",
+                                              "asOf",
+                                              "unit",
+                                              "qualifiedVideos",
+                                              "measuredVideos",
+                                              "estimatedVideos",
+                                              "measuredPartialViews",
+                                              "periods"
+                                            ],
+                                            "additionalProperties": false
+                                          },
+                                          "provisionalMonthlyTotal": {
+                                            "type": [
+                                              "integer",
+                                              "null"
+                                            ],
+                                            "minimum": 0,
+                                            "maximum": 9007199254740991
+                                          },
+                                          "unit": {
+                                            "type": "string",
+                                            "enum": [
+                                              "audio_downloads_plus_youtube_views"
+                                            ]
+                                          },
+                                          "coverage": {
+                                            "type": "string",
+                                            "enum": [
+                                              "audio_and_partial_youtube",
+                                              "audio_only",
+                                              "partial_youtube_only",
+                                              "unavailable"
+                                            ]
+                                          },
+                                          "uniqueListeners": {
+                                            "type": [
+                                              "string",
+                                              "null"
+                                            ],
+                                            "enum": [
+                                              null
+                                            ]
+                                          }
+                                        },
+                                        "required": [
+                                          "schemaVersion",
+                                          "audio",
+                                          "youtube",
+                                          "provisionalMonthlyTotal",
+                                          "unit",
+                                          "coverage",
+                                          "uniqueListeners"
+                                        ],
+                                        "additionalProperties": false
+                                      },
                                       "audio": {
                                         "oneOf": [
                                           {
@@ -10237,6 +10469,238 @@
                                       "enum": [
                                         1
                                       ]
+                                    },
+                                    "monthly_consumption": {
+                                      "type": "object",
+                                      "properties": {
+                                        "schemaVersion": {
+                                          "type": "number",
+                                          "enum": [
+                                            1
+                                          ]
+                                        },
+                                        "audio": {
+                                          "type": "object",
+                                          "properties": {
+                                            "value": {
+                                              "type": [
+                                                "integer",
+                                                "null"
+                                              ],
+                                              "minimum": 0,
+                                              "maximum": 9007199254740991
+                                            },
+                                            "basis": {
+                                              "type": "string",
+                                              "enum": [
+                                                "op3_measured",
+                                                "experimental_audio_model",
+                                                "measured_counter_gains",
+                                                "experimental_90_day_views_divided_by_3",
+                                                "unavailable"
+                                              ]
+                                            },
+                                            "asOf": {
+                                              "type": [
+                                                "string",
+                                                "null"
+                                              ],
+                                              "format": "date-time",
+                                              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                                            },
+                                            "unit": {
+                                              "type": "string",
+                                              "enum": [
+                                                "downloads"
+                                              ]
+                                            },
+                                            "p10": {
+                                              "type": [
+                                                "integer",
+                                                "null"
+                                              ],
+                                              "minimum": 0,
+                                              "maximum": 9007199254740991
+                                            },
+                                            "p90": {
+                                              "type": [
+                                                "integer",
+                                                "null"
+                                              ],
+                                              "minimum": 0,
+                                              "maximum": 9007199254740991
+                                            },
+                                            "modelVersion": {
+                                              "type": [
+                                                "string",
+                                                "null"
+                                              ]
+                                            }
+                                          },
+                                          "required": [
+                                            "value",
+                                            "basis",
+                                            "asOf",
+                                            "unit",
+                                            "p10",
+                                            "p90",
+                                            "modelVersion"
+                                          ],
+                                          "additionalProperties": false
+                                        },
+                                        "youtube": {
+                                          "type": "object",
+                                          "properties": {
+                                            "value": {
+                                              "type": [
+                                                "integer",
+                                                "null"
+                                              ],
+                                              "minimum": 0,
+                                              "maximum": 9007199254740991
+                                            },
+                                            "basis": {
+                                              "type": "string",
+                                              "enum": [
+                                                "op3_measured",
+                                                "experimental_audio_model",
+                                                "measured_counter_gains",
+                                                "experimental_90_day_views_divided_by_3",
+                                                "unavailable"
+                                              ]
+                                            },
+                                            "asOf": {
+                                              "type": [
+                                                "string",
+                                                "null"
+                                              ],
+                                              "format": "date-time",
+                                              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                                            },
+                                            "unit": {
+                                              "type": "string",
+                                              "enum": [
+                                                "views"
+                                              ]
+                                            },
+                                            "qualifiedVideos": {
+                                              "type": "integer",
+                                              "minimum": 0,
+                                              "maximum": 9007199254740991
+                                            },
+                                            "measuredVideos": {
+                                              "type": "integer",
+                                              "minimum": 0,
+                                              "maximum": 9007199254740991
+                                            },
+                                            "estimatedVideos": {
+                                              "type": "integer",
+                                              "minimum": 0,
+                                              "maximum": 9007199254740991
+                                            },
+                                            "measuredPartialViews": {
+                                              "type": [
+                                                "integer",
+                                                "null"
+                                              ],
+                                              "minimum": 0,
+                                              "maximum": 9007199254740991
+                                            },
+                                            "periods": {
+                                              "type": "array",
+                                              "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                  "videoId": {
+                                                    "type": "string"
+                                                  },
+                                                  "start": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                                                  },
+                                                  "end": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                                                  },
+                                                  "elapsedDays": {
+                                                    "type": "number",
+                                                    "exclusiveMinimum": 0
+                                                  },
+                                                  "views": {
+                                                    "type": "integer",
+                                                    "minimum": 0,
+                                                    "maximum": 9007199254740991
+                                                  }
+                                                },
+                                                "required": [
+                                                  "videoId",
+                                                  "start",
+                                                  "end",
+                                                  "elapsedDays",
+                                                  "views"
+                                                ],
+                                                "additionalProperties": false
+                                              }
+                                            }
+                                          },
+                                          "required": [
+                                            "value",
+                                            "basis",
+                                            "asOf",
+                                            "unit",
+                                            "qualifiedVideos",
+                                            "measuredVideos",
+                                            "estimatedVideos",
+                                            "measuredPartialViews",
+                                            "periods"
+                                          ],
+                                          "additionalProperties": false
+                                        },
+                                        "provisionalMonthlyTotal": {
+                                          "type": [
+                                            "integer",
+                                            "null"
+                                          ],
+                                          "minimum": 0,
+                                          "maximum": 9007199254740991
+                                        },
+                                        "unit": {
+                                          "type": "string",
+                                          "enum": [
+                                            "audio_downloads_plus_youtube_views"
+                                          ]
+                                        },
+                                        "coverage": {
+                                          "type": "string",
+                                          "enum": [
+                                            "audio_and_partial_youtube",
+                                            "audio_only",
+                                            "partial_youtube_only",
+                                            "unavailable"
+                                          ]
+                                        },
+                                        "uniqueListeners": {
+                                          "type": [
+                                            "string",
+                                            "null"
+                                          ],
+                                          "enum": [
+                                            null
+                                          ]
+                                        }
+                                      },
+                                      "required": [
+                                        "schemaVersion",
+                                        "audio",
+                                        "youtube",
+                                        "provisionalMonthlyTotal",
+                                        "unit",
+                                        "coverage",
+                                        "uniqueListeners"
+                                      ],
+                                      "additionalProperties": false
                                     },
                                     "audio": {
                                       "oneOf": [
@@ -13093,6 +13557,238 @@
                                   "enum": [
                                     1
                                   ]
+                                },
+                                "monthly_consumption": {
+                                  "type": "object",
+                                  "properties": {
+                                    "schemaVersion": {
+                                      "type": "number",
+                                      "enum": [
+                                        1
+                                      ]
+                                    },
+                                    "audio": {
+                                      "type": "object",
+                                      "properties": {
+                                        "value": {
+                                          "type": [
+                                            "integer",
+                                            "null"
+                                          ],
+                                          "minimum": 0,
+                                          "maximum": 9007199254740991
+                                        },
+                                        "basis": {
+                                          "type": "string",
+                                          "enum": [
+                                            "op3_measured",
+                                            "experimental_audio_model",
+                                            "measured_counter_gains",
+                                            "experimental_90_day_views_divided_by_3",
+                                            "unavailable"
+                                          ]
+                                        },
+                                        "asOf": {
+                                          "type": [
+                                            "string",
+                                            "null"
+                                          ],
+                                          "format": "date-time",
+                                          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                                        },
+                                        "unit": {
+                                          "type": "string",
+                                          "enum": [
+                                            "downloads"
+                                          ]
+                                        },
+                                        "p10": {
+                                          "type": [
+                                            "integer",
+                                            "null"
+                                          ],
+                                          "minimum": 0,
+                                          "maximum": 9007199254740991
+                                        },
+                                        "p90": {
+                                          "type": [
+                                            "integer",
+                                            "null"
+                                          ],
+                                          "minimum": 0,
+                                          "maximum": 9007199254740991
+                                        },
+                                        "modelVersion": {
+                                          "type": [
+                                            "string",
+                                            "null"
+                                          ]
+                                        }
+                                      },
+                                      "required": [
+                                        "value",
+                                        "basis",
+                                        "asOf",
+                                        "unit",
+                                        "p10",
+                                        "p90",
+                                        "modelVersion"
+                                      ],
+                                      "additionalProperties": false
+                                    },
+                                    "youtube": {
+                                      "type": "object",
+                                      "properties": {
+                                        "value": {
+                                          "type": [
+                                            "integer",
+                                            "null"
+                                          ],
+                                          "minimum": 0,
+                                          "maximum": 9007199254740991
+                                        },
+                                        "basis": {
+                                          "type": "string",
+                                          "enum": [
+                                            "op3_measured",
+                                            "experimental_audio_model",
+                                            "measured_counter_gains",
+                                            "experimental_90_day_views_divided_by_3",
+                                            "unavailable"
+                                          ]
+                                        },
+                                        "asOf": {
+                                          "type": [
+                                            "string",
+                                            "null"
+                                          ],
+                                          "format": "date-time",
+                                          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                                        },
+                                        "unit": {
+                                          "type": "string",
+                                          "enum": [
+                                            "views"
+                                          ]
+                                        },
+                                        "qualifiedVideos": {
+                                          "type": "integer",
+                                          "minimum": 0,
+                                          "maximum": 9007199254740991
+                                        },
+                                        "measuredVideos": {
+                                          "type": "integer",
+                                          "minimum": 0,
+                                          "maximum": 9007199254740991
+                                        },
+                                        "estimatedVideos": {
+                                          "type": "integer",
+                                          "minimum": 0,
+                                          "maximum": 9007199254740991
+                                        },
+                                        "measuredPartialViews": {
+                                          "type": [
+                                            "integer",
+                                            "null"
+                                          ],
+                                          "minimum": 0,
+                                          "maximum": 9007199254740991
+                                        },
+                                        "periods": {
+                                          "type": "array",
+                                          "items": {
+                                            "type": "object",
+                                            "properties": {
+                                              "videoId": {
+                                                "type": "string"
+                                              },
+                                              "start": {
+                                                "type": "string",
+                                                "format": "date-time",
+                                                "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                                              },
+                                              "end": {
+                                                "type": "string",
+                                                "format": "date-time",
+                                                "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                                              },
+                                              "elapsedDays": {
+                                                "type": "number",
+                                                "exclusiveMinimum": 0
+                                              },
+                                              "views": {
+                                                "type": "integer",
+                                                "minimum": 0,
+                                                "maximum": 9007199254740991
+                                              }
+                                            },
+                                            "required": [
+                                              "videoId",
+                                              "start",
+                                              "end",
+                                              "elapsedDays",
+                                              "views"
+                                            ],
+                                            "additionalProperties": false
+                                          }
+                                        }
+                                      },
+                                      "required": [
+                                        "value",
+                                        "basis",
+                                        "asOf",
+                                        "unit",
+                                        "qualifiedVideos",
+                                        "measuredVideos",
+                                        "estimatedVideos",
+                                        "measuredPartialViews",
+                                        "periods"
+                                      ],
+                                      "additionalProperties": false
+                                    },
+                                    "provisionalMonthlyTotal": {
+                                      "type": [
+                                        "integer",
+                                        "null"
+                                      ],
+                                      "minimum": 0,
+                                      "maximum": 9007199254740991
+                                    },
+                                    "unit": {
+                                      "type": "string",
+                                      "enum": [
+                                        "audio_downloads_plus_youtube_views"
+                                      ]
+                                    },
+                                    "coverage": {
+                                      "type": "string",
+                                      "enum": [
+                                        "audio_and_partial_youtube",
+                                        "audio_only",
+                                        "partial_youtube_only",
+                                        "unavailable"
+                                      ]
+                                    },
+                                    "uniqueListeners": {
+                                      "type": [
+                                        "string",
+                                        "null"
+                                      ],
+                                      "enum": [
+                                        null
+                                      ]
+                                    }
+                                  },
+                                  "required": [
+                                    "schemaVersion",
+                                    "audio",
+                                    "youtube",
+                                    "provisionalMonthlyTotal",
+                                    "unit",
+                                    "coverage",
+                                    "uniqueListeners"
+                                  ],
+                                  "additionalProperties": false
                                 },
                                 "audio": {
                                   "oneOf": [
@@ -17752,6 +18448,238 @@
                                       "enum": [
                                         1
                                       ]
+                                    },
+                                    "monthly_consumption": {
+                                      "type": "object",
+                                      "properties": {
+                                        "schemaVersion": {
+                                          "type": "number",
+                                          "enum": [
+                                            1
+                                          ]
+                                        },
+                                        "audio": {
+                                          "type": "object",
+                                          "properties": {
+                                            "value": {
+                                              "type": [
+                                                "integer",
+                                                "null"
+                                              ],
+                                              "minimum": 0,
+                                              "maximum": 9007199254740991
+                                            },
+                                            "basis": {
+                                              "type": "string",
+                                              "enum": [
+                                                "op3_measured",
+                                                "experimental_audio_model",
+                                                "measured_counter_gains",
+                                                "experimental_90_day_views_divided_by_3",
+                                                "unavailable"
+                                              ]
+                                            },
+                                            "asOf": {
+                                              "type": [
+                                                "string",
+                                                "null"
+                                              ],
+                                              "format": "date-time",
+                                              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                                            },
+                                            "unit": {
+                                              "type": "string",
+                                              "enum": [
+                                                "downloads"
+                                              ]
+                                            },
+                                            "p10": {
+                                              "type": [
+                                                "integer",
+                                                "null"
+                                              ],
+                                              "minimum": 0,
+                                              "maximum": 9007199254740991
+                                            },
+                                            "p90": {
+                                              "type": [
+                                                "integer",
+                                                "null"
+                                              ],
+                                              "minimum": 0,
+                                              "maximum": 9007199254740991
+                                            },
+                                            "modelVersion": {
+                                              "type": [
+                                                "string",
+                                                "null"
+                                              ]
+                                            }
+                                          },
+                                          "required": [
+                                            "value",
+                                            "basis",
+                                            "asOf",
+                                            "unit",
+                                            "p10",
+                                            "p90",
+                                            "modelVersion"
+                                          ],
+                                          "additionalProperties": false
+                                        },
+                                        "youtube": {
+                                          "type": "object",
+                                          "properties": {
+                                            "value": {
+                                              "type": [
+                                                "integer",
+                                                "null"
+                                              ],
+                                              "minimum": 0,
+                                              "maximum": 9007199254740991
+                                            },
+                                            "basis": {
+                                              "type": "string",
+                                              "enum": [
+                                                "op3_measured",
+                                                "experimental_audio_model",
+                                                "measured_counter_gains",
+                                                "experimental_90_day_views_divided_by_3",
+                                                "unavailable"
+                                              ]
+                                            },
+                                            "asOf": {
+                                              "type": [
+                                                "string",
+                                                "null"
+                                              ],
+                                              "format": "date-time",
+                                              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                                            },
+                                            "unit": {
+                                              "type": "string",
+                                              "enum": [
+                                                "views"
+                                              ]
+                                            },
+                                            "qualifiedVideos": {
+                                              "type": "integer",
+                                              "minimum": 0,
+                                              "maximum": 9007199254740991
+                                            },
+                                            "measuredVideos": {
+                                              "type": "integer",
+                                              "minimum": 0,
+                                              "maximum": 9007199254740991
+                                            },
+                                            "estimatedVideos": {
+                                              "type": "integer",
+                                              "minimum": 0,
+                                              "maximum": 9007199254740991
+                                            },
+                                            "measuredPartialViews": {
+                                              "type": [
+                                                "integer",
+                                                "null"
+                                              ],
+                                              "minimum": 0,
+                                              "maximum": 9007199254740991
+                                            },
+                                            "periods": {
+                                              "type": "array",
+                                              "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                  "videoId": {
+                                                    "type": "string"
+                                                  },
+                                                  "start": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                                                  },
+                                                  "end": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                                                  },
+                                                  "elapsedDays": {
+                                                    "type": "number",
+                                                    "exclusiveMinimum": 0
+                                                  },
+                                                  "views": {
+                                                    "type": "integer",
+                                                    "minimum": 0,
+                                                    "maximum": 9007199254740991
+                                                  }
+                                                },
+                                                "required": [
+                                                  "videoId",
+                                                  "start",
+                                                  "end",
+                                                  "elapsedDays",
+                                                  "views"
+                                                ],
+                                                "additionalProperties": false
+                                              }
+                                            }
+                                          },
+                                          "required": [
+                                            "value",
+                                            "basis",
+                                            "asOf",
+                                            "unit",
+                                            "qualifiedVideos",
+                                            "measuredVideos",
+                                            "estimatedVideos",
+                                            "measuredPartialViews",
+                                            "periods"
+                                          ],
+                                          "additionalProperties": false
+                                        },
+                                        "provisionalMonthlyTotal": {
+                                          "type": [
+                                            "integer",
+                                            "null"
+                                          ],
+                                          "minimum": 0,
+                                          "maximum": 9007199254740991
+                                        },
+                                        "unit": {
+                                          "type": "string",
+                                          "enum": [
+                                            "audio_downloads_plus_youtube_views"
+                                          ]
+                                        },
+                                        "coverage": {
+                                          "type": "string",
+                                          "enum": [
+                                            "audio_and_partial_youtube",
+                                            "audio_only",
+                                            "partial_youtube_only",
+                                            "unavailable"
+                                          ]
+                                        },
+                                        "uniqueListeners": {
+                                          "type": [
+                                            "string",
+                                            "null"
+                                          ],
+                                          "enum": [
+                                            null
+                                          ]
+                                        }
+                                      },
+                                      "required": [
+                                        "schemaVersion",
+                                        "audio",
+                                        "youtube",
+                                        "provisionalMonthlyTotal",
+                                        "unit",
+                                        "coverage",
+                                        "uniqueListeners"
+                                      ],
+                                      "additionalProperties": false
                                     },
                                     "audio": {
                                       "oneOf": [

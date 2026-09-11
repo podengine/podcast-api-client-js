@@ -5041,6 +5041,61 @@ export interface operations {
                     audienceBeta?: {
                       /** @enum {number} */
                       schema_version: 1;
+                      monthly_consumption?: {
+                        /** @enum {number} */
+                        schemaVersion: 1;
+                        audio: {
+                          value: number | null;
+                          /** @enum {string} */
+                          basis:
+                            | 'op3_measured'
+                            | 'experimental_audio_model'
+                            | 'measured_counter_gains'
+                            | 'experimental_90_day_views_divided_by_3'
+                            | 'unavailable';
+                          /** Format: date-time */
+                          asOf: Date | null;
+                          /** @enum {string} */
+                          unit: 'downloads';
+                          p10: number | null;
+                          p90: number | null;
+                          modelVersion: string | null;
+                        };
+                        youtube: {
+                          value: number | null;
+                          /** @enum {string} */
+                          basis:
+                            | 'op3_measured'
+                            | 'experimental_audio_model'
+                            | 'measured_counter_gains'
+                            | 'experimental_90_day_views_divided_by_3'
+                            | 'unavailable';
+                          /** Format: date-time */
+                          asOf: Date | null;
+                          /** @enum {string} */
+                          unit: 'views';
+                          qualifiedVideos: number;
+                          measuredVideos: number;
+                          estimatedVideos: number;
+                          measuredPartialViews: number | null;
+                          periods: {
+                            videoId: string;
+                            /** Format: date-time */
+                            start: Date;
+                            /** Format: date-time */
+                            end: Date;
+                            elapsedDays: number;
+                            views: number;
+                          }[];
+                        };
+                        provisionalMonthlyTotal: number | null;
+                        /** @enum {string} */
+                        unit: 'audio_downloads_plus_youtube_views';
+                        /** @enum {string} */
+                        coverage: 'audio_and_partial_youtube' | 'audio_only' | 'partial_youtube_only' | 'unavailable';
+                        /** @enum {string|null} */
+                        uniqueListeners: null;
+                      };
                       audio:
                         | {
                             /** @enum {string} */
@@ -5694,6 +5749,61 @@ export interface operations {
                   audienceBeta?: {
                     /** @enum {number} */
                     schema_version: 1;
+                    monthly_consumption?: {
+                      /** @enum {number} */
+                      schemaVersion: 1;
+                      audio: {
+                        value: number | null;
+                        /** @enum {string} */
+                        basis:
+                          | 'op3_measured'
+                          | 'experimental_audio_model'
+                          | 'measured_counter_gains'
+                          | 'experimental_90_day_views_divided_by_3'
+                          | 'unavailable';
+                        /** Format: date-time */
+                        asOf: Date | null;
+                        /** @enum {string} */
+                        unit: 'downloads';
+                        p10: number | null;
+                        p90: number | null;
+                        modelVersion: string | null;
+                      };
+                      youtube: {
+                        value: number | null;
+                        /** @enum {string} */
+                        basis:
+                          | 'op3_measured'
+                          | 'experimental_audio_model'
+                          | 'measured_counter_gains'
+                          | 'experimental_90_day_views_divided_by_3'
+                          | 'unavailable';
+                        /** Format: date-time */
+                        asOf: Date | null;
+                        /** @enum {string} */
+                        unit: 'views';
+                        qualifiedVideos: number;
+                        measuredVideos: number;
+                        estimatedVideos: number;
+                        measuredPartialViews: number | null;
+                        periods: {
+                          videoId: string;
+                          /** Format: date-time */
+                          start: Date;
+                          /** Format: date-time */
+                          end: Date;
+                          elapsedDays: number;
+                          views: number;
+                        }[];
+                      };
+                      provisionalMonthlyTotal: number | null;
+                      /** @enum {string} */
+                      unit: 'audio_downloads_plus_youtube_views';
+                      /** @enum {string} */
+                      coverage: 'audio_and_partial_youtube' | 'audio_only' | 'partial_youtube_only' | 'unavailable';
+                      /** @enum {string|null} */
+                      uniqueListeners: null;
+                    };
                     audio:
                       | {
                           /** @enum {string} */
@@ -6546,6 +6656,61 @@ export interface operations {
                 audienceBeta?: {
                   /** @enum {number} */
                   schema_version: 1;
+                  monthly_consumption?: {
+                    /** @enum {number} */
+                    schemaVersion: 1;
+                    audio: {
+                      value: number | null;
+                      /** @enum {string} */
+                      basis:
+                        | 'op3_measured'
+                        | 'experimental_audio_model'
+                        | 'measured_counter_gains'
+                        | 'experimental_90_day_views_divided_by_3'
+                        | 'unavailable';
+                      /** Format: date-time */
+                      asOf: Date | null;
+                      /** @enum {string} */
+                      unit: 'downloads';
+                      p10: number | null;
+                      p90: number | null;
+                      modelVersion: string | null;
+                    };
+                    youtube: {
+                      value: number | null;
+                      /** @enum {string} */
+                      basis:
+                        | 'op3_measured'
+                        | 'experimental_audio_model'
+                        | 'measured_counter_gains'
+                        | 'experimental_90_day_views_divided_by_3'
+                        | 'unavailable';
+                      /** Format: date-time */
+                      asOf: Date | null;
+                      /** @enum {string} */
+                      unit: 'views';
+                      qualifiedVideos: number;
+                      measuredVideos: number;
+                      estimatedVideos: number;
+                      measuredPartialViews: number | null;
+                      periods: {
+                        videoId: string;
+                        /** Format: date-time */
+                        start: Date;
+                        /** Format: date-time */
+                        end: Date;
+                        elapsedDays: number;
+                        views: number;
+                      }[];
+                    };
+                    provisionalMonthlyTotal: number | null;
+                    /** @enum {string} */
+                    unit: 'audio_downloads_plus_youtube_views';
+                    /** @enum {string} */
+                    coverage: 'audio_and_partial_youtube' | 'audio_only' | 'partial_youtube_only' | 'unavailable';
+                    /** @enum {string|null} */
+                    uniqueListeners: null;
+                  };
                   audio:
                     | {
                         /** @enum {string} */
@@ -8284,6 +8449,61 @@ export interface operations {
                     audienceBeta?: {
                       /** @enum {number} */
                       schema_version: 1;
+                      monthly_consumption?: {
+                        /** @enum {number} */
+                        schemaVersion: 1;
+                        audio: {
+                          value: number | null;
+                          /** @enum {string} */
+                          basis:
+                            | 'op3_measured'
+                            | 'experimental_audio_model'
+                            | 'measured_counter_gains'
+                            | 'experimental_90_day_views_divided_by_3'
+                            | 'unavailable';
+                          /** Format: date-time */
+                          asOf: Date | null;
+                          /** @enum {string} */
+                          unit: 'downloads';
+                          p10: number | null;
+                          p90: number | null;
+                          modelVersion: string | null;
+                        };
+                        youtube: {
+                          value: number | null;
+                          /** @enum {string} */
+                          basis:
+                            | 'op3_measured'
+                            | 'experimental_audio_model'
+                            | 'measured_counter_gains'
+                            | 'experimental_90_day_views_divided_by_3'
+                            | 'unavailable';
+                          /** Format: date-time */
+                          asOf: Date | null;
+                          /** @enum {string} */
+                          unit: 'views';
+                          qualifiedVideos: number;
+                          measuredVideos: number;
+                          estimatedVideos: number;
+                          measuredPartialViews: number | null;
+                          periods: {
+                            videoId: string;
+                            /** Format: date-time */
+                            start: Date;
+                            /** Format: date-time */
+                            end: Date;
+                            elapsedDays: number;
+                            views: number;
+                          }[];
+                        };
+                        provisionalMonthlyTotal: number | null;
+                        /** @enum {string} */
+                        unit: 'audio_downloads_plus_youtube_views';
+                        /** @enum {string} */
+                        coverage: 'audio_and_partial_youtube' | 'audio_only' | 'partial_youtube_only' | 'unavailable';
+                        /** @enum {string|null} */
+                        uniqueListeners: null;
+                      };
                       audio:
                         | {
                             /** @enum {string} */
