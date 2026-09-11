@@ -5044,6 +5044,12 @@ export interface operations {
                       monthly_consumption?: {
                         /** @enum {number} */
                         schemaVersion: 1;
+                        /** @enum {string} */
+                        eligibility?: 'eligible' | 'language_out_of_scope' | 'no_recent_episode';
+                        /** @enum {string} */
+                        policyVersion?: 'active-english-90d-v1';
+                        /** Format: date-time */
+                        calculatedAsOf?: Date;
                         audio: {
                           value: number | null;
                           /** @enum {string} */
@@ -5752,6 +5758,12 @@ export interface operations {
                     monthly_consumption?: {
                       /** @enum {number} */
                       schemaVersion: 1;
+                      /** @enum {string} */
+                      eligibility?: 'eligible' | 'language_out_of_scope' | 'no_recent_episode';
+                      /** @enum {string} */
+                      policyVersion?: 'active-english-90d-v1';
+                      /** Format: date-time */
+                      calculatedAsOf?: Date;
                       audio: {
                         value: number | null;
                         /** @enum {string} */
@@ -6659,6 +6671,12 @@ export interface operations {
                   monthly_consumption?: {
                     /** @enum {number} */
                     schemaVersion: 1;
+                    /** @enum {string} */
+                    eligibility?: 'eligible' | 'language_out_of_scope' | 'no_recent_episode';
+                    /** @enum {string} */
+                    policyVersion?: 'active-english-90d-v1';
+                    /** Format: date-time */
+                    calculatedAsOf?: Date;
                     audio: {
                       value: number | null;
                       /** @enum {string} */
@@ -8452,6 +8470,12 @@ export interface operations {
                       monthly_consumption?: {
                         /** @enum {number} */
                         schemaVersion: 1;
+                        /** @enum {string} */
+                        eligibility?: 'eligible' | 'language_out_of_scope' | 'no_recent_episode';
+                        /** @enum {string} */
+                        policyVersion?: 'active-english-90d-v1';
+                        /** Format: date-time */
+                        calculatedAsOf?: Date;
                         audio: {
                           value: number | null;
                           /** @enum {string} */
