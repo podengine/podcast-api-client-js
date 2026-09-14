@@ -6371,6 +6371,8 @@ export interface operations {
                     lastVideoUploadDate: unknown | null;
                     lastVideoUploadDateSource: string | null;
                     lastVideoUploadDateCheckedAt: unknown | null;
+                    /** @enum {string|null} */
+                    associationTier?: 'associated' | 'candidate' | 'unverified' | null;
                   }[];
                 } | null;
               };
@@ -8098,6 +8100,8 @@ export interface operations {
                   lastVideoUploadDate: unknown | null;
                   lastVideoUploadDateSource: string | null;
                   lastVideoUploadDateCheckedAt: unknown | null;
+                  /** @enum {string|null} */
+                  associationTier?: 'associated' | 'candidate' | 'unverified' | null;
                 }[];
               };
             };

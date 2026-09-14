@@ -12884,6 +12884,17 @@
                                             "type": "null"
                                           }
                                         ]
+                                      },
+                                      "associationTier": {
+                                        "type": [
+                                          "string",
+                                          "null"
+                                        ],
+                                        "enum": [
+                                          "associated",
+                                          "candidate",
+                                          "unverified"
+                                        ]
                                       }
                                     },
                                     "required": [
@@ -17680,6 +17691,17 @@
                                       {
                                         "type": "null"
                                       }
+                                    ]
+                                  },
+                                  "associationTier": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ],
+                                    "enum": [
+                                      "associated",
+                                      "candidate",
+                                      "unverified"
                                     ]
                                   }
                                 },
