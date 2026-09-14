@@ -3135,6 +3135,9 @@ export interface operations {
                     } | null;
                     estimatedMonthlyListeners: number | null;
                     estimatedMonthyListenersCalculatedAt: unknown | null;
+                    /** @enum {string|null} */
+                    confidence?: 'high' | 'medium' | 'low' | null;
+                    isDormant?: boolean | null;
                   };
                   youtubeEpisodeDetails: {
                     /** Format: uri */
@@ -3292,6 +3295,9 @@ export interface operations {
                   } | null;
                   estimatedMonthlyListeners: number | null;
                   estimatedMonthyListenersCalculatedAt: unknown | null;
+                  /** @enum {string|null} */
+                  confidence?: 'high' | 'medium' | 'low' | null;
+                  isDormant?: boolean | null;
                 };
                 youtubeEpisodeDetails: {
                   /** Format: uri */
@@ -5038,135 +5044,6 @@ export interface operations {
                           transcribeSince: unknown;
                         };
                     websiteUrl: string | null;
-                    audienceBeta?: {
-                      /** @enum {number} */
-                      schema_version: 1;
-                      monthly_consumption?: {
-                        /** @enum {number} */
-                        schemaVersion: 1;
-                        /** @enum {string} */
-                        eligibility?: 'eligible' | 'language_out_of_scope' | 'no_recent_episode';
-                        /** @enum {string} */
-                        policyVersion?: 'active-english-90d-v1';
-                        /** Format: date-time */
-                        calculatedAsOf?: Date;
-                        audio: {
-                          value: number | null;
-                          /** @enum {string} */
-                          basis:
-                            | 'op3_measured'
-                            | 'experimental_audio_model'
-                            | 'measured_counter_gains'
-                            | 'experimental_90_day_views_divided_by_3'
-                            | 'unavailable';
-                          /** Format: date-time */
-                          asOf: Date | null;
-                          /** @enum {string} */
-                          unit: 'downloads';
-                          p10: number | null;
-                          p90: number | null;
-                          modelVersion: string | null;
-                        };
-                        youtube: {
-                          value: number | null;
-                          /** @enum {string} */
-                          basis:
-                            | 'op3_measured'
-                            | 'experimental_audio_model'
-                            | 'measured_counter_gains'
-                            | 'experimental_90_day_views_divided_by_3'
-                            | 'unavailable';
-                          /** Format: date-time */
-                          asOf: Date | null;
-                          /** @enum {string} */
-                          unit: 'views';
-                          qualifiedVideos: number;
-                          measuredVideos: number;
-                          estimatedVideos: number;
-                          measuredPartialViews: number | null;
-                          periods: {
-                            videoId: string;
-                            /** Format: date-time */
-                            start: Date;
-                            /** Format: date-time */
-                            end: Date;
-                            elapsedDays: number;
-                            views: number;
-                          }[];
-                        };
-                        provisionalMonthlyTotal: number | null;
-                        /** @enum {string} */
-                        unit: 'audio_downloads_plus_youtube_views';
-                        /** @enum {string} */
-                        coverage: 'audio_and_partial_youtube' | 'audio_only' | 'partial_youtube_only' | 'unavailable';
-                        /** @enum {string|null} */
-                        uniqueListeners: null;
-                      };
-                      audio:
-                        | {
-                            /** @enum {string} */
-                            unit: 'downloads';
-                            /** @enum {string} */
-                            source: 'op3';
-                            /** @enum {string} */
-                            basis: 'trailing_30_days';
-                            /** Format: date-time */
-                            last_synced_at: Date | null;
-                            /** Format: date-time */
-                            source_as_of: Date | null;
-                            /** Format: date-time */
-                            measurement_recorded_at: Date | null;
-                            /** @enum {string} */
-                            coverage: 'unknown';
-                            /** @enum {string} */
-                            freshness: 'fresh' | 'stale' | 'unknown';
-                            /** @enum {string} */
-                            status: 'available';
-                            value: number;
-                            /** @enum {string|null} */
-                            reason: null;
-                          }
-                        | {
-                            /** @enum {string} */
-                            unit: 'downloads';
-                            /** @enum {string} */
-                            source: 'op3';
-                            /** @enum {string} */
-                            basis: 'trailing_30_days';
-                            /** Format: date-time */
-                            last_synced_at: Date | null;
-                            /** Format: date-time */
-                            source_as_of: Date | null;
-                            /** Format: date-time */
-                            measurement_recorded_at: Date | null;
-                            /** @enum {string} */
-                            coverage: 'unknown';
-                            /** @enum {string} */
-                            freshness: 'fresh' | 'stale' | 'unknown';
-                            /** @enum {string} */
-                            status: 'unavailable';
-                            /** @enum {string|null} */
-                            value: null;
-                            /** @enum {string} */
-                            reason: 'no_measurement' | 'invalid_measurement' | 'history_mismatch';
-                          };
-                      youtube: {
-                        /** @enum {string} */
-                        status: 'unavailable';
-                        /** @enum {string|null} */
-                        value: null;
-                        /** @enum {string} */
-                        unit: 'views';
-                        /** @enum {string} */
-                        reason: 'validation_pending';
-                      };
-                      /** @enum {string|null} */
-                      audience_estimate_monthly_listeners: null;
-                      /** @enum {string|null} */
-                      unique_viewers: null;
-                      /** @enum {string|null} */
-                      combined_audience: null;
-                    };
                     audienceEstimate?: {
                       audienceDemographics: {
                         /**
@@ -5214,6 +5091,9 @@ export interface operations {
                       } | null;
                       estimatedMonthlyListeners: number | null;
                       estimatedMonthyListenersCalculatedAt: unknown | null;
+                      /** @enum {string|null} */
+                      confidence?: 'high' | 'medium' | 'low' | null;
+                      isDormant?: boolean | null;
                     };
                     /** @enum {string} */
                     audioRetentionPolicy?: 'RETAIN_INDEFINITELY' | 'RETAIN_DAYS' | 'RETAIN_UNTIL_TRANSCRIBED';
@@ -5752,135 +5632,6 @@ export interface operations {
                         transcribeSince: unknown;
                       };
                   websiteUrl: string | null;
-                  audienceBeta?: {
-                    /** @enum {number} */
-                    schema_version: 1;
-                    monthly_consumption?: {
-                      /** @enum {number} */
-                      schemaVersion: 1;
-                      /** @enum {string} */
-                      eligibility?: 'eligible' | 'language_out_of_scope' | 'no_recent_episode';
-                      /** @enum {string} */
-                      policyVersion?: 'active-english-90d-v1';
-                      /** Format: date-time */
-                      calculatedAsOf?: Date;
-                      audio: {
-                        value: number | null;
-                        /** @enum {string} */
-                        basis:
-                          | 'op3_measured'
-                          | 'experimental_audio_model'
-                          | 'measured_counter_gains'
-                          | 'experimental_90_day_views_divided_by_3'
-                          | 'unavailable';
-                        /** Format: date-time */
-                        asOf: Date | null;
-                        /** @enum {string} */
-                        unit: 'downloads';
-                        p10: number | null;
-                        p90: number | null;
-                        modelVersion: string | null;
-                      };
-                      youtube: {
-                        value: number | null;
-                        /** @enum {string} */
-                        basis:
-                          | 'op3_measured'
-                          | 'experimental_audio_model'
-                          | 'measured_counter_gains'
-                          | 'experimental_90_day_views_divided_by_3'
-                          | 'unavailable';
-                        /** Format: date-time */
-                        asOf: Date | null;
-                        /** @enum {string} */
-                        unit: 'views';
-                        qualifiedVideos: number;
-                        measuredVideos: number;
-                        estimatedVideos: number;
-                        measuredPartialViews: number | null;
-                        periods: {
-                          videoId: string;
-                          /** Format: date-time */
-                          start: Date;
-                          /** Format: date-time */
-                          end: Date;
-                          elapsedDays: number;
-                          views: number;
-                        }[];
-                      };
-                      provisionalMonthlyTotal: number | null;
-                      /** @enum {string} */
-                      unit: 'audio_downloads_plus_youtube_views';
-                      /** @enum {string} */
-                      coverage: 'audio_and_partial_youtube' | 'audio_only' | 'partial_youtube_only' | 'unavailable';
-                      /** @enum {string|null} */
-                      uniqueListeners: null;
-                    };
-                    audio:
-                      | {
-                          /** @enum {string} */
-                          unit: 'downloads';
-                          /** @enum {string} */
-                          source: 'op3';
-                          /** @enum {string} */
-                          basis: 'trailing_30_days';
-                          /** Format: date-time */
-                          last_synced_at: Date | null;
-                          /** Format: date-time */
-                          source_as_of: Date | null;
-                          /** Format: date-time */
-                          measurement_recorded_at: Date | null;
-                          /** @enum {string} */
-                          coverage: 'unknown';
-                          /** @enum {string} */
-                          freshness: 'fresh' | 'stale' | 'unknown';
-                          /** @enum {string} */
-                          status: 'available';
-                          value: number;
-                          /** @enum {string|null} */
-                          reason: null;
-                        }
-                      | {
-                          /** @enum {string} */
-                          unit: 'downloads';
-                          /** @enum {string} */
-                          source: 'op3';
-                          /** @enum {string} */
-                          basis: 'trailing_30_days';
-                          /** Format: date-time */
-                          last_synced_at: Date | null;
-                          /** Format: date-time */
-                          source_as_of: Date | null;
-                          /** Format: date-time */
-                          measurement_recorded_at: Date | null;
-                          /** @enum {string} */
-                          coverage: 'unknown';
-                          /** @enum {string} */
-                          freshness: 'fresh' | 'stale' | 'unknown';
-                          /** @enum {string} */
-                          status: 'unavailable';
-                          /** @enum {string|null} */
-                          value: null;
-                          /** @enum {string} */
-                          reason: 'no_measurement' | 'invalid_measurement' | 'history_mismatch';
-                        };
-                    youtube: {
-                      /** @enum {string} */
-                      status: 'unavailable';
-                      /** @enum {string|null} */
-                      value: null;
-                      /** @enum {string} */
-                      unit: 'views';
-                      /** @enum {string} */
-                      reason: 'validation_pending';
-                    };
-                    /** @enum {string|null} */
-                    audience_estimate_monthly_listeners: null;
-                    /** @enum {string|null} */
-                    unique_viewers: null;
-                    /** @enum {string|null} */
-                    combined_audience: null;
-                  };
                   audienceEstimate?: {
                     audienceDemographics: {
                       /**
@@ -5928,6 +5679,9 @@ export interface operations {
                     } | null;
                     estimatedMonthlyListeners: number | null;
                     estimatedMonthyListenersCalculatedAt: unknown | null;
+                    /** @enum {string|null} */
+                    confidence?: 'high' | 'medium' | 'low' | null;
+                    isDormant?: boolean | null;
                   };
                   /** @enum {string} */
                   audioRetentionPolicy?: 'RETAIN_INDEFINITELY' | 'RETAIN_DAYS' | 'RETAIN_UNTIL_TRANSCRIBED';
@@ -6017,6 +5771,9 @@ export interface operations {
                         } | null;
                         estimatedMonthlyListeners: number | null;
                         estimatedMonthyListenersCalculatedAt: unknown | null;
+                        /** @enum {string|null} */
+                        confidence?: 'high' | 'medium' | 'low' | null;
+                        isDormant?: boolean | null;
                       };
                       youtubeEpisodeDetails: {
                         /** Format: uri */
@@ -6667,135 +6424,6 @@ export interface operations {
                       transcribeSince: unknown;
                     };
                 websiteUrl: string | null;
-                audienceBeta?: {
-                  /** @enum {number} */
-                  schema_version: 1;
-                  monthly_consumption?: {
-                    /** @enum {number} */
-                    schemaVersion: 1;
-                    /** @enum {string} */
-                    eligibility?: 'eligible' | 'language_out_of_scope' | 'no_recent_episode';
-                    /** @enum {string} */
-                    policyVersion?: 'active-english-90d-v1';
-                    /** Format: date-time */
-                    calculatedAsOf?: Date;
-                    audio: {
-                      value: number | null;
-                      /** @enum {string} */
-                      basis:
-                        | 'op3_measured'
-                        | 'experimental_audio_model'
-                        | 'measured_counter_gains'
-                        | 'experimental_90_day_views_divided_by_3'
-                        | 'unavailable';
-                      /** Format: date-time */
-                      asOf: Date | null;
-                      /** @enum {string} */
-                      unit: 'downloads';
-                      p10: number | null;
-                      p90: number | null;
-                      modelVersion: string | null;
-                    };
-                    youtube: {
-                      value: number | null;
-                      /** @enum {string} */
-                      basis:
-                        | 'op3_measured'
-                        | 'experimental_audio_model'
-                        | 'measured_counter_gains'
-                        | 'experimental_90_day_views_divided_by_3'
-                        | 'unavailable';
-                      /** Format: date-time */
-                      asOf: Date | null;
-                      /** @enum {string} */
-                      unit: 'views';
-                      qualifiedVideos: number;
-                      measuredVideos: number;
-                      estimatedVideos: number;
-                      measuredPartialViews: number | null;
-                      periods: {
-                        videoId: string;
-                        /** Format: date-time */
-                        start: Date;
-                        /** Format: date-time */
-                        end: Date;
-                        elapsedDays: number;
-                        views: number;
-                      }[];
-                    };
-                    provisionalMonthlyTotal: number | null;
-                    /** @enum {string} */
-                    unit: 'audio_downloads_plus_youtube_views';
-                    /** @enum {string} */
-                    coverage: 'audio_and_partial_youtube' | 'audio_only' | 'partial_youtube_only' | 'unavailable';
-                    /** @enum {string|null} */
-                    uniqueListeners: null;
-                  };
-                  audio:
-                    | {
-                        /** @enum {string} */
-                        unit: 'downloads';
-                        /** @enum {string} */
-                        source: 'op3';
-                        /** @enum {string} */
-                        basis: 'trailing_30_days';
-                        /** Format: date-time */
-                        last_synced_at: Date | null;
-                        /** Format: date-time */
-                        source_as_of: Date | null;
-                        /** Format: date-time */
-                        measurement_recorded_at: Date | null;
-                        /** @enum {string} */
-                        coverage: 'unknown';
-                        /** @enum {string} */
-                        freshness: 'fresh' | 'stale' | 'unknown';
-                        /** @enum {string} */
-                        status: 'available';
-                        value: number;
-                        /** @enum {string|null} */
-                        reason: null;
-                      }
-                    | {
-                        /** @enum {string} */
-                        unit: 'downloads';
-                        /** @enum {string} */
-                        source: 'op3';
-                        /** @enum {string} */
-                        basis: 'trailing_30_days';
-                        /** Format: date-time */
-                        last_synced_at: Date | null;
-                        /** Format: date-time */
-                        source_as_of: Date | null;
-                        /** Format: date-time */
-                        measurement_recorded_at: Date | null;
-                        /** @enum {string} */
-                        coverage: 'unknown';
-                        /** @enum {string} */
-                        freshness: 'fresh' | 'stale' | 'unknown';
-                        /** @enum {string} */
-                        status: 'unavailable';
-                        /** @enum {string|null} */
-                        value: null;
-                        /** @enum {string} */
-                        reason: 'no_measurement' | 'invalid_measurement' | 'history_mismatch';
-                      };
-                  youtube: {
-                    /** @enum {string} */
-                    status: 'unavailable';
-                    /** @enum {string|null} */
-                    value: null;
-                    /** @enum {string} */
-                    unit: 'views';
-                    /** @enum {string} */
-                    reason: 'validation_pending';
-                  };
-                  /** @enum {string|null} */
-                  audience_estimate_monthly_listeners: null;
-                  /** @enum {string|null} */
-                  unique_viewers: null;
-                  /** @enum {string|null} */
-                  combined_audience: null;
-                };
                 audienceEstimate?: {
                   audienceDemographics: {
                     /**
@@ -6843,6 +6471,9 @@ export interface operations {
                   } | null;
                   estimatedMonthlyListeners: number | null;
                   estimatedMonthyListenersCalculatedAt: unknown | null;
+                  /** @enum {string|null} */
+                  confidence?: 'high' | 'medium' | 'low' | null;
+                  isDormant?: boolean | null;
                 };
                 /** @enum {string} */
                 audioRetentionPolicy?: 'RETAIN_INDEFINITELY' | 'RETAIN_DAYS' | 'RETAIN_UNTIL_TRANSCRIBED';
@@ -7029,6 +6660,9 @@ export interface operations {
                     } | null;
                     estimatedMonthlyListeners: number | null;
                     estimatedMonthyListenersCalculatedAt: unknown | null;
+                    /** @enum {string|null} */
+                    confidence?: 'high' | 'medium' | 'low' | null;
+                    isDormant?: boolean | null;
                   };
                   youtubeEpisodeDetails: {
                     /** Format: uri */
@@ -8468,135 +8102,6 @@ export interface operations {
                           transcribeSince: unknown;
                         };
                     websiteUrl: string | null;
-                    audienceBeta?: {
-                      /** @enum {number} */
-                      schema_version: 1;
-                      monthly_consumption?: {
-                        /** @enum {number} */
-                        schemaVersion: 1;
-                        /** @enum {string} */
-                        eligibility?: 'eligible' | 'language_out_of_scope' | 'no_recent_episode';
-                        /** @enum {string} */
-                        policyVersion?: 'active-english-90d-v1';
-                        /** Format: date-time */
-                        calculatedAsOf?: Date;
-                        audio: {
-                          value: number | null;
-                          /** @enum {string} */
-                          basis:
-                            | 'op3_measured'
-                            | 'experimental_audio_model'
-                            | 'measured_counter_gains'
-                            | 'experimental_90_day_views_divided_by_3'
-                            | 'unavailable';
-                          /** Format: date-time */
-                          asOf: Date | null;
-                          /** @enum {string} */
-                          unit: 'downloads';
-                          p10: number | null;
-                          p90: number | null;
-                          modelVersion: string | null;
-                        };
-                        youtube: {
-                          value: number | null;
-                          /** @enum {string} */
-                          basis:
-                            | 'op3_measured'
-                            | 'experimental_audio_model'
-                            | 'measured_counter_gains'
-                            | 'experimental_90_day_views_divided_by_3'
-                            | 'unavailable';
-                          /** Format: date-time */
-                          asOf: Date | null;
-                          /** @enum {string} */
-                          unit: 'views';
-                          qualifiedVideos: number;
-                          measuredVideos: number;
-                          estimatedVideos: number;
-                          measuredPartialViews: number | null;
-                          periods: {
-                            videoId: string;
-                            /** Format: date-time */
-                            start: Date;
-                            /** Format: date-time */
-                            end: Date;
-                            elapsedDays: number;
-                            views: number;
-                          }[];
-                        };
-                        provisionalMonthlyTotal: number | null;
-                        /** @enum {string} */
-                        unit: 'audio_downloads_plus_youtube_views';
-                        /** @enum {string} */
-                        coverage: 'audio_and_partial_youtube' | 'audio_only' | 'partial_youtube_only' | 'unavailable';
-                        /** @enum {string|null} */
-                        uniqueListeners: null;
-                      };
-                      audio:
-                        | {
-                            /** @enum {string} */
-                            unit: 'downloads';
-                            /** @enum {string} */
-                            source: 'op3';
-                            /** @enum {string} */
-                            basis: 'trailing_30_days';
-                            /** Format: date-time */
-                            last_synced_at: Date | null;
-                            /** Format: date-time */
-                            source_as_of: Date | null;
-                            /** Format: date-time */
-                            measurement_recorded_at: Date | null;
-                            /** @enum {string} */
-                            coverage: 'unknown';
-                            /** @enum {string} */
-                            freshness: 'fresh' | 'stale' | 'unknown';
-                            /** @enum {string} */
-                            status: 'available';
-                            value: number;
-                            /** @enum {string|null} */
-                            reason: null;
-                          }
-                        | {
-                            /** @enum {string} */
-                            unit: 'downloads';
-                            /** @enum {string} */
-                            source: 'op3';
-                            /** @enum {string} */
-                            basis: 'trailing_30_days';
-                            /** Format: date-time */
-                            last_synced_at: Date | null;
-                            /** Format: date-time */
-                            source_as_of: Date | null;
-                            /** Format: date-time */
-                            measurement_recorded_at: Date | null;
-                            /** @enum {string} */
-                            coverage: 'unknown';
-                            /** @enum {string} */
-                            freshness: 'fresh' | 'stale' | 'unknown';
-                            /** @enum {string} */
-                            status: 'unavailable';
-                            /** @enum {string|null} */
-                            value: null;
-                            /** @enum {string} */
-                            reason: 'no_measurement' | 'invalid_measurement' | 'history_mismatch';
-                          };
-                      youtube: {
-                        /** @enum {string} */
-                        status: 'unavailable';
-                        /** @enum {string|null} */
-                        value: null;
-                        /** @enum {string} */
-                        unit: 'views';
-                        /** @enum {string} */
-                        reason: 'validation_pending';
-                      };
-                      /** @enum {string|null} */
-                      audience_estimate_monthly_listeners: null;
-                      /** @enum {string|null} */
-                      unique_viewers: null;
-                      /** @enum {string|null} */
-                      combined_audience: null;
-                    };
                     audienceEstimate?: {
                       audienceDemographics: {
                         /**
@@ -8644,6 +8149,9 @@ export interface operations {
                       } | null;
                       estimatedMonthlyListeners: number | null;
                       estimatedMonthyListenersCalculatedAt: unknown | null;
+                      /** @enum {string|null} */
+                      confidence?: 'high' | 'medium' | 'low' | null;
+                      isDormant?: boolean | null;
                     };
                     /** @enum {string} */
                     audioRetentionPolicy?: 'RETAIN_INDEFINITELY' | 'RETAIN_DAYS' | 'RETAIN_UNTIL_TRANSCRIBED';
