@@ -2692,6 +2692,8 @@ export interface operations {
                 };
                 positions: {
                   position: number;
+                  /** @description Latest published monthly audience estimate for the podcast, independent of the chart date and country. */
+                  estimatedMonthlyListeners: number | null;
                   podcastOnChart: {
                     podcastOnChartId: string;
                     title: string;
@@ -2818,6 +2820,8 @@ export interface operations {
                 };
                 positions: {
                   position: number;
+                  /** @description Latest published monthly audience estimate for the podcast, independent of the chart date and country. */
+                  estimatedMonthlyListeners: number | null;
                   podcastOnChart: {
                     podcastOnChartId: string;
                     title: string;

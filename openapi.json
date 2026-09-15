@@ -3767,6 +3767,15 @@
                                   "position": {
                                     "type": "number"
                                   },
+                                  "estimatedMonthlyListeners": {
+                                    "description": "Latest published monthly audience estimate for the podcast, independent of the chart date and country.",
+                                    "type": [
+                                      "integer",
+                                      "null"
+                                    ],
+                                    "minimum": 0,
+                                    "maximum": 9007199254740991
+                                  },
                                   "podcastOnChart": {
                                     "type": "object",
                                     "properties": {
@@ -3887,6 +3896,7 @@
                                 },
                                 "required": [
                                   "position",
+                                  "estimatedMonthlyListeners",
                                   "podcastOnChart",
                                   "podenginePodcast"
                                 ],
@@ -4084,6 +4094,15 @@
                                   "position": {
                                     "type": "number"
                                   },
+                                  "estimatedMonthlyListeners": {
+                                    "description": "Latest published monthly audience estimate for the podcast, independent of the chart date and country.",
+                                    "type": [
+                                      "integer",
+                                      "null"
+                                    ],
+                                    "minimum": 0,
+                                    "maximum": 9007199254740991
+                                  },
                                   "podcastOnChart": {
                                     "type": "object",
                                     "properties": {
@@ -4204,6 +4223,7 @@
                                 },
                                 "required": [
                                   "position",
+                                  "estimatedMonthlyListeners",
                                   "podcastOnChart",
                                   "podenginePodcast"
                                 ],
