@@ -1467,6 +1467,13 @@ export interface operations {
                     max: number | null;
                   };
                 };
+                /** @description Filter by the published podcast monthly audience estimate (audio downloads plus YouTube views over 30 days). Bounds are inclusive; omit min or max for an open-ended range. Podcasts without an estimate are excluded. Example: { "min": 10000, "max": 100000 }. */
+                podcastAudienceEstimatedMonthlyListeners?: {
+                  /** @description Inclusive minimum monthly audience estimate */
+                  min?: number;
+                  /** @description Inclusive maximum monthly audience estimate */
+                  max?: number;
+                };
                 /** @description Specify how results should be sorted */
                 sortOrder?: {
                   /** @enum {string} */
@@ -1624,6 +1631,13 @@ export interface operations {
                     min: number | null;
                     max: number | null;
                   };
+                };
+                /** @description Filter by the published podcast monthly audience estimate (audio downloads plus YouTube views over 30 days). Bounds are inclusive; omit min or max for an open-ended range. Podcasts without an estimate are excluded. Example: { "min": 10000, "max": 100000 }. */
+                podcastAudienceEstimatedMonthlyListeners?: {
+                  /** @description Inclusive minimum monthly audience estimate */
+                  min?: number;
+                  /** @description Inclusive maximum monthly audience estimate */
+                  max?: number;
                 };
                 /** @description Specify how results should be sorted */
                 sortOrder?: {
@@ -9406,6 +9420,13 @@ export interface operations {
               max: number | null;
             };
           };
+          /** @description Filter by the published podcast monthly audience estimate (audio downloads plus YouTube views over 30 days). Bounds are inclusive; omit min or max for an open-ended range. Podcasts without an estimate are excluded. Example: { "min": 10000, "max": 100000 }. */
+          podcastAudienceEstimatedMonthlyListeners?: {
+            /** @description Inclusive minimum monthly audience estimate */
+            min?: number;
+            /** @description Inclusive maximum monthly audience estimate */
+            max?: number;
+          };
           /** @description Specify how results should be sorted */
           sortOrder?: {
             /** @enum {string} */
@@ -9574,6 +9595,13 @@ export interface operations {
                     min: number | null;
                     max: number | null;
                   };
+                };
+                /** @description Filter by the published podcast monthly audience estimate (audio downloads plus YouTube views over 30 days). Bounds are inclusive; omit min or max for an open-ended range. Podcasts without an estimate are excluded. Example: { "min": 10000, "max": 100000 }. */
+                podcastAudienceEstimatedMonthlyListeners?: {
+                  /** @description Inclusive minimum monthly audience estimate */
+                  min?: number;
+                  /** @description Inclusive maximum monthly audience estimate */
+                  max?: number;
                 };
                 /** @description Specify how results should be sorted */
                 sortOrder?: {
@@ -9816,6 +9844,13 @@ export interface operations {
               max: number | null;
             };
           };
+          /** @description Filter by the published podcast monthly audience estimate (audio downloads plus YouTube views over 30 days). Bounds are inclusive; omit min or max for an open-ended range. Podcasts without an estimate are excluded. Example: { "min": 10000, "max": 100000 }. */
+          podcastAudienceEstimatedMonthlyListeners?: {
+            /** @description Inclusive minimum monthly audience estimate */
+            min?: number;
+            /** @description Inclusive maximum monthly audience estimate */
+            max?: number;
+          };
           /** @description Specify how results should be sorted */
           sortOrder?: {
             /** @enum {string} */
@@ -10037,6 +10072,13 @@ export interface operations {
                     min: number | null;
                     max: number | null;
                   };
+                };
+                /** @description Filter by the published podcast monthly audience estimate (audio downloads plus YouTube views over 30 days). Bounds are inclusive; omit min or max for an open-ended range. Podcasts without an estimate are excluded. Example: { "min": 10000, "max": 100000 }. */
+                podcastAudienceEstimatedMonthlyListeners?: {
+                  /** @description Inclusive minimum monthly audience estimate */
+                  min?: number;
+                  /** @description Inclusive maximum monthly audience estimate */
+                  max?: number;
                 };
                 /** @description Specify how results should be sorted */
                 sortOrder?: {
