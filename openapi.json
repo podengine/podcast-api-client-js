@@ -13492,6 +13492,15 @@
             }
           },
           {
+            "name": "includePublishingRhythm",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "description": "Include a 26-week publication heatmap and cadence summary, independent of episode pagination and transcript filtering.",
+              "type": "boolean"
+            }
+          },
+          {
             "name": "hasTranscript",
             "in": "query",
             "required": false,
@@ -13540,6 +13549,10 @@
                         "options": {
                           "type": "object",
                           "properties": {
+                            "includePublishingRhythm": {
+                              "description": "Include a 26-week publication heatmap and cadence summary, independent of episode pagination and transcript filtering.",
+                              "type": "boolean"
+                            },
                             "hasTranscript": {
                               "type": "boolean"
                             },
@@ -13983,6 +13996,124 @@
                           "required": [
                             "podcast",
                             "episodes"
+                          ],
+                          "additionalProperties": false
+                        },
+                        "publishingRhythm": {
+                          "type": "object",
+                          "properties": {
+                            "start": {
+                              "type": "string",
+                              "format": "date-time",
+                              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                            },
+                            "end": {
+                              "type": "string",
+                              "format": "date-time",
+                              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                            },
+                            "days": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "date": {
+                                    "type": "string",
+                                    "format": "date",
+                                    "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))$"
+                                  },
+                                  "count": {
+                                    "type": "integer",
+                                    "minimum": 0,
+                                    "maximum": 9007199254740991
+                                  },
+                                  "runtimeSeconds": {
+                                    "type": [
+                                      "number",
+                                      "null"
+                                    ]
+                                  },
+                                  "future": {
+                                    "type": "boolean"
+                                  }
+                                },
+                                "required": [
+                                  "date",
+                                  "count",
+                                  "runtimeSeconds",
+                                  "future"
+                                ],
+                                "additionalProperties": false
+                              }
+                            },
+                            "episodeCount": {
+                              "type": "integer",
+                              "minimum": 0,
+                              "maximum": 9007199254740991
+                            },
+                            "truncated": {
+                              "type": "boolean"
+                            },
+                            "medianRuntimeSeconds": {
+                              "type": [
+                                "number",
+                                "null"
+                              ]
+                            },
+                            "medianIntervalDays": {
+                              "type": [
+                                "number",
+                                "null"
+                              ]
+                            },
+                            "emptyWeeks": {
+                              "type": "array",
+                              "items": {
+                                "type": "string",
+                                "format": "date",
+                                "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))$"
+                              }
+                            },
+                            "weekdayShift": {
+                              "type": [
+                                "object",
+                                "null"
+                              ],
+                              "properties": {
+                                "fromDay": {
+                                  "type": "integer",
+                                  "minimum": 0,
+                                  "maximum": 6
+                                },
+                                "toDay": {
+                                  "type": "integer",
+                                  "minimum": 0,
+                                  "maximum": 6
+                                },
+                                "since": {
+                                  "type": "string",
+                                  "format": "date",
+                                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))$"
+                                }
+                              },
+                              "required": [
+                                "fromDay",
+                                "toDay",
+                                "since"
+                              ],
+                              "additionalProperties": false
+                            }
+                          },
+                          "required": [
+                            "start",
+                            "end",
+                            "days",
+                            "episodeCount",
+                            "truncated",
+                            "medianRuntimeSeconds",
+                            "medianIntervalDays",
+                            "emptyWeeks",
+                            "weekdayShift"
                           ],
                           "additionalProperties": false
                         }
