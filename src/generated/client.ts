@@ -554,7 +554,7 @@ const descriptors = {
     method: 'GET',
     path: '/api/v1/podcasts/{podcastIdOrSlug}/episodes',
     pathParams: ['podcastIdOrSlug'],
-    queryParams: ['includePublishingRhythm', 'hasTranscript', 'skip', 'limit'],
+    queryParams: ['hasTranscript', 'skip', 'limit'],
     body: 'none',
     binary: false,
   },

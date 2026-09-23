@@ -6758,7 +6758,6 @@ export interface operations {
   getPodcastEpisodes: {
     parameters: {
       query?: {
-        includePublishingRhythm?: boolean;
         hasTranscript?: boolean;
         skip?: number;
         limit?: number;
@@ -6782,8 +6781,6 @@ export interface operations {
             status: 'OK';
             data: {
               options: {
-                /** @description Include a 26-week publication heatmap and cadence summary, independent of episode pagination and transcript filtering. */
-                includePublishingRhythm?: boolean;
                 hasTranscript?: boolean;
                 skip?: number;
                 limit?: number;
@@ -6912,30 +6909,6 @@ export interface operations {
                   /** Format: uri */
                   applePodcastsUrl: string | null;
                 }[];
-              };
-              publishingRhythm?: {
-                /** Format: date-time */
-                start: Date;
-                /** Format: date-time */
-                end: Date;
-                days: {
-                  /** Format: date */
-                  date: string;
-                  count: number;
-                  runtimeSeconds: number | null;
-                  future: boolean;
-                }[];
-                episodeCount: number;
-                truncated: boolean;
-                medianRuntimeSeconds: number | null;
-                medianIntervalDays: number | null;
-                emptyWeeks: string[];
-                weekdayShift: {
-                  fromDay: number;
-                  toDay: number;
-                  /** Format: date */
-                  since: string;
-                } | null;
               };
             };
           };
