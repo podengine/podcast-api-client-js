@@ -8701,6 +8701,206 @@
                                           "boolean",
                                           "null"
                                         ]
+                                      },
+                                      "hasOp3Analytics": {
+                                        "type": "boolean"
+                                      },
+                                      "op3Downloads": {
+                                        "oneOf": [
+                                          {
+                                            "type": "object",
+                                            "properties": {
+                                              "unit": {
+                                                "type": "string",
+                                                "enum": [
+                                                  "downloads"
+                                                ]
+                                              },
+                                              "source": {
+                                                "type": "string",
+                                                "enum": [
+                                                  "op3"
+                                                ]
+                                              },
+                                              "basis": {
+                                                "type": "string",
+                                                "enum": [
+                                                  "trailing_30_days"
+                                                ]
+                                              },
+                                              "last_synced_at": {
+                                                "type": [
+                                                  "string",
+                                                  "null"
+                                                ],
+                                                "format": "date-time",
+                                                "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                                              },
+                                              "source_as_of": {
+                                                "type": [
+                                                  "string",
+                                                  "null"
+                                                ],
+                                                "format": "date-time",
+                                                "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                                              },
+                                              "measurement_recorded_at": {
+                                                "type": [
+                                                  "string",
+                                                  "null"
+                                                ],
+                                                "format": "date-time",
+                                                "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                                              },
+                                              "coverage": {
+                                                "type": "string",
+                                                "enum": [
+                                                  "unknown"
+                                                ]
+                                              },
+                                              "freshness": {
+                                                "type": "string",
+                                                "enum": [
+                                                  "fresh",
+                                                  "stale",
+                                                  "unknown"
+                                                ]
+                                              },
+                                              "status": {
+                                                "type": "string",
+                                                "enum": [
+                                                  "available"
+                                                ]
+                                              },
+                                              "value": {
+                                                "type": "integer",
+                                                "minimum": 0,
+                                                "maximum": 9007199254740991
+                                              },
+                                              "reason": {
+                                                "type": [
+                                                  "string",
+                                                  "null"
+                                                ],
+                                                "enum": [
+                                                  null
+                                                ]
+                                              }
+                                            },
+                                            "required": [
+                                              "unit",
+                                              "source",
+                                              "basis",
+                                              "last_synced_at",
+                                              "source_as_of",
+                                              "measurement_recorded_at",
+                                              "coverage",
+                                              "freshness",
+                                              "status",
+                                              "value",
+                                              "reason"
+                                            ],
+                                            "additionalProperties": false
+                                          },
+                                          {
+                                            "type": "object",
+                                            "properties": {
+                                              "unit": {
+                                                "type": "string",
+                                                "enum": [
+                                                  "downloads"
+                                                ]
+                                              },
+                                              "source": {
+                                                "type": "string",
+                                                "enum": [
+                                                  "op3"
+                                                ]
+                                              },
+                                              "basis": {
+                                                "type": "string",
+                                                "enum": [
+                                                  "trailing_30_days"
+                                                ]
+                                              },
+                                              "last_synced_at": {
+                                                "type": [
+                                                  "string",
+                                                  "null"
+                                                ],
+                                                "format": "date-time",
+                                                "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                                              },
+                                              "source_as_of": {
+                                                "type": [
+                                                  "string",
+                                                  "null"
+                                                ],
+                                                "format": "date-time",
+                                                "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                                              },
+                                              "measurement_recorded_at": {
+                                                "type": [
+                                                  "string",
+                                                  "null"
+                                                ],
+                                                "format": "date-time",
+                                                "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                                              },
+                                              "coverage": {
+                                                "type": "string",
+                                                "enum": [
+                                                  "unknown"
+                                                ]
+                                              },
+                                              "freshness": {
+                                                "type": "string",
+                                                "enum": [
+                                                  "fresh",
+                                                  "stale",
+                                                  "unknown"
+                                                ]
+                                              },
+                                              "status": {
+                                                "type": "string",
+                                                "enum": [
+                                                  "unavailable"
+                                                ]
+                                              },
+                                              "value": {
+                                                "type": [
+                                                  "string",
+                                                  "null"
+                                                ],
+                                                "enum": [
+                                                  null
+                                                ]
+                                              },
+                                              "reason": {
+                                                "type": "string",
+                                                "enum": [
+                                                  "no_measurement",
+                                                  "invalid_measurement",
+                                                  "history_mismatch"
+                                                ]
+                                              }
+                                            },
+                                            "required": [
+                                              "unit",
+                                              "source",
+                                              "basis",
+                                              "last_synced_at",
+                                              "source_as_of",
+                                              "measurement_recorded_at",
+                                              "coverage",
+                                              "freshness",
+                                              "status",
+                                              "value",
+                                              "reason"
+                                            ],
+                                            "additionalProperties": false
+                                          }
+                                        ]
                                       }
                                     },
                                     "required": [
@@ -10157,6 +10357,206 @@
                                       "type": [
                                         "boolean",
                                         "null"
+                                      ]
+                                    },
+                                    "hasOp3Analytics": {
+                                      "type": "boolean"
+                                    },
+                                    "op3Downloads": {
+                                      "oneOf": [
+                                        {
+                                          "type": "object",
+                                          "properties": {
+                                            "unit": {
+                                              "type": "string",
+                                              "enum": [
+                                                "downloads"
+                                              ]
+                                            },
+                                            "source": {
+                                              "type": "string",
+                                              "enum": [
+                                                "op3"
+                                              ]
+                                            },
+                                            "basis": {
+                                              "type": "string",
+                                              "enum": [
+                                                "trailing_30_days"
+                                              ]
+                                            },
+                                            "last_synced_at": {
+                                              "type": [
+                                                "string",
+                                                "null"
+                                              ],
+                                              "format": "date-time",
+                                              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                                            },
+                                            "source_as_of": {
+                                              "type": [
+                                                "string",
+                                                "null"
+                                              ],
+                                              "format": "date-time",
+                                              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                                            },
+                                            "measurement_recorded_at": {
+                                              "type": [
+                                                "string",
+                                                "null"
+                                              ],
+                                              "format": "date-time",
+                                              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                                            },
+                                            "coverage": {
+                                              "type": "string",
+                                              "enum": [
+                                                "unknown"
+                                              ]
+                                            },
+                                            "freshness": {
+                                              "type": "string",
+                                              "enum": [
+                                                "fresh",
+                                                "stale",
+                                                "unknown"
+                                              ]
+                                            },
+                                            "status": {
+                                              "type": "string",
+                                              "enum": [
+                                                "available"
+                                              ]
+                                            },
+                                            "value": {
+                                              "type": "integer",
+                                              "minimum": 0,
+                                              "maximum": 9007199254740991
+                                            },
+                                            "reason": {
+                                              "type": [
+                                                "string",
+                                                "null"
+                                              ],
+                                              "enum": [
+                                                null
+                                              ]
+                                            }
+                                          },
+                                          "required": [
+                                            "unit",
+                                            "source",
+                                            "basis",
+                                            "last_synced_at",
+                                            "source_as_of",
+                                            "measurement_recorded_at",
+                                            "coverage",
+                                            "freshness",
+                                            "status",
+                                            "value",
+                                            "reason"
+                                          ],
+                                          "additionalProperties": false
+                                        },
+                                        {
+                                          "type": "object",
+                                          "properties": {
+                                            "unit": {
+                                              "type": "string",
+                                              "enum": [
+                                                "downloads"
+                                              ]
+                                            },
+                                            "source": {
+                                              "type": "string",
+                                              "enum": [
+                                                "op3"
+                                              ]
+                                            },
+                                            "basis": {
+                                              "type": "string",
+                                              "enum": [
+                                                "trailing_30_days"
+                                              ]
+                                            },
+                                            "last_synced_at": {
+                                              "type": [
+                                                "string",
+                                                "null"
+                                              ],
+                                              "format": "date-time",
+                                              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                                            },
+                                            "source_as_of": {
+                                              "type": [
+                                                "string",
+                                                "null"
+                                              ],
+                                              "format": "date-time",
+                                              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                                            },
+                                            "measurement_recorded_at": {
+                                              "type": [
+                                                "string",
+                                                "null"
+                                              ],
+                                              "format": "date-time",
+                                              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                                            },
+                                            "coverage": {
+                                              "type": "string",
+                                              "enum": [
+                                                "unknown"
+                                              ]
+                                            },
+                                            "freshness": {
+                                              "type": "string",
+                                              "enum": [
+                                                "fresh",
+                                                "stale",
+                                                "unknown"
+                                              ]
+                                            },
+                                            "status": {
+                                              "type": "string",
+                                              "enum": [
+                                                "unavailable"
+                                              ]
+                                            },
+                                            "value": {
+                                              "type": [
+                                                "string",
+                                                "null"
+                                              ],
+                                              "enum": [
+                                                null
+                                              ]
+                                            },
+                                            "reason": {
+                                              "type": "string",
+                                              "enum": [
+                                                "no_measurement",
+                                                "invalid_measurement",
+                                                "history_mismatch"
+                                              ]
+                                            }
+                                          },
+                                          "required": [
+                                            "unit",
+                                            "source",
+                                            "basis",
+                                            "last_synced_at",
+                                            "source_as_of",
+                                            "measurement_recorded_at",
+                                            "coverage",
+                                            "freshness",
+                                            "status",
+                                            "value",
+                                            "reason"
+                                          ],
+                                          "additionalProperties": false
+                                        }
                                       ]
                                     }
                                   },
@@ -12775,6 +13175,206 @@
                                   "type": [
                                     "boolean",
                                     "null"
+                                  ]
+                                },
+                                "hasOp3Analytics": {
+                                  "type": "boolean"
+                                },
+                                "op3Downloads": {
+                                  "oneOf": [
+                                    {
+                                      "type": "object",
+                                      "properties": {
+                                        "unit": {
+                                          "type": "string",
+                                          "enum": [
+                                            "downloads"
+                                          ]
+                                        },
+                                        "source": {
+                                          "type": "string",
+                                          "enum": [
+                                            "op3"
+                                          ]
+                                        },
+                                        "basis": {
+                                          "type": "string",
+                                          "enum": [
+                                            "trailing_30_days"
+                                          ]
+                                        },
+                                        "last_synced_at": {
+                                          "type": [
+                                            "string",
+                                            "null"
+                                          ],
+                                          "format": "date-time",
+                                          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                                        },
+                                        "source_as_of": {
+                                          "type": [
+                                            "string",
+                                            "null"
+                                          ],
+                                          "format": "date-time",
+                                          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                                        },
+                                        "measurement_recorded_at": {
+                                          "type": [
+                                            "string",
+                                            "null"
+                                          ],
+                                          "format": "date-time",
+                                          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                                        },
+                                        "coverage": {
+                                          "type": "string",
+                                          "enum": [
+                                            "unknown"
+                                          ]
+                                        },
+                                        "freshness": {
+                                          "type": "string",
+                                          "enum": [
+                                            "fresh",
+                                            "stale",
+                                            "unknown"
+                                          ]
+                                        },
+                                        "status": {
+                                          "type": "string",
+                                          "enum": [
+                                            "available"
+                                          ]
+                                        },
+                                        "value": {
+                                          "type": "integer",
+                                          "minimum": 0,
+                                          "maximum": 9007199254740991
+                                        },
+                                        "reason": {
+                                          "type": [
+                                            "string",
+                                            "null"
+                                          ],
+                                          "enum": [
+                                            null
+                                          ]
+                                        }
+                                      },
+                                      "required": [
+                                        "unit",
+                                        "source",
+                                        "basis",
+                                        "last_synced_at",
+                                        "source_as_of",
+                                        "measurement_recorded_at",
+                                        "coverage",
+                                        "freshness",
+                                        "status",
+                                        "value",
+                                        "reason"
+                                      ],
+                                      "additionalProperties": false
+                                    },
+                                    {
+                                      "type": "object",
+                                      "properties": {
+                                        "unit": {
+                                          "type": "string",
+                                          "enum": [
+                                            "downloads"
+                                          ]
+                                        },
+                                        "source": {
+                                          "type": "string",
+                                          "enum": [
+                                            "op3"
+                                          ]
+                                        },
+                                        "basis": {
+                                          "type": "string",
+                                          "enum": [
+                                            "trailing_30_days"
+                                          ]
+                                        },
+                                        "last_synced_at": {
+                                          "type": [
+                                            "string",
+                                            "null"
+                                          ],
+                                          "format": "date-time",
+                                          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                                        },
+                                        "source_as_of": {
+                                          "type": [
+                                            "string",
+                                            "null"
+                                          ],
+                                          "format": "date-time",
+                                          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                                        },
+                                        "measurement_recorded_at": {
+                                          "type": [
+                                            "string",
+                                            "null"
+                                          ],
+                                          "format": "date-time",
+                                          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                                        },
+                                        "coverage": {
+                                          "type": "string",
+                                          "enum": [
+                                            "unknown"
+                                          ]
+                                        },
+                                        "freshness": {
+                                          "type": "string",
+                                          "enum": [
+                                            "fresh",
+                                            "stale",
+                                            "unknown"
+                                          ]
+                                        },
+                                        "status": {
+                                          "type": "string",
+                                          "enum": [
+                                            "unavailable"
+                                          ]
+                                        },
+                                        "value": {
+                                          "type": [
+                                            "string",
+                                            "null"
+                                          ],
+                                          "enum": [
+                                            null
+                                          ]
+                                        },
+                                        "reason": {
+                                          "type": "string",
+                                          "enum": [
+                                            "no_measurement",
+                                            "invalid_measurement",
+                                            "history_mismatch"
+                                          ]
+                                        }
+                                      },
+                                      "required": [
+                                        "unit",
+                                        "source",
+                                        "basis",
+                                        "last_synced_at",
+                                        "source_as_of",
+                                        "measurement_recorded_at",
+                                        "coverage",
+                                        "freshness",
+                                        "status",
+                                        "value",
+                                        "reason"
+                                      ],
+                                      "additionalProperties": false
+                                    }
                                   ]
                                 }
                               },
@@ -17196,6 +17796,206 @@
                                       "type": [
                                         "boolean",
                                         "null"
+                                      ]
+                                    },
+                                    "hasOp3Analytics": {
+                                      "type": "boolean"
+                                    },
+                                    "op3Downloads": {
+                                      "oneOf": [
+                                        {
+                                          "type": "object",
+                                          "properties": {
+                                            "unit": {
+                                              "type": "string",
+                                              "enum": [
+                                                "downloads"
+                                              ]
+                                            },
+                                            "source": {
+                                              "type": "string",
+                                              "enum": [
+                                                "op3"
+                                              ]
+                                            },
+                                            "basis": {
+                                              "type": "string",
+                                              "enum": [
+                                                "trailing_30_days"
+                                              ]
+                                            },
+                                            "last_synced_at": {
+                                              "type": [
+                                                "string",
+                                                "null"
+                                              ],
+                                              "format": "date-time",
+                                              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                                            },
+                                            "source_as_of": {
+                                              "type": [
+                                                "string",
+                                                "null"
+                                              ],
+                                              "format": "date-time",
+                                              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                                            },
+                                            "measurement_recorded_at": {
+                                              "type": [
+                                                "string",
+                                                "null"
+                                              ],
+                                              "format": "date-time",
+                                              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                                            },
+                                            "coverage": {
+                                              "type": "string",
+                                              "enum": [
+                                                "unknown"
+                                              ]
+                                            },
+                                            "freshness": {
+                                              "type": "string",
+                                              "enum": [
+                                                "fresh",
+                                                "stale",
+                                                "unknown"
+                                              ]
+                                            },
+                                            "status": {
+                                              "type": "string",
+                                              "enum": [
+                                                "available"
+                                              ]
+                                            },
+                                            "value": {
+                                              "type": "integer",
+                                              "minimum": 0,
+                                              "maximum": 9007199254740991
+                                            },
+                                            "reason": {
+                                              "type": [
+                                                "string",
+                                                "null"
+                                              ],
+                                              "enum": [
+                                                null
+                                              ]
+                                            }
+                                          },
+                                          "required": [
+                                            "unit",
+                                            "source",
+                                            "basis",
+                                            "last_synced_at",
+                                            "source_as_of",
+                                            "measurement_recorded_at",
+                                            "coverage",
+                                            "freshness",
+                                            "status",
+                                            "value",
+                                            "reason"
+                                          ],
+                                          "additionalProperties": false
+                                        },
+                                        {
+                                          "type": "object",
+                                          "properties": {
+                                            "unit": {
+                                              "type": "string",
+                                              "enum": [
+                                                "downloads"
+                                              ]
+                                            },
+                                            "source": {
+                                              "type": "string",
+                                              "enum": [
+                                                "op3"
+                                              ]
+                                            },
+                                            "basis": {
+                                              "type": "string",
+                                              "enum": [
+                                                "trailing_30_days"
+                                              ]
+                                            },
+                                            "last_synced_at": {
+                                              "type": [
+                                                "string",
+                                                "null"
+                                              ],
+                                              "format": "date-time",
+                                              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                                            },
+                                            "source_as_of": {
+                                              "type": [
+                                                "string",
+                                                "null"
+                                              ],
+                                              "format": "date-time",
+                                              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                                            },
+                                            "measurement_recorded_at": {
+                                              "type": [
+                                                "string",
+                                                "null"
+                                              ],
+                                              "format": "date-time",
+                                              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                                            },
+                                            "coverage": {
+                                              "type": "string",
+                                              "enum": [
+                                                "unknown"
+                                              ]
+                                            },
+                                            "freshness": {
+                                              "type": "string",
+                                              "enum": [
+                                                "fresh",
+                                                "stale",
+                                                "unknown"
+                                              ]
+                                            },
+                                            "status": {
+                                              "type": "string",
+                                              "enum": [
+                                                "unavailable"
+                                              ]
+                                            },
+                                            "value": {
+                                              "type": [
+                                                "string",
+                                                "null"
+                                              ],
+                                              "enum": [
+                                                null
+                                              ]
+                                            },
+                                            "reason": {
+                                              "type": "string",
+                                              "enum": [
+                                                "no_measurement",
+                                                "invalid_measurement",
+                                                "history_mismatch"
+                                              ]
+                                            }
+                                          },
+                                          "required": [
+                                            "unit",
+                                            "source",
+                                            "basis",
+                                            "last_synced_at",
+                                            "source_as_of",
+                                            "measurement_recorded_at",
+                                            "coverage",
+                                            "freshness",
+                                            "status",
+                                            "value",
+                                            "reason"
+                                          ],
+                                          "additionalProperties": false
+                                        }
                                       ]
                                     }
                                   },

@@ -5112,6 +5112,55 @@ export interface operations {
                       /** @enum {string|null} */
                       confidence?: 'high' | 'medium' | 'low' | null;
                       isDormant?: boolean | null;
+                      hasOp3Analytics?: boolean;
+                      op3Downloads?:
+                        | {
+                            /** @enum {string} */
+                            unit: 'downloads';
+                            /** @enum {string} */
+                            source: 'op3';
+                            /** @enum {string} */
+                            basis: 'trailing_30_days';
+                            /** Format: date-time */
+                            last_synced_at: Date | null;
+                            /** Format: date-time */
+                            source_as_of: Date | null;
+                            /** Format: date-time */
+                            measurement_recorded_at: Date | null;
+                            /** @enum {string} */
+                            coverage: 'unknown';
+                            /** @enum {string} */
+                            freshness: 'fresh' | 'stale' | 'unknown';
+                            /** @enum {string} */
+                            status: 'available';
+                            value: number;
+                            /** @enum {string|null} */
+                            reason: null;
+                          }
+                        | {
+                            /** @enum {string} */
+                            unit: 'downloads';
+                            /** @enum {string} */
+                            source: 'op3';
+                            /** @enum {string} */
+                            basis: 'trailing_30_days';
+                            /** Format: date-time */
+                            last_synced_at: Date | null;
+                            /** Format: date-time */
+                            source_as_of: Date | null;
+                            /** Format: date-time */
+                            measurement_recorded_at: Date | null;
+                            /** @enum {string} */
+                            coverage: 'unknown';
+                            /** @enum {string} */
+                            freshness: 'fresh' | 'stale' | 'unknown';
+                            /** @enum {string} */
+                            status: 'unavailable';
+                            /** @enum {string|null} */
+                            value: null;
+                            /** @enum {string} */
+                            reason: 'no_measurement' | 'invalid_measurement' | 'history_mismatch';
+                          };
                     };
                     /** @enum {string} */
                     audioRetentionPolicy?: 'RETAIN_INDEFINITELY' | 'RETAIN_DAYS' | 'RETAIN_UNTIL_TRANSCRIBED';
@@ -5700,6 +5749,55 @@ export interface operations {
                     /** @enum {string|null} */
                     confidence?: 'high' | 'medium' | 'low' | null;
                     isDormant?: boolean | null;
+                    hasOp3Analytics?: boolean;
+                    op3Downloads?:
+                      | {
+                          /** @enum {string} */
+                          unit: 'downloads';
+                          /** @enum {string} */
+                          source: 'op3';
+                          /** @enum {string} */
+                          basis: 'trailing_30_days';
+                          /** Format: date-time */
+                          last_synced_at: Date | null;
+                          /** Format: date-time */
+                          source_as_of: Date | null;
+                          /** Format: date-time */
+                          measurement_recorded_at: Date | null;
+                          /** @enum {string} */
+                          coverage: 'unknown';
+                          /** @enum {string} */
+                          freshness: 'fresh' | 'stale' | 'unknown';
+                          /** @enum {string} */
+                          status: 'available';
+                          value: number;
+                          /** @enum {string|null} */
+                          reason: null;
+                        }
+                      | {
+                          /** @enum {string} */
+                          unit: 'downloads';
+                          /** @enum {string} */
+                          source: 'op3';
+                          /** @enum {string} */
+                          basis: 'trailing_30_days';
+                          /** Format: date-time */
+                          last_synced_at: Date | null;
+                          /** Format: date-time */
+                          source_as_of: Date | null;
+                          /** Format: date-time */
+                          measurement_recorded_at: Date | null;
+                          /** @enum {string} */
+                          coverage: 'unknown';
+                          /** @enum {string} */
+                          freshness: 'fresh' | 'stale' | 'unknown';
+                          /** @enum {string} */
+                          status: 'unavailable';
+                          /** @enum {string|null} */
+                          value: null;
+                          /** @enum {string} */
+                          reason: 'no_measurement' | 'invalid_measurement' | 'history_mismatch';
+                        };
                   };
                   /** @enum {string} */
                   audioRetentionPolicy?: 'RETAIN_INDEFINITELY' | 'RETAIN_DAYS' | 'RETAIN_UNTIL_TRANSCRIBED';
@@ -6492,6 +6590,55 @@ export interface operations {
                   /** @enum {string|null} */
                   confidence?: 'high' | 'medium' | 'low' | null;
                   isDormant?: boolean | null;
+                  hasOp3Analytics?: boolean;
+                  op3Downloads?:
+                    | {
+                        /** @enum {string} */
+                        unit: 'downloads';
+                        /** @enum {string} */
+                        source: 'op3';
+                        /** @enum {string} */
+                        basis: 'trailing_30_days';
+                        /** Format: date-time */
+                        last_synced_at: Date | null;
+                        /** Format: date-time */
+                        source_as_of: Date | null;
+                        /** Format: date-time */
+                        measurement_recorded_at: Date | null;
+                        /** @enum {string} */
+                        coverage: 'unknown';
+                        /** @enum {string} */
+                        freshness: 'fresh' | 'stale' | 'unknown';
+                        /** @enum {string} */
+                        status: 'available';
+                        value: number;
+                        /** @enum {string|null} */
+                        reason: null;
+                      }
+                    | {
+                        /** @enum {string} */
+                        unit: 'downloads';
+                        /** @enum {string} */
+                        source: 'op3';
+                        /** @enum {string} */
+                        basis: 'trailing_30_days';
+                        /** Format: date-time */
+                        last_synced_at: Date | null;
+                        /** Format: date-time */
+                        source_as_of: Date | null;
+                        /** Format: date-time */
+                        measurement_recorded_at: Date | null;
+                        /** @enum {string} */
+                        coverage: 'unknown';
+                        /** @enum {string} */
+                        freshness: 'fresh' | 'stale' | 'unknown';
+                        /** @enum {string} */
+                        status: 'unavailable';
+                        /** @enum {string|null} */
+                        value: null;
+                        /** @enum {string} */
+                        reason: 'no_measurement' | 'invalid_measurement' | 'history_mismatch';
+                      };
                 };
                 /** @enum {string} */
                 audioRetentionPolicy?: 'RETAIN_INDEFINITELY' | 'RETAIN_DAYS' | 'RETAIN_UNTIL_TRANSCRIBED';
@@ -8170,6 +8317,55 @@ export interface operations {
                       /** @enum {string|null} */
                       confidence?: 'high' | 'medium' | 'low' | null;
                       isDormant?: boolean | null;
+                      hasOp3Analytics?: boolean;
+                      op3Downloads?:
+                        | {
+                            /** @enum {string} */
+                            unit: 'downloads';
+                            /** @enum {string} */
+                            source: 'op3';
+                            /** @enum {string} */
+                            basis: 'trailing_30_days';
+                            /** Format: date-time */
+                            last_synced_at: Date | null;
+                            /** Format: date-time */
+                            source_as_of: Date | null;
+                            /** Format: date-time */
+                            measurement_recorded_at: Date | null;
+                            /** @enum {string} */
+                            coverage: 'unknown';
+                            /** @enum {string} */
+                            freshness: 'fresh' | 'stale' | 'unknown';
+                            /** @enum {string} */
+                            status: 'available';
+                            value: number;
+                            /** @enum {string|null} */
+                            reason: null;
+                          }
+                        | {
+                            /** @enum {string} */
+                            unit: 'downloads';
+                            /** @enum {string} */
+                            source: 'op3';
+                            /** @enum {string} */
+                            basis: 'trailing_30_days';
+                            /** Format: date-time */
+                            last_synced_at: Date | null;
+                            /** Format: date-time */
+                            source_as_of: Date | null;
+                            /** Format: date-time */
+                            measurement_recorded_at: Date | null;
+                            /** @enum {string} */
+                            coverage: 'unknown';
+                            /** @enum {string} */
+                            freshness: 'fresh' | 'stale' | 'unknown';
+                            /** @enum {string} */
+                            status: 'unavailable';
+                            /** @enum {string|null} */
+                            value: null;
+                            /** @enum {string} */
+                            reason: 'no_measurement' | 'invalid_measurement' | 'history_mismatch';
+                          };
                     };
                     /** @enum {string} */
                     audioRetentionPolicy?: 'RETAIN_INDEFINITELY' | 'RETAIN_DAYS' | 'RETAIN_UNTIL_TRANSCRIBED';
