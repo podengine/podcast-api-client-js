@@ -159,14 +159,16 @@
                               "properties": {
                                 "searchTerm": {
                                   "type": "string",
-                                  "minLength": 2
+                                  "minLength": 2,
+                                  "description": "The text to look for. Wrapping it in single or double quotes forces a phrase match, the same as setting searchTermOptions.phraseMatch."
                                 },
                                 "searchType": {
                                   "type": "string",
                                   "enum": [
                                     "text",
                                     "embeddings"
-                                  ]
+                                  ],
+                                  "description": "How to match the term. 'text' runs keyword matching against each of the searchTargets. 'embeddings' is reserved for semantic search and is not accepted yet — a request using it is rejected."
                                 },
                                 "searchTargets": {
                                   "type": "array",
@@ -176,7 +178,8 @@
                                       "podcast-title",
                                       "podcast-description"
                                     ]
-                                  }
+                                  },
+                                  "description": "Which fields to match this term against. A result matches if the term hits any one of its targets, so listing several widens the search rather than narrowing it."
                                 },
                                 "searchTermOptions": {
                                   "default": {
@@ -188,6 +191,7 @@
                                   "properties": {
                                     "matchMode": {
                                       "default": "optional",
+                                      "description": "How this term combines with the others. 'optional' (the default) lets the term raise a result's relevance without being required, though a result still has to match at least one term. 'must' requires it. 'not' excludes anything it matches.",
                                       "type": "string",
                                       "enum": [
                                         "must",
@@ -211,7 +215,8 @@
                                   "required": [
                                     "matchMode"
                                   ],
-                                  "additionalProperties": false
+                                  "additionalProperties": false,
+                                  "description": "How this term is matched: whether it is required, treated as a phrase, or matched loosely."
                                 }
                               },
                               "required": [
@@ -381,9 +386,11 @@
                             "type": "object",
                             "properties": {
                               "authorityScore": {
+                                "description": "Restrict results to podcasts whose overall Authority Score falls in this range. The overall score combines the quality, engagement, social and YouTube components; podcasts we have not scored are excluded. See https://www.podengine.ai/podcast-authority-score.",
                                 "type": "object",
                                 "properties": {
                                   "min": {
+                                    "description": "Inclusive lower bound for the overall Authority Score. Null or omitted leaves the range open at the bottom.",
                                     "type": [
                                       "number",
                                       "null"
@@ -392,6 +399,7 @@
                                     "maximum": 100
                                   },
                                   "max": {
+                                    "description": "Inclusive upper bound for the overall Authority Score. Null or omitted leaves the range open at the top.",
                                     "type": [
                                       "number",
                                       "null"
@@ -407,9 +415,11 @@
                                 "additionalProperties": false
                               },
                               "qualityScore": {
+                                "description": "Restrict results by the quality component of the Authority Score, which rates how well the show is produced and maintained: release consistency, episode length, artwork, show notes, transcript coverage, contact details and RSS completeness. Podcasts we have not scored are excluded.",
                                 "type": "object",
                                 "properties": {
                                   "min": {
+                                    "description": "Inclusive lower bound for the quality score. Null or omitted leaves the range open at the bottom.",
                                     "type": [
                                       "number",
                                       "null"
@@ -418,6 +428,7 @@
                                     "maximum": 100
                                   },
                                   "max": {
+                                    "description": "Inclusive upper bound for the quality score. Null or omitted leaves the range open at the top.",
                                     "type": [
                                       "number",
                                       "null"
@@ -433,9 +444,11 @@
                                 "additionalProperties": false
                               },
                               "engagementScore": {
+                                "description": "Restrict results by the engagement component of the Authority Score, which rates how strongly listeners respond to the show: review counts and ratings, recent Apple US chart position, and Castbox plays and subscribers. Podcasts we have not scored are excluded.",
                                 "type": "object",
                                 "properties": {
                                   "min": {
+                                    "description": "Inclusive lower bound for the engagement score. Null or omitted leaves the range open at the bottom.",
                                     "type": [
                                       "number",
                                       "null"
@@ -444,6 +457,7 @@
                                     "maximum": 100
                                   },
                                   "max": {
+                                    "description": "Inclusive upper bound for the engagement score. Null or omitted leaves the range open at the top.",
                                     "type": [
                                       "number",
                                       "null"
@@ -459,9 +473,11 @@
                                 "additionalProperties": false
                               },
                               "socialScore": {
+                                "description": "Restrict results by the social component of the Authority Score, which rates follower counts across the show's linked Facebook, Instagram, LinkedIn, TikTok and Twitter accounts. Podcasts we have not scored are excluded.",
                                 "type": "object",
                                 "properties": {
                                   "min": {
+                                    "description": "Inclusive lower bound for the social score. Null or omitted leaves the range open at the bottom.",
                                     "type": [
                                       "number",
                                       "null"
@@ -470,6 +486,7 @@
                                     "maximum": 100
                                   },
                                   "max": {
+                                    "description": "Inclusive upper bound for the social score. Null or omitted leaves the range open at the top.",
                                     "type": [
                                       "number",
                                       "null"
@@ -485,9 +502,11 @@
                                 "additionalProperties": false
                               },
                               "youtubeScore": {
+                                "description": "Restrict results by the YouTube component of the Authority Score, which rates the channel's subscribers, total views and most-viewed video. Podcasts we have not scored are excluded.",
                                 "type": "object",
                                 "properties": {
                                   "min": {
+                                    "description": "Inclusive lower bound for the YouTube score. Null or omitted leaves the range open at the bottom.",
                                     "type": [
                                       "number",
                                       "null"
@@ -496,6 +515,7 @@
                                     "maximum": 100
                                   },
                                   "max": {
+                                    "description": "Inclusive upper bound for the YouTube score. Null or omitted leaves the range open at the top.",
                                     "type": [
                                       "number",
                                       "null"
@@ -546,9 +566,11 @@
                                     "title",
                                     "appleReviews",
                                     "spotifyReviews"
-                                  ]
+                                  ],
+                                  "description": "What to order by. 'relevance' is the search score. 'recentActivity' is the episode's publication date when searching episodes, and the podcast's most recent episode date when searching podcasts. 'title' orders alphabetically. 'appleReviews' and 'spotifyReviews' order by a rating that weighs the number of reviews as well as the average, so a 5.0 from three listeners does not outrank a 4.7 from thousands."
                                 },
                                 "direction": {
+                                  "description": "Sort direction. Defaults to 'asc' for 'title' and 'desc' for every other field.",
                                   "type": "string",
                                   "enum": [
                                     "asc",
@@ -556,6 +578,7 @@
                                   ]
                                 },
                                 "nullOrder": {
+                                  "description": "Where results that have no value for this field go. Defaults to 'last'. Ignored for 'relevance', which every result has.",
                                   "type": "string",
                                   "enum": [
                                     "first",
@@ -632,20 +655,23 @@
                             "type": "string"
                           },
                           "searchTerms": {
+                            "description": "Terms to search for in the episode title, the episode description, the transcript, or the parent podcast's title and description.",
                             "type": "array",
                             "items": {
                               "type": "object",
                               "properties": {
                                 "searchTerm": {
                                   "type": "string",
-                                  "minLength": 2
+                                  "minLength": 2,
+                                  "description": "The text to look for. Wrapping it in single or double quotes forces a phrase match, the same as setting searchTermOptions.phraseMatch."
                                 },
                                 "searchType": {
                                   "type": "string",
                                   "enum": [
                                     "text",
                                     "embeddings"
-                                  ]
+                                  ],
+                                  "description": "How to match the term. 'text' runs keyword matching against each of the searchTargets. 'embeddings' is reserved for semantic search and is not accepted yet — a request using it is rejected."
                                 },
                                 "searchTargets": {
                                   "type": "array",
@@ -658,7 +684,8 @@
                                       "episode-description",
                                       "transcript"
                                     ]
-                                  }
+                                  },
+                                  "description": "Which fields to match this term against. A result matches if the term hits any one of its targets, so listing several widens the search rather than narrowing it."
                                 },
                                 "searchTermOptions": {
                                   "default": {
@@ -670,6 +697,7 @@
                                   "properties": {
                                     "matchMode": {
                                       "default": "optional",
+                                      "description": "How this term combines with the others. 'optional' (the default) lets the term raise a result's relevance without being required, though a result still has to match at least one term. 'must' requires it. 'not' excludes anything it matches.",
                                       "type": "string",
                                       "enum": [
                                         "must",
@@ -693,7 +721,8 @@
                                   "required": [
                                     "matchMode"
                                   ],
-                                  "additionalProperties": false
+                                  "additionalProperties": false,
+                                  "description": "How this term is matched: whether it is required, treated as a phrase, or matched loosely."
                                 }
                               },
                               "required": [
@@ -863,9 +892,11 @@
                             "type": "object",
                             "properties": {
                               "authorityScore": {
+                                "description": "Restrict results to podcasts whose overall Authority Score falls in this range. The overall score combines the quality, engagement, social and YouTube components; podcasts we have not scored are excluded. See https://www.podengine.ai/podcast-authority-score.",
                                 "type": "object",
                                 "properties": {
                                   "min": {
+                                    "description": "Inclusive lower bound for the overall Authority Score. Null or omitted leaves the range open at the bottom.",
                                     "type": [
                                       "number",
                                       "null"
@@ -874,6 +905,7 @@
                                     "maximum": 100
                                   },
                                   "max": {
+                                    "description": "Inclusive upper bound for the overall Authority Score. Null or omitted leaves the range open at the top.",
                                     "type": [
                                       "number",
                                       "null"
@@ -889,9 +921,11 @@
                                 "additionalProperties": false
                               },
                               "qualityScore": {
+                                "description": "Restrict results by the quality component of the Authority Score, which rates how well the show is produced and maintained: release consistency, episode length, artwork, show notes, transcript coverage, contact details and RSS completeness. Podcasts we have not scored are excluded.",
                                 "type": "object",
                                 "properties": {
                                   "min": {
+                                    "description": "Inclusive lower bound for the quality score. Null or omitted leaves the range open at the bottom.",
                                     "type": [
                                       "number",
                                       "null"
@@ -900,6 +934,7 @@
                                     "maximum": 100
                                   },
                                   "max": {
+                                    "description": "Inclusive upper bound for the quality score. Null or omitted leaves the range open at the top.",
                                     "type": [
                                       "number",
                                       "null"
@@ -915,9 +950,11 @@
                                 "additionalProperties": false
                               },
                               "engagementScore": {
+                                "description": "Restrict results by the engagement component of the Authority Score, which rates how strongly listeners respond to the show: review counts and ratings, recent Apple US chart position, and Castbox plays and subscribers. Podcasts we have not scored are excluded.",
                                 "type": "object",
                                 "properties": {
                                   "min": {
+                                    "description": "Inclusive lower bound for the engagement score. Null or omitted leaves the range open at the bottom.",
                                     "type": [
                                       "number",
                                       "null"
@@ -926,6 +963,7 @@
                                     "maximum": 100
                                   },
                                   "max": {
+                                    "description": "Inclusive upper bound for the engagement score. Null or omitted leaves the range open at the top.",
                                     "type": [
                                       "number",
                                       "null"
@@ -941,9 +979,11 @@
                                 "additionalProperties": false
                               },
                               "socialScore": {
+                                "description": "Restrict results by the social component of the Authority Score, which rates follower counts across the show's linked Facebook, Instagram, LinkedIn, TikTok and Twitter accounts. Podcasts we have not scored are excluded.",
                                 "type": "object",
                                 "properties": {
                                   "min": {
+                                    "description": "Inclusive lower bound for the social score. Null or omitted leaves the range open at the bottom.",
                                     "type": [
                                       "number",
                                       "null"
@@ -952,6 +992,7 @@
                                     "maximum": 100
                                   },
                                   "max": {
+                                    "description": "Inclusive upper bound for the social score. Null or omitted leaves the range open at the top.",
                                     "type": [
                                       "number",
                                       "null"
@@ -967,9 +1008,11 @@
                                 "additionalProperties": false
                               },
                               "youtubeScore": {
+                                "description": "Restrict results by the YouTube component of the Authority Score, which rates the channel's subscribers, total views and most-viewed video. Podcasts we have not scored are excluded.",
                                 "type": "object",
                                 "properties": {
                                   "min": {
+                                    "description": "Inclusive lower bound for the YouTube score. Null or omitted leaves the range open at the bottom.",
                                     "type": [
                                       "number",
                                       "null"
@@ -978,6 +1021,7 @@
                                     "maximum": 100
                                   },
                                   "max": {
+                                    "description": "Inclusive upper bound for the YouTube score. Null or omitted leaves the range open at the top.",
                                     "type": [
                                       "number",
                                       "null"
@@ -1028,9 +1072,11 @@
                                     "title",
                                     "appleReviews",
                                     "spotifyReviews"
-                                  ]
+                                  ],
+                                  "description": "What to order by. 'relevance' is the search score. 'recentActivity' is the episode's publication date when searching episodes, and the podcast's most recent episode date when searching podcasts. 'title' orders alphabetically. 'appleReviews' and 'spotifyReviews' order by a rating that weighs the number of reviews as well as the average, so a 5.0 from three listeners does not outrank a 4.7 from thousands."
                                 },
                                 "direction": {
+                                  "description": "Sort direction. Defaults to 'asc' for 'title' and 'desc' for every other field.",
                                   "type": "string",
                                   "enum": [
                                     "asc",
@@ -1038,6 +1084,7 @@
                                   ]
                                 },
                                 "nullOrder": {
+                                  "description": "Where results that have no value for this field go. Defaults to 'last'. Ignored for 'relevance', which every result has.",
                                   "type": "string",
                                   "enum": [
                                     "first",
@@ -1052,19 +1099,23 @@
                             }
                           },
                           "includeTranscriptSnippet": {
+                            "description": "Return the opening of each matching episode transcript alongside the result, as transcriptTextSnippet. Episodes with no transcript return null.",
                             "type": "boolean"
                           },
                           "transcriptSnippetLength": {
+                            "description": "How many characters of the transcript includeTranscriptSnippet returns. Defaults to 500. This is the start of the transcript, not the part that matched — for the matching text, search the transcript target and read the highlights.",
                             "type": "integer",
                             "minimum": 1,
                             "maximum": 9007199254740991
                           },
                           "transcriptHighlightLength": {
+                            "description": "How many characters each highlighted transcript fragment contains when a search term targets the transcript. Defaults to 300.",
                             "type": "integer",
                             "minimum": 1,
                             "maximum": 9007199254740991
                           },
                           "includeEpisodeIds": {
+                            "description": "Restrict results to these specific episode IDs",
                             "type": "array",
                             "items": {
                               "type": "string"
@@ -1077,10 +1128,15 @@
                             "description": "Only episodes published strictly before this date (exclusive). Combine with publishedSince for a bounded window, e.g. publishedSince=90 days ago + publishedBefore=30 days ago."
                           },
                           "hasTranscript": {
+                            "description": "Filter to episodes that have a transcript (true) or that do not (false)",
                             "type": "boolean"
                           },
-                          "episodeUpdatedSince": {},
-                          "episodeCreatedSince": {},
+                          "episodeUpdatedSince": {
+                            "description": "Only episodes whose Pod Engine record changed on or after this date. This tracks our record, not the show's own updates, so use it to pick up everything that has changed since your last sync."
+                          },
+                          "episodeCreatedSince": {
+                            "description": "Only episodes added to Pod Engine on or after this date. An episode is added when we first index it, which can be well after it was published — use publishedSince to filter on the publication date instead."
+                          },
                           "personFilters": {
                             "description": "Filter episodes by the people on them. Entries are ANDed together, e.g. [{ \"name\": \"Elon Musk\", \"type\": \"guest\" }, { \"name\": \"Joe Rogan\", \"type\": \"host\" }] returns only episodes where Elon Musk appeared as a guest and Joe Rogan was a host. An entry with matchMode \"not\" instead excludes episodes featuring that person.",
                             "type": "array",
@@ -21114,14 +21170,16 @@
                       "properties": {
                         "searchTerm": {
                           "type": "string",
-                          "minLength": 2
+                          "minLength": 2,
+                          "description": "The text to look for. Wrapping it in single or double quotes forces a phrase match, the same as setting searchTermOptions.phraseMatch."
                         },
                         "searchType": {
                           "type": "string",
                           "enum": [
                             "text",
                             "embeddings"
-                          ]
+                          ],
+                          "description": "How to match the term. 'text' runs keyword matching against each of the searchTargets. 'embeddings' is reserved for semantic search and is not accepted yet — a request using it is rejected."
                         },
                         "searchTargets": {
                           "type": "array",
@@ -21131,7 +21189,8 @@
                               "podcast-title",
                               "podcast-description"
                             ]
-                          }
+                          },
+                          "description": "Which fields to match this term against. A result matches if the term hits any one of its targets, so listing several widens the search rather than narrowing it."
                         },
                         "searchTermOptions": {
                           "default": {
@@ -21143,6 +21202,7 @@
                           "properties": {
                             "matchMode": {
                               "default": "optional",
+                              "description": "How this term combines with the others. 'optional' (the default) lets the term raise a result's relevance without being required, though a result still has to match at least one term. 'must' requires it. 'not' excludes anything it matches.",
                               "type": "string",
                               "enum": [
                                 "must",
@@ -21166,7 +21226,8 @@
                           "required": [
                             "matchMode"
                           ],
-                          "additionalProperties": false
+                          "additionalProperties": false,
+                          "description": "How this term is matched: whether it is required, treated as a phrase, or matched loosely."
                         }
                       },
                       "required": [
@@ -21336,9 +21397,11 @@
                     "type": "object",
                     "properties": {
                       "authorityScore": {
+                        "description": "Restrict results to podcasts whose overall Authority Score falls in this range. The overall score combines the quality, engagement, social and YouTube components; podcasts we have not scored are excluded. See https://www.podengine.ai/podcast-authority-score.",
                         "type": "object",
                         "properties": {
                           "min": {
+                            "description": "Inclusive lower bound for the overall Authority Score. Null or omitted leaves the range open at the bottom.",
                             "type": [
                               "number",
                               "null"
@@ -21347,6 +21410,7 @@
                             "maximum": 100
                           },
                           "max": {
+                            "description": "Inclusive upper bound for the overall Authority Score. Null or omitted leaves the range open at the top.",
                             "type": [
                               "number",
                               "null"
@@ -21362,9 +21426,11 @@
                         "additionalProperties": false
                       },
                       "qualityScore": {
+                        "description": "Restrict results by the quality component of the Authority Score, which rates how well the show is produced and maintained: release consistency, episode length, artwork, show notes, transcript coverage, contact details and RSS completeness. Podcasts we have not scored are excluded.",
                         "type": "object",
                         "properties": {
                           "min": {
+                            "description": "Inclusive lower bound for the quality score. Null or omitted leaves the range open at the bottom.",
                             "type": [
                               "number",
                               "null"
@@ -21373,6 +21439,7 @@
                             "maximum": 100
                           },
                           "max": {
+                            "description": "Inclusive upper bound for the quality score. Null or omitted leaves the range open at the top.",
                             "type": [
                               "number",
                               "null"
@@ -21388,9 +21455,11 @@
                         "additionalProperties": false
                       },
                       "engagementScore": {
+                        "description": "Restrict results by the engagement component of the Authority Score, which rates how strongly listeners respond to the show: review counts and ratings, recent Apple US chart position, and Castbox plays and subscribers. Podcasts we have not scored are excluded.",
                         "type": "object",
                         "properties": {
                           "min": {
+                            "description": "Inclusive lower bound for the engagement score. Null or omitted leaves the range open at the bottom.",
                             "type": [
                               "number",
                               "null"
@@ -21399,6 +21468,7 @@
                             "maximum": 100
                           },
                           "max": {
+                            "description": "Inclusive upper bound for the engagement score. Null or omitted leaves the range open at the top.",
                             "type": [
                               "number",
                               "null"
@@ -21414,9 +21484,11 @@
                         "additionalProperties": false
                       },
                       "socialScore": {
+                        "description": "Restrict results by the social component of the Authority Score, which rates follower counts across the show's linked Facebook, Instagram, LinkedIn, TikTok and Twitter accounts. Podcasts we have not scored are excluded.",
                         "type": "object",
                         "properties": {
                           "min": {
+                            "description": "Inclusive lower bound for the social score. Null or omitted leaves the range open at the bottom.",
                             "type": [
                               "number",
                               "null"
@@ -21425,6 +21497,7 @@
                             "maximum": 100
                           },
                           "max": {
+                            "description": "Inclusive upper bound for the social score. Null or omitted leaves the range open at the top.",
                             "type": [
                               "number",
                               "null"
@@ -21440,9 +21513,11 @@
                         "additionalProperties": false
                       },
                       "youtubeScore": {
+                        "description": "Restrict results by the YouTube component of the Authority Score, which rates the channel's subscribers, total views and most-viewed video. Podcasts we have not scored are excluded.",
                         "type": "object",
                         "properties": {
                           "min": {
+                            "description": "Inclusive lower bound for the YouTube score. Null or omitted leaves the range open at the bottom.",
                             "type": [
                               "number",
                               "null"
@@ -21451,6 +21526,7 @@
                             "maximum": 100
                           },
                           "max": {
+                            "description": "Inclusive upper bound for the YouTube score. Null or omitted leaves the range open at the top.",
                             "type": [
                               "number",
                               "null"
@@ -21501,9 +21577,11 @@
                             "title",
                             "appleReviews",
                             "spotifyReviews"
-                          ]
+                          ],
+                          "description": "What to order by. 'relevance' is the search score. 'recentActivity' is the episode's publication date when searching episodes, and the podcast's most recent episode date when searching podcasts. 'title' orders alphabetically. 'appleReviews' and 'spotifyReviews' order by a rating that weighs the number of reviews as well as the average, so a 5.0 from three listeners does not outrank a 4.7 from thousands."
                         },
                         "direction": {
+                          "description": "Sort direction. Defaults to 'asc' for 'title' and 'desc' for every other field.",
                           "type": "string",
                           "enum": [
                             "asc",
@@ -21511,6 +21589,7 @@
                           ]
                         },
                         "nullOrder": {
+                          "description": "Where results that have no value for this field go. Defaults to 'last'. Ignored for 'relevance', which every result has.",
                           "type": "string",
                           "enum": [
                             "first",
@@ -21623,14 +21702,16 @@
                                 "properties": {
                                   "searchTerm": {
                                     "type": "string",
-                                    "minLength": 2
+                                    "minLength": 2,
+                                    "description": "The text to look for. Wrapping it in single or double quotes forces a phrase match, the same as setting searchTermOptions.phraseMatch."
                                   },
                                   "searchType": {
                                     "type": "string",
                                     "enum": [
                                       "text",
                                       "embeddings"
-                                    ]
+                                    ],
+                                    "description": "How to match the term. 'text' runs keyword matching against each of the searchTargets. 'embeddings' is reserved for semantic search and is not accepted yet — a request using it is rejected."
                                   },
                                   "searchTargets": {
                                     "type": "array",
@@ -21640,7 +21721,8 @@
                                         "podcast-title",
                                         "podcast-description"
                                       ]
-                                    }
+                                    },
+                                    "description": "Which fields to match this term against. A result matches if the term hits any one of its targets, so listing several widens the search rather than narrowing it."
                                   },
                                   "searchTermOptions": {
                                     "default": {
@@ -21652,6 +21734,7 @@
                                     "properties": {
                                       "matchMode": {
                                         "default": "optional",
+                                        "description": "How this term combines with the others. 'optional' (the default) lets the term raise a result's relevance without being required, though a result still has to match at least one term. 'must' requires it. 'not' excludes anything it matches.",
                                         "type": "string",
                                         "enum": [
                                           "must",
@@ -21675,7 +21758,8 @@
                                     "required": [
                                       "matchMode"
                                     ],
-                                    "additionalProperties": false
+                                    "additionalProperties": false,
+                                    "description": "How this term is matched: whether it is required, treated as a phrase, or matched loosely."
                                   }
                                 },
                                 "required": [
@@ -21845,9 +21929,11 @@
                               "type": "object",
                               "properties": {
                                 "authorityScore": {
+                                  "description": "Restrict results to podcasts whose overall Authority Score falls in this range. The overall score combines the quality, engagement, social and YouTube components; podcasts we have not scored are excluded. See https://www.podengine.ai/podcast-authority-score.",
                                   "type": "object",
                                   "properties": {
                                     "min": {
+                                      "description": "Inclusive lower bound for the overall Authority Score. Null or omitted leaves the range open at the bottom.",
                                       "type": [
                                         "number",
                                         "null"
@@ -21856,6 +21942,7 @@
                                       "maximum": 100
                                     },
                                     "max": {
+                                      "description": "Inclusive upper bound for the overall Authority Score. Null or omitted leaves the range open at the top.",
                                       "type": [
                                         "number",
                                         "null"
@@ -21871,9 +21958,11 @@
                                   "additionalProperties": false
                                 },
                                 "qualityScore": {
+                                  "description": "Restrict results by the quality component of the Authority Score, which rates how well the show is produced and maintained: release consistency, episode length, artwork, show notes, transcript coverage, contact details and RSS completeness. Podcasts we have not scored are excluded.",
                                   "type": "object",
                                   "properties": {
                                     "min": {
+                                      "description": "Inclusive lower bound for the quality score. Null or omitted leaves the range open at the bottom.",
                                       "type": [
                                         "number",
                                         "null"
@@ -21882,6 +21971,7 @@
                                       "maximum": 100
                                     },
                                     "max": {
+                                      "description": "Inclusive upper bound for the quality score. Null or omitted leaves the range open at the top.",
                                       "type": [
                                         "number",
                                         "null"
@@ -21897,9 +21987,11 @@
                                   "additionalProperties": false
                                 },
                                 "engagementScore": {
+                                  "description": "Restrict results by the engagement component of the Authority Score, which rates how strongly listeners respond to the show: review counts and ratings, recent Apple US chart position, and Castbox plays and subscribers. Podcasts we have not scored are excluded.",
                                   "type": "object",
                                   "properties": {
                                     "min": {
+                                      "description": "Inclusive lower bound for the engagement score. Null or omitted leaves the range open at the bottom.",
                                       "type": [
                                         "number",
                                         "null"
@@ -21908,6 +22000,7 @@
                                       "maximum": 100
                                     },
                                     "max": {
+                                      "description": "Inclusive upper bound for the engagement score. Null or omitted leaves the range open at the top.",
                                       "type": [
                                         "number",
                                         "null"
@@ -21923,9 +22016,11 @@
                                   "additionalProperties": false
                                 },
                                 "socialScore": {
+                                  "description": "Restrict results by the social component of the Authority Score, which rates follower counts across the show's linked Facebook, Instagram, LinkedIn, TikTok and Twitter accounts. Podcasts we have not scored are excluded.",
                                   "type": "object",
                                   "properties": {
                                     "min": {
+                                      "description": "Inclusive lower bound for the social score. Null or omitted leaves the range open at the bottom.",
                                       "type": [
                                         "number",
                                         "null"
@@ -21934,6 +22029,7 @@
                                       "maximum": 100
                                     },
                                     "max": {
+                                      "description": "Inclusive upper bound for the social score. Null or omitted leaves the range open at the top.",
                                       "type": [
                                         "number",
                                         "null"
@@ -21949,9 +22045,11 @@
                                   "additionalProperties": false
                                 },
                                 "youtubeScore": {
+                                  "description": "Restrict results by the YouTube component of the Authority Score, which rates the channel's subscribers, total views and most-viewed video. Podcasts we have not scored are excluded.",
                                   "type": "object",
                                   "properties": {
                                     "min": {
+                                      "description": "Inclusive lower bound for the YouTube score. Null or omitted leaves the range open at the bottom.",
                                       "type": [
                                         "number",
                                         "null"
@@ -21960,6 +22058,7 @@
                                       "maximum": 100
                                     },
                                     "max": {
+                                      "description": "Inclusive upper bound for the YouTube score. Null or omitted leaves the range open at the top.",
                                       "type": [
                                         "number",
                                         "null"
@@ -22010,9 +22109,11 @@
                                       "title",
                                       "appleReviews",
                                       "spotifyReviews"
-                                    ]
+                                    ],
+                                    "description": "What to order by. 'relevance' is the search score. 'recentActivity' is the episode's publication date when searching episodes, and the podcast's most recent episode date when searching podcasts. 'title' orders alphabetically. 'appleReviews' and 'spotifyReviews' order by a rating that weighs the number of reviews as well as the average, so a 5.0 from three listeners does not outrank a 4.7 from thousands."
                                   },
                                   "direction": {
+                                    "description": "Sort direction. Defaults to 'asc' for 'title' and 'desc' for every other field.",
                                     "type": "string",
                                     "enum": [
                                       "asc",
@@ -22020,6 +22121,7 @@
                                     ]
                                   },
                                   "nullOrder": {
+                                    "description": "Where results that have no value for this field go. Defaults to 'last'. Ignored for 'relevance', which every result has.",
                                     "type": "string",
                                     "enum": [
                                       "first",
@@ -22283,20 +22385,23 @@
                     "type": "string"
                   },
                   "searchTerms": {
+                    "description": "Terms to search for in the episode title, the episode description, the transcript, or the parent podcast's title and description.",
                     "type": "array",
                     "items": {
                       "type": "object",
                       "properties": {
                         "searchTerm": {
                           "type": "string",
-                          "minLength": 2
+                          "minLength": 2,
+                          "description": "The text to look for. Wrapping it in single or double quotes forces a phrase match, the same as setting searchTermOptions.phraseMatch."
                         },
                         "searchType": {
                           "type": "string",
                           "enum": [
                             "text",
                             "embeddings"
-                          ]
+                          ],
+                          "description": "How to match the term. 'text' runs keyword matching against each of the searchTargets. 'embeddings' is reserved for semantic search and is not accepted yet — a request using it is rejected."
                         },
                         "searchTargets": {
                           "type": "array",
@@ -22309,7 +22414,8 @@
                               "episode-description",
                               "transcript"
                             ]
-                          }
+                          },
+                          "description": "Which fields to match this term against. A result matches if the term hits any one of its targets, so listing several widens the search rather than narrowing it."
                         },
                         "searchTermOptions": {
                           "default": {
@@ -22321,6 +22427,7 @@
                           "properties": {
                             "matchMode": {
                               "default": "optional",
+                              "description": "How this term combines with the others. 'optional' (the default) lets the term raise a result's relevance without being required, though a result still has to match at least one term. 'must' requires it. 'not' excludes anything it matches.",
                               "type": "string",
                               "enum": [
                                 "must",
@@ -22344,7 +22451,8 @@
                           "required": [
                             "matchMode"
                           ],
-                          "additionalProperties": false
+                          "additionalProperties": false,
+                          "description": "How this term is matched: whether it is required, treated as a phrase, or matched loosely."
                         }
                       },
                       "required": [
@@ -22514,9 +22622,11 @@
                     "type": "object",
                     "properties": {
                       "authorityScore": {
+                        "description": "Restrict results to podcasts whose overall Authority Score falls in this range. The overall score combines the quality, engagement, social and YouTube components; podcasts we have not scored are excluded. See https://www.podengine.ai/podcast-authority-score.",
                         "type": "object",
                         "properties": {
                           "min": {
+                            "description": "Inclusive lower bound for the overall Authority Score. Null or omitted leaves the range open at the bottom.",
                             "type": [
                               "number",
                               "null"
@@ -22525,6 +22635,7 @@
                             "maximum": 100
                           },
                           "max": {
+                            "description": "Inclusive upper bound for the overall Authority Score. Null or omitted leaves the range open at the top.",
                             "type": [
                               "number",
                               "null"
@@ -22540,9 +22651,11 @@
                         "additionalProperties": false
                       },
                       "qualityScore": {
+                        "description": "Restrict results by the quality component of the Authority Score, which rates how well the show is produced and maintained: release consistency, episode length, artwork, show notes, transcript coverage, contact details and RSS completeness. Podcasts we have not scored are excluded.",
                         "type": "object",
                         "properties": {
                           "min": {
+                            "description": "Inclusive lower bound for the quality score. Null or omitted leaves the range open at the bottom.",
                             "type": [
                               "number",
                               "null"
@@ -22551,6 +22664,7 @@
                             "maximum": 100
                           },
                           "max": {
+                            "description": "Inclusive upper bound for the quality score. Null or omitted leaves the range open at the top.",
                             "type": [
                               "number",
                               "null"
@@ -22566,9 +22680,11 @@
                         "additionalProperties": false
                       },
                       "engagementScore": {
+                        "description": "Restrict results by the engagement component of the Authority Score, which rates how strongly listeners respond to the show: review counts and ratings, recent Apple US chart position, and Castbox plays and subscribers. Podcasts we have not scored are excluded.",
                         "type": "object",
                         "properties": {
                           "min": {
+                            "description": "Inclusive lower bound for the engagement score. Null or omitted leaves the range open at the bottom.",
                             "type": [
                               "number",
                               "null"
@@ -22577,6 +22693,7 @@
                             "maximum": 100
                           },
                           "max": {
+                            "description": "Inclusive upper bound for the engagement score. Null or omitted leaves the range open at the top.",
                             "type": [
                               "number",
                               "null"
@@ -22592,9 +22709,11 @@
                         "additionalProperties": false
                       },
                       "socialScore": {
+                        "description": "Restrict results by the social component of the Authority Score, which rates follower counts across the show's linked Facebook, Instagram, LinkedIn, TikTok and Twitter accounts. Podcasts we have not scored are excluded.",
                         "type": "object",
                         "properties": {
                           "min": {
+                            "description": "Inclusive lower bound for the social score. Null or omitted leaves the range open at the bottom.",
                             "type": [
                               "number",
                               "null"
@@ -22603,6 +22722,7 @@
                             "maximum": 100
                           },
                           "max": {
+                            "description": "Inclusive upper bound for the social score. Null or omitted leaves the range open at the top.",
                             "type": [
                               "number",
                               "null"
@@ -22618,9 +22738,11 @@
                         "additionalProperties": false
                       },
                       "youtubeScore": {
+                        "description": "Restrict results by the YouTube component of the Authority Score, which rates the channel's subscribers, total views and most-viewed video. Podcasts we have not scored are excluded.",
                         "type": "object",
                         "properties": {
                           "min": {
+                            "description": "Inclusive lower bound for the YouTube score. Null or omitted leaves the range open at the bottom.",
                             "type": [
                               "number",
                               "null"
@@ -22629,6 +22751,7 @@
                             "maximum": 100
                           },
                           "max": {
+                            "description": "Inclusive upper bound for the YouTube score. Null or omitted leaves the range open at the top.",
                             "type": [
                               "number",
                               "null"
@@ -22679,9 +22802,11 @@
                             "title",
                             "appleReviews",
                             "spotifyReviews"
-                          ]
+                          ],
+                          "description": "What to order by. 'relevance' is the search score. 'recentActivity' is the episode's publication date when searching episodes, and the podcast's most recent episode date when searching podcasts. 'title' orders alphabetically. 'appleReviews' and 'spotifyReviews' order by a rating that weighs the number of reviews as well as the average, so a 5.0 from three listeners does not outrank a 4.7 from thousands."
                         },
                         "direction": {
+                          "description": "Sort direction. Defaults to 'asc' for 'title' and 'desc' for every other field.",
                           "type": "string",
                           "enum": [
                             "asc",
@@ -22689,6 +22814,7 @@
                           ]
                         },
                         "nullOrder": {
+                          "description": "Where results that have no value for this field go. Defaults to 'last'. Ignored for 'relevance', which every result has.",
                           "type": "string",
                           "enum": [
                             "first",
@@ -22703,19 +22829,23 @@
                     }
                   },
                   "includeTranscriptSnippet": {
+                    "description": "Return the opening of each matching episode transcript alongside the result, as transcriptTextSnippet. Episodes with no transcript return null.",
                     "type": "boolean"
                   },
                   "transcriptSnippetLength": {
+                    "description": "How many characters of the transcript includeTranscriptSnippet returns. Defaults to 500. This is the start of the transcript, not the part that matched — for the matching text, search the transcript target and read the highlights.",
                     "type": "integer",
                     "minimum": 1,
                     "maximum": 9007199254740991
                   },
                   "transcriptHighlightLength": {
+                    "description": "How many characters each highlighted transcript fragment contains when a search term targets the transcript. Defaults to 300.",
                     "type": "integer",
                     "minimum": 1,
                     "maximum": 9007199254740991
                   },
                   "includeEpisodeIds": {
+                    "description": "Restrict results to these specific episode IDs",
                     "type": "array",
                     "items": {
                       "type": "string"
@@ -22728,10 +22858,15 @@
                     "description": "Only episodes published strictly before this date (exclusive). Combine with publishedSince for a bounded window, e.g. publishedSince=90 days ago + publishedBefore=30 days ago."
                   },
                   "hasTranscript": {
+                    "description": "Filter to episodes that have a transcript (true) or that do not (false)",
                     "type": "boolean"
                   },
-                  "episodeUpdatedSince": {},
-                  "episodeCreatedSince": {},
+                  "episodeUpdatedSince": {
+                    "description": "Only episodes whose Pod Engine record changed on or after this date. This tracks our record, not the show's own updates, so use it to pick up everything that has changed since your last sync."
+                  },
+                  "episodeCreatedSince": {
+                    "description": "Only episodes added to Pod Engine on or after this date. An episode is added when we first index it, which can be well after it was published — use publishedSince to filter on the publication date instead."
+                  },
                   "personFilters": {
                     "description": "Filter episodes by the people on them. Entries are ANDed together, e.g. [{ \"name\": \"Elon Musk\", \"type\": \"guest\" }, { \"name\": \"Joe Rogan\", \"type\": \"host\" }] returns only episodes where Elon Musk appeared as a guest and Joe Rogan was a host. An entry with matchMode \"not\" instead excludes episodes featuring that person.",
                     "type": "array",
@@ -22909,20 +23044,23 @@
                               "type": "string"
                             },
                             "searchTerms": {
+                              "description": "Terms to search for in the episode title, the episode description, the transcript, or the parent podcast's title and description.",
                               "type": "array",
                               "items": {
                                 "type": "object",
                                 "properties": {
                                   "searchTerm": {
                                     "type": "string",
-                                    "minLength": 2
+                                    "minLength": 2,
+                                    "description": "The text to look for. Wrapping it in single or double quotes forces a phrase match, the same as setting searchTermOptions.phraseMatch."
                                   },
                                   "searchType": {
                                     "type": "string",
                                     "enum": [
                                       "text",
                                       "embeddings"
-                                    ]
+                                    ],
+                                    "description": "How to match the term. 'text' runs keyword matching against each of the searchTargets. 'embeddings' is reserved for semantic search and is not accepted yet — a request using it is rejected."
                                   },
                                   "searchTargets": {
                                     "type": "array",
@@ -22935,7 +23073,8 @@
                                         "episode-description",
                                         "transcript"
                                       ]
-                                    }
+                                    },
+                                    "description": "Which fields to match this term against. A result matches if the term hits any one of its targets, so listing several widens the search rather than narrowing it."
                                   },
                                   "searchTermOptions": {
                                     "default": {
@@ -22947,6 +23086,7 @@
                                     "properties": {
                                       "matchMode": {
                                         "default": "optional",
+                                        "description": "How this term combines with the others. 'optional' (the default) lets the term raise a result's relevance without being required, though a result still has to match at least one term. 'must' requires it. 'not' excludes anything it matches.",
                                         "type": "string",
                                         "enum": [
                                           "must",
@@ -22970,7 +23110,8 @@
                                     "required": [
                                       "matchMode"
                                     ],
-                                    "additionalProperties": false
+                                    "additionalProperties": false,
+                                    "description": "How this term is matched: whether it is required, treated as a phrase, or matched loosely."
                                   }
                                 },
                                 "required": [
@@ -23140,9 +23281,11 @@
                               "type": "object",
                               "properties": {
                                 "authorityScore": {
+                                  "description": "Restrict results to podcasts whose overall Authority Score falls in this range. The overall score combines the quality, engagement, social and YouTube components; podcasts we have not scored are excluded. See https://www.podengine.ai/podcast-authority-score.",
                                   "type": "object",
                                   "properties": {
                                     "min": {
+                                      "description": "Inclusive lower bound for the overall Authority Score. Null or omitted leaves the range open at the bottom.",
                                       "type": [
                                         "number",
                                         "null"
@@ -23151,6 +23294,7 @@
                                       "maximum": 100
                                     },
                                     "max": {
+                                      "description": "Inclusive upper bound for the overall Authority Score. Null or omitted leaves the range open at the top.",
                                       "type": [
                                         "number",
                                         "null"
@@ -23166,9 +23310,11 @@
                                   "additionalProperties": false
                                 },
                                 "qualityScore": {
+                                  "description": "Restrict results by the quality component of the Authority Score, which rates how well the show is produced and maintained: release consistency, episode length, artwork, show notes, transcript coverage, contact details and RSS completeness. Podcasts we have not scored are excluded.",
                                   "type": "object",
                                   "properties": {
                                     "min": {
+                                      "description": "Inclusive lower bound for the quality score. Null or omitted leaves the range open at the bottom.",
                                       "type": [
                                         "number",
                                         "null"
@@ -23177,6 +23323,7 @@
                                       "maximum": 100
                                     },
                                     "max": {
+                                      "description": "Inclusive upper bound for the quality score. Null or omitted leaves the range open at the top.",
                                       "type": [
                                         "number",
                                         "null"
@@ -23192,9 +23339,11 @@
                                   "additionalProperties": false
                                 },
                                 "engagementScore": {
+                                  "description": "Restrict results by the engagement component of the Authority Score, which rates how strongly listeners respond to the show: review counts and ratings, recent Apple US chart position, and Castbox plays and subscribers. Podcasts we have not scored are excluded.",
                                   "type": "object",
                                   "properties": {
                                     "min": {
+                                      "description": "Inclusive lower bound for the engagement score. Null or omitted leaves the range open at the bottom.",
                                       "type": [
                                         "number",
                                         "null"
@@ -23203,6 +23352,7 @@
                                       "maximum": 100
                                     },
                                     "max": {
+                                      "description": "Inclusive upper bound for the engagement score. Null or omitted leaves the range open at the top.",
                                       "type": [
                                         "number",
                                         "null"
@@ -23218,9 +23368,11 @@
                                   "additionalProperties": false
                                 },
                                 "socialScore": {
+                                  "description": "Restrict results by the social component of the Authority Score, which rates follower counts across the show's linked Facebook, Instagram, LinkedIn, TikTok and Twitter accounts. Podcasts we have not scored are excluded.",
                                   "type": "object",
                                   "properties": {
                                     "min": {
+                                      "description": "Inclusive lower bound for the social score. Null or omitted leaves the range open at the bottom.",
                                       "type": [
                                         "number",
                                         "null"
@@ -23229,6 +23381,7 @@
                                       "maximum": 100
                                     },
                                     "max": {
+                                      "description": "Inclusive upper bound for the social score. Null or omitted leaves the range open at the top.",
                                       "type": [
                                         "number",
                                         "null"
@@ -23244,9 +23397,11 @@
                                   "additionalProperties": false
                                 },
                                 "youtubeScore": {
+                                  "description": "Restrict results by the YouTube component of the Authority Score, which rates the channel's subscribers, total views and most-viewed video. Podcasts we have not scored are excluded.",
                                   "type": "object",
                                   "properties": {
                                     "min": {
+                                      "description": "Inclusive lower bound for the YouTube score. Null or omitted leaves the range open at the bottom.",
                                       "type": [
                                         "number",
                                         "null"
@@ -23255,6 +23410,7 @@
                                       "maximum": 100
                                     },
                                     "max": {
+                                      "description": "Inclusive upper bound for the YouTube score. Null or omitted leaves the range open at the top.",
                                       "type": [
                                         "number",
                                         "null"
@@ -23305,9 +23461,11 @@
                                       "title",
                                       "appleReviews",
                                       "spotifyReviews"
-                                    ]
+                                    ],
+                                    "description": "What to order by. 'relevance' is the search score. 'recentActivity' is the episode's publication date when searching episodes, and the podcast's most recent episode date when searching podcasts. 'title' orders alphabetically. 'appleReviews' and 'spotifyReviews' order by a rating that weighs the number of reviews as well as the average, so a 5.0 from three listeners does not outrank a 4.7 from thousands."
                                   },
                                   "direction": {
+                                    "description": "Sort direction. Defaults to 'asc' for 'title' and 'desc' for every other field.",
                                     "type": "string",
                                     "enum": [
                                       "asc",
@@ -23315,6 +23473,7 @@
                                     ]
                                   },
                                   "nullOrder": {
+                                    "description": "Where results that have no value for this field go. Defaults to 'last'. Ignored for 'relevance', which every result has.",
                                     "type": "string",
                                     "enum": [
                                       "first",
@@ -23329,19 +23488,23 @@
                               }
                             },
                             "includeTranscriptSnippet": {
+                              "description": "Return the opening of each matching episode transcript alongside the result, as transcriptTextSnippet. Episodes with no transcript return null.",
                               "type": "boolean"
                             },
                             "transcriptSnippetLength": {
+                              "description": "How many characters of the transcript includeTranscriptSnippet returns. Defaults to 500. This is the start of the transcript, not the part that matched — for the matching text, search the transcript target and read the highlights.",
                               "type": "integer",
                               "minimum": 1,
                               "maximum": 9007199254740991
                             },
                             "transcriptHighlightLength": {
+                              "description": "How many characters each highlighted transcript fragment contains when a search term targets the transcript. Defaults to 300.",
                               "type": "integer",
                               "minimum": 1,
                               "maximum": 9007199254740991
                             },
                             "includeEpisodeIds": {
+                              "description": "Restrict results to these specific episode IDs",
                               "type": "array",
                               "items": {
                                 "type": "string"
@@ -23354,10 +23517,15 @@
                               "description": "Only episodes published strictly before this date (exclusive). Combine with publishedSince for a bounded window, e.g. publishedSince=90 days ago + publishedBefore=30 days ago."
                             },
                             "hasTranscript": {
+                              "description": "Filter to episodes that have a transcript (true) or that do not (false)",
                               "type": "boolean"
                             },
-                            "episodeUpdatedSince": {},
-                            "episodeCreatedSince": {},
+                            "episodeUpdatedSince": {
+                              "description": "Only episodes whose Pod Engine record changed on or after this date. This tracks our record, not the show's own updates, so use it to pick up everything that has changed since your last sync."
+                            },
+                            "episodeCreatedSince": {
+                              "description": "Only episodes added to Pod Engine on or after this date. An episode is added when we first index it, which can be well after it was published — use publishedSince to filter on the publication date instead."
+                            },
                             "personFilters": {
                               "description": "Filter episodes by the people on them. Entries are ANDed together, e.g. [{ \"name\": \"Elon Musk\", \"type\": \"guest\" }, { \"name\": \"Joe Rogan\", \"type\": \"host\" }] returns only episodes where Elon Musk appeared as a guest and Joe Rogan was a host. An entry with matchMode \"not\" instead excludes episodes featuring that person.",
                               "type": "array",

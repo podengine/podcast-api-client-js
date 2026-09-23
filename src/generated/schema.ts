@@ -1348,11 +1348,17 @@ export interface operations {
                 projectId?: string;
                 /** @description Terms to search for in podcast title and description */
                 searchTerms?: {
+                  /** @description The text to look for. Wrapping it in single or double quotes forces a phrase match, the same as setting searchTermOptions.phraseMatch. */
                   searchTerm: string;
-                  /** @enum {string} */
+                  /**
+                   * @description How to match the term. 'text' runs keyword matching against each of the searchTargets. 'embeddings' is reserved for semantic search and is not accepted yet — a request using it is rejected.
+                   * @enum {string}
+                   */
                   searchType: 'text' | 'embeddings';
+                  /** @description Which fields to match this term against. A result matches if the term hits any one of its targets, so listing several widens the search rather than narrowing it. */
                   searchTargets: ('podcast-title' | 'podcast-description')[];
                   /**
+                   * @description How this term is matched: whether it is required, treated as a phrase, or matched loosely.
                    * @default {
                    *       "matchMode": "optional",
                    *       "phraseMatch": false,
@@ -1361,6 +1367,7 @@ export interface operations {
                    */
                   searchTermOptions: {
                     /**
+                     * @description How this term combines with the others. 'optional' (the default) lets the term raise a result's relevance without being required, though a result still has to match at least one term. 'must' requires it. 'not' excludes anything it matches.
                      * @default optional
                      * @enum {string}
                      */
@@ -1446,24 +1453,39 @@ export interface operations {
                 podcastHasGuests?: boolean;
                 /** @description Filter podcasts by their Authority Score */
                 podcastAuthorityScore?: {
+                  /** @description Restrict results to podcasts whose overall Authority Score falls in this range. The overall score combines the quality, engagement, social and YouTube components; podcasts we have not scored are excluded. See https://www.podengine.ai/podcast-authority-score. */
                   authorityScore?: {
+                    /** @description Inclusive lower bound for the overall Authority Score. Null or omitted leaves the range open at the bottom. */
                     min: number | null;
+                    /** @description Inclusive upper bound for the overall Authority Score. Null or omitted leaves the range open at the top. */
                     max: number | null;
                   };
+                  /** @description Restrict results by the quality component of the Authority Score, which rates how well the show is produced and maintained: release consistency, episode length, artwork, show notes, transcript coverage, contact details and RSS completeness. Podcasts we have not scored are excluded. */
                   qualityScore?: {
+                    /** @description Inclusive lower bound for the quality score. Null or omitted leaves the range open at the bottom. */
                     min: number | null;
+                    /** @description Inclusive upper bound for the quality score. Null or omitted leaves the range open at the top. */
                     max: number | null;
                   };
+                  /** @description Restrict results by the engagement component of the Authority Score, which rates how strongly listeners respond to the show: review counts and ratings, recent Apple US chart position, and Castbox plays and subscribers. Podcasts we have not scored are excluded. */
                   engagementScore?: {
+                    /** @description Inclusive lower bound for the engagement score. Null or omitted leaves the range open at the bottom. */
                     min: number | null;
+                    /** @description Inclusive upper bound for the engagement score. Null or omitted leaves the range open at the top. */
                     max: number | null;
                   };
+                  /** @description Restrict results by the social component of the Authority Score, which rates follower counts across the show's linked Facebook, Instagram, LinkedIn, TikTok and Twitter accounts. Podcasts we have not scored are excluded. */
                   socialScore?: {
+                    /** @description Inclusive lower bound for the social score. Null or omitted leaves the range open at the bottom. */
                     min: number | null;
+                    /** @description Inclusive upper bound for the social score. Null or omitted leaves the range open at the top. */
                     max: number | null;
                   };
+                  /** @description Restrict results by the YouTube component of the Authority Score, which rates the channel's subscribers, total views and most-viewed video. Podcasts we have not scored are excluded. */
                   youtubeScore?: {
+                    /** @description Inclusive lower bound for the YouTube score. Null or omitted leaves the range open at the bottom. */
                     min: number | null;
+                    /** @description Inclusive upper bound for the YouTube score. Null or omitted leaves the range open at the top. */
                     max: number | null;
                   };
                 };
@@ -1476,11 +1498,20 @@ export interface operations {
                 };
                 /** @description Specify how results should be sorted */
                 sortOrder?: {
-                  /** @enum {string} */
+                  /**
+                   * @description What to order by. 'relevance' is the search score. 'recentActivity' is the episode's publication date when searching episodes, and the podcast's most recent episode date when searching podcasts. 'title' orders alphabetically. 'appleReviews' and 'spotifyReviews' order by a rating that weighs the number of reviews as well as the average, so a 5.0 from three listeners does not outrank a 4.7 from thousands.
+                   * @enum {string}
+                   */
                   field: 'relevance' | 'recentActivity' | 'title' | 'appleReviews' | 'spotifyReviews';
-                  /** @enum {string} */
+                  /**
+                   * @description Sort direction. Defaults to 'asc' for 'title' and 'desc' for every other field.
+                   * @enum {string}
+                   */
                   direction?: 'asc' | 'desc';
-                  /** @enum {string} */
+                  /**
+                   * @description Where results that have no value for this field go. Defaults to 'last'. Ignored for 'relevance', which every result has.
+                   * @enum {string}
+                   */
                   nullOrder?: 'first' | 'last';
                 }[];
               }
@@ -1506,10 +1537,16 @@ export interface operations {
                 };
                 /** @description [DEPRECATED] Project ID to associate the search with */
                 projectId?: string;
+                /** @description Terms to search for in the episode title, the episode description, the transcript, or the parent podcast's title and description. */
                 searchTerms?: {
+                  /** @description The text to look for. Wrapping it in single or double quotes forces a phrase match, the same as setting searchTermOptions.phraseMatch. */
                   searchTerm: string;
-                  /** @enum {string} */
+                  /**
+                   * @description How to match the term. 'text' runs keyword matching against each of the searchTargets. 'embeddings' is reserved for semantic search and is not accepted yet — a request using it is rejected.
+                   * @enum {string}
+                   */
                   searchType: 'text' | 'embeddings';
+                  /** @description Which fields to match this term against. A result matches if the term hits any one of its targets, so listing several widens the search rather than narrowing it. */
                   searchTargets: (
                     | 'podcast-title'
                     | 'podcast-description'
@@ -1518,6 +1555,7 @@ export interface operations {
                     | 'transcript'
                   )[];
                   /**
+                   * @description How this term is matched: whether it is required, treated as a phrase, or matched loosely.
                    * @default {
                    *       "matchMode": "optional",
                    *       "phraseMatch": false,
@@ -1526,6 +1564,7 @@ export interface operations {
                    */
                   searchTermOptions: {
                     /**
+                     * @description How this term combines with the others. 'optional' (the default) lets the term raise a result's relevance without being required, though a result still has to match at least one term. 'must' requires it. 'not' excludes anything it matches.
                      * @default optional
                      * @enum {string}
                      */
@@ -1611,24 +1650,39 @@ export interface operations {
                 podcastHasGuests?: boolean;
                 /** @description Filter podcasts by their Authority Score */
                 podcastAuthorityScore?: {
+                  /** @description Restrict results to podcasts whose overall Authority Score falls in this range. The overall score combines the quality, engagement, social and YouTube components; podcasts we have not scored are excluded. See https://www.podengine.ai/podcast-authority-score. */
                   authorityScore?: {
+                    /** @description Inclusive lower bound for the overall Authority Score. Null or omitted leaves the range open at the bottom. */
                     min: number | null;
+                    /** @description Inclusive upper bound for the overall Authority Score. Null or omitted leaves the range open at the top. */
                     max: number | null;
                   };
+                  /** @description Restrict results by the quality component of the Authority Score, which rates how well the show is produced and maintained: release consistency, episode length, artwork, show notes, transcript coverage, contact details and RSS completeness. Podcasts we have not scored are excluded. */
                   qualityScore?: {
+                    /** @description Inclusive lower bound for the quality score. Null or omitted leaves the range open at the bottom. */
                     min: number | null;
+                    /** @description Inclusive upper bound for the quality score. Null or omitted leaves the range open at the top. */
                     max: number | null;
                   };
+                  /** @description Restrict results by the engagement component of the Authority Score, which rates how strongly listeners respond to the show: review counts and ratings, recent Apple US chart position, and Castbox plays and subscribers. Podcasts we have not scored are excluded. */
                   engagementScore?: {
+                    /** @description Inclusive lower bound for the engagement score. Null or omitted leaves the range open at the bottom. */
                     min: number | null;
+                    /** @description Inclusive upper bound for the engagement score. Null or omitted leaves the range open at the top. */
                     max: number | null;
                   };
+                  /** @description Restrict results by the social component of the Authority Score, which rates follower counts across the show's linked Facebook, Instagram, LinkedIn, TikTok and Twitter accounts. Podcasts we have not scored are excluded. */
                   socialScore?: {
+                    /** @description Inclusive lower bound for the social score. Null or omitted leaves the range open at the bottom. */
                     min: number | null;
+                    /** @description Inclusive upper bound for the social score. Null or omitted leaves the range open at the top. */
                     max: number | null;
                   };
+                  /** @description Restrict results by the YouTube component of the Authority Score, which rates the channel's subscribers, total views and most-viewed video. Podcasts we have not scored are excluded. */
                   youtubeScore?: {
+                    /** @description Inclusive lower bound for the YouTube score. Null or omitted leaves the range open at the bottom. */
                     min: number | null;
+                    /** @description Inclusive upper bound for the YouTube score. Null or omitted leaves the range open at the top. */
                     max: number | null;
                   };
                 };
@@ -1641,23 +1695,39 @@ export interface operations {
                 };
                 /** @description Specify how results should be sorted */
                 sortOrder?: {
-                  /** @enum {string} */
+                  /**
+                   * @description What to order by. 'relevance' is the search score. 'recentActivity' is the episode's publication date when searching episodes, and the podcast's most recent episode date when searching podcasts. 'title' orders alphabetically. 'appleReviews' and 'spotifyReviews' order by a rating that weighs the number of reviews as well as the average, so a 5.0 from three listeners does not outrank a 4.7 from thousands.
+                   * @enum {string}
+                   */
                   field: 'relevance' | 'recentActivity' | 'title' | 'appleReviews' | 'spotifyReviews';
-                  /** @enum {string} */
+                  /**
+                   * @description Sort direction. Defaults to 'asc' for 'title' and 'desc' for every other field.
+                   * @enum {string}
+                   */
                   direction?: 'asc' | 'desc';
-                  /** @enum {string} */
+                  /**
+                   * @description Where results that have no value for this field go. Defaults to 'last'. Ignored for 'relevance', which every result has.
+                   * @enum {string}
+                   */
                   nullOrder?: 'first' | 'last';
                 }[];
+                /** @description Return the opening of each matching episode transcript alongside the result, as transcriptTextSnippet. Episodes with no transcript return null. */
                 includeTranscriptSnippet?: boolean;
+                /** @description How many characters of the transcript includeTranscriptSnippet returns. Defaults to 500. This is the start of the transcript, not the part that matched — for the matching text, search the transcript target and read the highlights. */
                 transcriptSnippetLength?: number;
+                /** @description How many characters each highlighted transcript fragment contains when a search term targets the transcript. Defaults to 300. */
                 transcriptHighlightLength?: number;
+                /** @description Restrict results to these specific episode IDs */
                 includeEpisodeIds?: string[];
                 /** @description Only episodes published on or after this date (inclusive) */
                 publishedSince?: unknown;
                 /** @description Only episodes published strictly before this date (exclusive). Combine with publishedSince for a bounded window, e.g. publishedSince=90 days ago + publishedBefore=30 days ago. */
                 publishedBefore?: unknown;
+                /** @description Filter to episodes that have a transcript (true) or that do not (false) */
                 hasTranscript?: boolean;
+                /** @description Only episodes whose Pod Engine record changed on or after this date. This tracks our record, not the show's own updates, so use it to pick up everything that has changed since your last sync. */
                 episodeUpdatedSince?: unknown;
+                /** @description Only episodes added to Pod Engine on or after this date. An episode is added when we first index it, which can be well after it was published — use publishedSince to filter on the publication date instead. */
                 episodeCreatedSince?: unknown;
                 /** @description Filter episodes by the people on them. Entries are ANDed together, e.g. [{ "name": "Elon Musk", "type": "guest" }, { "name": "Joe Rogan", "type": "host" }] returns only episodes where Elon Musk appeared as a guest and Joe Rogan was a host. An entry with matchMode "not" instead excludes episodes featuring that person. */
                 personFilters?: {
@@ -9528,11 +9598,17 @@ export interface operations {
           projectId?: string;
           /** @description Terms to search for in podcast title and description */
           searchTerms?: {
+            /** @description The text to look for. Wrapping it in single or double quotes forces a phrase match, the same as setting searchTermOptions.phraseMatch. */
             searchTerm: string;
-            /** @enum {string} */
+            /**
+             * @description How to match the term. 'text' runs keyword matching against each of the searchTargets. 'embeddings' is reserved for semantic search and is not accepted yet — a request using it is rejected.
+             * @enum {string}
+             */
             searchType: 'text' | 'embeddings';
+            /** @description Which fields to match this term against. A result matches if the term hits any one of its targets, so listing several widens the search rather than narrowing it. */
             searchTargets: ('podcast-title' | 'podcast-description')[];
             /**
+             * @description How this term is matched: whether it is required, treated as a phrase, or matched loosely.
              * @default {
              *       "matchMode": "optional",
              *       "phraseMatch": false,
@@ -9541,6 +9617,7 @@ export interface operations {
              */
             searchTermOptions: {
               /**
+               * @description How this term combines with the others. 'optional' (the default) lets the term raise a result's relevance without being required, though a result still has to match at least one term. 'must' requires it. 'not' excludes anything it matches.
                * @default optional
                * @enum {string}
                */
@@ -9626,24 +9703,39 @@ export interface operations {
           podcastHasGuests?: boolean;
           /** @description Filter podcasts by their Authority Score */
           podcastAuthorityScore?: {
+            /** @description Restrict results to podcasts whose overall Authority Score falls in this range. The overall score combines the quality, engagement, social and YouTube components; podcasts we have not scored are excluded. See https://www.podengine.ai/podcast-authority-score. */
             authorityScore?: {
+              /** @description Inclusive lower bound for the overall Authority Score. Null or omitted leaves the range open at the bottom. */
               min: number | null;
+              /** @description Inclusive upper bound for the overall Authority Score. Null or omitted leaves the range open at the top. */
               max: number | null;
             };
+            /** @description Restrict results by the quality component of the Authority Score, which rates how well the show is produced and maintained: release consistency, episode length, artwork, show notes, transcript coverage, contact details and RSS completeness. Podcasts we have not scored are excluded. */
             qualityScore?: {
+              /** @description Inclusive lower bound for the quality score. Null or omitted leaves the range open at the bottom. */
               min: number | null;
+              /** @description Inclusive upper bound for the quality score. Null or omitted leaves the range open at the top. */
               max: number | null;
             };
+            /** @description Restrict results by the engagement component of the Authority Score, which rates how strongly listeners respond to the show: review counts and ratings, recent Apple US chart position, and Castbox plays and subscribers. Podcasts we have not scored are excluded. */
             engagementScore?: {
+              /** @description Inclusive lower bound for the engagement score. Null or omitted leaves the range open at the bottom. */
               min: number | null;
+              /** @description Inclusive upper bound for the engagement score. Null or omitted leaves the range open at the top. */
               max: number | null;
             };
+            /** @description Restrict results by the social component of the Authority Score, which rates follower counts across the show's linked Facebook, Instagram, LinkedIn, TikTok and Twitter accounts. Podcasts we have not scored are excluded. */
             socialScore?: {
+              /** @description Inclusive lower bound for the social score. Null or omitted leaves the range open at the bottom. */
               min: number | null;
+              /** @description Inclusive upper bound for the social score. Null or omitted leaves the range open at the top. */
               max: number | null;
             };
+            /** @description Restrict results by the YouTube component of the Authority Score, which rates the channel's subscribers, total views and most-viewed video. Podcasts we have not scored are excluded. */
             youtubeScore?: {
+              /** @description Inclusive lower bound for the YouTube score. Null or omitted leaves the range open at the bottom. */
               min: number | null;
+              /** @description Inclusive upper bound for the YouTube score. Null or omitted leaves the range open at the top. */
               max: number | null;
             };
           };
@@ -9656,11 +9748,20 @@ export interface operations {
           };
           /** @description Specify how results should be sorted */
           sortOrder?: {
-            /** @enum {string} */
+            /**
+             * @description What to order by. 'relevance' is the search score. 'recentActivity' is the episode's publication date when searching episodes, and the podcast's most recent episode date when searching podcasts. 'title' orders alphabetically. 'appleReviews' and 'spotifyReviews' order by a rating that weighs the number of reviews as well as the average, so a 5.0 from three listeners does not outrank a 4.7 from thousands.
+             * @enum {string}
+             */
             field: 'relevance' | 'recentActivity' | 'title' | 'appleReviews' | 'spotifyReviews';
-            /** @enum {string} */
+            /**
+             * @description Sort direction. Defaults to 'asc' for 'title' and 'desc' for every other field.
+             * @enum {string}
+             */
             direction?: 'asc' | 'desc';
-            /** @enum {string} */
+            /**
+             * @description Where results that have no value for this field go. Defaults to 'last'. Ignored for 'relevance', which every result has.
+             * @enum {string}
+             */
             nullOrder?: 'first' | 'last';
           }[];
         };
@@ -9704,11 +9805,17 @@ export interface operations {
                 projectId?: string;
                 /** @description Terms to search for in podcast title and description */
                 searchTerms?: {
+                  /** @description The text to look for. Wrapping it in single or double quotes forces a phrase match, the same as setting searchTermOptions.phraseMatch. */
                   searchTerm: string;
-                  /** @enum {string} */
+                  /**
+                   * @description How to match the term. 'text' runs keyword matching against each of the searchTargets. 'embeddings' is reserved for semantic search and is not accepted yet — a request using it is rejected.
+                   * @enum {string}
+                   */
                   searchType: 'text' | 'embeddings';
+                  /** @description Which fields to match this term against. A result matches if the term hits any one of its targets, so listing several widens the search rather than narrowing it. */
                   searchTargets: ('podcast-title' | 'podcast-description')[];
                   /**
+                   * @description How this term is matched: whether it is required, treated as a phrase, or matched loosely.
                    * @default {
                    *       "matchMode": "optional",
                    *       "phraseMatch": false,
@@ -9717,6 +9824,7 @@ export interface operations {
                    */
                   searchTermOptions: {
                     /**
+                     * @description How this term combines with the others. 'optional' (the default) lets the term raise a result's relevance without being required, though a result still has to match at least one term. 'must' requires it. 'not' excludes anything it matches.
                      * @default optional
                      * @enum {string}
                      */
@@ -9802,24 +9910,39 @@ export interface operations {
                 podcastHasGuests?: boolean;
                 /** @description Filter podcasts by their Authority Score */
                 podcastAuthorityScore?: {
+                  /** @description Restrict results to podcasts whose overall Authority Score falls in this range. The overall score combines the quality, engagement, social and YouTube components; podcasts we have not scored are excluded. See https://www.podengine.ai/podcast-authority-score. */
                   authorityScore?: {
+                    /** @description Inclusive lower bound for the overall Authority Score. Null or omitted leaves the range open at the bottom. */
                     min: number | null;
+                    /** @description Inclusive upper bound for the overall Authority Score. Null or omitted leaves the range open at the top. */
                     max: number | null;
                   };
+                  /** @description Restrict results by the quality component of the Authority Score, which rates how well the show is produced and maintained: release consistency, episode length, artwork, show notes, transcript coverage, contact details and RSS completeness. Podcasts we have not scored are excluded. */
                   qualityScore?: {
+                    /** @description Inclusive lower bound for the quality score. Null or omitted leaves the range open at the bottom. */
                     min: number | null;
+                    /** @description Inclusive upper bound for the quality score. Null or omitted leaves the range open at the top. */
                     max: number | null;
                   };
+                  /** @description Restrict results by the engagement component of the Authority Score, which rates how strongly listeners respond to the show: review counts and ratings, recent Apple US chart position, and Castbox plays and subscribers. Podcasts we have not scored are excluded. */
                   engagementScore?: {
+                    /** @description Inclusive lower bound for the engagement score. Null or omitted leaves the range open at the bottom. */
                     min: number | null;
+                    /** @description Inclusive upper bound for the engagement score. Null or omitted leaves the range open at the top. */
                     max: number | null;
                   };
+                  /** @description Restrict results by the social component of the Authority Score, which rates follower counts across the show's linked Facebook, Instagram, LinkedIn, TikTok and Twitter accounts. Podcasts we have not scored are excluded. */
                   socialScore?: {
+                    /** @description Inclusive lower bound for the social score. Null or omitted leaves the range open at the bottom. */
                     min: number | null;
+                    /** @description Inclusive upper bound for the social score. Null or omitted leaves the range open at the top. */
                     max: number | null;
                   };
+                  /** @description Restrict results by the YouTube component of the Authority Score, which rates the channel's subscribers, total views and most-viewed video. Podcasts we have not scored are excluded. */
                   youtubeScore?: {
+                    /** @description Inclusive lower bound for the YouTube score. Null or omitted leaves the range open at the bottom. */
                     min: number | null;
+                    /** @description Inclusive upper bound for the YouTube score. Null or omitted leaves the range open at the top. */
                     max: number | null;
                   };
                 };
@@ -9832,11 +9955,20 @@ export interface operations {
                 };
                 /** @description Specify how results should be sorted */
                 sortOrder?: {
-                  /** @enum {string} */
+                  /**
+                   * @description What to order by. 'relevance' is the search score. 'recentActivity' is the episode's publication date when searching episodes, and the podcast's most recent episode date when searching podcasts. 'title' orders alphabetically. 'appleReviews' and 'spotifyReviews' order by a rating that weighs the number of reviews as well as the average, so a 5.0 from three listeners does not outrank a 4.7 from thousands.
+                   * @enum {string}
+                   */
                   field: 'relevance' | 'recentActivity' | 'title' | 'appleReviews' | 'spotifyReviews';
-                  /** @enum {string} */
+                  /**
+                   * @description Sort direction. Defaults to 'asc' for 'title' and 'desc' for every other field.
+                   * @enum {string}
+                   */
                   direction?: 'asc' | 'desc';
-                  /** @enum {string} */
+                  /**
+                   * @description Where results that have no value for this field go. Defaults to 'last'. Ignored for 'relevance', which every result has.
+                   * @enum {string}
+                   */
                   nullOrder?: 'first' | 'last';
                 }[];
               };
@@ -9945,10 +10077,16 @@ export interface operations {
           };
           /** @description [DEPRECATED] Project ID to associate the search with */
           projectId?: string;
+          /** @description Terms to search for in the episode title, the episode description, the transcript, or the parent podcast's title and description. */
           searchTerms?: {
+            /** @description The text to look for. Wrapping it in single or double quotes forces a phrase match, the same as setting searchTermOptions.phraseMatch. */
             searchTerm: string;
-            /** @enum {string} */
+            /**
+             * @description How to match the term. 'text' runs keyword matching against each of the searchTargets. 'embeddings' is reserved for semantic search and is not accepted yet — a request using it is rejected.
+             * @enum {string}
+             */
             searchType: 'text' | 'embeddings';
+            /** @description Which fields to match this term against. A result matches if the term hits any one of its targets, so listing several widens the search rather than narrowing it. */
             searchTargets: (
               | 'podcast-title'
               | 'podcast-description'
@@ -9957,6 +10095,7 @@ export interface operations {
               | 'transcript'
             )[];
             /**
+             * @description How this term is matched: whether it is required, treated as a phrase, or matched loosely.
              * @default {
              *       "matchMode": "optional",
              *       "phraseMatch": false,
@@ -9965,6 +10104,7 @@ export interface operations {
              */
             searchTermOptions: {
               /**
+               * @description How this term combines with the others. 'optional' (the default) lets the term raise a result's relevance without being required, though a result still has to match at least one term. 'must' requires it. 'not' excludes anything it matches.
                * @default optional
                * @enum {string}
                */
@@ -10050,24 +10190,39 @@ export interface operations {
           podcastHasGuests?: boolean;
           /** @description Filter podcasts by their Authority Score */
           podcastAuthorityScore?: {
+            /** @description Restrict results to podcasts whose overall Authority Score falls in this range. The overall score combines the quality, engagement, social and YouTube components; podcasts we have not scored are excluded. See https://www.podengine.ai/podcast-authority-score. */
             authorityScore?: {
+              /** @description Inclusive lower bound for the overall Authority Score. Null or omitted leaves the range open at the bottom. */
               min: number | null;
+              /** @description Inclusive upper bound for the overall Authority Score. Null or omitted leaves the range open at the top. */
               max: number | null;
             };
+            /** @description Restrict results by the quality component of the Authority Score, which rates how well the show is produced and maintained: release consistency, episode length, artwork, show notes, transcript coverage, contact details and RSS completeness. Podcasts we have not scored are excluded. */
             qualityScore?: {
+              /** @description Inclusive lower bound for the quality score. Null or omitted leaves the range open at the bottom. */
               min: number | null;
+              /** @description Inclusive upper bound for the quality score. Null or omitted leaves the range open at the top. */
               max: number | null;
             };
+            /** @description Restrict results by the engagement component of the Authority Score, which rates how strongly listeners respond to the show: review counts and ratings, recent Apple US chart position, and Castbox plays and subscribers. Podcasts we have not scored are excluded. */
             engagementScore?: {
+              /** @description Inclusive lower bound for the engagement score. Null or omitted leaves the range open at the bottom. */
               min: number | null;
+              /** @description Inclusive upper bound for the engagement score. Null or omitted leaves the range open at the top. */
               max: number | null;
             };
+            /** @description Restrict results by the social component of the Authority Score, which rates follower counts across the show's linked Facebook, Instagram, LinkedIn, TikTok and Twitter accounts. Podcasts we have not scored are excluded. */
             socialScore?: {
+              /** @description Inclusive lower bound for the social score. Null or omitted leaves the range open at the bottom. */
               min: number | null;
+              /** @description Inclusive upper bound for the social score. Null or omitted leaves the range open at the top. */
               max: number | null;
             };
+            /** @description Restrict results by the YouTube component of the Authority Score, which rates the channel's subscribers, total views and most-viewed video. Podcasts we have not scored are excluded. */
             youtubeScore?: {
+              /** @description Inclusive lower bound for the YouTube score. Null or omitted leaves the range open at the bottom. */
               min: number | null;
+              /** @description Inclusive upper bound for the YouTube score. Null or omitted leaves the range open at the top. */
               max: number | null;
             };
           };
@@ -10080,23 +10235,39 @@ export interface operations {
           };
           /** @description Specify how results should be sorted */
           sortOrder?: {
-            /** @enum {string} */
+            /**
+             * @description What to order by. 'relevance' is the search score. 'recentActivity' is the episode's publication date when searching episodes, and the podcast's most recent episode date when searching podcasts. 'title' orders alphabetically. 'appleReviews' and 'spotifyReviews' order by a rating that weighs the number of reviews as well as the average, so a 5.0 from three listeners does not outrank a 4.7 from thousands.
+             * @enum {string}
+             */
             field: 'relevance' | 'recentActivity' | 'title' | 'appleReviews' | 'spotifyReviews';
-            /** @enum {string} */
+            /**
+             * @description Sort direction. Defaults to 'asc' for 'title' and 'desc' for every other field.
+             * @enum {string}
+             */
             direction?: 'asc' | 'desc';
-            /** @enum {string} */
+            /**
+             * @description Where results that have no value for this field go. Defaults to 'last'. Ignored for 'relevance', which every result has.
+             * @enum {string}
+             */
             nullOrder?: 'first' | 'last';
           }[];
+          /** @description Return the opening of each matching episode transcript alongside the result, as transcriptTextSnippet. Episodes with no transcript return null. */
           includeTranscriptSnippet?: boolean;
+          /** @description How many characters of the transcript includeTranscriptSnippet returns. Defaults to 500. This is the start of the transcript, not the part that matched — for the matching text, search the transcript target and read the highlights. */
           transcriptSnippetLength?: number;
+          /** @description How many characters each highlighted transcript fragment contains when a search term targets the transcript. Defaults to 300. */
           transcriptHighlightLength?: number;
+          /** @description Restrict results to these specific episode IDs */
           includeEpisodeIds?: string[];
           /** @description Only episodes published on or after this date (inclusive) */
           publishedSince?: unknown;
           /** @description Only episodes published strictly before this date (exclusive). Combine with publishedSince for a bounded window, e.g. publishedSince=90 days ago + publishedBefore=30 days ago. */
           publishedBefore?: unknown;
+          /** @description Filter to episodes that have a transcript (true) or that do not (false) */
           hasTranscript?: boolean;
+          /** @description Only episodes whose Pod Engine record changed on or after this date. This tracks our record, not the show's own updates, so use it to pick up everything that has changed since your last sync. */
           episodeUpdatedSince?: unknown;
+          /** @description Only episodes added to Pod Engine on or after this date. An episode is added when we first index it, which can be well after it was published — use publishedSince to filter on the publication date instead. */
           episodeCreatedSince?: unknown;
           /** @description Filter episodes by the people on them. Entries are ANDed together, e.g. [{ "name": "Elon Musk", "type": "guest" }, { "name": "Joe Rogan", "type": "host" }] returns only episodes where Elon Musk appeared as a guest and Joe Rogan was a host. An entry with matchMode "not" instead excludes episodes featuring that person. */
           personFilters?: {
@@ -10174,10 +10345,16 @@ export interface operations {
                 };
                 /** @description [DEPRECATED] Project ID to associate the search with */
                 projectId?: string;
+                /** @description Terms to search for in the episode title, the episode description, the transcript, or the parent podcast's title and description. */
                 searchTerms?: {
+                  /** @description The text to look for. Wrapping it in single or double quotes forces a phrase match, the same as setting searchTermOptions.phraseMatch. */
                   searchTerm: string;
-                  /** @enum {string} */
+                  /**
+                   * @description How to match the term. 'text' runs keyword matching against each of the searchTargets. 'embeddings' is reserved for semantic search and is not accepted yet — a request using it is rejected.
+                   * @enum {string}
+                   */
                   searchType: 'text' | 'embeddings';
+                  /** @description Which fields to match this term against. A result matches if the term hits any one of its targets, so listing several widens the search rather than narrowing it. */
                   searchTargets: (
                     | 'podcast-title'
                     | 'podcast-description'
@@ -10186,6 +10363,7 @@ export interface operations {
                     | 'transcript'
                   )[];
                   /**
+                   * @description How this term is matched: whether it is required, treated as a phrase, or matched loosely.
                    * @default {
                    *       "matchMode": "optional",
                    *       "phraseMatch": false,
@@ -10194,6 +10372,7 @@ export interface operations {
                    */
                   searchTermOptions: {
                     /**
+                     * @description How this term combines with the others. 'optional' (the default) lets the term raise a result's relevance without being required, though a result still has to match at least one term. 'must' requires it. 'not' excludes anything it matches.
                      * @default optional
                      * @enum {string}
                      */
@@ -10279,24 +10458,39 @@ export interface operations {
                 podcastHasGuests?: boolean;
                 /** @description Filter podcasts by their Authority Score */
                 podcastAuthorityScore?: {
+                  /** @description Restrict results to podcasts whose overall Authority Score falls in this range. The overall score combines the quality, engagement, social and YouTube components; podcasts we have not scored are excluded. See https://www.podengine.ai/podcast-authority-score. */
                   authorityScore?: {
+                    /** @description Inclusive lower bound for the overall Authority Score. Null or omitted leaves the range open at the bottom. */
                     min: number | null;
+                    /** @description Inclusive upper bound for the overall Authority Score. Null or omitted leaves the range open at the top. */
                     max: number | null;
                   };
+                  /** @description Restrict results by the quality component of the Authority Score, which rates how well the show is produced and maintained: release consistency, episode length, artwork, show notes, transcript coverage, contact details and RSS completeness. Podcasts we have not scored are excluded. */
                   qualityScore?: {
+                    /** @description Inclusive lower bound for the quality score. Null or omitted leaves the range open at the bottom. */
                     min: number | null;
+                    /** @description Inclusive upper bound for the quality score. Null or omitted leaves the range open at the top. */
                     max: number | null;
                   };
+                  /** @description Restrict results by the engagement component of the Authority Score, which rates how strongly listeners respond to the show: review counts and ratings, recent Apple US chart position, and Castbox plays and subscribers. Podcasts we have not scored are excluded. */
                   engagementScore?: {
+                    /** @description Inclusive lower bound for the engagement score. Null or omitted leaves the range open at the bottom. */
                     min: number | null;
+                    /** @description Inclusive upper bound for the engagement score. Null or omitted leaves the range open at the top. */
                     max: number | null;
                   };
+                  /** @description Restrict results by the social component of the Authority Score, which rates follower counts across the show's linked Facebook, Instagram, LinkedIn, TikTok and Twitter accounts. Podcasts we have not scored are excluded. */
                   socialScore?: {
+                    /** @description Inclusive lower bound for the social score. Null or omitted leaves the range open at the bottom. */
                     min: number | null;
+                    /** @description Inclusive upper bound for the social score. Null or omitted leaves the range open at the top. */
                     max: number | null;
                   };
+                  /** @description Restrict results by the YouTube component of the Authority Score, which rates the channel's subscribers, total views and most-viewed video. Podcasts we have not scored are excluded. */
                   youtubeScore?: {
+                    /** @description Inclusive lower bound for the YouTube score. Null or omitted leaves the range open at the bottom. */
                     min: number | null;
+                    /** @description Inclusive upper bound for the YouTube score. Null or omitted leaves the range open at the top. */
                     max: number | null;
                   };
                 };
@@ -10309,23 +10503,39 @@ export interface operations {
                 };
                 /** @description Specify how results should be sorted */
                 sortOrder?: {
-                  /** @enum {string} */
+                  /**
+                   * @description What to order by. 'relevance' is the search score. 'recentActivity' is the episode's publication date when searching episodes, and the podcast's most recent episode date when searching podcasts. 'title' orders alphabetically. 'appleReviews' and 'spotifyReviews' order by a rating that weighs the number of reviews as well as the average, so a 5.0 from three listeners does not outrank a 4.7 from thousands.
+                   * @enum {string}
+                   */
                   field: 'relevance' | 'recentActivity' | 'title' | 'appleReviews' | 'spotifyReviews';
-                  /** @enum {string} */
+                  /**
+                   * @description Sort direction. Defaults to 'asc' for 'title' and 'desc' for every other field.
+                   * @enum {string}
+                   */
                   direction?: 'asc' | 'desc';
-                  /** @enum {string} */
+                  /**
+                   * @description Where results that have no value for this field go. Defaults to 'last'. Ignored for 'relevance', which every result has.
+                   * @enum {string}
+                   */
                   nullOrder?: 'first' | 'last';
                 }[];
+                /** @description Return the opening of each matching episode transcript alongside the result, as transcriptTextSnippet. Episodes with no transcript return null. */
                 includeTranscriptSnippet?: boolean;
+                /** @description How many characters of the transcript includeTranscriptSnippet returns. Defaults to 500. This is the start of the transcript, not the part that matched — for the matching text, search the transcript target and read the highlights. */
                 transcriptSnippetLength?: number;
+                /** @description How many characters each highlighted transcript fragment contains when a search term targets the transcript. Defaults to 300. */
                 transcriptHighlightLength?: number;
+                /** @description Restrict results to these specific episode IDs */
                 includeEpisodeIds?: string[];
                 /** @description Only episodes published on or after this date (inclusive) */
                 publishedSince?: unknown;
                 /** @description Only episodes published strictly before this date (exclusive). Combine with publishedSince for a bounded window, e.g. publishedSince=90 days ago + publishedBefore=30 days ago. */
                 publishedBefore?: unknown;
+                /** @description Filter to episodes that have a transcript (true) or that do not (false) */
                 hasTranscript?: boolean;
+                /** @description Only episodes whose Pod Engine record changed on or after this date. This tracks our record, not the show's own updates, so use it to pick up everything that has changed since your last sync. */
                 episodeUpdatedSince?: unknown;
+                /** @description Only episodes added to Pod Engine on or after this date. An episode is added when we first index it, which can be well after it was published — use publishedSince to filter on the publication date instead. */
                 episodeCreatedSince?: unknown;
                 /** @description Filter episodes by the people on them. Entries are ANDed together, e.g. [{ "name": "Elon Musk", "type": "guest" }, { "name": "Joe Rogan", "type": "host" }] returns only episodes where Elon Musk appeared as a guest and Joe Rogan was a host. An entry with matchMode "not" instead excludes episodes featuring that person. */
                 personFilters?: {
