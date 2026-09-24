@@ -6290,6 +6290,643 @@
         ]
       }
     },
+    "/api/v1/charts/history": {
+      "get": {
+        "tags": [
+          "charts"
+        ],
+        "summary": "Chart Rank History",
+        "description": "Get the daily ranks of a chart's top shows on the end date over the preceding 7 to 90 days, with each day's chart coverage",
+        "operationId": "getChartRankHistory",
+        "parameters": [
+          {
+            "name": "chartType",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "apple",
+                "spotify"
+              ],
+              "description": "The type of chart, one of apple, spotify"
+            }
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "The chart category defaulting to 'top podcasts'. Apple podcasts supports the following: \"top podcasts\", \"arts\", \"business\", \"comedy\", \"education\", \"fiction\", \"government\", \"health & fitness\", \"history\", \"kids & family\", \"leisure\", \"music\", \"news\", \"religion & spirituality\", \"science\", \"society & culture\", \"sports\", \"technology\", \"true crime\", \"tv & film\""
+            }
+          },
+          {
+            "name": "country",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "The country of the chart in ISO 3166-1 alpha-2 format, for example \"us\". Defaults to us."
+            }
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "description": "The last day of the window (YYYY-MM-DD). Exact: when no chart was captured that day the response has no rows. Defaults to the latest chart date.",
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+            }
+          },
+          {
+            "name": "days",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "description": "Calendar days in the window, ending on endDate. 7-90, default 30.",
+              "type": "integer",
+              "minimum": 7,
+              "maximum": 90
+            }
+          },
+          {
+            "name": "rows",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "description": "How many of the end date's top shows to return, default 12, max 50.",
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 50
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "OK"
+                      ]
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "options": {
+                          "type": "object",
+                          "properties": {
+                            "chartType": {
+                              "type": "string",
+                              "enum": [
+                                "apple",
+                                "spotify"
+                              ],
+                              "description": "The type of chart, one of apple, spotify"
+                            },
+                            "category": {
+                              "type": "string",
+                              "description": "The chart category defaulting to 'top podcasts'. Apple podcasts supports the following: \"top podcasts\", \"arts\", \"business\", \"comedy\", \"education\", \"fiction\", \"government\", \"health & fitness\", \"history\", \"kids & family\", \"leisure\", \"music\", \"news\", \"religion & spirituality\", \"science\", \"society & culture\", \"sports\", \"technology\", \"true crime\", \"tv & film\""
+                            },
+                            "country": {
+                              "type": "string",
+                              "description": "The country of the chart in ISO 3166-1 alpha-2 format, for example \"us\". Defaults to us."
+                            },
+                            "endDate": {
+                              "description": "The last day of the window (YYYY-MM-DD). Exact: when no chart was captured that day the response has no rows. Defaults to the latest chart date.",
+                              "type": "string",
+                              "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+                            },
+                            "days": {
+                              "description": "Calendar days in the window, ending on endDate. 7-90, default 30.",
+                              "type": "integer",
+                              "minimum": 7,
+                              "maximum": 90
+                            },
+                            "rows": {
+                              "description": "How many of the end date's top shows to return, default 12, max 50.",
+                              "type": "integer",
+                              "minimum": 1,
+                              "maximum": 50
+                            }
+                          },
+                          "additionalProperties": false,
+                          "description": "Get the daily ranks of the top shows on a chart over a window of days"
+                        },
+                        "history": {
+                          "description": "Null when this chart has never been captured.",
+                          "type": [
+                            "object",
+                            "null"
+                          ],
+                          "properties": {
+                            "chart": {
+                              "type": "object",
+                              "properties": {
+                                "chartType": {
+                                  "type": "string",
+                                  "enum": [
+                                    "apple",
+                                    "spotify"
+                                  ],
+                                  "description": "The type of chart, one of apple, spotify"
+                                },
+                                "category": {
+                                  "type": "string",
+                                  "description": "The chart category defaulting to 'top podcasts'. Apple podcasts supports the following: \"top podcasts\", \"arts\", \"business\", \"comedy\", \"education\", \"fiction\", \"government\", \"health & fitness\", \"history\", \"kids & family\", \"leisure\", \"music\", \"news\", \"religion & spirituality\", \"science\", \"society & culture\", \"sports\", \"technology\", \"true crime\", \"tv & film\""
+                                },
+                                "country": {
+                                  "type": "string",
+                                  "description": "The country of the chart in ISO 3166-1 alpha-2 format, for example \"us\". Defaults to us."
+                                },
+                                "startDate": {
+                                  "type": "string",
+                                  "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+                                  "description": "The date of the chart in YYYY-MM-DD format"
+                                },
+                                "endDate": {
+                                  "type": "string",
+                                  "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+                                  "description": "The date of the chart in YYYY-MM-DD format"
+                                },
+                                "days": {
+                                  "type": "number"
+                                },
+                                "endDateStatus": {
+                                  "type": "string",
+                                  "enum": [
+                                    "available",
+                                    "no_chart"
+                                  ],
+                                  "description": "no_chart: nothing was captured on endDate, so there is no cohort and rows is empty."
+                                },
+                                "endChart": {
+                                  "description": "The full end-date chart, independent of rows; null when endDateStatus is no_chart.",
+                                  "type": [
+                                    "object",
+                                    "null"
+                                  ],
+                                  "properties": {
+                                    "totalPositions": {
+                                      "type": "number",
+                                      "description": "Positions with a platform identity on this chart, independent of positionsLimit."
+                                    },
+                                    "unresolvedPositions": {
+                                      "type": "number",
+                                      "description": "Historical Spotify positions recorded without a trustworthy Spotify id (not included in positions)."
+                                    },
+                                    "observedDepth": {
+                                      "type": "number",
+                                      "description": "The deepest position captured for this chart."
+                                    },
+                                    "coverageStatus": {
+                                      "type": "string",
+                                      "enum": [
+                                        "complete",
+                                        "unresolved_identities",
+                                        "incomplete"
+                                      ],
+                                      "description": "complete: every captured position has a platform id. unresolved_identities: some historical Spotify positions are known only by Pod Engine podcast. incomplete: positions are missing from the capture."
+                                    }
+                                  },
+                                  "required": [
+                                    "totalPositions",
+                                    "unresolvedPositions",
+                                    "observedDepth",
+                                    "coverageStatus"
+                                  ],
+                                  "additionalProperties": false
+                                },
+                                "requestedRows": {
+                                  "type": "number"
+                                },
+                                "actualRows": {
+                                  "type": "number",
+                                  "description": "Rows returned; fewer than requestedRows when the end-date chart is shorter."
+                                },
+                                "coverage": {
+                                  "type": "object",
+                                  "properties": {
+                                    "calendarDays": {
+                                      "type": "number"
+                                    },
+                                    "chartDays": {
+                                      "type": "number",
+                                      "description": "Days with a captured chart."
+                                    },
+                                    "missingDays": {
+                                      "type": "number",
+                                      "description": "Days with no captured chart."
+                                    },
+                                    "completeDays": {
+                                      "type": "number"
+                                    },
+                                    "unresolvedIdentityDays": {
+                                      "type": "number",
+                                      "description": "Days whose chart has Spotify positions known only by podcast."
+                                    },
+                                    "incompleteDays": {
+                                      "type": "number",
+                                      "description": "Days whose chart is missing positions."
+                                    },
+                                    "minObservedDepth": {
+                                      "type": [
+                                        "number",
+                                        "null"
+                                      ]
+                                    },
+                                    "maxObservedDepth": {
+                                      "type": [
+                                        "number",
+                                        "null"
+                                      ]
+                                    },
+                                    "depthChanged": {
+                                      "type": "boolean",
+                                      "description": "True when charts in the window were captured to different depths, so off chart means different cut-offs."
+                                    }
+                                  },
+                                  "required": [
+                                    "calendarDays",
+                                    "chartDays",
+                                    "missingDays",
+                                    "completeDays",
+                                    "unresolvedIdentityDays",
+                                    "incompleteDays",
+                                    "minObservedDepth",
+                                    "maxObservedDepth",
+                                    "depthChanged"
+                                  ],
+                                  "additionalProperties": false
+                                }
+                              },
+                              "required": [
+                                "chartType",
+                                "category",
+                                "country",
+                                "startDate",
+                                "endDate",
+                                "days",
+                                "endDateStatus",
+                                "endChart",
+                                "requestedRows",
+                                "actualRows",
+                                "coverage"
+                              ],
+                              "additionalProperties": false
+                            },
+                            "dates": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "date": {
+                                    "type": "string",
+                                    "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+                                    "description": "The date of the chart in YYYY-MM-DD format"
+                                  },
+                                  "coverage": {
+                                    "type": "string",
+                                    "enum": [
+                                      "complete",
+                                      "unresolved_identities",
+                                      "incomplete",
+                                      "no_chart"
+                                    ],
+                                    "description": "no_chart marks a day with no captured chart: never interpolate it."
+                                  },
+                                  "observedDepth": {
+                                    "description": "The deepest position captured that day; null when no chart.",
+                                    "type": [
+                                      "number",
+                                      "null"
+                                    ]
+                                  },
+                                  "totalPositions": {
+                                    "description": "Positions with a platform identity that day; null when no chart.",
+                                    "type": [
+                                      "number",
+                                      "null"
+                                    ]
+                                  },
+                                  "unresolvedPositions": {
+                                    "description": "Historical Spotify positions known only by Pod Engine podcast that day; null when no chart.",
+                                    "type": [
+                                      "number",
+                                      "null"
+                                    ]
+                                  }
+                                },
+                                "required": [
+                                  "date",
+                                  "coverage",
+                                  "observedDepth",
+                                  "totalPositions",
+                                  "unresolvedPositions"
+                                ],
+                                "additionalProperties": false
+                              },
+                              "description": "Every UTC calendar day from startDate to endDate, oldest first."
+                            },
+                            "rows": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "podenginePodcast": {
+                                    "type": [
+                                      "object",
+                                      "null"
+                                    ],
+                                    "properties": {
+                                      "author": {
+                                        "type": [
+                                          "string",
+                                          "null"
+                                        ]
+                                      },
+                                      "authorityScore": {
+                                        "type": [
+                                          "object",
+                                          "null"
+                                        ],
+                                        "properties": {
+                                          "calculatedAt": {},
+                                          "authorityScore": {
+                                            "type": "number",
+                                            "description": "This is the weighted total authority score of the podcast, out of 100"
+                                          },
+                                          "qualityScore": {
+                                            "type": "number",
+                                            "description": "This is the quality score of the podcast, out of 100"
+                                          },
+                                          "youtubeScore": {
+                                            "type": "number",
+                                            "description": "This is the YouTube score of the podcast, out of 100"
+                                          },
+                                          "socialScore": {
+                                            "type": "number",
+                                            "description": "This is the social score of the podcast, out of 100"
+                                          },
+                                          "engagementScore": {
+                                            "type": "number",
+                                            "description": "This is the engagement score of the podcast, out of 100"
+                                          }
+                                        },
+                                        "required": [
+                                          "calculatedAt",
+                                          "authorityScore",
+                                          "qualityScore",
+                                          "youtubeScore",
+                                          "socialScore",
+                                          "engagementScore"
+                                        ],
+                                        "additionalProperties": false
+                                      },
+                                      "genres": {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "id": {
+                                        "type": "string"
+                                      },
+                                      "imageUrl": {
+                                        "type": [
+                                          "string",
+                                          "null"
+                                        ]
+                                      },
+                                      "language": {
+                                        "type": "string"
+                                      },
+                                      "lastEpisodePublishedAt": {},
+                                      "slug": {
+                                        "type": "string"
+                                      },
+                                      "title": {
+                                        "type": "string"
+                                      },
+                                      "titleLatest": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "author",
+                                      "authorityScore",
+                                      "genres",
+                                      "id",
+                                      "imageUrl",
+                                      "language",
+                                      "lastEpisodePublishedAt",
+                                      "slug",
+                                      "title",
+                                      "titleLatest"
+                                    ],
+                                    "additionalProperties": false
+                                  },
+                                  "position": {
+                                    "type": "number",
+                                    "description": "Rank on the end date; rows are in this order."
+                                  },
+                                  "identity": {
+                                    "oneOf": [
+                                      {
+                                        "type": "object",
+                                        "properties": {
+                                          "type": {
+                                            "type": "string",
+                                            "enum": [
+                                              "podcast"
+                                            ]
+                                          },
+                                          "podcastId": {
+                                            "type": "string"
+                                          },
+                                          "slug": {
+                                            "type": "string"
+                                          }
+                                        },
+                                        "required": [
+                                          "type",
+                                          "podcastId",
+                                          "slug"
+                                        ],
+                                        "additionalProperties": false
+                                      },
+                                      {
+                                        "type": "object",
+                                        "properties": {
+                                          "type": {
+                                            "type": "string",
+                                            "enum": [
+                                              "platform"
+                                            ]
+                                          },
+                                          "chartType": {
+                                            "type": "string",
+                                            "enum": [
+                                              "apple",
+                                              "spotify"
+                                            ],
+                                            "description": "The type of chart, one of apple, spotify"
+                                          },
+                                          "platformId": {
+                                            "type": "string"
+                                          }
+                                        },
+                                        "required": [
+                                          "type",
+                                          "chartType",
+                                          "platformId"
+                                        ],
+                                        "additionalProperties": false
+                                      }
+                                    ],
+                                    "description": "platform for a listed show; podcast for a historical Spotify position known only by its Pod Engine podcast, whose ranks then cover every Spotify id matched to it."
+                                  },
+                                  "platformId": {
+                                    "description": "The Apple or Spotify id; null when no trustworthy platform id exists.",
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "title": {
+                                    "type": "string"
+                                  },
+                                  "creator": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "imageUrl": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "ranks": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "position": {
+                                          "description": "Rank that day; null unless status is observed.",
+                                          "type": [
+                                            "number",
+                                            "null"
+                                          ]
+                                        },
+                                        "status": {
+                                          "type": "string",
+                                          "enum": [
+                                            "observed",
+                                            "off_chart",
+                                            "no_chart",
+                                            "unknown"
+                                          ],
+                                          "description": "observed: ranked that day. off_chart: a fully resolved chart exists and the show is not on it. no_chart: no chart was captured that day. unknown: a chart exists but its coverage cannot prove absence."
+                                        }
+                                      },
+                                      "required": [
+                                        "position",
+                                        "status"
+                                      ],
+                                      "additionalProperties": false
+                                    },
+                                    "description": "One entry per dates entry, oldest first."
+                                  },
+                                  "bestPosition": {
+                                    "description": "Best observed rank in the window.",
+                                    "type": [
+                                      "number",
+                                      "null"
+                                    ]
+                                  },
+                                  "daysCharted": {
+                                    "type": "number",
+                                    "description": "Days in the window the show was observed."
+                                  },
+                                  "unknownDays": {
+                                    "type": "number",
+                                    "description": "Captured charts in the window whose coverage cannot prove the show was absent."
+                                  }
+                                },
+                                "required": [
+                                  "podenginePodcast",
+                                  "position",
+                                  "identity",
+                                  "platformId",
+                                  "title",
+                                  "creator",
+                                  "imageUrl",
+                                  "ranks",
+                                  "bestPosition",
+                                  "daysCharted",
+                                  "unknownDays"
+                                ],
+                                "additionalProperties": false
+                              },
+                              "description": "The end date's top shows by rank. Shows that charted earlier in the window but are not in this cohort are left out."
+                            }
+                          },
+                          "required": [
+                            "chart",
+                            "dates",
+                            "rows"
+                          ],
+                          "additionalProperties": false
+                        }
+                      },
+                      "required": [
+                        "options",
+                        "history"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "data"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Forbidden — plan does not include this endpoint"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
     "/api/v1/charts/podcast-history": {
       "get": {
         "tags": [

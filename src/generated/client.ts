@@ -58,6 +58,9 @@ export type GetChartAvailabilityResponse =
 export type GetChartMovementParams = NonNullable<operations['getChartMovement']['parameters']['query']>;
 export type GetChartMovementResponse =
   operations['getChartMovement']['responses']['200']['content']['application/json']['data'];
+export type GetChartRankHistoryParams = NonNullable<operations['getChartRankHistory']['parameters']['query']>;
+export type GetChartRankHistoryResponse =
+  operations['getChartRankHistory']['responses']['200']['content']['application/json']['data'];
 export type GetLatestChartParams = NonNullable<operations['getLatestChart']['parameters']['query']>;
 export type GetLatestChartResponse =
   operations['getLatestChart']['responses']['200']['content']['application/json']['data'];
@@ -385,6 +388,14 @@ const descriptors = {
     path: '/api/v1/charts/movement',
     pathParams: [],
     queryParams: ['chartType', 'category', 'country', 'date', 'compare', 'limit'],
+    body: 'none',
+    binary: false,
+  },
+  getChartRankHistory: {
+    method: 'GET',
+    path: '/api/v1/charts/history',
+    pathParams: [],
+    queryParams: ['chartType', 'category', 'country', 'endDate', 'days', 'rows'],
     body: 'none',
     binary: false,
   },
@@ -1000,6 +1011,17 @@ class ChartsResource {
    */
   getChartMovement(params?: GetChartMovementParams, options?: RequestOptions): Promise<GetChartMovementResponse> {
     return this.core.request(descriptors.getChartMovement, params as Record<string, unknown>, options);
+  }
+
+  /**
+   * Chart Rank History
+   * Get the daily ranks of a chart's top shows on the end date over the preceding 7 to 90 days, with each day's chart coverage
+   */
+  getChartRankHistory(
+    params?: GetChartRankHistoryParams,
+    options?: RequestOptions
+  ): Promise<GetChartRankHistoryResponse> {
+    return this.core.request(descriptors.getChartRankHistory, params as Record<string, unknown>, options);
   }
 
   /**
