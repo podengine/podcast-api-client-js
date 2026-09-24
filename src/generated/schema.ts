@@ -10190,6 +10190,8 @@ export interface operations {
                 slug: string;
                 title: string;
                 titleLatest: string;
+                /** @description Number of episodes in the podcast feed, or null when unavailable */
+                episodeCount: number | null;
               }[];
               words: string[];
             };

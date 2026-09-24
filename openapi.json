@@ -22833,6 +22833,15 @@
                               },
                               "titleLatest": {
                                 "type": "string"
+                              },
+                              "episodeCount": {
+                                "description": "Number of episodes in the podcast feed, or null when unavailable",
+                                "type": [
+                                  "integer",
+                                  "null"
+                                ],
+                                "minimum": 0,
+                                "maximum": 9007199254740991
                               }
                             },
                             "required": [
@@ -22845,7 +22854,8 @@
                               "lastEpisodePublishedAt",
                               "slug",
                               "title",
-                              "titleLatest"
+                              "titleLatest",
+                              "episodeCount"
                             ],
                             "additionalProperties": false
                           }
