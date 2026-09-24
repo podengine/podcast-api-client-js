@@ -55,6 +55,9 @@ export type GetChartResponse = operations['getChart']['responses']['200']['conte
 export type GetChartAvailabilityParams = NonNullable<operations['getChartAvailability']['parameters']['query']>;
 export type GetChartAvailabilityResponse =
   operations['getChartAvailability']['responses']['200']['content']['application/json']['data'];
+export type GetChartMovementParams = NonNullable<operations['getChartMovement']['parameters']['query']>;
+export type GetChartMovementResponse =
+  operations['getChartMovement']['responses']['200']['content']['application/json']['data'];
 export type GetLatestChartParams = NonNullable<operations['getLatestChart']['parameters']['query']>;
 export type GetLatestChartResponse =
   operations['getLatestChart']['responses']['200']['content']['application/json']['data'];
@@ -374,6 +377,14 @@ const descriptors = {
     path: '/api/v1/charts/availability',
     pathParams: [],
     queryParams: ['chartType', 'category', 'country', 'date'],
+    body: 'none',
+    binary: false,
+  },
+  getChartMovement: {
+    method: 'GET',
+    path: '/api/v1/charts/movement',
+    pathParams: [],
+    queryParams: ['chartType', 'category', 'country', 'date', 'compare', 'limit'],
     body: 'none',
     binary: false,
   },
@@ -981,6 +992,14 @@ class ChartsResource {
     options?: RequestOptions
   ): Promise<GetChartAvailabilityResponse> {
     return this.core.request(descriptors.getChartAvailability, params as Record<string, unknown>, options);
+  }
+
+  /**
+   * Chart Movement
+   * Get a chart's biggest climbers and fallers, new entries and drop-offs since the chart 1 or 7 days earlier, computed over every position
+   */
+  getChartMovement(params?: GetChartMovementParams, options?: RequestOptions): Promise<GetChartMovementResponse> {
+    return this.core.request(descriptors.getChartMovement, params as Record<string, unknown>, options);
   }
 
   /**

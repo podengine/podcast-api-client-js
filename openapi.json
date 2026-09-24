@@ -5003,6 +5003,1293 @@
         ]
       }
     },
+    "/api/v1/charts/movement": {
+      "get": {
+        "tags": [
+          "charts"
+        ],
+        "summary": "Chart Movement",
+        "description": "Get a chart's biggest climbers and fallers, new entries and drop-offs since the chart 1 or 7 days earlier, computed over every position",
+        "operationId": "getChartMovement",
+        "parameters": [
+          {
+            "name": "chartType",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "apple",
+                "spotify"
+              ],
+              "description": "The type of chart, one of apple, spotify"
+            }
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "The chart category defaulting to 'top podcasts'. Apple podcasts supports the following: \"top podcasts\", \"arts\", \"business\", \"comedy\", \"education\", \"fiction\", \"government\", \"health & fitness\", \"history\", \"kids & family\", \"leisure\", \"music\", \"news\", \"religion & spirituality\", \"science\", \"society & culture\", \"sports\", \"technology\", \"true crime\", \"tv & film\""
+            }
+          },
+          {
+            "name": "country",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "The country of the chart in ISO 3166-1 alpha-2 format, for example \"us\". Defaults to us."
+            }
+          },
+          {
+            "name": "date",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "description": "The chart date (YYYY-MM-DD). Omit for the latest chart; pass the date on screen to stay on one snapshot.",
+              "type": [
+                "string",
+                "null"
+              ],
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+            }
+          },
+          {
+            "name": "compare",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "1d",
+                "7d"
+              ],
+              "description": "Which earlier chart to measure rank change against: 1 day or 7 days before the chart date. The latest chart on or before that date is used. Defaults to 1d."
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "description": "Items per list, default 4, max 25. Lists are computed over the whole chart; totalCount is unaffected.",
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 25
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "OK"
+                      ]
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "options": {
+                          "type": "object",
+                          "properties": {
+                            "chartType": {
+                              "type": "string",
+                              "enum": [
+                                "apple",
+                                "spotify"
+                              ],
+                              "description": "The type of chart, one of apple, spotify"
+                            },
+                            "category": {
+                              "type": "string",
+                              "description": "The chart category defaulting to 'top podcasts'. Apple podcasts supports the following: \"top podcasts\", \"arts\", \"business\", \"comedy\", \"education\", \"fiction\", \"government\", \"health & fitness\", \"history\", \"kids & family\", \"leisure\", \"music\", \"news\", \"religion & spirituality\", \"science\", \"society & culture\", \"sports\", \"technology\", \"true crime\", \"tv & film\""
+                            },
+                            "country": {
+                              "type": "string",
+                              "description": "The country of the chart in ISO 3166-1 alpha-2 format, for example \"us\". Defaults to us."
+                            },
+                            "date": {
+                              "description": "The chart date (YYYY-MM-DD). Omit for the latest chart; pass the date on screen to stay on one snapshot.",
+                              "type": [
+                                "string",
+                                "null"
+                              ],
+                              "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+                            },
+                            "compare": {
+                              "type": "string",
+                              "enum": [
+                                "1d",
+                                "7d"
+                              ],
+                              "description": "Which earlier chart to measure rank change against: 1 day or 7 days before the chart date. The latest chart on or before that date is used. Defaults to 1d."
+                            },
+                            "limit": {
+                              "description": "Items per list, default 4, max 25. Lists are computed over the whole chart; totalCount is unaffected.",
+                              "type": "integer",
+                              "minimum": 1,
+                              "maximum": 25
+                            }
+                          },
+                          "additionalProperties": false,
+                          "description": "Get a chart's biggest climbers and fallers, new entries and drop-offs since a comparison chart"
+                        },
+                        "movement": {
+                          "description": "Null when no chart exists for the date.",
+                          "type": [
+                            "object",
+                            "null"
+                          ],
+                          "properties": {
+                            "chart": {
+                              "type": "object",
+                              "properties": {
+                                "chartType": {
+                                  "type": "string",
+                                  "enum": [
+                                    "apple",
+                                    "spotify"
+                                  ],
+                                  "description": "The type of chart, one of apple, spotify"
+                                },
+                                "category": {
+                                  "type": "string",
+                                  "description": "The chart category defaulting to 'top podcasts'. Apple podcasts supports the following: \"top podcasts\", \"arts\", \"business\", \"comedy\", \"education\", \"fiction\", \"government\", \"health & fitness\", \"history\", \"kids & family\", \"leisure\", \"music\", \"news\", \"religion & spirituality\", \"science\", \"society & culture\", \"sports\", \"technology\", \"true crime\", \"tv & film\""
+                                },
+                                "country": {
+                                  "type": "string",
+                                  "description": "The country of the chart in ISO 3166-1 alpha-2 format, for example \"us\". Defaults to us."
+                                },
+                                "chartDate": {
+                                  "type": "string",
+                                  "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+                                  "description": "The date of the chart in YYYY-MM-DD format"
+                                },
+                                "totalPositions": {
+                                  "type": "number",
+                                  "description": "Positions with a platform identity on this chart, independent of positionsLimit."
+                                },
+                                "unresolvedPositions": {
+                                  "type": "number",
+                                  "description": "Historical Spotify positions recorded without a trustworthy Spotify id (not included in positions)."
+                                },
+                                "observedDepth": {
+                                  "type": "number",
+                                  "description": "The deepest position captured for this chart."
+                                },
+                                "coverageStatus": {
+                                  "type": "string",
+                                  "enum": [
+                                    "complete",
+                                    "unresolved_identities",
+                                    "incomplete"
+                                  ],
+                                  "description": "complete: every captured position has a platform id. unresolved_identities: some historical Spotify positions are known only by Pod Engine podcast. incomplete: positions are missing from the capture."
+                                },
+                                "compare": {
+                                  "type": "string",
+                                  "enum": [
+                                    "1d",
+                                    "7d"
+                                  ],
+                                  "description": "Which earlier chart to measure rank change against: 1 day or 7 days before the chart date. The latest chart on or before that date is used. Defaults to 1d."
+                                },
+                                "requestedCompareDate": {
+                                  "type": "string",
+                                  "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+                                  "description": "The chart date minus 1 or 7 UTC calendar days."
+                                },
+                                "compareChartDate": {
+                                  "description": "The date of the chart actually compared against: the latest chart on or before requestedCompareDate.",
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ],
+                                  "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+                                },
+                                "comparisonStatus": {
+                                  "type": "string",
+                                  "enum": [
+                                    "available",
+                                    "unavailable"
+                                  ]
+                                },
+                                "comparisonUnavailableReason": {
+                                  "description": "Why no comparison chart could be resolved; null when comparisonStatus is available.",
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ],
+                                  "enum": [
+                                    "no_earlier_chart"
+                                  ]
+                                },
+                                "compareChartObservedDepth": {
+                                  "type": [
+                                    "number",
+                                    "null"
+                                  ]
+                                },
+                                "compareChartCoverageStatus": {
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ],
+                                  "enum": [
+                                    "complete",
+                                    "unresolved_identities",
+                                    "incomplete"
+                                  ],
+                                  "description": "complete: every captured position has a platform id. unresolved_identities: some historical Spotify positions are known only by Pod Engine podcast. incomplete: positions are missing from the capture."
+                                },
+                                "entryExitConfirmable": {
+                                  "type": "boolean",
+                                  "description": "Whether entries can be confirmed: both charts are fully resolved and captured to the same depth. When false, shows absent from the comparison chart have movement unknown."
+                                }
+                              },
+                              "required": [
+                                "chartType",
+                                "category",
+                                "country",
+                                "chartDate",
+                                "totalPositions",
+                                "unresolvedPositions",
+                                "observedDepth",
+                                "coverageStatus",
+                                "compare",
+                                "requestedCompareDate",
+                                "compareChartDate",
+                                "comparisonStatus",
+                                "comparisonUnavailableReason",
+                                "compareChartObservedDepth",
+                                "compareChartCoverageStatus",
+                                "entryExitConfirmable"
+                              ],
+                              "additionalProperties": false
+                            },
+                            "climbers": {
+                              "type": "object",
+                              "properties": {
+                                "status": {
+                                  "type": "string",
+                                  "enum": [
+                                    "available",
+                                    "unavailable"
+                                  ],
+                                  "description": "unavailable: the list cannot be computed reliably, which is different from an empty list."
+                                },
+                                "unavailableReason": {
+                                  "description": "no_earlier_chart: nothing to compare with. depth_changed: the charts were captured to different depths. incomplete_coverage: a chart has missing or unresolved positions.",
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ],
+                                  "enum": [
+                                    "no_earlier_chart",
+                                    "depth_changed",
+                                    "incomplete_coverage"
+                                  ]
+                                },
+                                "totalCount": {
+                                  "type": "number",
+                                  "description": "Items in the full list, independent of limit."
+                                },
+                                "items": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "podenginePodcast": {
+                                        "type": [
+                                          "object",
+                                          "null"
+                                        ],
+                                        "properties": {
+                                          "author": {
+                                            "type": [
+                                              "string",
+                                              "null"
+                                            ]
+                                          },
+                                          "authorityScore": {
+                                            "type": [
+                                              "object",
+                                              "null"
+                                            ],
+                                            "properties": {
+                                              "calculatedAt": {},
+                                              "authorityScore": {
+                                                "type": "number",
+                                                "description": "This is the weighted total authority score of the podcast, out of 100"
+                                              },
+                                              "qualityScore": {
+                                                "type": "number",
+                                                "description": "This is the quality score of the podcast, out of 100"
+                                              },
+                                              "youtubeScore": {
+                                                "type": "number",
+                                                "description": "This is the YouTube score of the podcast, out of 100"
+                                              },
+                                              "socialScore": {
+                                                "type": "number",
+                                                "description": "This is the social score of the podcast, out of 100"
+                                              },
+                                              "engagementScore": {
+                                                "type": "number",
+                                                "description": "This is the engagement score of the podcast, out of 100"
+                                              }
+                                            },
+                                            "required": [
+                                              "calculatedAt",
+                                              "authorityScore",
+                                              "qualityScore",
+                                              "youtubeScore",
+                                              "socialScore",
+                                              "engagementScore"
+                                            ],
+                                            "additionalProperties": false
+                                          },
+                                          "genres": {
+                                            "type": "array",
+                                            "items": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "id": {
+                                            "type": "string"
+                                          },
+                                          "imageUrl": {
+                                            "type": [
+                                              "string",
+                                              "null"
+                                            ]
+                                          },
+                                          "language": {
+                                            "type": "string"
+                                          },
+                                          "lastEpisodePublishedAt": {},
+                                          "slug": {
+                                            "type": "string"
+                                          },
+                                          "title": {
+                                            "type": "string"
+                                          },
+                                          "titleLatest": {
+                                            "type": "string"
+                                          }
+                                        },
+                                        "required": [
+                                          "author",
+                                          "authorityScore",
+                                          "genres",
+                                          "id",
+                                          "imageUrl",
+                                          "language",
+                                          "lastEpisodePublishedAt",
+                                          "slug",
+                                          "title",
+                                          "titleLatest"
+                                        ],
+                                        "additionalProperties": false
+                                      },
+                                      "identity": {
+                                        "oneOf": [
+                                          {
+                                            "type": "object",
+                                            "properties": {
+                                              "type": {
+                                                "type": "string",
+                                                "enum": [
+                                                  "podcast"
+                                                ]
+                                              },
+                                              "podcastId": {
+                                                "type": "string"
+                                              },
+                                              "slug": {
+                                                "type": "string"
+                                              }
+                                            },
+                                            "required": [
+                                              "type",
+                                              "podcastId",
+                                              "slug"
+                                            ],
+                                            "additionalProperties": false
+                                          },
+                                          {
+                                            "type": "object",
+                                            "properties": {
+                                              "type": {
+                                                "type": "string",
+                                                "enum": [
+                                                  "platform"
+                                                ]
+                                              },
+                                              "chartType": {
+                                                "type": "string",
+                                                "enum": [
+                                                  "apple",
+                                                  "spotify"
+                                                ],
+                                                "description": "The type of chart, one of apple, spotify"
+                                              },
+                                              "platformId": {
+                                                "type": "string"
+                                              }
+                                            },
+                                            "required": [
+                                              "type",
+                                              "chartType",
+                                              "platformId"
+                                            ],
+                                            "additionalProperties": false
+                                          }
+                                        ],
+                                        "description": "The resolved identity, stable for deep links: the canonical Pod Engine id, or the platform id."
+                                      },
+                                      "title": {
+                                        "type": "string"
+                                      },
+                                      "creator": {
+                                        "type": [
+                                          "string",
+                                          "null"
+                                        ]
+                                      },
+                                      "imageUrl": {
+                                        "type": [
+                                          "string",
+                                          "null"
+                                        ]
+                                      },
+                                      "position": {
+                                        "description": "Rank on the chart; null for a dropped show.",
+                                        "type": [
+                                          "number",
+                                          "null"
+                                        ]
+                                      },
+                                      "previousPosition": {
+                                        "description": "Rank on the comparison chart; null for an entry.",
+                                        "type": [
+                                          "number",
+                                          "null"
+                                        ]
+                                      },
+                                      "positionChange": {
+                                        "description": "previousPosition minus position; positive means the show climbed. Null unless on both charts.",
+                                        "type": [
+                                          "number",
+                                          "null"
+                                        ]
+                                      }
+                                    },
+                                    "required": [
+                                      "podenginePodcast",
+                                      "identity",
+                                      "title",
+                                      "creator",
+                                      "imageUrl",
+                                      "position",
+                                      "previousPosition",
+                                      "positionChange"
+                                    ],
+                                    "additionalProperties": false
+                                  }
+                                }
+                              },
+                              "required": [
+                                "status",
+                                "unavailableReason",
+                                "totalCount",
+                                "items"
+                              ],
+                              "additionalProperties": false,
+                              "description": "Largest climbs among shows on both charts, biggest first."
+                            },
+                            "fallers": {
+                              "type": "object",
+                              "properties": {
+                                "status": {
+                                  "type": "string",
+                                  "enum": [
+                                    "available",
+                                    "unavailable"
+                                  ],
+                                  "description": "unavailable: the list cannot be computed reliably, which is different from an empty list."
+                                },
+                                "unavailableReason": {
+                                  "description": "no_earlier_chart: nothing to compare with. depth_changed: the charts were captured to different depths. incomplete_coverage: a chart has missing or unresolved positions.",
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ],
+                                  "enum": [
+                                    "no_earlier_chart",
+                                    "depth_changed",
+                                    "incomplete_coverage"
+                                  ]
+                                },
+                                "totalCount": {
+                                  "type": "number",
+                                  "description": "Items in the full list, independent of limit."
+                                },
+                                "items": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "podenginePodcast": {
+                                        "type": [
+                                          "object",
+                                          "null"
+                                        ],
+                                        "properties": {
+                                          "author": {
+                                            "type": [
+                                              "string",
+                                              "null"
+                                            ]
+                                          },
+                                          "authorityScore": {
+                                            "type": [
+                                              "object",
+                                              "null"
+                                            ],
+                                            "properties": {
+                                              "calculatedAt": {},
+                                              "authorityScore": {
+                                                "type": "number",
+                                                "description": "This is the weighted total authority score of the podcast, out of 100"
+                                              },
+                                              "qualityScore": {
+                                                "type": "number",
+                                                "description": "This is the quality score of the podcast, out of 100"
+                                              },
+                                              "youtubeScore": {
+                                                "type": "number",
+                                                "description": "This is the YouTube score of the podcast, out of 100"
+                                              },
+                                              "socialScore": {
+                                                "type": "number",
+                                                "description": "This is the social score of the podcast, out of 100"
+                                              },
+                                              "engagementScore": {
+                                                "type": "number",
+                                                "description": "This is the engagement score of the podcast, out of 100"
+                                              }
+                                            },
+                                            "required": [
+                                              "calculatedAt",
+                                              "authorityScore",
+                                              "qualityScore",
+                                              "youtubeScore",
+                                              "socialScore",
+                                              "engagementScore"
+                                            ],
+                                            "additionalProperties": false
+                                          },
+                                          "genres": {
+                                            "type": "array",
+                                            "items": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "id": {
+                                            "type": "string"
+                                          },
+                                          "imageUrl": {
+                                            "type": [
+                                              "string",
+                                              "null"
+                                            ]
+                                          },
+                                          "language": {
+                                            "type": "string"
+                                          },
+                                          "lastEpisodePublishedAt": {},
+                                          "slug": {
+                                            "type": "string"
+                                          },
+                                          "title": {
+                                            "type": "string"
+                                          },
+                                          "titleLatest": {
+                                            "type": "string"
+                                          }
+                                        },
+                                        "required": [
+                                          "author",
+                                          "authorityScore",
+                                          "genres",
+                                          "id",
+                                          "imageUrl",
+                                          "language",
+                                          "lastEpisodePublishedAt",
+                                          "slug",
+                                          "title",
+                                          "titleLatest"
+                                        ],
+                                        "additionalProperties": false
+                                      },
+                                      "identity": {
+                                        "oneOf": [
+                                          {
+                                            "type": "object",
+                                            "properties": {
+                                              "type": {
+                                                "type": "string",
+                                                "enum": [
+                                                  "podcast"
+                                                ]
+                                              },
+                                              "podcastId": {
+                                                "type": "string"
+                                              },
+                                              "slug": {
+                                                "type": "string"
+                                              }
+                                            },
+                                            "required": [
+                                              "type",
+                                              "podcastId",
+                                              "slug"
+                                            ],
+                                            "additionalProperties": false
+                                          },
+                                          {
+                                            "type": "object",
+                                            "properties": {
+                                              "type": {
+                                                "type": "string",
+                                                "enum": [
+                                                  "platform"
+                                                ]
+                                              },
+                                              "chartType": {
+                                                "type": "string",
+                                                "enum": [
+                                                  "apple",
+                                                  "spotify"
+                                                ],
+                                                "description": "The type of chart, one of apple, spotify"
+                                              },
+                                              "platformId": {
+                                                "type": "string"
+                                              }
+                                            },
+                                            "required": [
+                                              "type",
+                                              "chartType",
+                                              "platformId"
+                                            ],
+                                            "additionalProperties": false
+                                          }
+                                        ],
+                                        "description": "The resolved identity, stable for deep links: the canonical Pod Engine id, or the platform id."
+                                      },
+                                      "title": {
+                                        "type": "string"
+                                      },
+                                      "creator": {
+                                        "type": [
+                                          "string",
+                                          "null"
+                                        ]
+                                      },
+                                      "imageUrl": {
+                                        "type": [
+                                          "string",
+                                          "null"
+                                        ]
+                                      },
+                                      "position": {
+                                        "description": "Rank on the chart; null for a dropped show.",
+                                        "type": [
+                                          "number",
+                                          "null"
+                                        ]
+                                      },
+                                      "previousPosition": {
+                                        "description": "Rank on the comparison chart; null for an entry.",
+                                        "type": [
+                                          "number",
+                                          "null"
+                                        ]
+                                      },
+                                      "positionChange": {
+                                        "description": "previousPosition minus position; positive means the show climbed. Null unless on both charts.",
+                                        "type": [
+                                          "number",
+                                          "null"
+                                        ]
+                                      }
+                                    },
+                                    "required": [
+                                      "podenginePodcast",
+                                      "identity",
+                                      "title",
+                                      "creator",
+                                      "imageUrl",
+                                      "position",
+                                      "previousPosition",
+                                      "positionChange"
+                                    ],
+                                    "additionalProperties": false
+                                  }
+                                }
+                              },
+                              "required": [
+                                "status",
+                                "unavailableReason",
+                                "totalCount",
+                                "items"
+                              ],
+                              "additionalProperties": false,
+                              "description": "Largest falls among shows on both charts, biggest first."
+                            },
+                            "newEntries": {
+                              "type": "object",
+                              "properties": {
+                                "status": {
+                                  "type": "string",
+                                  "enum": [
+                                    "available",
+                                    "unavailable"
+                                  ],
+                                  "description": "unavailable: the list cannot be computed reliably, which is different from an empty list."
+                                },
+                                "unavailableReason": {
+                                  "description": "no_earlier_chart: nothing to compare with. depth_changed: the charts were captured to different depths. incomplete_coverage: a chart has missing or unresolved positions.",
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ],
+                                  "enum": [
+                                    "no_earlier_chart",
+                                    "depth_changed",
+                                    "incomplete_coverage"
+                                  ]
+                                },
+                                "totalCount": {
+                                  "type": "number",
+                                  "description": "Items in the full list, independent of limit."
+                                },
+                                "items": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "podenginePodcast": {
+                                        "type": [
+                                          "object",
+                                          "null"
+                                        ],
+                                        "properties": {
+                                          "author": {
+                                            "type": [
+                                              "string",
+                                              "null"
+                                            ]
+                                          },
+                                          "authorityScore": {
+                                            "type": [
+                                              "object",
+                                              "null"
+                                            ],
+                                            "properties": {
+                                              "calculatedAt": {},
+                                              "authorityScore": {
+                                                "type": "number",
+                                                "description": "This is the weighted total authority score of the podcast, out of 100"
+                                              },
+                                              "qualityScore": {
+                                                "type": "number",
+                                                "description": "This is the quality score of the podcast, out of 100"
+                                              },
+                                              "youtubeScore": {
+                                                "type": "number",
+                                                "description": "This is the YouTube score of the podcast, out of 100"
+                                              },
+                                              "socialScore": {
+                                                "type": "number",
+                                                "description": "This is the social score of the podcast, out of 100"
+                                              },
+                                              "engagementScore": {
+                                                "type": "number",
+                                                "description": "This is the engagement score of the podcast, out of 100"
+                                              }
+                                            },
+                                            "required": [
+                                              "calculatedAt",
+                                              "authorityScore",
+                                              "qualityScore",
+                                              "youtubeScore",
+                                              "socialScore",
+                                              "engagementScore"
+                                            ],
+                                            "additionalProperties": false
+                                          },
+                                          "genres": {
+                                            "type": "array",
+                                            "items": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "id": {
+                                            "type": "string"
+                                          },
+                                          "imageUrl": {
+                                            "type": [
+                                              "string",
+                                              "null"
+                                            ]
+                                          },
+                                          "language": {
+                                            "type": "string"
+                                          },
+                                          "lastEpisodePublishedAt": {},
+                                          "slug": {
+                                            "type": "string"
+                                          },
+                                          "title": {
+                                            "type": "string"
+                                          },
+                                          "titleLatest": {
+                                            "type": "string"
+                                          }
+                                        },
+                                        "required": [
+                                          "author",
+                                          "authorityScore",
+                                          "genres",
+                                          "id",
+                                          "imageUrl",
+                                          "language",
+                                          "lastEpisodePublishedAt",
+                                          "slug",
+                                          "title",
+                                          "titleLatest"
+                                        ],
+                                        "additionalProperties": false
+                                      },
+                                      "identity": {
+                                        "oneOf": [
+                                          {
+                                            "type": "object",
+                                            "properties": {
+                                              "type": {
+                                                "type": "string",
+                                                "enum": [
+                                                  "podcast"
+                                                ]
+                                              },
+                                              "podcastId": {
+                                                "type": "string"
+                                              },
+                                              "slug": {
+                                                "type": "string"
+                                              }
+                                            },
+                                            "required": [
+                                              "type",
+                                              "podcastId",
+                                              "slug"
+                                            ],
+                                            "additionalProperties": false
+                                          },
+                                          {
+                                            "type": "object",
+                                            "properties": {
+                                              "type": {
+                                                "type": "string",
+                                                "enum": [
+                                                  "platform"
+                                                ]
+                                              },
+                                              "chartType": {
+                                                "type": "string",
+                                                "enum": [
+                                                  "apple",
+                                                  "spotify"
+                                                ],
+                                                "description": "The type of chart, one of apple, spotify"
+                                              },
+                                              "platformId": {
+                                                "type": "string"
+                                              }
+                                            },
+                                            "required": [
+                                              "type",
+                                              "chartType",
+                                              "platformId"
+                                            ],
+                                            "additionalProperties": false
+                                          }
+                                        ],
+                                        "description": "The resolved identity, stable for deep links: the canonical Pod Engine id, or the platform id."
+                                      },
+                                      "title": {
+                                        "type": "string"
+                                      },
+                                      "creator": {
+                                        "type": [
+                                          "string",
+                                          "null"
+                                        ]
+                                      },
+                                      "imageUrl": {
+                                        "type": [
+                                          "string",
+                                          "null"
+                                        ]
+                                      },
+                                      "position": {
+                                        "description": "Rank on the chart; null for a dropped show.",
+                                        "type": [
+                                          "number",
+                                          "null"
+                                        ]
+                                      },
+                                      "previousPosition": {
+                                        "description": "Rank on the comparison chart; null for an entry.",
+                                        "type": [
+                                          "number",
+                                          "null"
+                                        ]
+                                      },
+                                      "positionChange": {
+                                        "description": "previousPosition minus position; positive means the show climbed. Null unless on both charts.",
+                                        "type": [
+                                          "number",
+                                          "null"
+                                        ]
+                                      }
+                                    },
+                                    "required": [
+                                      "podenginePodcast",
+                                      "identity",
+                                      "title",
+                                      "creator",
+                                      "imageUrl",
+                                      "position",
+                                      "previousPosition",
+                                      "positionChange"
+                                    ],
+                                    "additionalProperties": false
+                                  }
+                                }
+                              },
+                              "required": [
+                                "status",
+                                "unavailableReason",
+                                "totalCount",
+                                "items"
+                              ],
+                              "additionalProperties": false,
+                              "description": "Confirmed entries since the comparison chart, by position. May include re-entries; not a debut."
+                            },
+                            "droppedOff": {
+                              "type": "object",
+                              "properties": {
+                                "status": {
+                                  "type": "string",
+                                  "enum": [
+                                    "available",
+                                    "unavailable"
+                                  ],
+                                  "description": "unavailable: the list cannot be computed reliably, which is different from an empty list."
+                                },
+                                "unavailableReason": {
+                                  "description": "no_earlier_chart: nothing to compare with. depth_changed: the charts were captured to different depths. incomplete_coverage: a chart has missing or unresolved positions.",
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ],
+                                  "enum": [
+                                    "no_earlier_chart",
+                                    "depth_changed",
+                                    "incomplete_coverage"
+                                  ]
+                                },
+                                "totalCount": {
+                                  "type": "number",
+                                  "description": "Items in the full list, independent of limit."
+                                },
+                                "items": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "podenginePodcast": {
+                                        "type": [
+                                          "object",
+                                          "null"
+                                        ],
+                                        "properties": {
+                                          "author": {
+                                            "type": [
+                                              "string",
+                                              "null"
+                                            ]
+                                          },
+                                          "authorityScore": {
+                                            "type": [
+                                              "object",
+                                              "null"
+                                            ],
+                                            "properties": {
+                                              "calculatedAt": {},
+                                              "authorityScore": {
+                                                "type": "number",
+                                                "description": "This is the weighted total authority score of the podcast, out of 100"
+                                              },
+                                              "qualityScore": {
+                                                "type": "number",
+                                                "description": "This is the quality score of the podcast, out of 100"
+                                              },
+                                              "youtubeScore": {
+                                                "type": "number",
+                                                "description": "This is the YouTube score of the podcast, out of 100"
+                                              },
+                                              "socialScore": {
+                                                "type": "number",
+                                                "description": "This is the social score of the podcast, out of 100"
+                                              },
+                                              "engagementScore": {
+                                                "type": "number",
+                                                "description": "This is the engagement score of the podcast, out of 100"
+                                              }
+                                            },
+                                            "required": [
+                                              "calculatedAt",
+                                              "authorityScore",
+                                              "qualityScore",
+                                              "youtubeScore",
+                                              "socialScore",
+                                              "engagementScore"
+                                            ],
+                                            "additionalProperties": false
+                                          },
+                                          "genres": {
+                                            "type": "array",
+                                            "items": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "id": {
+                                            "type": "string"
+                                          },
+                                          "imageUrl": {
+                                            "type": [
+                                              "string",
+                                              "null"
+                                            ]
+                                          },
+                                          "language": {
+                                            "type": "string"
+                                          },
+                                          "lastEpisodePublishedAt": {},
+                                          "slug": {
+                                            "type": "string"
+                                          },
+                                          "title": {
+                                            "type": "string"
+                                          },
+                                          "titleLatest": {
+                                            "type": "string"
+                                          }
+                                        },
+                                        "required": [
+                                          "author",
+                                          "authorityScore",
+                                          "genres",
+                                          "id",
+                                          "imageUrl",
+                                          "language",
+                                          "lastEpisodePublishedAt",
+                                          "slug",
+                                          "title",
+                                          "titleLatest"
+                                        ],
+                                        "additionalProperties": false
+                                      },
+                                      "identity": {
+                                        "oneOf": [
+                                          {
+                                            "type": "object",
+                                            "properties": {
+                                              "type": {
+                                                "type": "string",
+                                                "enum": [
+                                                  "podcast"
+                                                ]
+                                              },
+                                              "podcastId": {
+                                                "type": "string"
+                                              },
+                                              "slug": {
+                                                "type": "string"
+                                              }
+                                            },
+                                            "required": [
+                                              "type",
+                                              "podcastId",
+                                              "slug"
+                                            ],
+                                            "additionalProperties": false
+                                          },
+                                          {
+                                            "type": "object",
+                                            "properties": {
+                                              "type": {
+                                                "type": "string",
+                                                "enum": [
+                                                  "platform"
+                                                ]
+                                              },
+                                              "chartType": {
+                                                "type": "string",
+                                                "enum": [
+                                                  "apple",
+                                                  "spotify"
+                                                ],
+                                                "description": "The type of chart, one of apple, spotify"
+                                              },
+                                              "platformId": {
+                                                "type": "string"
+                                              }
+                                            },
+                                            "required": [
+                                              "type",
+                                              "chartType",
+                                              "platformId"
+                                            ],
+                                            "additionalProperties": false
+                                          }
+                                        ],
+                                        "description": "The resolved identity, stable for deep links: the canonical Pod Engine id, or the platform id."
+                                      },
+                                      "title": {
+                                        "type": "string"
+                                      },
+                                      "creator": {
+                                        "type": [
+                                          "string",
+                                          "null"
+                                        ]
+                                      },
+                                      "imageUrl": {
+                                        "type": [
+                                          "string",
+                                          "null"
+                                        ]
+                                      },
+                                      "position": {
+                                        "description": "Rank on the chart; null for a dropped show.",
+                                        "type": [
+                                          "number",
+                                          "null"
+                                        ]
+                                      },
+                                      "previousPosition": {
+                                        "description": "Rank on the comparison chart; null for an entry.",
+                                        "type": [
+                                          "number",
+                                          "null"
+                                        ]
+                                      },
+                                      "positionChange": {
+                                        "description": "previousPosition minus position; positive means the show climbed. Null unless on both charts.",
+                                        "type": [
+                                          "number",
+                                          "null"
+                                        ]
+                                      }
+                                    },
+                                    "required": [
+                                      "podenginePodcast",
+                                      "identity",
+                                      "title",
+                                      "creator",
+                                      "imageUrl",
+                                      "position",
+                                      "previousPosition",
+                                      "positionChange"
+                                    ],
+                                    "additionalProperties": false
+                                  }
+                                }
+                              },
+                              "required": [
+                                "status",
+                                "unavailableReason",
+                                "totalCount",
+                                "items"
+                              ],
+                              "additionalProperties": false,
+                              "description": "Shows on the comparison chart confirmed absent from this one, by their last position."
+                            }
+                          },
+                          "required": [
+                            "chart",
+                            "climbers",
+                            "fallers",
+                            "newEntries",
+                            "droppedOff"
+                          ],
+                          "additionalProperties": false
+                        }
+                      },
+                      "required": [
+                        "options",
+                        "movement"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "data"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Forbidden — plan does not include this endpoint"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
     "/api/v1/charts/podcast-history": {
       "get": {
         "tags": [

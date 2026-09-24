@@ -191,6 +191,26 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  '/api/v1/charts/movement': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /**
+     * Chart Movement
+     * @description Get a chart's biggest climbers and fallers, new entries and drop-offs since the chart 1 or 7 days earlier, computed over every position
+     */
+    get: operations['getChartMovement'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   '/api/v1/charts/podcast-history': {
     parameters: {
       query?: never;
@@ -3221,6 +3241,417 @@ export interface operations {
                 /** @description The earliest chart strictly after selectedDate. */
                 nextChartDate: string | null;
               };
+            };
+          };
+        };
+      };
+      /** @description Bad request */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Authentication required */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Forbidden — plan does not include this endpoint */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Not found */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Rate limit exceeded */
+      429: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+    };
+  };
+  getChartMovement: {
+    parameters: {
+      query?: {
+        chartType?: 'apple' | 'spotify';
+        category?: string;
+        country?: string;
+        date?: string | null;
+        compare?: '1d' | '7d';
+        limit?: number;
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Success */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': {
+            /** @enum {string} */
+            status: 'OK';
+            data: {
+              /** @description Get a chart's biggest climbers and fallers, new entries and drop-offs since a comparison chart */
+              options: {
+                /**
+                 * @description The type of chart, one of apple, spotify
+                 * @enum {string}
+                 */
+                chartType?: 'apple' | 'spotify';
+                /** @description The chart category defaulting to 'top podcasts'. Apple podcasts supports the following: "top podcasts", "arts", "business", "comedy", "education", "fiction", "government", "health & fitness", "history", "kids & family", "leisure", "music", "news", "religion & spirituality", "science", "society & culture", "sports", "technology", "true crime", "tv & film" */
+                category?: string;
+                /** @description The country of the chart in ISO 3166-1 alpha-2 format, for example "us". Defaults to us. */
+                country?: string;
+                /** @description The chart date (YYYY-MM-DD). Omit for the latest chart; pass the date on screen to stay on one snapshot. */
+                date?: string | null;
+                /**
+                 * @description Which earlier chart to measure rank change against: 1 day or 7 days before the chart date. The latest chart on or before that date is used. Defaults to 1d.
+                 * @enum {string}
+                 */
+                compare?: '1d' | '7d';
+                /** @description Items per list, default 4, max 25. Lists are computed over the whole chart; totalCount is unaffected. */
+                limit?: number;
+              };
+              /** @description Null when no chart exists for the date. */
+              movement: {
+                chart: {
+                  /**
+                   * @description The type of chart, one of apple, spotify
+                   * @enum {string}
+                   */
+                  chartType: 'apple' | 'spotify';
+                  /** @description The chart category defaulting to 'top podcasts'. Apple podcasts supports the following: "top podcasts", "arts", "business", "comedy", "education", "fiction", "government", "health & fitness", "history", "kids & family", "leisure", "music", "news", "religion & spirituality", "science", "society & culture", "sports", "technology", "true crime", "tv & film" */
+                  category: string;
+                  /** @description The country of the chart in ISO 3166-1 alpha-2 format, for example "us". Defaults to us. */
+                  country: string;
+                  /** @description The date of the chart in YYYY-MM-DD format */
+                  chartDate: string;
+                  /** @description Positions with a platform identity on this chart, independent of positionsLimit. */
+                  totalPositions: number;
+                  /** @description Historical Spotify positions recorded without a trustworthy Spotify id (not included in positions). */
+                  unresolvedPositions: number;
+                  /** @description The deepest position captured for this chart. */
+                  observedDepth: number;
+                  /**
+                   * @description complete: every captured position has a platform id. unresolved_identities: some historical Spotify positions are known only by Pod Engine podcast. incomplete: positions are missing from the capture.
+                   * @enum {string}
+                   */
+                  coverageStatus: 'complete' | 'unresolved_identities' | 'incomplete';
+                  /**
+                   * @description Which earlier chart to measure rank change against: 1 day or 7 days before the chart date. The latest chart on or before that date is used. Defaults to 1d.
+                   * @enum {string}
+                   */
+                  compare: '1d' | '7d';
+                  /** @description The chart date minus 1 or 7 UTC calendar days. */
+                  requestedCompareDate: string;
+                  /** @description The date of the chart actually compared against: the latest chart on or before requestedCompareDate. */
+                  compareChartDate: string | null;
+                  /** @enum {string} */
+                  comparisonStatus: 'available' | 'unavailable';
+                  /**
+                   * @description Why no comparison chart could be resolved; null when comparisonStatus is available.
+                   * @enum {string|null}
+                   */
+                  comparisonUnavailableReason: 'no_earlier_chart' | null;
+                  compareChartObservedDepth: number | null;
+                  /**
+                   * @description complete: every captured position has a platform id. unresolved_identities: some historical Spotify positions are known only by Pod Engine podcast. incomplete: positions are missing from the capture.
+                   * @enum {string|null}
+                   */
+                  compareChartCoverageStatus: 'complete' | 'unresolved_identities' | 'incomplete' | null;
+                  /** @description Whether entries can be confirmed: both charts are fully resolved and captured to the same depth. When false, shows absent from the comparison chart have movement unknown. */
+                  entryExitConfirmable: boolean;
+                };
+                /** @description Largest climbs among shows on both charts, biggest first. */
+                climbers: {
+                  /**
+                   * @description unavailable: the list cannot be computed reliably, which is different from an empty list.
+                   * @enum {string}
+                   */
+                  status: 'available' | 'unavailable';
+                  /**
+                   * @description no_earlier_chart: nothing to compare with. depth_changed: the charts were captured to different depths. incomplete_coverage: a chart has missing or unresolved positions.
+                   * @enum {string|null}
+                   */
+                  unavailableReason: 'no_earlier_chart' | 'depth_changed' | 'incomplete_coverage' | null;
+                  /** @description Items in the full list, independent of limit. */
+                  totalCount: number;
+                  items: {
+                    podenginePodcast: {
+                      author: string | null;
+                      authorityScore: {
+                        calculatedAt: unknown;
+                        /** @description This is the weighted total authority score of the podcast, out of 100 */
+                        authorityScore: number;
+                        /** @description This is the quality score of the podcast, out of 100 */
+                        qualityScore: number;
+                        /** @description This is the YouTube score of the podcast, out of 100 */
+                        youtubeScore: number;
+                        /** @description This is the social score of the podcast, out of 100 */
+                        socialScore: number;
+                        /** @description This is the engagement score of the podcast, out of 100 */
+                        engagementScore: number;
+                      } | null;
+                      genres: string[];
+                      id: string;
+                      imageUrl: string | null;
+                      language: string;
+                      lastEpisodePublishedAt: unknown;
+                      slug: string;
+                      title: string;
+                      titleLatest: string;
+                    } | null;
+                    /** @description The resolved identity, stable for deep links: the canonical Pod Engine id, or the platform id. */
+                    identity:
+                      | {
+                          /** @enum {string} */
+                          type: 'podcast';
+                          podcastId: string;
+                          slug: string;
+                        }
+                      | {
+                          /** @enum {string} */
+                          type: 'platform';
+                          /**
+                           * @description The type of chart, one of apple, spotify
+                           * @enum {string}
+                           */
+                          chartType: 'apple' | 'spotify';
+                          platformId: string;
+                        };
+                    title: string;
+                    creator: string | null;
+                    imageUrl: string | null;
+                    /** @description Rank on the chart; null for a dropped show. */
+                    position: number | null;
+                    /** @description Rank on the comparison chart; null for an entry. */
+                    previousPosition: number | null;
+                    /** @description previousPosition minus position; positive means the show climbed. Null unless on both charts. */
+                    positionChange: number | null;
+                  }[];
+                };
+                /** @description Largest falls among shows on both charts, biggest first. */
+                fallers: {
+                  /**
+                   * @description unavailable: the list cannot be computed reliably, which is different from an empty list.
+                   * @enum {string}
+                   */
+                  status: 'available' | 'unavailable';
+                  /**
+                   * @description no_earlier_chart: nothing to compare with. depth_changed: the charts were captured to different depths. incomplete_coverage: a chart has missing or unresolved positions.
+                   * @enum {string|null}
+                   */
+                  unavailableReason: 'no_earlier_chart' | 'depth_changed' | 'incomplete_coverage' | null;
+                  /** @description Items in the full list, independent of limit. */
+                  totalCount: number;
+                  items: {
+                    podenginePodcast: {
+                      author: string | null;
+                      authorityScore: {
+                        calculatedAt: unknown;
+                        /** @description This is the weighted total authority score of the podcast, out of 100 */
+                        authorityScore: number;
+                        /** @description This is the quality score of the podcast, out of 100 */
+                        qualityScore: number;
+                        /** @description This is the YouTube score of the podcast, out of 100 */
+                        youtubeScore: number;
+                        /** @description This is the social score of the podcast, out of 100 */
+                        socialScore: number;
+                        /** @description This is the engagement score of the podcast, out of 100 */
+                        engagementScore: number;
+                      } | null;
+                      genres: string[];
+                      id: string;
+                      imageUrl: string | null;
+                      language: string;
+                      lastEpisodePublishedAt: unknown;
+                      slug: string;
+                      title: string;
+                      titleLatest: string;
+                    } | null;
+                    /** @description The resolved identity, stable for deep links: the canonical Pod Engine id, or the platform id. */
+                    identity:
+                      | {
+                          /** @enum {string} */
+                          type: 'podcast';
+                          podcastId: string;
+                          slug: string;
+                        }
+                      | {
+                          /** @enum {string} */
+                          type: 'platform';
+                          /**
+                           * @description The type of chart, one of apple, spotify
+                           * @enum {string}
+                           */
+                          chartType: 'apple' | 'spotify';
+                          platformId: string;
+                        };
+                    title: string;
+                    creator: string | null;
+                    imageUrl: string | null;
+                    /** @description Rank on the chart; null for a dropped show. */
+                    position: number | null;
+                    /** @description Rank on the comparison chart; null for an entry. */
+                    previousPosition: number | null;
+                    /** @description previousPosition minus position; positive means the show climbed. Null unless on both charts. */
+                    positionChange: number | null;
+                  }[];
+                };
+                /** @description Confirmed entries since the comparison chart, by position. May include re-entries; not a debut. */
+                newEntries: {
+                  /**
+                   * @description unavailable: the list cannot be computed reliably, which is different from an empty list.
+                   * @enum {string}
+                   */
+                  status: 'available' | 'unavailable';
+                  /**
+                   * @description no_earlier_chart: nothing to compare with. depth_changed: the charts were captured to different depths. incomplete_coverage: a chart has missing or unresolved positions.
+                   * @enum {string|null}
+                   */
+                  unavailableReason: 'no_earlier_chart' | 'depth_changed' | 'incomplete_coverage' | null;
+                  /** @description Items in the full list, independent of limit. */
+                  totalCount: number;
+                  items: {
+                    podenginePodcast: {
+                      author: string | null;
+                      authorityScore: {
+                        calculatedAt: unknown;
+                        /** @description This is the weighted total authority score of the podcast, out of 100 */
+                        authorityScore: number;
+                        /** @description This is the quality score of the podcast, out of 100 */
+                        qualityScore: number;
+                        /** @description This is the YouTube score of the podcast, out of 100 */
+                        youtubeScore: number;
+                        /** @description This is the social score of the podcast, out of 100 */
+                        socialScore: number;
+                        /** @description This is the engagement score of the podcast, out of 100 */
+                        engagementScore: number;
+                      } | null;
+                      genres: string[];
+                      id: string;
+                      imageUrl: string | null;
+                      language: string;
+                      lastEpisodePublishedAt: unknown;
+                      slug: string;
+                      title: string;
+                      titleLatest: string;
+                    } | null;
+                    /** @description The resolved identity, stable for deep links: the canonical Pod Engine id, or the platform id. */
+                    identity:
+                      | {
+                          /** @enum {string} */
+                          type: 'podcast';
+                          podcastId: string;
+                          slug: string;
+                        }
+                      | {
+                          /** @enum {string} */
+                          type: 'platform';
+                          /**
+                           * @description The type of chart, one of apple, spotify
+                           * @enum {string}
+                           */
+                          chartType: 'apple' | 'spotify';
+                          platformId: string;
+                        };
+                    title: string;
+                    creator: string | null;
+                    imageUrl: string | null;
+                    /** @description Rank on the chart; null for a dropped show. */
+                    position: number | null;
+                    /** @description Rank on the comparison chart; null for an entry. */
+                    previousPosition: number | null;
+                    /** @description previousPosition minus position; positive means the show climbed. Null unless on both charts. */
+                    positionChange: number | null;
+                  }[];
+                };
+                /** @description Shows on the comparison chart confirmed absent from this one, by their last position. */
+                droppedOff: {
+                  /**
+                   * @description unavailable: the list cannot be computed reliably, which is different from an empty list.
+                   * @enum {string}
+                   */
+                  status: 'available' | 'unavailable';
+                  /**
+                   * @description no_earlier_chart: nothing to compare with. depth_changed: the charts were captured to different depths. incomplete_coverage: a chart has missing or unresolved positions.
+                   * @enum {string|null}
+                   */
+                  unavailableReason: 'no_earlier_chart' | 'depth_changed' | 'incomplete_coverage' | null;
+                  /** @description Items in the full list, independent of limit. */
+                  totalCount: number;
+                  items: {
+                    podenginePodcast: {
+                      author: string | null;
+                      authorityScore: {
+                        calculatedAt: unknown;
+                        /** @description This is the weighted total authority score of the podcast, out of 100 */
+                        authorityScore: number;
+                        /** @description This is the quality score of the podcast, out of 100 */
+                        qualityScore: number;
+                        /** @description This is the YouTube score of the podcast, out of 100 */
+                        youtubeScore: number;
+                        /** @description This is the social score of the podcast, out of 100 */
+                        socialScore: number;
+                        /** @description This is the engagement score of the podcast, out of 100 */
+                        engagementScore: number;
+                      } | null;
+                      genres: string[];
+                      id: string;
+                      imageUrl: string | null;
+                      language: string;
+                      lastEpisodePublishedAt: unknown;
+                      slug: string;
+                      title: string;
+                      titleLatest: string;
+                    } | null;
+                    /** @description The resolved identity, stable for deep links: the canonical Pod Engine id, or the platform id. */
+                    identity:
+                      | {
+                          /** @enum {string} */
+                          type: 'podcast';
+                          podcastId: string;
+                          slug: string;
+                        }
+                      | {
+                          /** @enum {string} */
+                          type: 'platform';
+                          /**
+                           * @description The type of chart, one of apple, spotify
+                           * @enum {string}
+                           */
+                          chartType: 'apple' | 'spotify';
+                          platformId: string;
+                        };
+                    title: string;
+                    creator: string | null;
+                    imageUrl: string | null;
+                    /** @description Rank on the chart; null for a dropped show. */
+                    position: number | null;
+                    /** @description Rank on the comparison chart; null for an entry. */
+                    previousPosition: number | null;
+                    /** @description previousPosition minus position; positive means the show climbed. Null unless on both charts. */
+                    positionChange: number | null;
+                  }[];
+                };
+              } | null;
             };
           };
         };
