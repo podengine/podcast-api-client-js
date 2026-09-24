@@ -14463,6 +14463,28 @@
               "type": "number",
               "minimum": 0
             }
+          },
+          {
+            "name": "minRating",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "description": "Only return review text rated at least this many stars (1-5).",
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 5
+            }
+          },
+          {
+            "name": "maxRating",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "description": "Only return review text rated at most this many stars (1-5).",
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 5
+            }
           }
         ],
         "responses": {

@@ -7081,6 +7081,8 @@ export interface operations {
         country?: 'us' | 'gb' | 'au' | 'ca';
         limit?: number;
         offset?: number;
+        minRating?: number;
+        maxRating?: number;
       };
       header?: never;
       path: {
