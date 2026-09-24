@@ -12372,6 +12372,43 @@
                                             },
                                             "views": {
                                               "type": "number"
+                                            },
+                                            "durationSeconds": {
+                                              "type": [
+                                                "number",
+                                                "null"
+                                              ]
+                                            },
+                                            "durationCheckedAt": {
+                                              "anyOf": [
+                                                {},
+                                                {
+                                                  "type": "null"
+                                                }
+                                              ]
+                                            },
+                                            "episode": {
+                                              "type": [
+                                                "object",
+                                                "null"
+                                              ],
+                                              "properties": {
+                                                "id": {
+                                                  "type": "string"
+                                                },
+                                                "slug": {
+                                                  "type": "string"
+                                                },
+                                                "title": {
+                                                  "type": "string"
+                                                }
+                                              },
+                                              "required": [
+                                                "id",
+                                                "slug",
+                                                "title"
+                                              ],
+                                              "additionalProperties": false
                                             }
                                           },
                                           "required": [
@@ -12426,6 +12463,23 @@
                                           "candidate",
                                           "unverified"
                                         ]
+                                      },
+                                      "statsHistory": {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "object",
+                                          "properties": {
+                                            "recordedAt": {},
+                                            "subscriberCount": {
+                                              "type": "number"
+                                            }
+                                          },
+                                          "required": [
+                                            "recordedAt",
+                                            "subscriberCount"
+                                          ],
+                                          "additionalProperties": false
+                                        }
                                       }
                                     },
                                     "required": [
@@ -16880,6 +16934,43 @@
                                         },
                                         "views": {
                                           "type": "number"
+                                        },
+                                        "durationSeconds": {
+                                          "type": [
+                                            "number",
+                                            "null"
+                                          ]
+                                        },
+                                        "durationCheckedAt": {
+                                          "anyOf": [
+                                            {},
+                                            {
+                                              "type": "null"
+                                            }
+                                          ]
+                                        },
+                                        "episode": {
+                                          "type": [
+                                            "object",
+                                            "null"
+                                          ],
+                                          "properties": {
+                                            "id": {
+                                              "type": "string"
+                                            },
+                                            "slug": {
+                                              "type": "string"
+                                            },
+                                            "title": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "required": [
+                                            "id",
+                                            "slug",
+                                            "title"
+                                          ],
+                                          "additionalProperties": false
                                         }
                                       },
                                       "required": [
@@ -16934,6 +17025,23 @@
                                       "candidate",
                                       "unverified"
                                     ]
+                                  },
+                                  "statsHistory": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "recordedAt": {},
+                                        "subscriberCount": {
+                                          "type": "number"
+                                        }
+                                      },
+                                      "required": [
+                                        "recordedAt",
+                                        "subscriberCount"
+                                      ],
+                                      "additionalProperties": false
+                                    }
                                   }
                                 },
                                 "required": [

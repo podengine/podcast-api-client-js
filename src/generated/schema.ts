@@ -6307,6 +6307,13 @@ export interface operations {
                           title: string;
                           videoUrl: string;
                           views: number;
+                          durationSeconds?: number | null;
+                          durationCheckedAt?: unknown | null;
+                          episode?: {
+                            id: string;
+                            slug: string;
+                            title: string;
+                          } | null;
                         }[]
                       | null;
                     profileImageUrl: string | null;
@@ -6316,6 +6323,10 @@ export interface operations {
                     lastVideoUploadDateCheckedAt: unknown | null;
                     /** @enum {string|null} */
                     associationTier?: 'associated' | 'candidate' | 'unverified' | null;
+                    statsHistory?: {
+                      recordedAt: unknown;
+                      subscriberCount: number;
+                    }[];
                   }[];
                 } | null;
               };
@@ -7962,6 +7973,13 @@ export interface operations {
                         title: string;
                         videoUrl: string;
                         views: number;
+                        durationSeconds?: number | null;
+                        durationCheckedAt?: unknown | null;
+                        episode?: {
+                          id: string;
+                          slug: string;
+                          title: string;
+                        } | null;
                       }[]
                     | null;
                   profileImageUrl: string | null;
@@ -7971,6 +7989,10 @@ export interface operations {
                   lastVideoUploadDateCheckedAt: unknown | null;
                   /** @enum {string|null} */
                   associationTier?: 'associated' | 'candidate' | 'unverified' | null;
+                  statsHistory?: {
+                    recordedAt: unknown;
+                    subscriberCount: number;
+                  }[];
                 }[];
               };
             };
