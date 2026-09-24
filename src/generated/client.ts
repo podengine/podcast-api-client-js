@@ -52,9 +52,20 @@ export type GetCategoriesByChartTypeResponse =
   operations['getCategoriesByChartType']['responses']['200']['content']['application/json']['data'];
 export type GetChartParams = NonNullable<operations['getChart']['parameters']['query']>;
 export type GetChartResponse = operations['getChart']['responses']['200']['content']['application/json']['data'];
+export type GetChartAvailabilityParams = NonNullable<operations['getChartAvailability']['parameters']['query']>;
+export type GetChartAvailabilityResponse =
+  operations['getChartAvailability']['responses']['200']['content']['application/json']['data'];
 export type GetLatestChartParams = NonNullable<operations['getLatestChart']['parameters']['query']>;
 export type GetLatestChartResponse =
   operations['getLatestChart']['responses']['200']['content']['application/json']['data'];
+export type GetPodcastChartAppearancesParams = NonNullable<
+  operations['getPodcastChartAppearances']['parameters']['query']
+>;
+export type GetPodcastChartAppearancesResponse =
+  operations['getPodcastChartAppearances']['responses']['200']['content']['application/json']['data'];
+export type GetPodcastChartHistoryParams = NonNullable<operations['getPodcastChartHistory']['parameters']['query']>;
+export type GetPodcastChartHistoryResponse =
+  operations['getPodcastChartHistory']['responses']['200']['content']['application/json']['data'];
 export type DownloadEpisodeTranscriptParams = NonNullable<
   operations['downloadEpisodeTranscript']['parameters']['path']
 > &
@@ -354,7 +365,15 @@ const descriptors = {
     method: 'GET',
     path: '/api/v1/charts',
     pathParams: [],
-    queryParams: ['chartType', 'category', 'country', 'positionsLimit', 'date'],
+    queryParams: ['chartType', 'category', 'country', 'positionsLimit', 'compare', 'date'],
+    body: 'none',
+    binary: false,
+  },
+  getChartAvailability: {
+    method: 'GET',
+    path: '/api/v1/charts/availability',
+    pathParams: [],
+    queryParams: ['chartType', 'category', 'country', 'date'],
     body: 'none',
     binary: false,
   },
@@ -362,7 +381,23 @@ const descriptors = {
     method: 'GET',
     path: '/api/v1/charts/latest',
     pathParams: [],
-    queryParams: ['chartType', 'category', 'country', 'positionsLimit'],
+    queryParams: ['chartType', 'category', 'country', 'positionsLimit', 'compare'],
+    body: 'none',
+    binary: false,
+  },
+  getPodcastChartAppearances: {
+    method: 'GET',
+    path: '/api/v1/charts/podcast-appearances',
+    pathParams: [],
+    queryParams: ['identityType', 'podcastIdOrSlug', 'platformId', 'chartType', 'date', 'limit'],
+    body: 'none',
+    binary: false,
+  },
+  getPodcastChartHistory: {
+    method: 'GET',
+    path: '/api/v1/charts/podcast-history',
+    pathParams: [],
+    queryParams: ['identityType', 'podcastIdOrSlug', 'platformId', 'chartType', 'category', 'country', 'range', 'date'],
     body: 'none',
     binary: false,
   },
@@ -538,7 +573,7 @@ const descriptors = {
     method: 'GET',
     path: '/api/v1/podcasts/{podcastIdOrSlug}/charts',
     pathParams: ['podcastIdOrSlug'],
-    queryParams: ['chartType', 'category', 'country', 'positionsLimit', 'limit'],
+    queryParams: ['chartType', 'category', 'country', 'positionsLimit', 'compare', 'limit', 'date'],
     body: 'none',
     binary: false,
   },
@@ -938,11 +973,44 @@ class ChartsResource {
   }
 
   /**
+   * Chart Availability
+   * Get the earliest, latest, previous and next chart dates around a selected date
+   */
+  getChartAvailability(
+    params?: GetChartAvailabilityParams,
+    options?: RequestOptions
+  ): Promise<GetChartAvailabilityResponse> {
+    return this.core.request(descriptors.getChartAvailability, params as Record<string, unknown>, options);
+  }
+
+  /**
    * Latest Chart
    * Get the latest chart
    */
   getLatestChart(params?: GetLatestChartParams, options?: RequestOptions): Promise<GetLatestChartResponse> {
     return this.core.request(descriptors.getLatestChart, params as Record<string, unknown>, options);
+  }
+
+  /**
+   * Podcast Chart Appearances
+   * Get every chart a podcast is on for one date, ordered by position, with the total count
+   */
+  getPodcastChartAppearances(
+    params: GetPodcastChartAppearancesParams,
+    options?: RequestOptions
+  ): Promise<GetPodcastChartAppearancesResponse> {
+    return this.core.request(descriptors.getPodcastChartAppearances, params as Record<string, unknown>, options);
+  }
+
+  /**
+   * Podcast Chart History
+   * Get a podcast's rank history on one chart: daily ranks for 30 or 90 days, weekly buckets for longer ranges, with range stats and coverage gaps
+   */
+  getPodcastChartHistory(
+    params: GetPodcastChartHistoryParams,
+    options?: RequestOptions
+  ): Promise<GetPodcastChartHistoryResponse> {
+    return this.core.request(descriptors.getPodcastChartHistory, params as Record<string, unknown>, options);
   }
 }
 

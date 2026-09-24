@@ -171,6 +171,66 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  '/api/v1/charts/availability': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /**
+     * Chart Availability
+     * @description Get the earliest, latest, previous and next chart dates around a selected date
+     */
+    get: operations['getChartAvailability'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/api/v1/charts/podcast-history': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /**
+     * Podcast Chart History
+     * @description Get a podcast's rank history on one chart: daily ranks for 30 or 90 days, weekly buckets for longer ranges, with range stats and coverage gaps
+     */
+    get: operations['getPodcastChartHistory'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/api/v1/charts/podcast-appearances': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /**
+     * Podcast Chart Appearances
+     * @description Get every chart a podcast is on for one date, ordered by position, with the total count
+     */
+    get: operations['getPodcastChartAppearances'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   '/api/v1/charts/{chartType}/categories': {
     parameters: {
       query?: never;
@@ -2712,6 +2772,7 @@ export interface operations {
         category?: string;
         country?: string;
         positionsLimit?: number;
+        compare?: '1d' | '7d';
         date?: string | null;
       };
       header?: never;
@@ -2743,6 +2804,11 @@ export interface operations {
                 country?: string;
                 /** @description The number of chart positions to return. If not provided, all positions are returned */
                 positionsLimit?: number;
+                /**
+                 * @description Which earlier chart to measure rank change against: 1 day or 7 days before the chart date. The latest chart on or before that date is used. Defaults to 1d.
+                 * @enum {string}
+                 */
+                compare?: '1d' | '7d';
                 /** @description The date of the chart in YYYY-MM-DD format. If null will return the latest chart */
                 date?: string | null;
               };
@@ -2759,6 +2825,48 @@ export interface operations {
                   country: string;
                   /** @description The date of the chart in YYYY-MM-DD format */
                   chartDate: string;
+                  /** @description Positions with a platform identity on this chart, independent of positionsLimit. */
+                  totalPositions: number;
+                  /** @description Historical Spotify positions recorded without a trustworthy Spotify id (not included in positions). */
+                  unresolvedPositions: number;
+                  /** @description The deepest position captured for this chart. */
+                  observedDepth: number;
+                  /**
+                   * @description complete: every captured position has a platform id. unresolved_identities: some historical Spotify positions are known only by Pod Engine podcast. incomplete: positions are missing from the capture.
+                   * @enum {string}
+                   */
+                  coverageStatus: 'complete' | 'unresolved_identities' | 'incomplete';
+                  /**
+                   * @description Which earlier chart to measure rank change against: 1 day or 7 days before the chart date. The latest chart on or before that date is used. Defaults to 1d.
+                   * @enum {string}
+                   */
+                  compare: '1d' | '7d';
+                  /** @description The chart date minus 1 or 7 UTC calendar days. */
+                  requestedCompareDate: string;
+                  /** @description The date of the chart actually compared against: the latest chart on or before requestedCompareDate. */
+                  compareChartDate: string | null;
+                  /** @enum {string} */
+                  comparisonStatus: 'available' | 'unavailable';
+                  /**
+                   * @description Why no comparison chart could be resolved; null when comparisonStatus is available.
+                   * @enum {string|null}
+                   */
+                  comparisonUnavailableReason: 'no_earlier_chart' | null;
+                  compareChartObservedDepth: number | null;
+                  /**
+                   * @description complete: every captured position has a platform id. unresolved_identities: some historical Spotify positions are known only by Pod Engine podcast. incomplete: positions are missing from the capture.
+                   * @enum {string|null}
+                   */
+                  compareChartCoverageStatus: 'complete' | 'unresolved_identities' | 'incomplete' | null;
+                  /** @description Whether entries can be confirmed: both charts are fully resolved and captured to the same depth. When false, shows absent from the comparison chart have movement unknown. */
+                  entryExitConfirmable: boolean;
+                  /** @description The dates that each position's history30d values line up with. */
+                  historyWindow: {
+                    /** @description The 30 calendar dates ending on chartDate, oldest first. */
+                    dates: string[];
+                    /** @description Chart capture status for each date in dates; no_chart marks a gap that must not be interpolated. */
+                    coverage: ('complete' | 'unresolved_identities' | 'incomplete' | 'no_chart')[];
+                  };
                 };
                 positions: {
                   position: number;
@@ -2767,6 +2875,7 @@ export interface operations {
                   podcastOnChart: {
                     podcastOnChartId: string;
                     title: string;
+                    creator: string | null;
                     /** Format: uri */
                     imageUrl: string | null;
                   };
@@ -2794,6 +2903,29 @@ export interface operations {
                     title: string;
                     titleLatest: string;
                   } | null;
+                  /** @description Rank on the comparison chart. Null when absent or unknown; see movement to tell these apart. */
+                  previousPosition: number | null;
+                  /** @description previousPosition minus position; positive means the show climbed. Null when previousPosition is null. */
+                  positionChange: number | null;
+                  /** @description True for a confirmed entry since the comparison chart, false when on both charts, null when unknown. */
+                  isNew: boolean | null;
+                  /**
+                   * @description Rank movement against the comparison chart. entered means on this chart but confirmed absent from the comparison chart (re-entries included, not a debut). unknown means no comparison chart or not enough coverage to decide.
+                   * @enum {string}
+                   */
+                  movement: 'up' | 'down' | 'unchanged' | 'entered' | 'unknown';
+                  /** @description Rank on each chart.historyWindow date, oldest first; null when not observed that day. */
+                  history30d: (number | null)[];
+                  /** @description Status of each history30d value. */
+                  history30dStatus: ('observed' | 'off_chart' | 'no_chart' | 'unknown')[];
+                  /** @description Best observed rank in the window. */
+                  peakPosition30d: number | null;
+                  /** @description Days in the window the show was observed on the chart. */
+                  daysCharted30d: number;
+                  /** @description Charts captured in the window (not calendar days). */
+                  chartsInWindow30d: number;
+                  /** @description Captured charts in the window whose coverage cannot prove the show was absent. */
+                  unknownDays30d: number;
                 }[];
               } | null;
             };
@@ -2844,6 +2976,7 @@ export interface operations {
         category?: string;
         country?: string;
         positionsLimit?: number;
+        compare?: '1d' | '7d';
       };
       header?: never;
       path?: never;
@@ -2873,6 +3006,11 @@ export interface operations {
                 country?: string;
                 /** @description The number of chart positions to return. If not provided, all positions are returned */
                 positionsLimit?: number;
+                /**
+                 * @description Which earlier chart to measure rank change against: 1 day or 7 days before the chart date. The latest chart on or before that date is used. Defaults to 1d.
+                 * @enum {string}
+                 */
+                compare?: '1d' | '7d';
               };
               chart: {
                 chart: {
@@ -2887,6 +3025,48 @@ export interface operations {
                   country: string;
                   /** @description The date of the chart in YYYY-MM-DD format */
                   chartDate: string;
+                  /** @description Positions with a platform identity on this chart, independent of positionsLimit. */
+                  totalPositions: number;
+                  /** @description Historical Spotify positions recorded without a trustworthy Spotify id (not included in positions). */
+                  unresolvedPositions: number;
+                  /** @description The deepest position captured for this chart. */
+                  observedDepth: number;
+                  /**
+                   * @description complete: every captured position has a platform id. unresolved_identities: some historical Spotify positions are known only by Pod Engine podcast. incomplete: positions are missing from the capture.
+                   * @enum {string}
+                   */
+                  coverageStatus: 'complete' | 'unresolved_identities' | 'incomplete';
+                  /**
+                   * @description Which earlier chart to measure rank change against: 1 day or 7 days before the chart date. The latest chart on or before that date is used. Defaults to 1d.
+                   * @enum {string}
+                   */
+                  compare: '1d' | '7d';
+                  /** @description The chart date minus 1 or 7 UTC calendar days. */
+                  requestedCompareDate: string;
+                  /** @description The date of the chart actually compared against: the latest chart on or before requestedCompareDate. */
+                  compareChartDate: string | null;
+                  /** @enum {string} */
+                  comparisonStatus: 'available' | 'unavailable';
+                  /**
+                   * @description Why no comparison chart could be resolved; null when comparisonStatus is available.
+                   * @enum {string|null}
+                   */
+                  comparisonUnavailableReason: 'no_earlier_chart' | null;
+                  compareChartObservedDepth: number | null;
+                  /**
+                   * @description complete: every captured position has a platform id. unresolved_identities: some historical Spotify positions are known only by Pod Engine podcast. incomplete: positions are missing from the capture.
+                   * @enum {string|null}
+                   */
+                  compareChartCoverageStatus: 'complete' | 'unresolved_identities' | 'incomplete' | null;
+                  /** @description Whether entries can be confirmed: both charts are fully resolved and captured to the same depth. When false, shows absent from the comparison chart have movement unknown. */
+                  entryExitConfirmable: boolean;
+                  /** @description The dates that each position's history30d values line up with. */
+                  historyWindow: {
+                    /** @description The 30 calendar dates ending on chartDate, oldest first. */
+                    dates: string[];
+                    /** @description Chart capture status for each date in dates; no_chart marks a gap that must not be interpolated. */
+                    coverage: ('complete' | 'unresolved_identities' | 'incomplete' | 'no_chart')[];
+                  };
                 };
                 positions: {
                   position: number;
@@ -2895,6 +3075,7 @@ export interface operations {
                   podcastOnChart: {
                     podcastOnChartId: string;
                     title: string;
+                    creator: string | null;
                     /** Format: uri */
                     imageUrl: string | null;
                   };
@@ -2922,8 +3103,489 @@ export interface operations {
                     title: string;
                     titleLatest: string;
                   } | null;
+                  /** @description Rank on the comparison chart. Null when absent or unknown; see movement to tell these apart. */
+                  previousPosition: number | null;
+                  /** @description previousPosition minus position; positive means the show climbed. Null when previousPosition is null. */
+                  positionChange: number | null;
+                  /** @description True for a confirmed entry since the comparison chart, false when on both charts, null when unknown. */
+                  isNew: boolean | null;
+                  /**
+                   * @description Rank movement against the comparison chart. entered means on this chart but confirmed absent from the comparison chart (re-entries included, not a debut). unknown means no comparison chart or not enough coverage to decide.
+                   * @enum {string}
+                   */
+                  movement: 'up' | 'down' | 'unchanged' | 'entered' | 'unknown';
+                  /** @description Rank on each chart.historyWindow date, oldest first; null when not observed that day. */
+                  history30d: (number | null)[];
+                  /** @description Status of each history30d value. */
+                  history30dStatus: ('observed' | 'off_chart' | 'no_chart' | 'unknown')[];
+                  /** @description Best observed rank in the window. */
+                  peakPosition30d: number | null;
+                  /** @description Days in the window the show was observed on the chart. */
+                  daysCharted30d: number;
+                  /** @description Charts captured in the window (not calendar days). */
+                  chartsInWindow30d: number;
+                  /** @description Captured charts in the window whose coverage cannot prove the show was absent. */
+                  unknownDays30d: number;
                 }[];
               } | null;
+            };
+          };
+        };
+      };
+      /** @description Bad request */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Authentication required */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Forbidden — plan does not include this endpoint */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Not found */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Rate limit exceeded */
+      429: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+    };
+  };
+  getChartAvailability: {
+    parameters: {
+      query?: {
+        chartType?: 'apple' | 'spotify';
+        category?: string;
+        country?: string;
+        date?: string;
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Success */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': {
+            /** @enum {string} */
+            status: 'OK';
+            data: {
+              /** @description Get the chart dates available around a selected date */
+              options: {
+                /**
+                 * @description The type of chart, one of apple, spotify
+                 * @enum {string}
+                 */
+                chartType?: 'apple' | 'spotify';
+                /** @description The chart category defaulting to 'top podcasts'. Apple podcasts supports the following: "top podcasts", "arts", "business", "comedy", "education", "fiction", "government", "health & fitness", "history", "kids & family", "leisure", "music", "news", "religion & spirituality", "science", "society & culture", "sports", "technology", "true crime", "tv & film" */
+                category?: string;
+                /** @description The country of the chart in ISO 3166-1 alpha-2 format, for example "us". Defaults to us. */
+                country?: string;
+                /** @description The selected chart date in YYYY-MM-DD format. Defaults to the latest chart date. */
+                date?: string;
+              };
+              availability: {
+                /** @description The date of the chart in YYYY-MM-DD format */
+                earliestChartDate: string | null;
+                /** @description The date of the chart in YYYY-MM-DD format */
+                latestChartDate: string | null;
+                /** @description The requested date, or the latest chart date when none was requested. */
+                selectedDate: string | null;
+                /** @description Whether a chart exists for selectedDate. */
+                selectedDateAvailable: boolean;
+                /** @description The latest chart strictly before selectedDate. */
+                previousChartDate: string | null;
+                /** @description The earliest chart strictly after selectedDate. */
+                nextChartDate: string | null;
+              };
+            };
+          };
+        };
+      };
+      /** @description Bad request */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Authentication required */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Forbidden — plan does not include this endpoint */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Not found */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Rate limit exceeded */
+      429: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+    };
+  };
+  getPodcastChartHistory: {
+    parameters: {
+      query: {
+        identityType: 'podcast' | 'platform';
+        podcastIdOrSlug?: string;
+        platformId?: string;
+        chartType?: 'apple' | 'spotify';
+        category?: string;
+        country?: string;
+        range?: '30d' | '90d' | '6m' | '1y' | 'all';
+        date?: string;
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Success */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': {
+            /** @enum {string} */
+            status: 'OK';
+            data: {
+              history: {
+                podenginePodcast: {
+                  author: string | null;
+                  authorityScore: {
+                    calculatedAt: unknown;
+                    /** @description This is the weighted total authority score of the podcast, out of 100 */
+                    authorityScore: number;
+                    /** @description This is the quality score of the podcast, out of 100 */
+                    qualityScore: number;
+                    /** @description This is the YouTube score of the podcast, out of 100 */
+                    youtubeScore: number;
+                    /** @description This is the social score of the podcast, out of 100 */
+                    socialScore: number;
+                    /** @description This is the engagement score of the podcast, out of 100 */
+                    engagementScore: number;
+                  } | null;
+                  genres: string[];
+                  id: string;
+                  imageUrl: string | null;
+                  language: string;
+                  lastEpisodePublishedAt: unknown;
+                  slug: string;
+                  title: string;
+                  titleLatest: string;
+                } | null;
+                /** @description The platform listing, for identityType=platform. */
+                podcastOnChart: {
+                  platformId: string;
+                  title: string;
+                  creator: string | null;
+                  imageUrl: string | null;
+                } | null;
+                /** @description The resolved identity, stable for deep links: the canonical Pod Engine id, or the platform id. */
+                identity:
+                  | {
+                      /** @enum {string} */
+                      type: 'podcast';
+                      podcastId: string;
+                      slug: string;
+                    }
+                  | {
+                      /** @enum {string} */
+                      type: 'platform';
+                      /**
+                       * @description The type of chart, one of apple, spotify
+                       * @enum {string}
+                       */
+                      chartType: 'apple' | 'spotify';
+                      platformId: string;
+                    };
+                chart: {
+                  /**
+                   * @description The type of chart, one of apple, spotify
+                   * @enum {string}
+                   */
+                  chartType: 'apple' | 'spotify';
+                  /** @description The chart category defaulting to 'top podcasts'. Apple podcasts supports the following: "top podcasts", "arts", "business", "comedy", "education", "fiction", "government", "health & fitness", "history", "kids & family", "leisure", "music", "news", "religion & spirituality", "science", "society & culture", "sports", "technology", "true crime", "tv & film" */
+                  category: string;
+                  /** @description The country of the chart in ISO 3166-1 alpha-2 format, for example "us". Defaults to us. */
+                  country: string;
+                  /** @description The date of the chart in YYYY-MM-DD format */
+                  earliestChartDate: string;
+                  /** @description The date of the chart in YYYY-MM-DD format */
+                  latestChartDate: string;
+                };
+                range: {
+                  /**
+                   * @description History range ending on date. 30d and 90d return daily points; 6m, 1y and all return Monday-Sunday UTC weekly buckets clipped to the range.
+                   * @enum {string}
+                   */
+                  range: '30d' | '90d' | '6m' | '1y' | 'all';
+                  /** @description The date of the chart in YYYY-MM-DD format */
+                  startDate: string;
+                  /** @description The date of the chart in YYYY-MM-DD format */
+                  endDate: string;
+                };
+                stats: {
+                  bestPosition: number | null;
+                  /** @description Average rank when charting: the mean of every observed daily rank in the range. */
+                  averagePositionWhenCharting: number | null;
+                  daysOnChart: number;
+                  /** @description Days in the range with a captured chart. */
+                  chartDays: number;
+                  offChartDays: number;
+                  unknownDays: number;
+                  /** @description Days in the range with no captured chart. */
+                  missingDays: number;
+                  calendarDays: number;
+                  /** @description Earliest observed appearance on this chart up to the end date, possibly before the range. */
+                  firstSeenDate: string | null;
+                  /** @description Latest observed appearance on this chart up to the end date. */
+                  lastSeenDate: string | null;
+                  streak: {
+                    /** @description Consecutive observed days ending on the end date: 0 when confirmed off chart, null when unknown. */
+                    days: number | null;
+                    /**
+                     * @description observed: ranked that day. off_chart: a fully resolved chart exists and the show is not on it. no_chart: no chart was captured that day. unknown: a chart exists but its coverage cannot prove absence.
+                     * @enum {string}
+                     */
+                    endDateStatus: 'observed' | 'off_chart' | 'no_chart' | 'unknown';
+                    /** @description The date of the chart in YYYY-MM-DD format */
+                    startDate: string | null;
+                    /** @description True when the day before the streak has no chart or unknown coverage, so it may be longer. */
+                    boundedByMissingCoverage: boolean;
+                  };
+                };
+                series:
+                  | {
+                      /** @enum {string} */
+                      resolution: 'daily';
+                      points: {
+                        /** @description The date of the chart in YYYY-MM-DD format */
+                        date: string;
+                        /** @description Rank that day; null unless status is observed. */
+                        position: number | null;
+                        /**
+                         * @description observed: ranked that day. off_chart: a fully resolved chart exists and the show is not on it. no_chart: no chart was captured that day. unknown: a chart exists but its coverage cannot prove absence.
+                         * @enum {string}
+                         */
+                        status: 'observed' | 'off_chart' | 'no_chart' | 'unknown';
+                        /**
+                         * @description How completely that day’s chart was captured.
+                         * @enum {string}
+                         */
+                        chartCoverage: 'complete' | 'unresolved_identities' | 'incomplete' | 'no_chart';
+                      }[];
+                    }
+                  | {
+                      /** @enum {string} */
+                      resolution: 'weekly';
+                      buckets: {
+                        /** @description First day of the bucket, clipped to the range. */
+                        startDate: string;
+                        /** @description Last day of the bucket, clipped to the range. */
+                        endDate: string;
+                        /** @description True when the range clips the Monday-Sunday week. */
+                        isPartial: boolean;
+                        calendarDays: number;
+                        bestPosition: number | null;
+                        /** @description Average of the observed daily ranks in the bucket. */
+                        averagePosition: number | null;
+                        daysCharted: number;
+                        /** @description Days in the bucket with a captured chart. */
+                        chartDays: number;
+                        offChartDays: number;
+                        /** @description Captured charts whose coverage cannot prove the show was absent. */
+                        unknownDays: number;
+                        /** @description Days in the bucket with no captured chart. */
+                        missingDates: string[];
+                        /** @description True when any day is missing or unknown; break connecting lines through this bucket. */
+                        hasCoverageGaps: boolean;
+                      }[];
+                    };
+              };
+            };
+          };
+        };
+      };
+      /** @description Bad request */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Authentication required */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Forbidden — plan does not include this endpoint */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Not found */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Rate limit exceeded */
+      429: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+    };
+  };
+  getPodcastChartAppearances: {
+    parameters: {
+      query: {
+        identityType: 'podcast' | 'platform';
+        podcastIdOrSlug?: string;
+        platformId?: string;
+        chartType?: 'apple' | 'spotify';
+        date: string;
+        limit?: number;
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Success */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': {
+            /** @enum {string} */
+            status: 'OK';
+            data: {
+              appearances: {
+                podenginePodcast: {
+                  author: string | null;
+                  authorityScore: {
+                    calculatedAt: unknown;
+                    /** @description This is the weighted total authority score of the podcast, out of 100 */
+                    authorityScore: number;
+                    /** @description This is the quality score of the podcast, out of 100 */
+                    qualityScore: number;
+                    /** @description This is the YouTube score of the podcast, out of 100 */
+                    youtubeScore: number;
+                    /** @description This is the social score of the podcast, out of 100 */
+                    socialScore: number;
+                    /** @description This is the engagement score of the podcast, out of 100 */
+                    engagementScore: number;
+                  } | null;
+                  genres: string[];
+                  id: string;
+                  imageUrl: string | null;
+                  language: string;
+                  lastEpisodePublishedAt: unknown;
+                  slug: string;
+                  title: string;
+                  titleLatest: string;
+                } | null;
+                /** @description The platform listing, for identityType=platform. */
+                podcastOnChart: {
+                  platformId: string;
+                  title: string;
+                  creator: string | null;
+                  imageUrl: string | null;
+                } | null;
+                /** @description The resolved identity, stable for deep links: the canonical Pod Engine id, or the platform id. */
+                identity:
+                  | {
+                      /** @enum {string} */
+                      type: 'podcast';
+                      podcastId: string;
+                      slug: string;
+                    }
+                  | {
+                      /** @enum {string} */
+                      type: 'platform';
+                      /**
+                       * @description The type of chart, one of apple, spotify
+                       * @enum {string}
+                       */
+                      chartType: 'apple' | 'spotify';
+                      platformId: string;
+                    };
+                /**
+                 * @description The type of chart, one of apple, spotify
+                 * @enum {string}
+                 */
+                chartType: 'apple' | 'spotify';
+                /** @description The date of the chart in YYYY-MM-DD format */
+                date: string;
+                /** @description Charts the show is on that day, independent of limit. */
+                totalCount: number;
+                /** @description Ordered by position, then country, then category. */
+                appearances: {
+                  /** @description The date of the chart in YYYY-MM-DD format */
+                  chartDate: string;
+                  /**
+                   * @description The type of chart, one of apple, spotify
+                   * @enum {string}
+                   */
+                  chartType: 'apple' | 'spotify';
+                  /** @description The country of the chart in ISO 3166-1 alpha-2 format, for example "us". Defaults to us. */
+                  country: string;
+                  /** @description The chart category defaulting to 'top podcasts'. Apple podcasts supports the following: "top podcasts", "arts", "business", "comedy", "education", "fiction", "government", "health & fitness", "history", "kids & family", "leisure", "music", "news", "religion & spirituality", "science", "society & culture", "sports", "technology", "true crime", "tv & film" */
+                  category: string;
+                  position: number;
+                }[];
+              };
             };
           };
         };
@@ -7558,7 +8220,9 @@ export interface operations {
         category?: string;
         country?: string;
         positionsLimit?: number;
+        compare?: '1d' | '7d';
         limit?: number;
+        date?: string;
       };
       header?: never;
       path: {
@@ -7614,8 +8278,15 @@ export interface operations {
                 country?: string;
                 /** @description The number of chart positions to return. If not provided, all positions are returned */
                 positionsLimit?: number;
-                /** @description The number of charts to return */
+                /**
+                 * @description Which earlier chart to measure rank change against: 1 day or 7 days before the chart date. The latest chart on or before that date is used. Defaults to 1d.
+                 * @enum {string}
+                 */
+                compare?: '1d' | '7d';
+                /** @description The number of charts to return; totalCharts is unaffected */
                 limit?: number;
+                /** @description Only the charts the podcast is on for this exact date (YYYY-MM-DD), ordered by position. Without it, the latest appearance on each chart. */
+                date?: string;
               };
               totalCharts: number;
               positions: {
