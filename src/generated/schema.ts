@@ -1421,8 +1421,11 @@ export interface operations {
     requestBody: {
       content: {
         'application/json': {
+          /** @description ID of the project whose criteria are used to assess the podcast. */
           projectId: string;
+          /** @description Pod Engine ID of the podcast to assess. */
           podcastId: string;
+          /** @description Optional search context to include when assessing podcast relevance. */
           searchOptions?:
             | {
                 /** @description Pagination cursor for fetching the next page of results. This cursor is stateless and does not expire. However, because it uses search_after pagination, results may be inconsistent if the underlying data changes between requests (e.g., you may see duplicate or missing results if documents are added/removed). */
@@ -1451,10 +1454,10 @@ export interface operations {
                   /** @description The text to look for. Wrapping it in single or double quotes forces a phrase match, the same as setting searchTermOptions.phraseMatch. */
                   searchTerm: string;
                   /**
-                   * @description How to match the term. 'text' runs keyword matching against each of the searchTargets. 'embeddings' is reserved for semantic search and is not accepted yet — a request using it is rejected.
+                   * @description How to match the term. 'text' runs keyword matching against each of the searchTargets.
                    * @enum {string}
                    */
-                  searchType: 'text' | 'embeddings';
+                  searchType: 'text';
                   /** @description Which fields to match this term against. A result matches if the term hits any one of its targets, so listing several widens the search rather than narrowing it. */
                   searchTargets: ('podcast-title' | 'podcast-description')[];
                   /**
@@ -1642,10 +1645,10 @@ export interface operations {
                   /** @description The text to look for. Wrapping it in single or double quotes forces a phrase match, the same as setting searchTermOptions.phraseMatch. */
                   searchTerm: string;
                   /**
-                   * @description How to match the term. 'text' runs keyword matching against each of the searchTargets. 'embeddings' is reserved for semantic search and is not accepted yet — a request using it is rejected.
+                   * @description How to match the term. 'text' runs keyword matching against each of the searchTargets.
                    * @enum {string}
                    */
-                  searchType: 'text' | 'embeddings';
+                  searchType: 'text';
                   /** @description Which fields to match this term against. A result matches if the term hits any one of its targets, so listing several widens the search rather than narrowing it. */
                   searchTargets: (
                     | 'podcast-title'
@@ -1867,6 +1870,7 @@ export interface operations {
                   fuzzy?: boolean;
                 }[];
               };
+          /** @description Regenerate the assessment even when a saved result exists. */
           forceRegenerate?: boolean;
         };
       };
@@ -1941,6 +1945,7 @@ export interface operations {
     requestBody: {
       content: {
         'application/json': {
+          /** @description Person or company name to generate plausible phonetic spelling variants for. */
           value: string;
         };
       };
@@ -2008,18 +2013,32 @@ export interface operations {
     requestBody: {
       content: {
         'application/json': {
+          /** @description Display name for this alert. */
           alertName: string;
-          /** @enum {string} */
+          /**
+           * @description Whether to track a person, company, or custom keyword.
+           * @enum {string}
+           */
           alertType: 'person' | 'company' | 'custom-keyword';
+          /** @description Name or keyword to monitor in podcast episodes and transcripts. */
           value: string;
+          /** @description Email notification schedule; defaults to daily when omitted. */
           emailSettings?: {
-            /** @enum {string} */
+            /**
+             * @description How often alert email notifications should be sent.
+             * @enum {string}
+             */
             frequency: 'hourly' | 'daily' | 'weekly';
           };
+          /** @description Whether the alert is active; defaults to true. */
           enabled?: boolean;
+          /** @description Generate and add phonetic spelling variants to the terms monitored by this alert. */
           generateAlternativeSpellings?: boolean;
+          /** @description Additional recipients and spelling variants for this alert. */
           additionalAlertSettings?: {
+            /** @description Additional email addresses to receive alert notifications. */
             otherEmails?: string[];
+            /** @description Additional spellings to match alongside the primary name or keyword. */
             otherSpellings?: string[];
           };
         };
@@ -2099,7 +2118,10 @@ export interface operations {
                       value: string;
                     };
                 emailSettings: {
-                  /** @enum {string} */
+                  /**
+                   * @description How often alert email notifications should be sent.
+                   * @enum {string}
+                   */
                   frequency: 'hourly' | 'daily' | 'weekly';
                 };
                 lastRunDate: unknown | null;
@@ -2170,11 +2192,19 @@ export interface operations {
             status: 'OK';
             data: {
               options: {
+                /** @description Filter by enabled status; omit to include both. Currently any nonempty query string, including the text false, is coerced to true. */
                 enabled?: boolean;
+                /** @description ID of the alert configuration. */
                 alertConfigId?: string;
-                /** @enum {string} */
+                /**
+                 * @description Field to sort by; defaults to lastRunDate.
+                 * @enum {string}
+                 */
                 sortBy?: 'lastRunDate' | 'alertName';
-                /** @enum {string} */
+                /**
+                 * @description Sort direction; defaults to descending.
+                 * @enum {string}
+                 */
                 sortDirection?: 'asc' | 'desc';
               };
               alertConfigs: {
@@ -2240,7 +2270,10 @@ export interface operations {
                       value: string;
                     };
                 emailSettings: {
-                  /** @enum {string} */
+                  /**
+                   * @description How often alert email notifications should be sent.
+                   * @enum {string}
+                   */
                   frequency: 'hourly' | 'daily' | 'weekly';
                 };
                 lastRunDate: unknown | null;
@@ -2370,7 +2403,10 @@ export interface operations {
                       value: string;
                     };
                 emailSettings: {
-                  /** @enum {string} */
+                  /**
+                   * @description How often alert email notifications should be sent.
+                   * @enum {string}
+                   */
                   frequency: 'hourly' | 'daily' | 'weekly';
                 };
                 lastRunDate: unknown | null;
@@ -2491,12 +2527,19 @@ export interface operations {
     requestBody: {
       content: {
         'application/json': {
+          /** @description Fields to update; omitted fields retain their current values. */
           updates: {
+            /** @description New display name for the alert. */
             alertName?: string;
+            /** @description Replacement email notification schedule. */
             emailSettings?: {
-              /** @enum {string} */
+              /**
+               * @description How often alert email notifications should be sent.
+               * @enum {string}
+               */
               frequency: 'hourly' | 'daily' | 'weekly';
             };
+            /** @description Replacement matching settings for this alert. */
             alertSettings?:
               | {
                   genresToSkip?: string[];
@@ -2549,6 +2592,7 @@ export interface operations {
                   type: 'custom-keyword';
                   value: string;
                 };
+            /** @description Enable or disable this alert. */
             enabled?: boolean;
           };
         };
@@ -2628,7 +2672,10 @@ export interface operations {
                       value: string;
                     };
                 emailSettings: {
-                  /** @enum {string} */
+                  /**
+                   * @description How often alert email notifications should be sent.
+                   * @enum {string}
+                   */
                   frequency: 'hourly' | 'daily' | 'weekly';
                 };
                 lastRunDate: unknown | null;
@@ -2698,8 +2745,11 @@ export interface operations {
             status: 'OK';
             data: {
               options: {
+                /** @description ID of the alert configuration. */
                 alertConfigId?: string;
+                /** @description Page of alert matches to return; defaults to 1, with 50 matches per page. */
                 page?: number;
+                /** @description Reserved date filter. Currently accepted but ignored by the alert history endpoint. */
                 sinceDate?: unknown;
               };
               totalAlertMatches: number;
@@ -5472,7 +5522,10 @@ export interface operations {
                 email: string;
               };
               socialMediaLinks: {
-                /** @enum {string} */
+                /**
+                 * @description Social platform associated with the profile URL.
+                 * @enum {string}
+                 */
                 socialMediaType:
                   | 'beehiiv'
                   | 'behance'
@@ -5499,7 +5552,10 @@ export interface operations {
                   | 'vimeo'
                   | 'whatsapp'
                   | 'youtube';
-                /** Format: uri */
+                /**
+                 * Format: uri
+                 * @description Full URL of the social media profile.
+                 */
                 url: string;
                 lastScrapedAt: unknown | null;
                 lastScrapeFailedAt: unknown | null;
@@ -5803,7 +5859,10 @@ export interface operations {
     requestBody: {
       content: {
         'application/json': {
-          /** @enum {string} */
+          /**
+           * @description Social platform associated with the profile URL.
+           * @enum {string}
+           */
           socialMediaType:
             | 'beehiiv'
             | 'behance'
@@ -5830,7 +5889,10 @@ export interface operations {
             | 'vimeo'
             | 'whatsapp'
             | 'youtube';
-          /** Format: uri */
+          /**
+           * Format: uri
+           * @description Full URL of the social media profile.
+           */
           url: string;
         }[];
       };
@@ -6399,7 +6461,10 @@ export interface operations {
                     primaryContactEmail: string | null;
                     rssFeedUrl: string;
                     socialMediaLinks: {
-                      /** @enum {string} */
+                      /**
+                       * @description Social platform associated with the profile URL.
+                       * @enum {string}
+                       */
                       socialMediaType:
                         | 'beehiiv'
                         | 'behance'
@@ -6426,7 +6491,10 @@ export interface operations {
                         | 'vimeo'
                         | 'whatsapp'
                         | 'youtube';
-                      /** Format: uri */
+                      /**
+                       * Format: uri
+                       * @description Full URL of the social media profile.
+                       */
                       url: string;
                       sources: (
                         | 'apple-podcasts'
@@ -7036,7 +7104,10 @@ export interface operations {
                   primaryContactEmail: string | null;
                   rssFeedUrl: string;
                   socialMediaLinks: {
-                    /** @enum {string} */
+                    /**
+                     * @description Social platform associated with the profile URL.
+                     * @enum {string}
+                     */
                     socialMediaType:
                       | 'beehiiv'
                       | 'behance'
@@ -7063,7 +7134,10 @@ export interface operations {
                       | 'vimeo'
                       | 'whatsapp'
                       | 'youtube';
-                    /** Format: uri */
+                    /**
+                     * Format: uri
+                     * @description Full URL of the social media profile.
+                     */
                     url: string;
                     sources: (
                       | 'apple-podcasts'
@@ -7422,7 +7496,10 @@ export interface operations {
                 socialMedia: {
                   podcastId: string;
                   socialMediaLinks: {
-                    /** @enum {string} */
+                    /**
+                     * @description Social platform associated with the profile URL.
+                     * @enum {string}
+                     */
                     socialMediaType:
                       | 'beehiiv'
                       | 'behance'
@@ -7449,7 +7526,10 @@ export interface operations {
                       | 'vimeo'
                       | 'whatsapp'
                       | 'youtube';
-                    /** Format: uri */
+                    /**
+                     * Format: uri
+                     * @description Full URL of the social media profile.
+                     */
                     url: string;
                     sources: (
                       | 'apple-podcasts'
@@ -7888,7 +7968,10 @@ export interface operations {
                 primaryContactEmail: string | null;
                 rssFeedUrl: string;
                 socialMediaLinks: {
-                  /** @enum {string} */
+                  /**
+                   * @description Social platform associated with the profile URL.
+                   * @enum {string}
+                   */
                   socialMediaType:
                     | 'beehiiv'
                     | 'behance'
@@ -7915,7 +7998,10 @@ export interface operations {
                     | 'vimeo'
                     | 'whatsapp'
                     | 'youtube';
-                  /** Format: uri */
+                  /**
+                   * Format: uri
+                   * @description Full URL of the social media profile.
+                   */
                   url: string;
                   sources: (
                     | 'apple-podcasts'
@@ -8131,8 +8217,11 @@ export interface operations {
             status: 'OK';
             data: {
               options: {
+                /** @description When true, only return episodes with transcripts; false or omission does not filter by transcript availability. */
                 hasTranscript?: boolean;
+                /** @description Number of episodes to skip before returning this page. */
                 skip?: number;
+                /** @description Maximum number of episodes to return in this page; defaults to 50, up to 100. */
                 limit?: number;
               };
               totalEpisodes: number;
@@ -9069,7 +9158,10 @@ export interface operations {
               socialMediaData: {
                 podcastId: string;
                 socialMediaLinks: {
-                  /** @enum {string} */
+                  /**
+                   * @description Social platform associated with the profile URL.
+                   * @enum {string}
+                   */
                   socialMediaType:
                     | 'beehiiv'
                     | 'behance'
@@ -9096,7 +9188,10 @@ export interface operations {
                     | 'vimeo'
                     | 'whatsapp'
                     | 'youtube';
-                  /** Format: uri */
+                  /**
+                   * Format: uri
+                   * @description Full URL of the social media profile.
+                   */
                   url: string;
                   sources: (
                     | 'apple-podcasts'
@@ -9637,7 +9732,10 @@ export interface operations {
                     primaryContactEmail: string | null;
                     rssFeedUrl: string;
                     socialMediaLinks: {
-                      /** @enum {string} */
+                      /**
+                       * @description Social platform associated with the profile URL.
+                       * @enum {string}
+                       */
                       socialMediaType:
                         | 'beehiiv'
                         | 'behance'
@@ -9664,7 +9762,10 @@ export interface operations {
                         | 'vimeo'
                         | 'whatsapp'
                         | 'youtube';
-                      /** Format: uri */
+                      /**
+                       * Format: uri
+                       * @description Full URL of the social media profile.
+                       */
                       url: string;
                       sources: (
                         | 'apple-podcasts'
@@ -10070,8 +10171,12 @@ export interface operations {
             status: string;
             data: {
               options: {
+                /** @description Include projects in any of these lifecycle states; omit to include all project states. */
                 states?: unknown;
-                /** @enum {string} */
+                /**
+                 * @description Project field used to order the results.
+                 * @enum {string}
+                 */
                 sortBy?: 'recent-activity' | 'name' | 'created';
               };
               projects: {
@@ -10406,9 +10511,14 @@ export interface operations {
     requestBody: {
       content: {
         'application/json': {
-          /** @enum {string} */
+          /**
+           * @description New project lifecycle state.
+           * @enum {string}
+           */
           state?: 'DRAFT' | 'PENDING' | 'ACTIVE' | 'ARCHIVED' | 'ERROR';
+          /** @description Purpose and goals of the project; null clears the stored purpose. */
           projectPurpose?: string | null;
+          /** @description Replacement keywords for the project; an empty array clears them. */
           projectKeywords?: string[];
         };
       };
@@ -10540,14 +10650,20 @@ export interface operations {
     requestBody: {
       content: {
         'application/json': {
+          /** @description Pod Engine ID of the podcast to add to this project. */
           podcastId: string;
           /**
+           * @description Initial workflow state for the podcast in this project.
            * @default prospect
            * @enum {string}
            */
           state: 'prospect' | 'qualified' | 'pitched' | 'lost' | 'booked' | 'ignored';
-          /** @enum {string} */
+          /**
+           * @description Priority of this podcast within the project.
+           * @enum {string}
+           */
           priority?: 'low' | 'medium' | 'high' | 'urgent';
+          /** @description Labels to apply to the podcast entry in this project. */
           labels?: ('automated' | 'guest-appearance' | 'mcp')[];
         };
       };
@@ -10663,7 +10779,9 @@ export interface operations {
             /** @enum {string} */
             status: 'OK';
             data: {
+              /** @description URL slug identifying the project. */
               projectSlug: string;
+              /** @description ID of the podcast entry in this project, not the podcast ID. */
               listedPodcastId: string;
             };
           };
@@ -10719,9 +10837,15 @@ export interface operations {
     requestBody: {
       content: {
         'application/json': {
-          /** @enum {string} */
+          /**
+           * @description New workflow state for the podcast in the project.
+           * @enum {string}
+           */
           state?: 'prospect' | 'qualified' | 'pitched' | 'lost' | 'booked' | 'ignored';
-          /** @enum {string|null} */
+          /**
+           * @description New priority for the podcast entry; null clears its priority.
+           * @enum {string|null}
+           */
           priority?: 'low' | 'medium' | 'high' | 'urgent' | null;
         };
       };
@@ -10737,12 +10861,20 @@ export interface operations {
             /** @enum {string} */
             status: 'OK';
             data: {
+              /** @description URL slug identifying the project. */
               projectSlug: string;
+              /** @description ID of the podcast entry in this project, not the podcast ID. */
               listedPodcastId: string;
               options: {
-                /** @enum {string} */
+                /**
+                 * @description New workflow state for the podcast in the project.
+                 * @enum {string}
+                 */
                 state?: 'prospect' | 'qualified' | 'pitched' | 'lost' | 'booked' | 'ignored';
-                /** @enum {string|null} */
+                /**
+                 * @description New priority for the podcast entry; null clears its priority.
+                 * @enum {string|null}
+                 */
                 priority?: 'low' | 'medium' | 'high' | 'urgent' | null;
               };
               updatedListedPodcast: {
@@ -10948,10 +11080,10 @@ export interface operations {
             /** @description The text to look for. Wrapping it in single or double quotes forces a phrase match, the same as setting searchTermOptions.phraseMatch. */
             searchTerm: string;
             /**
-             * @description How to match the term. 'text' runs keyword matching against each of the searchTargets. 'embeddings' is reserved for semantic search and is not accepted yet — a request using it is rejected.
+             * @description How to match the term. 'text' runs keyword matching against each of the searchTargets.
              * @enum {string}
              */
-            searchType: 'text' | 'embeddings';
+            searchType: 'text';
             /** @description Which fields to match this term against. A result matches if the term hits any one of its targets, so listing several widens the search rather than narrowing it. */
             searchTargets: ('podcast-title' | 'podcast-description')[];
             /**
@@ -11155,10 +11287,10 @@ export interface operations {
                   /** @description The text to look for. Wrapping it in single or double quotes forces a phrase match, the same as setting searchTermOptions.phraseMatch. */
                   searchTerm: string;
                   /**
-                   * @description How to match the term. 'text' runs keyword matching against each of the searchTargets. 'embeddings' is reserved for semantic search and is not accepted yet — a request using it is rejected.
+                   * @description How to match the term. 'text' runs keyword matching against each of the searchTargets.
                    * @enum {string}
                    */
-                  searchType: 'text' | 'embeddings';
+                  searchType: 'text';
                   /** @description Which fields to match this term against. A result matches if the term hits any one of its targets, so listing several widens the search rather than narrowing it. */
                   searchTargets: ('podcast-title' | 'podcast-description')[];
                   /**
@@ -11350,7 +11482,318 @@ export interface operations {
                   };
                 };
               };
-              result: unknown;
+              result: {
+                /** @description Elasticsearch match count before application filtering. */
+                total: {
+                  /** @description Number of matching results, or a lower bound when relation is gte. */
+                  value: number;
+                  /** @description eq for an exact count; gte for a lower bound. */
+                  relation?: string;
+                };
+                /** @description Highest relevance score in the result set, or null when unavailable. */
+                maxScore: number | null;
+                /** @description Number of hits returned in this page. */
+                hitsReturned: number;
+                /** @description Matching podcasts. Optional fields depend on the field selection used by the search service. */
+                hits: {
+                  appleId?: number;
+                  applePodcastsContentRating?: string | null;
+                  applePodcastsRating?: number | null;
+                  applePodcastsRatingsCount?: number | null;
+                  applePodcastsRatingWilsonScore?: number | null;
+                  /** Format: date-time */
+                  applePodcastsScrapedDate?: Date;
+                  castboxPlays?: number | null;
+                  castboxSubscribers?: number | null;
+                  /** Format: date-time */
+                  castboxDataLastUpdated?: Date | null;
+                  castboxId?: string | null;
+                  chartPositions?:
+                    | {
+                        /** @description The date of the chart position in YYYY-MM-DD format. */
+                        date: string;
+                        /** @description The type of chart (e.g., "apple", "spotify"). */
+                        chart_type: string;
+                        /** @description The ISO country code where this chart position applies. */
+                        country_code: string;
+                        /** @description The main category of the chart (e.g., "top podcasts"). */
+                        category: string;
+                        /** @description The sub-category of the chart, if applicable. */
+                        sub_category: string | null;
+                        /** @description The current position of the podcast on the chart. */
+                        position: number;
+                        /** @description The previous position of the podcast on the chart. */
+                        previous_position: number | null;
+                        /** @description The change in position from the previous chart (positive = moved up, negative = moved down). */
+                        position_change: number | null;
+                        /** @description The total number of days the podcast has been on this chart. */
+                        total_days_in_chart: number;
+                        /** @description The number of consecutive days the podcast has been on this chart. */
+                        days_streak_count: number;
+                      }[]
+                    | null;
+                  ignore?: boolean | null;
+                  podcastAffiliationOrganizationName?: string | null;
+                  podcastAffiliationType?: string | null;
+                  /** Format: date-time */
+                  podcastAuthorityScoreCalculatedDate?: Date | null;
+                  podcastAuthorityScoreEngagement: number | null;
+                  podcastAuthorityScoreQuality: number | null;
+                  podcastAuthorityScoreSocial: number | null;
+                  podcastAuthorityScoreTotal: number | null;
+                  podcastAuthorityScoreYoutube: number | null;
+                  podcastEmails?: string[] | null;
+                  podcastWebsites?: string[] | null;
+                  podcastCountries?: string[];
+                  /** Format: date-time */
+                  foundedDate: Date | null;
+                  /** Format: date-time */
+                  lastEpisodeDate: Date | null;
+                  podcastEstimatedAudienceAge?: string | null;
+                  podcastEstimatedAudienceEducation?: string | null;
+                  podcastEstimatedAudienceGender?: string | null;
+                  podcastEstimatedAudienceIncome?: string | null;
+                  podcastEstimatedListeners?: string | null;
+                  podcastAudienceEstimatedMonthlyListeners?: number | null;
+                  podcastAudienceConfidence?: string | null;
+                  podcastAudienceIsDormant?: boolean | null;
+                  podcastEstimatedPoliticalBias?: string | null;
+                  podcastHasSponsors?: boolean | null;
+                  podcastHasGuests?: boolean | null;
+                  podcastId: string;
+                  podcastImageUrl: string | null;
+                  podcastGuid?: string | null;
+                  podcastHostNames?: string[] | null;
+                  podcastRssAuthor?: string | null;
+                  podcastRssDescription: string | null;
+                  podcastRssDescriptionNoHtml?: string | null;
+                  podcastRssDescriptionGeneratedLong?: string | null;
+                  podcastRssDescriptionGeneratedShort?: string | null;
+                  podcastRssTitleLatestCleaned?: string | null;
+                  podcastRssTitleLatest: string | null;
+                  podcastRssTitleOriginal?: string;
+                  podcastRssTitle: string;
+                  podcastSlug: string;
+                  podcastSocialMediaLinks?: {
+                    type: string;
+                    url: string;
+                  }[];
+                  podcastWebsiteUrl: string | null;
+                  podcastRssFeedUrl?: string;
+                  /** Format: date-time */
+                  updatedAt?: Date;
+                  updateFrequency?: string | null;
+                  primaryContact?: string | null;
+                  rssCategories?: string[] | null;
+                  rssLanguage: string | null;
+                  podchaserUrlSlug?: string | null;
+                  podnewsUrlSlug?: string | null;
+                  rephonicUrlSlug?: string | null;
+                  similarPodcasts?: {
+                    podcast_id: string;
+                    title: string;
+                    image_url: string | null;
+                    slug: string;
+                  }[];
+                  socialsFacebookTotalPagesCount?: number;
+                  socialsFacebookTotalFollowersCount?: number;
+                  socialsFacebookTotalLikesCount?: number;
+                  socialsFacebookTotalFollowingCount?: number;
+                  socialsFacebookTotalTalkingAboutCount?: number;
+                  socialsFacebook?:
+                    | {
+                        /** @description The unique Facebook page ID. */
+                        id: string;
+                        /** @description The name of the Facebook page. */
+                        name: string;
+                        /** @description The number of followers the Facebook page has. */
+                        followers_count: number;
+                        /** @description The number of likes the Facebook page has. */
+                        likes_count: number;
+                        /** @description The number of pages this Facebook page is following. */
+                        following_count: number;
+                        /** @description The number of people talking about this Facebook page. */
+                        talking_about_count: number;
+                        /** @description The URL of the Facebook page profile image. */
+                        image_url: string | null;
+                        /** @description The URL of the Facebook page. */
+                        url: string;
+                        /** Format: date-time */
+                        data_last_updated: Date;
+                      }[]
+                    | null;
+                  socialsInstagramTotalFollowersCount?: number;
+                  socialsInstagramTotalFollowingCount?: number;
+                  socialsInstagramTotalPostsCount?: number;
+                  socialsInstagramTotalProfilesCount?: number;
+                  socialsInstagram?:
+                    | {
+                        /** @description The unique Instagram profile ID. */
+                        id: string;
+                        /** @description The Instagram username/handle. */
+                        username: string;
+                        /** @description The number of followers the Instagram profile has. */
+                        followers_count: number;
+                        /** @description The number of accounts this Instagram profile is following. */
+                        following_count: number;
+                        /** @description The number of posts the Instagram profile has. */
+                        posts_count: number;
+                        /** @description The URL of the Instagram profile image. */
+                        image_url: string | null;
+                        /** Format: date-time */
+                        data_last_updated: Date;
+                      }[]
+                    | null;
+                  socialsLinkedinCompanyTotalFollowersCount?: number;
+                  socialsLinkedinCompanyTotalEmployeesCount?: number;
+                  socialsLinkedinCompanyTotalPagesCount?: number;
+                  socialsLinkedinCompany?:
+                    | {
+                        /** @description The unique LinkedIn company ID. */
+                        id: string;
+                        /** @description The name of the LinkedIn company. */
+                        name: string;
+                        /** @description The "About" section text of the LinkedIn company. */
+                        about: string | null;
+                        /** @description The description of the LinkedIn company. */
+                        description: string | null;
+                        /** @description The size of the company (e.g., "11-50 employees"). */
+                        company_size: string | null;
+                        /** @description The ISO country code where the company is located. */
+                        country_code: string | null;
+                        /** @description The industries the company operates in. */
+                        industries: string | null;
+                        /** @description The number of followers the LinkedIn company has. */
+                        followers_count: number;
+                        /** @description The number of employees at the company. */
+                        employees_count: number;
+                        /** @description The URL of the LinkedIn company logo/image. */
+                        image_url: string | null;
+                        /** Format: date-time */
+                        data_last_updated: Date;
+                      }[]
+                    | null;
+                  socialsLinkedinPersonTotalFollowersCount?: number;
+                  socialsLinkedinPersonTotalConnectionsCount?: number;
+                  socialsLinkedinPersonTotalProfilesCount?: number;
+                  socialsLinkedinPerson?:
+                    | {
+                        /** @description The unique LinkedIn person ID. */
+                        id: string;
+                        /** @description The name of the LinkedIn person. */
+                        name: string;
+                        /** @description The "About" section text of the LinkedIn person. */
+                        about: string | null;
+                        /** @description The description of the LinkedIn person. */
+                        description: string | null;
+                        /** @description The number of followers the LinkedIn person has. */
+                        followers_count: number;
+                        /** @description The number of connections the LinkedIn person has. */
+                        connections_count: number;
+                        /** @description The ISO country code where the person is located. */
+                        country_code: string | null;
+                        /** @description The URL of the LinkedIn person profile image. */
+                        image_url: string | null;
+                        /** Format: date-time */
+                        data_last_updated: Date;
+                      }[]
+                    | null;
+                  socialsTiktokTotalFollowersCount?: number;
+                  socialsTiktokTotalFollowingCount?: number;
+                  socialsTiktokTotalLikesCount?: number;
+                  socialsTiktokTotalProfilesCount?: number;
+                  socialsTiktok?:
+                    | {
+                        /** @description The unique TikTok profile ID. */
+                        id: string;
+                        /** @description The TikTok handle/username. */
+                        handle: string;
+                        /** @description The display name of the TikTok profile. */
+                        profile_name: string;
+                        /** @description The biography text of the TikTok profile. */
+                        biography: string | null;
+                        /** @description The number of followers the TikTok profile has. */
+                        followers_count: number;
+                        /** @description The number of accounts this TikTok profile is following. */
+                        following_count: number;
+                        /** @description The number of likes the TikTok profile has received. */
+                        likes_count: number;
+                        /** @description The URL of the TikTok profile image. */
+                        image_url: string | null;
+                        /** Format: date-time */
+                        data_last_updated: Date;
+                      }[]
+                    | null;
+                  socialsTwitterTotalFollowersCount?: number;
+                  socialsTwitterTotalFollowingCount?: number;
+                  socialsTwitterTotalPostsCount?: number;
+                  socialsTwitterTotalProfilesCount?: number;
+                  socialsTwitter?:
+                    | {
+                        /** @description The unique Twitter profile ID. */
+                        id: string;
+                        /** Format: date-time */
+                        date_joined: Date | null;
+                        /** @description The biography text of the Twitter profile. */
+                        biography: string | null;
+                        /** @description The Twitter handle/username. */
+                        handle: string;
+                        /** @description The number of followers the Twitter profile has. */
+                        followers_count: number;
+                        /** @description The number of accounts this Twitter profile is following. */
+                        following_count: number;
+                        /** @description The number of posts/tweets the Twitter profile has. */
+                        posts_count: number;
+                        /** @description The URL of the Twitter profile image. */
+                        image_url: string | null;
+                        /** Format: date-time */
+                        data_last_updated: Date;
+                      }[]
+                    | null;
+                  /** Format: date-time */
+                  spotifyDataLastUpdated?: Date | null;
+                  spotifyId?: string | null;
+                  spotifyRating?: number | null;
+                  spotifyRatingsCount?: number | null;
+                  spotifyRatingWilsonScore?: number | null;
+                  /** @enum {string} */
+                  transcriptionMode: 'none' | 'all' | 'episodes-since';
+                  totalEpisodes?: number;
+                  totalTranscripts?: number;
+                  youtubeAverageViewsPerVideo?: number | null;
+                  youtubeChannelCount: number | null;
+                  /** Format: date-time */
+                  youtubeDataLastUpdated?: Date | null;
+                  youtubeTotalSubscribers: number | null;
+                  youtubeTotalVideos: number | null;
+                  youtubeTotalViews: number | null;
+                  youtubeChannels?: {
+                    average_views_per_video: number;
+                    /** Format: date-time */
+                    channel_data_last_updated: Date;
+                    channel_description: string | null;
+                    channel_handle: string | null;
+                    channel_id: string;
+                    channel_title: string | null;
+                    /** Format: date-time */
+                    channel_published_date: Date | null;
+                    total_subscribers: number;
+                    total_videos: number;
+                    total_views: number;
+                  }[];
+                  /** Format: date-time */
+                  youtubePrimaryChanelDataLastUpdated?: Date | null;
+                  youtubePrimaryChannelId?: string | null;
+                  youtubePrimaryChannelName?: string | null;
+                  youtubePrimaryChannelSubscribers?: number | null;
+                  youtubePrimaryChannelVideos?: number | null;
+                  youtubePrimaryChannelViews?: number | null;
+                  /** @description Search relevance score; zero when Elasticsearch does not return a score. */
+                  score: number;
+                  podcastDescriptionHighlights?: string[];
+                  podcastTitleHighlights?: string[];
+                }[];
+              };
               cursor: string | null;
             };
           };
@@ -11429,10 +11872,10 @@ export interface operations {
             /** @description The text to look for. Wrapping it in single or double quotes forces a phrase match, the same as setting searchTermOptions.phraseMatch. */
             searchTerm: string;
             /**
-             * @description How to match the term. 'text' runs keyword matching against each of the searchTargets. 'embeddings' is reserved for semantic search and is not accepted yet — a request using it is rejected.
+             * @description How to match the term. 'text' runs keyword matching against each of the searchTargets.
              * @enum {string}
              */
-            searchType: 'text' | 'embeddings';
+            searchType: 'text';
             /** @description Which fields to match this term against. A result matches if the term hits any one of its targets, so listing several widens the search rather than narrowing it. */
             searchTargets: (
               | 'podcast-title'
@@ -11697,10 +12140,10 @@ export interface operations {
                   /** @description The text to look for. Wrapping it in single or double quotes forces a phrase match, the same as setting searchTermOptions.phraseMatch. */
                   searchTerm: string;
                   /**
-                   * @description How to match the term. 'text' runs keyword matching against each of the searchTargets. 'embeddings' is reserved for semantic search and is not accepted yet — a request using it is rejected.
+                   * @description How to match the term. 'text' runs keyword matching against each of the searchTargets.
                    * @enum {string}
                    */
-                  searchType: 'text' | 'embeddings';
+                  searchType: 'text';
                   /** @description Which fields to match this term against. A result matches if the term hits any one of its targets, so listing several widens the search rather than narrowing it. */
                   searchTargets: (
                     | 'podcast-title'
@@ -11953,8 +12396,386 @@ export interface operations {
                   };
                 };
               };
-              /** @description Search results. Each hit in result.hits combines episode and parent-podcast fields, including podcastId, episodeGuestsAndHosts (array of {name, type: guest|host|unknown|mentioned, roles[], organizations[], image_url}) and episodeSponsorsAndAdvertisers (array of {name, snippet, coupon_codes: string|null, urls[]}). The roles and organizations arrays are currently always empty. An empty array for either episodeGuestsAndHosts or episodeSponsorsAndAdvertisers can mean analysis is missing or completed analysis found no matching people or sponsors; these cases cannot be distinguished from the array alone. Responses with populated sponsor snippets can be large. */
-              result: unknown;
+              result: {
+                /** @description Elasticsearch match count before application filtering. */
+                total: {
+                  /** @description Number of matching results, or a lower bound when relation is gte. */
+                  value: number;
+                  /** @description eq for an exact count; gte for a lower bound. */
+                  relation?: string;
+                };
+                /** @description Highest relevance score in the result set, or null when unavailable. */
+                maxScore: number | null;
+                /** @description Number of hits returned in this page. */
+                hitsReturned: number;
+                /** @description Matching episodes with parent podcast fields. Optional fields depend on the requested field selections. */
+                hits: {
+                  /** Format: date-time */
+                  episodeCreatedAt?: Date;
+                  /** Format: date-time */
+                  episodeUpdatedAt?: Date;
+                  episodeRssDescriptionNoHtml?: string | null;
+                  episodeRssDescriptionGeneratedShort?: string | null;
+                  episodeRssDescriptionGeneratedLong?: string | null;
+                  episodeRssItunesSubtitle?: string | null;
+                  episodeDurationSeconds?: number | null;
+                  episodeEnclosureUrl: string;
+                  episodeGuid?: string | null;
+                  episodeId: string;
+                  episodeImageUrl: string | null;
+                  episodePodcastTitleDenormalized?: string;
+                  episodePodcastDescriptionDenormalized?: string | null;
+                  episodeRssDescription: string | null;
+                  episodeRssTitle: string;
+                  episodeSlug: string;
+                  /** @description Whether the hit has a transcript ID. */
+                  episodeHasTranscript: boolean;
+                  /** @description Detected sponsors and advertisers with transcript snippets. An empty array can mean analysis is missing or found no sponsors. */
+                  episodeSponsorsAndAdvertisers?:
+                    | {
+                        /** @description The name of the sponsor. */
+                        name: string;
+                        /** @description An array of URLs associated with the sponsor. */
+                        urls: string[];
+                        /** @description A brief snippet or description of the sponsor. */
+                        snippet: string;
+                        /** @description Any coupon codes provided by the sponsor, if applicable. */
+                        coupon_codes: string | null;
+                      }[]
+                    | null;
+                  /** @description Detected episode guests, hosts, and mentions. Roles and organizations are currently empty. An empty array can mean analysis is missing or found no matching people. */
+                  episodeGuestsAndHosts?:
+                    | {
+                        /** @description The name of the guest. */
+                        name: string;
+                        /**
+                         * @description How the person appears in the episode: guest, host, unknown, or mentioned.
+                         * @enum {string}
+                         */
+                        type: 'host' | 'guest' | 'unknown' | 'mentioned';
+                        /** @description An array of possible job roles and titles */
+                        roles: string[];
+                        /** @description An array of organizations the guest is affiliated with. */
+                        organizations: string[];
+                        /**
+                         * Format: uri
+                         * @description The URL of the guest image, if available.
+                         */
+                        image_url: string | null;
+                      }[]
+                    | null;
+                  episodeWebUrl: string | null;
+                  /** Format: date-time */
+                  episodeRssPublishedAt: Date;
+                  podcastId: string;
+                  podcastSlug: string;
+                  transcriptId: string | null;
+                  transcriptText?: string | null;
+                  /** Format: date-time */
+                  youtubeVideoDataDate?: Date | null;
+                  youtubeVideoUrl?: string | null;
+                  youtubeVideoViewCount?: number | null;
+                  appleId?: number;
+                  applePodcastsContentRating?: string | null;
+                  applePodcastsRating?: number | null;
+                  applePodcastsRatingsCount?: number | null;
+                  applePodcastsRatingWilsonScore?: number | null;
+                  /** Format: date-time */
+                  applePodcastsScrapedDate?: Date;
+                  castboxPlays?: number | null;
+                  castboxSubscribers?: number | null;
+                  /** Format: date-time */
+                  castboxDataLastUpdated?: Date | null;
+                  castboxId?: string | null;
+                  chartPositions?:
+                    | {
+                        /** @description The date of the chart position in YYYY-MM-DD format. */
+                        date: string;
+                        /** @description The type of chart (e.g., "apple", "spotify"). */
+                        chart_type: string;
+                        /** @description The ISO country code where this chart position applies. */
+                        country_code: string;
+                        /** @description The main category of the chart (e.g., "top podcasts"). */
+                        category: string;
+                        /** @description The sub-category of the chart, if applicable. */
+                        sub_category: string | null;
+                        /** @description The current position of the podcast on the chart. */
+                        position: number;
+                        /** @description The previous position of the podcast on the chart. */
+                        previous_position: number | null;
+                        /** @description The change in position from the previous chart (positive = moved up, negative = moved down). */
+                        position_change: number | null;
+                        /** @description The total number of days the podcast has been on this chart. */
+                        total_days_in_chart: number;
+                        /** @description The number of consecutive days the podcast has been on this chart. */
+                        days_streak_count: number;
+                      }[]
+                    | null;
+                  ignore?: boolean | null;
+                  podcastAffiliationOrganizationName?: string | null;
+                  podcastAffiliationType?: string | null;
+                  /** Format: date-time */
+                  podcastAuthorityScoreCalculatedDate?: Date | null;
+                  podcastAuthorityScoreEngagement: number | null;
+                  podcastAuthorityScoreQuality: number | null;
+                  podcastAuthorityScoreSocial: number | null;
+                  podcastAuthorityScoreTotal: number | null;
+                  podcastAuthorityScoreYoutube: number | null;
+                  podcastEmails?: string[] | null;
+                  podcastWebsites?: string[] | null;
+                  podcastCountries?: string[];
+                  /** Format: date-time */
+                  foundedDate: Date | null;
+                  /** Format: date-time */
+                  lastEpisodeDate: Date | null;
+                  podcastEstimatedAudienceAge?: string | null;
+                  podcastEstimatedAudienceEducation?: string | null;
+                  podcastEstimatedAudienceGender?: string | null;
+                  podcastEstimatedAudienceIncome?: string | null;
+                  podcastEstimatedListeners?: string | null;
+                  podcastAudienceEstimatedMonthlyListeners?: number | null;
+                  podcastAudienceConfidence?: string | null;
+                  podcastAudienceIsDormant?: boolean | null;
+                  podcastEstimatedPoliticalBias?: string | null;
+                  podcastHasSponsors?: boolean | null;
+                  podcastHasGuests?: boolean | null;
+                  podcastImageUrl: string | null;
+                  podcastGuid?: string | null;
+                  podcastHostNames?: string[] | null;
+                  podcastRssAuthor?: string | null;
+                  podcastRssDescription: string | null;
+                  podcastRssDescriptionNoHtml?: string | null;
+                  podcastRssDescriptionGeneratedLong?: string | null;
+                  podcastRssDescriptionGeneratedShort?: string | null;
+                  podcastRssTitleLatestCleaned?: string | null;
+                  podcastRssTitleLatest: string | null;
+                  podcastRssTitleOriginal?: string;
+                  podcastRssTitle: string;
+                  podcastSocialMediaLinks?: {
+                    type: string;
+                    url: string;
+                  }[];
+                  podcastWebsiteUrl: string | null;
+                  podcastRssFeedUrl?: string;
+                  /** Format: date-time */
+                  updatedAt?: Date;
+                  updateFrequency?: string | null;
+                  primaryContact?: string | null;
+                  rssCategories?: string[] | null;
+                  rssLanguage: string | null;
+                  podchaserUrlSlug?: string | null;
+                  podnewsUrlSlug?: string | null;
+                  rephonicUrlSlug?: string | null;
+                  similarPodcasts?: {
+                    podcast_id: string;
+                    title: string;
+                    image_url: string | null;
+                    slug: string;
+                  }[];
+                  socialsFacebookTotalPagesCount?: number;
+                  socialsFacebookTotalFollowersCount?: number;
+                  socialsFacebookTotalLikesCount?: number;
+                  socialsFacebookTotalFollowingCount?: number;
+                  socialsFacebookTotalTalkingAboutCount?: number;
+                  socialsFacebook?:
+                    | {
+                        /** @description The unique Facebook page ID. */
+                        id: string;
+                        /** @description The name of the Facebook page. */
+                        name: string;
+                        /** @description The number of followers the Facebook page has. */
+                        followers_count: number;
+                        /** @description The number of likes the Facebook page has. */
+                        likes_count: number;
+                        /** @description The number of pages this Facebook page is following. */
+                        following_count: number;
+                        /** @description The number of people talking about this Facebook page. */
+                        talking_about_count: number;
+                        /** @description The URL of the Facebook page profile image. */
+                        image_url: string | null;
+                        /** @description The URL of the Facebook page. */
+                        url: string;
+                        /** Format: date-time */
+                        data_last_updated: Date;
+                      }[]
+                    | null;
+                  socialsInstagramTotalFollowersCount?: number;
+                  socialsInstagramTotalFollowingCount?: number;
+                  socialsInstagramTotalPostsCount?: number;
+                  socialsInstagramTotalProfilesCount?: number;
+                  socialsInstagram?:
+                    | {
+                        /** @description The unique Instagram profile ID. */
+                        id: string;
+                        /** @description The Instagram username/handle. */
+                        username: string;
+                        /** @description The number of followers the Instagram profile has. */
+                        followers_count: number;
+                        /** @description The number of accounts this Instagram profile is following. */
+                        following_count: number;
+                        /** @description The number of posts the Instagram profile has. */
+                        posts_count: number;
+                        /** @description The URL of the Instagram profile image. */
+                        image_url: string | null;
+                        /** Format: date-time */
+                        data_last_updated: Date;
+                      }[]
+                    | null;
+                  socialsLinkedinCompanyTotalFollowersCount?: number;
+                  socialsLinkedinCompanyTotalEmployeesCount?: number;
+                  socialsLinkedinCompanyTotalPagesCount?: number;
+                  socialsLinkedinCompany?:
+                    | {
+                        /** @description The unique LinkedIn company ID. */
+                        id: string;
+                        /** @description The name of the LinkedIn company. */
+                        name: string;
+                        /** @description The "About" section text of the LinkedIn company. */
+                        about: string | null;
+                        /** @description The description of the LinkedIn company. */
+                        description: string | null;
+                        /** @description The size of the company (e.g., "11-50 employees"). */
+                        company_size: string | null;
+                        /** @description The ISO country code where the company is located. */
+                        country_code: string | null;
+                        /** @description The industries the company operates in. */
+                        industries: string | null;
+                        /** @description The number of followers the LinkedIn company has. */
+                        followers_count: number;
+                        /** @description The number of employees at the company. */
+                        employees_count: number;
+                        /** @description The URL of the LinkedIn company logo/image. */
+                        image_url: string | null;
+                        /** Format: date-time */
+                        data_last_updated: Date;
+                      }[]
+                    | null;
+                  socialsLinkedinPersonTotalFollowersCount?: number;
+                  socialsLinkedinPersonTotalConnectionsCount?: number;
+                  socialsLinkedinPersonTotalProfilesCount?: number;
+                  socialsLinkedinPerson?:
+                    | {
+                        /** @description The unique LinkedIn person ID. */
+                        id: string;
+                        /** @description The name of the LinkedIn person. */
+                        name: string;
+                        /** @description The "About" section text of the LinkedIn person. */
+                        about: string | null;
+                        /** @description The description of the LinkedIn person. */
+                        description: string | null;
+                        /** @description The number of followers the LinkedIn person has. */
+                        followers_count: number;
+                        /** @description The number of connections the LinkedIn person has. */
+                        connections_count: number;
+                        /** @description The ISO country code where the person is located. */
+                        country_code: string | null;
+                        /** @description The URL of the LinkedIn person profile image. */
+                        image_url: string | null;
+                        /** Format: date-time */
+                        data_last_updated: Date;
+                      }[]
+                    | null;
+                  socialsTiktokTotalFollowersCount?: number;
+                  socialsTiktokTotalFollowingCount?: number;
+                  socialsTiktokTotalLikesCount?: number;
+                  socialsTiktokTotalProfilesCount?: number;
+                  socialsTiktok?:
+                    | {
+                        /** @description The unique TikTok profile ID. */
+                        id: string;
+                        /** @description The TikTok handle/username. */
+                        handle: string;
+                        /** @description The display name of the TikTok profile. */
+                        profile_name: string;
+                        /** @description The biography text of the TikTok profile. */
+                        biography: string | null;
+                        /** @description The number of followers the TikTok profile has. */
+                        followers_count: number;
+                        /** @description The number of accounts this TikTok profile is following. */
+                        following_count: number;
+                        /** @description The number of likes the TikTok profile has received. */
+                        likes_count: number;
+                        /** @description The URL of the TikTok profile image. */
+                        image_url: string | null;
+                        /** Format: date-time */
+                        data_last_updated: Date;
+                      }[]
+                    | null;
+                  socialsTwitterTotalFollowersCount?: number;
+                  socialsTwitterTotalFollowingCount?: number;
+                  socialsTwitterTotalPostsCount?: number;
+                  socialsTwitterTotalProfilesCount?: number;
+                  socialsTwitter?:
+                    | {
+                        /** @description The unique Twitter profile ID. */
+                        id: string;
+                        /** Format: date-time */
+                        date_joined: Date | null;
+                        /** @description The biography text of the Twitter profile. */
+                        biography: string | null;
+                        /** @description The Twitter handle/username. */
+                        handle: string;
+                        /** @description The number of followers the Twitter profile has. */
+                        followers_count: number;
+                        /** @description The number of accounts this Twitter profile is following. */
+                        following_count: number;
+                        /** @description The number of posts/tweets the Twitter profile has. */
+                        posts_count: number;
+                        /** @description The URL of the Twitter profile image. */
+                        image_url: string | null;
+                        /** Format: date-time */
+                        data_last_updated: Date;
+                      }[]
+                    | null;
+                  /** Format: date-time */
+                  spotifyDataLastUpdated?: Date | null;
+                  spotifyId?: string | null;
+                  spotifyRating?: number | null;
+                  spotifyRatingsCount?: number | null;
+                  spotifyRatingWilsonScore?: number | null;
+                  /** @enum {string} */
+                  transcriptionMode: 'none' | 'all' | 'episodes-since';
+                  totalEpisodes?: number;
+                  totalTranscripts?: number;
+                  youtubeAverageViewsPerVideo?: number | null;
+                  youtubeChannelCount: number | null;
+                  /** Format: date-time */
+                  youtubeDataLastUpdated?: Date | null;
+                  youtubeTotalSubscribers: number | null;
+                  youtubeTotalVideos: number | null;
+                  youtubeTotalViews: number | null;
+                  youtubeChannels?: {
+                    average_views_per_video: number;
+                    /** Format: date-time */
+                    channel_data_last_updated: Date;
+                    channel_description: string | null;
+                    channel_handle: string | null;
+                    channel_id: string;
+                    channel_title: string | null;
+                    /** Format: date-time */
+                    channel_published_date: Date | null;
+                    total_subscribers: number;
+                    total_videos: number;
+                    total_views: number;
+                  }[];
+                  /** Format: date-time */
+                  youtubePrimaryChanelDataLastUpdated?: Date | null;
+                  youtubePrimaryChannelId?: string | null;
+                  youtubePrimaryChannelName?: string | null;
+                  youtubePrimaryChannelSubscribers?: number | null;
+                  youtubePrimaryChannelVideos?: number | null;
+                  youtubePrimaryChannelViews?: number | null;
+                  /** @description Search relevance score; zero when Elasticsearch does not return a score. */
+                  score: number;
+                  podcastDescriptionHighlights?: string[];
+                  podcastTitleHighlights?: string[];
+                  episodeDescriptionHighlights?: string[];
+                  episodeTitleHighlights?: string[];
+                  transcriptHighlights?: string[];
+                  /** @description Opening transcript excerpt, when requested and available. */
+                  transcriptTextSnippet?: string;
+                }[];
+              };
               cursor: string | null;
             };
           };
@@ -12230,7 +13051,9 @@ export interface operations {
     requestBody: {
       content: {
         'application/json': {
+          /** @description Whether to enable Airtable syncing. Null preserves the existing value, or defaults to false for a new entry. */
           sync: boolean | null;
+          /** @description Whether to blacklist the podcast for the team. Null preserves the existing value, or defaults to false for a new entry. */
           blacklist: boolean | null;
         };
       };
@@ -12408,7 +13231,9 @@ export interface operations {
     requestBody: {
       content: {
         'application/json': {
+          /** @description Pod Engine IDs of podcasts to remove from the team list. */
           podcastIds?: string[];
+          /** @description Apple Podcasts IDs of podcasts to remove from the team list. */
           appleIds?: number[];
         };
       };

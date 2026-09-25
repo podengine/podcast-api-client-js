@@ -85,12 +85,15 @@
                 "type": "object",
                 "properties": {
                   "projectId": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "ID of the project whose criteria are used to assess the podcast."
                   },
                   "podcastId": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Pod Engine ID of the podcast to assess."
                   },
                   "searchOptions": {
+                    "description": "Optional search context to include when assessing podcast relevance.",
                     "anyOf": [
                       {
                         "type": "object",
@@ -165,10 +168,9 @@
                                 "searchType": {
                                   "type": "string",
                                   "enum": [
-                                    "text",
-                                    "embeddings"
+                                    "text"
                                   ],
-                                  "description": "How to match the term. 'text' runs keyword matching against each of the searchTargets. 'embeddings' is reserved for semantic search and is not accepted yet — a request using it is rejected."
+                                  "description": "How to match the term. 'text' runs keyword matching against each of the searchTargets."
                                 },
                                 "searchTargets": {
                                   "type": "array",
@@ -668,10 +670,9 @@
                                 "searchType": {
                                   "type": "string",
                                   "enum": [
-                                    "text",
-                                    "embeddings"
+                                    "text"
                                   ],
-                                  "description": "How to match the term. 'text' runs keyword matching against each of the searchTargets. 'embeddings' is reserved for semantic search and is not accepted yet — a request using it is rejected."
+                                  "description": "How to match the term. 'text' runs keyword matching against each of the searchTargets."
                                 },
                                 "searchTargets": {
                                   "type": "array",
@@ -1228,6 +1229,7 @@
                     ]
                   },
                   "forceRegenerate": {
+                    "description": "Regenerate the assessment even when a saved result exists.",
                     "type": "boolean"
                   }
                 },
@@ -1345,7 +1347,8 @@
                   "value": {
                     "type": "string",
                     "minLength": 3,
-                    "maxLength": 200
+                    "maxLength": 200,
+                    "description": "Person or company name to generate plausible phonetic spelling variants for."
                   }
                 },
                 "required": [
@@ -1434,7 +1437,8 @@
                 "type": "object",
                 "properties": {
                   "alertName": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Display name for this alert."
                   },
                   "alertType": {
                     "type": "string",
@@ -1442,12 +1446,15 @@
                       "person",
                       "company",
                       "custom-keyword"
-                    ]
+                    ],
+                    "description": "Whether to track a person, company, or custom keyword."
                   },
                   "value": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Name or keyword to monitor in podcast episodes and transcripts."
                   },
                   "emailSettings": {
+                    "description": "Email notification schedule; defaults to daily when omitted.",
                     "type": "object",
                     "properties": {
                       "frequency": {
@@ -1456,7 +1463,8 @@
                           "hourly",
                           "daily",
                           "weekly"
-                        ]
+                        ],
+                        "description": "How often alert email notifications should be sent."
                       }
                     },
                     "required": [
@@ -1465,21 +1473,26 @@
                     "additionalProperties": false
                   },
                   "enabled": {
+                    "description": "Whether the alert is active; defaults to true.",
                     "type": "boolean"
                   },
                   "generateAlternativeSpellings": {
+                    "description": "Generate and add phonetic spelling variants to the terms monitored by this alert.",
                     "type": "boolean"
                   },
                   "additionalAlertSettings": {
+                    "description": "Additional recipients and spelling variants for this alert.",
                     "type": "object",
                     "properties": {
                       "otherEmails": {
+                        "description": "Additional email addresses to receive alert notifications.",
                         "type": "array",
                         "items": {
                           "type": "string"
                         }
                       },
                       "otherSpellings": {
+                        "description": "Additional spellings to match alongside the primary name or keyword.",
                         "type": "array",
                         "items": {
                           "type": "string"
@@ -1764,7 +1777,8 @@
                                     "hourly",
                                     "daily",
                                     "weekly"
-                                  ]
+                                  ],
+                                  "description": "How often alert email notifications should be sent."
                                 }
                               },
                               "required": [
@@ -1849,6 +1863,7 @@
             "in": "query",
             "required": false,
             "schema": {
+              "description": "Filter by enabled status; omit to include both. Currently any nonempty query string, including the text false, is coerced to true.",
               "type": "boolean"
             }
           },
@@ -1857,7 +1872,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "description": "ID of the alert configuration."
             }
           },
           {
@@ -1865,6 +1881,7 @@
             "in": "query",
             "required": false,
             "schema": {
+              "description": "Field to sort by; defaults to lastRunDate.",
               "type": "string",
               "enum": [
                 "lastRunDate",
@@ -1877,6 +1894,7 @@
             "in": "query",
             "required": false,
             "schema": {
+              "description": "Sort direction; defaults to descending.",
               "type": "string",
               "enum": [
                 "asc",
@@ -1906,12 +1924,15 @@
                           "type": "object",
                           "properties": {
                             "enabled": {
+                              "description": "Filter by enabled status; omit to include both. Currently any nonempty query string, including the text false, is coerced to true.",
                               "type": "boolean"
                             },
                             "alertConfigId": {
-                              "type": "string"
+                              "type": "string",
+                              "description": "ID of the alert configuration."
                             },
                             "sortBy": {
+                              "description": "Field to sort by; defaults to lastRunDate.",
                               "type": "string",
                               "enum": [
                                 "lastRunDate",
@@ -1919,6 +1940,7 @@
                               ]
                             },
                             "sortDirection": {
+                              "description": "Sort direction; defaults to descending.",
                               "type": "string",
                               "enum": [
                                 "asc",
@@ -2178,7 +2200,8 @@
                                       "hourly",
                                       "daily",
                                       "weekly"
-                                    ]
+                                    ],
+                                    "description": "How often alert email notifications should be sent."
                                   }
                                 },
                                 "required": [
@@ -2265,7 +2288,8 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "description": "ID of the alert configuration."
             }
           }
         ],
@@ -2534,7 +2558,8 @@
                                     "hourly",
                                     "daily",
                                     "weekly"
-                                  ]
+                                  ],
+                                  "description": "How often alert email notifications should be sent."
                                 }
                               },
                               "required": [
@@ -2617,7 +2642,8 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "description": "ID of the alert configuration."
             }
           }
         ],
@@ -2632,9 +2658,11 @@
                     "type": "object",
                     "properties": {
                       "alertName": {
+                        "description": "New display name for the alert.",
                         "type": "string"
                       },
                       "emailSettings": {
+                        "description": "Replacement email notification schedule.",
                         "type": "object",
                         "properties": {
                           "frequency": {
@@ -2643,7 +2671,8 @@
                               "hourly",
                               "daily",
                               "weekly"
-                            ]
+                            ],
+                            "description": "How often alert email notifications should be sent."
                           }
                         },
                         "required": [
@@ -2652,6 +2681,7 @@
                         "additionalProperties": false
                       },
                       "alertSettings": {
+                        "description": "Replacement matching settings for this alert.",
                         "oneOf": [
                           {
                             "type": "object",
@@ -2863,10 +2893,12 @@
                         ]
                       },
                       "enabled": {
+                        "description": "Enable or disable this alert.",
                         "type": "boolean"
                       }
                     },
-                    "additionalProperties": false
+                    "additionalProperties": false,
+                    "description": "Fields to update; omitted fields retain their current values."
                   }
                 },
                 "required": [
@@ -3142,7 +3174,8 @@
                                     "hourly",
                                     "daily",
                                     "weekly"
-                                  ]
+                                  ],
+                                  "description": "How often alert email notifications should be sent."
                                 }
                               },
                               "required": [
@@ -3225,7 +3258,8 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "description": "ID of the alert configuration."
             }
           }
         ],
@@ -3302,7 +3336,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "description": "ID of the alert configuration."
             }
           },
           {
@@ -3310,6 +3345,7 @@
             "in": "query",
             "required": false,
             "schema": {
+              "description": "Page of alert matches to return; defaults to 1, with 50 matches per page.",
               "type": "number"
             }
           },
@@ -3317,7 +3353,9 @@
             "name": "sinceDate",
             "in": "query",
             "required": false,
-            "schema": {}
+            "schema": {
+              "description": "Reserved date filter. Currently accepted but ignored by the alert history endpoint."
+            }
           }
         ],
         "responses": {
@@ -3341,12 +3379,16 @@
                           "type": "object",
                           "properties": {
                             "alertConfigId": {
-                              "type": "string"
+                              "type": "string",
+                              "description": "ID of the alert configuration."
                             },
                             "page": {
+                              "description": "Page of alert matches to return; defaults to 1, with 50 matches per page.",
                               "type": "number"
                             },
-                            "sinceDate": {}
+                            "sinceDate": {
+                              "description": "Reserved date filter. Currently accepted but ignored by the alert history endpoint."
+                            }
                           },
                           "additionalProperties": false
                         },
@@ -8191,6 +8233,7 @@
             "in": "query",
             "required": false,
             "schema": {
+              "description": "Comma-separated parent podcast categories; matches any supplied category, case-insensitively.",
               "type": "array",
               "items": {
                 "type": "string"
@@ -8202,6 +8245,7 @@
             "in": "query",
             "required": false,
             "schema": {
+              "description": "When true, only include episodes with a stored image. False or omission leaves images unrestricted.",
               "type": "boolean"
             }
           },
@@ -8210,6 +8254,7 @@
             "in": "query",
             "required": false,
             "schema": {
+              "description": "When true, only include episodes with a transcript. False or omission leaves transcripts unrestricted.",
               "type": "boolean"
             }
           },
@@ -8219,6 +8264,7 @@
             "required": true,
             "schema": {
               "default": "en",
+              "description": "Language code of the parent podcast; defaults to en.",
               "type": "string"
             }
           }
@@ -8718,7 +8764,8 @@
             "schema": {
               "type": "string",
               "format": "uuid",
-              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+              "description": "Pod Engine UUID of the episode."
             }
           }
         ],
@@ -9115,7 +9162,8 @@
             "schema": {
               "type": "string",
               "format": "uuid",
-              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+              "description": "Pod Engine UUID of the episode."
             }
           }
         ],
@@ -9221,7 +9269,8 @@
             "schema": {
               "type": "string",
               "format": "uuid",
-              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+              "description": "Pod Engine UUID of the episode."
             }
           }
         ],
@@ -9335,7 +9384,8 @@
             "schema": {
               "type": "string",
               "format": "uuid",
-              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+              "description": "Pod Engine UUID of the episode."
             }
           }
         ],
@@ -9414,7 +9464,8 @@
             "schema": {
               "type": "string",
               "format": "uuid",
-              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+              "description": "Pod Engine UUID of the episode."
             }
           },
           {
@@ -9423,6 +9474,7 @@
             "required": true,
             "schema": {
               "default": "txt",
+              "description": "Transcript download format: plain text, word-timed WebVTT, or sentence-timed WebVTT. Defaults to txt.",
               "type": "string",
               "enum": [
                 "txt",
@@ -9483,7 +9535,8 @@
             "schema": {
               "type": "string",
               "format": "uuid",
-              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+              "description": "Pod Engine UUID of the episode."
             }
           }
         ],
@@ -9590,7 +9643,8 @@
             "schema": {
               "type": "string",
               "format": "uuid",
-              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+              "description": "Pod Engine UUID of the episode."
             }
           }
         ],
@@ -9703,6 +9757,7 @@
             "in": "query",
             "required": true,
             "schema": {
+              "description": "Maximum number of requests to return; defaults to 50.",
               "type": "number",
               "maximum": 50
             }
@@ -9712,6 +9767,7 @@
             "in": "query",
             "required": false,
             "schema": {
+              "description": "Number of requests to skip before returning this page.",
               "type": "number"
             }
           },
@@ -9720,6 +9776,7 @@
             "in": "query",
             "required": false,
             "schema": {
+              "description": "When true, exclude completed requests and return only pending requests.",
               "type": "boolean"
             }
           }
@@ -10449,11 +10506,13 @@
                                   "vimeo",
                                   "whatsapp",
                                   "youtube"
-                                ]
+                                ],
+                                "description": "Social platform associated with the profile URL."
                               },
                               "url": {
                                 "type": "string",
-                                "format": "uri"
+                                "format": "uri",
+                                "description": "Full URL of the social media profile."
                               },
                               "lastScrapedAt": {
                                 "anyOf": [
@@ -11024,11 +11083,13 @@
                         "vimeo",
                         "whatsapp",
                         "youtube"
-                      ]
+                      ],
+                      "description": "Social platform associated with the profile URL."
                     },
                     "url": {
                       "type": "string",
-                      "format": "uri"
+                      "format": "uri",
+                      "description": "Full URL of the social media profile."
                     }
                   },
                   "required": [
@@ -11425,6 +11486,7 @@
             "in": "query",
             "required": false,
             "schema": {
+              "description": "Filter for podcasts with transcripts when true, or without transcripts when false; omit for both.",
               "type": "boolean"
             }
           }
@@ -12180,11 +12242,13 @@
                                             "vimeo",
                                             "whatsapp",
                                             "youtube"
-                                          ]
+                                          ],
+                                          "description": "Social platform associated with the profile URL."
                                         },
                                         "url": {
                                           "type": "string",
-                                          "format": "uri"
+                                          "format": "uri",
+                                          "description": "Full URL of the social media profile."
                                         },
                                         "sources": {
                                           "type": "array",
@@ -13837,11 +13901,13 @@
                                           "vimeo",
                                           "whatsapp",
                                           "youtube"
-                                        ]
+                                        ],
+                                        "description": "Social platform associated with the profile URL."
                                       },
                                       "url": {
                                         "type": "string",
-                                        "format": "uri"
+                                        "format": "uri",
+                                        "description": "Full URL of the social media profile."
                                       },
                                       "sources": {
                                         "type": "array",
@@ -15200,11 +15266,13 @@
                                           "vimeo",
                                           "whatsapp",
                                           "youtube"
-                                        ]
+                                        ],
+                                        "description": "Social platform associated with the profile URL."
                                       },
                                       "url": {
                                         "type": "string",
-                                        "format": "uri"
+                                        "format": "uri",
+                                        "description": "Full URL of the social media profile."
                                       },
                                       "sources": {
                                         "type": "array",
@@ -16709,11 +16777,13 @@
                                       "vimeo",
                                       "whatsapp",
                                       "youtube"
-                                    ]
+                                    ],
+                                    "description": "Social platform associated with the profile URL."
                                   },
                                   "url": {
                                     "type": "string",
-                                    "format": "uri"
+                                    "format": "uri",
+                                    "description": "Full URL of the social media profile."
                                   },
                                   "sources": {
                                     "type": "array",
@@ -17292,6 +17362,7 @@
             "in": "query",
             "required": false,
             "schema": {
+              "description": "When true, only return episodes with transcripts; false or omission does not filter by transcript availability.",
               "type": "boolean"
             }
           },
@@ -17300,6 +17371,7 @@
             "in": "query",
             "required": false,
             "schema": {
+              "description": "Number of episodes to skip before returning this page.",
               "type": "integer",
               "minimum": 0,
               "maximum": 9007199254740991
@@ -17310,6 +17382,7 @@
             "in": "query",
             "required": false,
             "schema": {
+              "description": "Maximum number of episodes to return in this page; defaults to 50, up to 100.",
               "type": "integer",
               "minimum": 1,
               "maximum": 100
@@ -17337,14 +17410,17 @@
                           "type": "object",
                           "properties": {
                             "hasTranscript": {
+                              "description": "When true, only return episodes with transcripts; false or omission does not filter by transcript availability.",
                               "type": "boolean"
                             },
                             "skip": {
+                              "description": "Number of episodes to skip before returning this page.",
                               "type": "integer",
                               "minimum": 0,
                               "maximum": 9007199254740991
                             },
                             "limit": {
+                              "description": "Maximum number of episodes to return in this page; defaults to 50, up to 100.",
                               "type": "integer",
                               "minimum": 1,
                               "maximum": 100
@@ -19882,11 +19958,13 @@
                                       "vimeo",
                                       "whatsapp",
                                       "youtube"
-                                    ]
+                                    ],
+                                    "description": "Social platform associated with the profile URL."
                                   },
                                   "url": {
                                     "type": "string",
-                                    "format": "uri"
+                                    "format": "uri",
+                                    "description": "Full URL of the social media profile."
                                   },
                                   "sources": {
                                     "type": "array",
@@ -20894,7 +20972,8 @@
                 "since",
                 "latest",
                 "recent"
-              ]
+              ],
+              "description": "Episodes to transcribe: since selects episodes published from January 1, 2025; latest selects one episode; recent selects the 10 newest episodes."
             }
           },
           {
@@ -20998,6 +21077,7 @@
             "in": "query",
             "required": false,
             "schema": {
+              "description": "Refresh the stored podcast thumbnail while refreshing the RSS feed; defaults to false.",
               "type": "boolean"
             }
           }
@@ -21446,11 +21526,13 @@
                                           "vimeo",
                                           "whatsapp",
                                           "youtube"
-                                        ]
+                                        ],
+                                        "description": "Social platform associated with the profile URL."
                                       },
                                       "url": {
                                         "type": "string",
-                                        "format": "uri"
+                                        "format": "uri",
+                                        "description": "Full URL of the social media profile."
                                       },
                                       "sources": {
                                         "type": "array",
@@ -22583,13 +22665,16 @@
             "name": "states",
             "in": "query",
             "required": false,
-            "schema": {}
+            "schema": {
+              "description": "Include projects in any of these lifecycle states; omit to include all project states."
+            }
           },
           {
             "name": "sortBy",
             "in": "query",
             "required": false,
             "schema": {
+              "description": "Project field used to order the results.",
               "type": "string",
               "enum": [
                 "recent-activity",
@@ -22616,8 +22701,11 @@
                         "options": {
                           "type": "object",
                           "properties": {
-                            "states": {},
+                            "states": {
+                              "description": "Include projects in any of these lifecycle states; omit to include all project states."
+                            },
                             "sortBy": {
+                              "description": "Project field used to order the results.",
                               "type": "string",
                               "enum": [
                                 "recent-activity",
@@ -22968,7 +23056,8 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "description": "URL slug identifying the project."
             }
           }
         ],
@@ -23376,7 +23465,8 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "description": "URL slug identifying the project."
             }
           }
         ],
@@ -23543,7 +23633,8 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "description": "URL slug identifying the project."
             }
           }
         ],
@@ -23555,6 +23646,7 @@
                 "type": "object",
                 "properties": {
                   "state": {
+                    "description": "New project lifecycle state.",
                     "type": "string",
                     "enum": [
                       "DRAFT",
@@ -23565,12 +23657,14 @@
                     ]
                   },
                   "projectPurpose": {
+                    "description": "Purpose and goals of the project; null clears the stored purpose.",
                     "type": [
                       "string",
                       "null"
                     ]
                   },
                   "projectKeywords": {
+                    "description": "Replacement keywords for the project; an empty array clears them.",
                     "type": "array",
                     "items": {
                       "type": "string"
@@ -23932,7 +24026,8 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "description": "URL slug identifying the project."
             }
           }
         ],
@@ -23944,10 +24039,12 @@
                 "type": "object",
                 "properties": {
                   "podcastId": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Pod Engine ID of the podcast to add to this project."
                   },
                   "state": {
                     "default": "prospect",
+                    "description": "Initial workflow state for the podcast in this project.",
                     "type": "string",
                     "enum": [
                       "prospect",
@@ -23959,6 +24056,7 @@
                     ]
                   },
                   "priority": {
+                    "description": "Priority of this podcast within the project.",
                     "type": "string",
                     "enum": [
                       "low",
@@ -23968,6 +24066,7 @@
                     ]
                   },
                   "labels": {
+                    "description": "Labels to apply to the podcast entry in this project.",
                     "type": "array",
                     "items": {
                       "type": "string",
@@ -24237,7 +24336,8 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "description": "URL slug identifying the project."
             }
           },
           {
@@ -24245,7 +24345,8 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "description": "ID of the podcast entry in this project, not the podcast ID."
             }
           }
         ],
@@ -24257,6 +24358,7 @@
                 "type": "object",
                 "properties": {
                   "state": {
+                    "description": "New workflow state for the podcast in the project.",
                     "type": "string",
                     "enum": [
                       "prospect",
@@ -24268,6 +24370,7 @@
                     ]
                   },
                   "priority": {
+                    "description": "New priority for the podcast entry; null clears its priority.",
                     "type": [
                       "string",
                       "null"
@@ -24303,15 +24406,18 @@
                       "type": "object",
                       "properties": {
                         "projectSlug": {
-                          "type": "string"
+                          "type": "string",
+                          "description": "URL slug identifying the project."
                         },
                         "listedPodcastId": {
-                          "type": "string"
+                          "type": "string",
+                          "description": "ID of the podcast entry in this project, not the podcast ID."
                         },
                         "options": {
                           "type": "object",
                           "properties": {
                             "state": {
+                              "description": "New workflow state for the podcast in the project.",
                               "type": "string",
                               "enum": [
                                 "prospect",
@@ -24323,6 +24429,7 @@
                               ]
                             },
                             "priority": {
+                              "description": "New priority for the podcast entry; null clears its priority.",
                               "type": [
                                 "string",
                                 "null"
@@ -24570,7 +24677,8 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "description": "URL slug identifying the project."
             }
           },
           {
@@ -24578,7 +24686,8 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "description": "ID of the podcast entry in this project, not the podcast ID."
             }
           }
         ],
@@ -24600,10 +24709,12 @@
                       "type": "object",
                       "properties": {
                         "projectSlug": {
-                          "type": "string"
+                          "type": "string",
+                          "description": "URL slug identifying the project."
                         },
                         "listedPodcastId": {
-                          "type": "string"
+                          "type": "string",
+                          "description": "ID of the podcast entry in this project, not the podcast ID."
                         }
                       },
                       "required": [
@@ -24911,10 +25022,9 @@
                         "searchType": {
                           "type": "string",
                           "enum": [
-                            "text",
-                            "embeddings"
+                            "text"
                           ],
-                          "description": "How to match the term. 'text' runs keyword matching against each of the searchTargets. 'embeddings' is reserved for semantic search and is not accepted yet — a request using it is rejected."
+                          "description": "How to match the term. 'text' runs keyword matching against each of the searchTargets."
                         },
                         "searchTargets": {
                           "type": "array",
@@ -25443,10 +25553,9 @@
                                   "searchType": {
                                     "type": "string",
                                     "enum": [
-                                      "text",
-                                      "embeddings"
+                                      "text"
                                     ],
-                                    "description": "How to match the term. 'text' runs keyword matching against each of the searchTargets. 'embeddings' is reserved for semantic search and is not accepted yet — a request using it is rejected."
+                                    "description": "How to match the term. 'text' runs keyword matching against each of the searchTargets."
                                   },
                                   "searchTargets": {
                                     "type": "array",
@@ -25997,7 +26106,1224 @@
                           ],
                           "additionalProperties": false
                         },
-                        "result": {},
+                        "result": {
+                          "type": "object",
+                          "properties": {
+                            "total": {
+                              "type": "object",
+                              "properties": {
+                                "value": {
+                                  "type": "number",
+                                  "description": "Number of matching results, or a lower bound when relation is gte."
+                                },
+                                "relation": {
+                                  "description": "eq for an exact count; gte for a lower bound.",
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "value"
+                              ],
+                              "additionalProperties": false,
+                              "description": "Elasticsearch match count before application filtering."
+                            },
+                            "maxScore": {
+                              "description": "Highest relevance score in the result set, or null when unavailable.",
+                              "type": [
+                                "number",
+                                "null"
+                              ]
+                            },
+                            "hitsReturned": {
+                              "type": "number",
+                              "description": "Number of hits returned in this page."
+                            },
+                            "hits": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "appleId": {
+                                    "type": "number"
+                                  },
+                                  "applePodcastsContentRating": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "applePodcastsRating": {
+                                    "type": [
+                                      "number",
+                                      "null"
+                                    ]
+                                  },
+                                  "applePodcastsRatingsCount": {
+                                    "type": [
+                                      "number",
+                                      "null"
+                                    ]
+                                  },
+                                  "applePodcastsRatingWilsonScore": {
+                                    "type": [
+                                      "number",
+                                      "null"
+                                    ]
+                                  },
+                                  "applePodcastsScrapedDate": {
+                                    "type": "string",
+                                    "format": "date-time"
+                                  },
+                                  "castboxPlays": {
+                                    "type": [
+                                      "number",
+                                      "null"
+                                    ]
+                                  },
+                                  "castboxSubscribers": {
+                                    "type": [
+                                      "number",
+                                      "null"
+                                    ]
+                                  },
+                                  "castboxDataLastUpdated": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ],
+                                    "format": "date-time"
+                                  },
+                                  "castboxId": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "chartPositions": {
+                                    "type": [
+                                      "array",
+                                      "null"
+                                    ],
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "date": {
+                                          "type": "string",
+                                          "description": "The date of the chart position in YYYY-MM-DD format."
+                                        },
+                                        "chart_type": {
+                                          "type": "string",
+                                          "description": "The type of chart (e.g., \"apple\", \"spotify\")."
+                                        },
+                                        "country_code": {
+                                          "type": "string",
+                                          "description": "The ISO country code where this chart position applies."
+                                        },
+                                        "category": {
+                                          "type": "string",
+                                          "description": "The main category of the chart (e.g., \"top podcasts\")."
+                                        },
+                                        "sub_category": {
+                                          "description": "The sub-category of the chart, if applicable.",
+                                          "type": [
+                                            "string",
+                                            "null"
+                                          ]
+                                        },
+                                        "position": {
+                                          "type": "number",
+                                          "description": "The current position of the podcast on the chart."
+                                        },
+                                        "previous_position": {
+                                          "description": "The previous position of the podcast on the chart.",
+                                          "type": [
+                                            "number",
+                                            "null"
+                                          ]
+                                        },
+                                        "position_change": {
+                                          "description": "The change in position from the previous chart (positive = moved up, negative = moved down).",
+                                          "type": [
+                                            "number",
+                                            "null"
+                                          ]
+                                        },
+                                        "total_days_in_chart": {
+                                          "type": "number",
+                                          "description": "The total number of days the podcast has been on this chart."
+                                        },
+                                        "days_streak_count": {
+                                          "type": "number",
+                                          "description": "The number of consecutive days the podcast has been on this chart."
+                                        }
+                                      },
+                                      "required": [
+                                        "date",
+                                        "chart_type",
+                                        "country_code",
+                                        "category",
+                                        "sub_category",
+                                        "position",
+                                        "previous_position",
+                                        "position_change",
+                                        "total_days_in_chart",
+                                        "days_streak_count"
+                                      ],
+                                      "additionalProperties": false
+                                    }
+                                  },
+                                  "ignore": {
+                                    "type": [
+                                      "boolean",
+                                      "null"
+                                    ]
+                                  },
+                                  "podcastAffiliationOrganizationName": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "podcastAffiliationType": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "podcastAuthorityScoreCalculatedDate": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ],
+                                    "format": "date-time"
+                                  },
+                                  "podcastAuthorityScoreEngagement": {
+                                    "type": [
+                                      "number",
+                                      "null"
+                                    ]
+                                  },
+                                  "podcastAuthorityScoreQuality": {
+                                    "type": [
+                                      "number",
+                                      "null"
+                                    ]
+                                  },
+                                  "podcastAuthorityScoreSocial": {
+                                    "type": [
+                                      "number",
+                                      "null"
+                                    ]
+                                  },
+                                  "podcastAuthorityScoreTotal": {
+                                    "type": [
+                                      "number",
+                                      "null"
+                                    ]
+                                  },
+                                  "podcastAuthorityScoreYoutube": {
+                                    "type": [
+                                      "number",
+                                      "null"
+                                    ]
+                                  },
+                                  "podcastEmails": {
+                                    "type": [
+                                      "array",
+                                      "null"
+                                    ],
+                                    "items": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "podcastWebsites": {
+                                    "type": [
+                                      "array",
+                                      "null"
+                                    ],
+                                    "items": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "podcastCountries": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "foundedDate": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ],
+                                    "format": "date-time"
+                                  },
+                                  "lastEpisodeDate": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ],
+                                    "format": "date-time"
+                                  },
+                                  "podcastEstimatedAudienceAge": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "podcastEstimatedAudienceEducation": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "podcastEstimatedAudienceGender": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "podcastEstimatedAudienceIncome": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "podcastEstimatedListeners": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "podcastAudienceEstimatedMonthlyListeners": {
+                                    "type": [
+                                      "number",
+                                      "null"
+                                    ]
+                                  },
+                                  "podcastAudienceConfidence": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "podcastAudienceIsDormant": {
+                                    "type": [
+                                      "boolean",
+                                      "null"
+                                    ]
+                                  },
+                                  "podcastEstimatedPoliticalBias": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "podcastHasSponsors": {
+                                    "type": [
+                                      "boolean",
+                                      "null"
+                                    ]
+                                  },
+                                  "podcastHasGuests": {
+                                    "type": [
+                                      "boolean",
+                                      "null"
+                                    ]
+                                  },
+                                  "podcastId": {
+                                    "type": "string"
+                                  },
+                                  "podcastImageUrl": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "podcastGuid": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "podcastHostNames": {
+                                    "type": [
+                                      "array",
+                                      "null"
+                                    ],
+                                    "items": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "podcastRssAuthor": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "podcastRssDescription": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "podcastRssDescriptionNoHtml": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "podcastRssDescriptionGeneratedLong": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "podcastRssDescriptionGeneratedShort": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "podcastRssTitleLatestCleaned": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "podcastRssTitleLatest": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "podcastRssTitleOriginal": {
+                                    "type": "string"
+                                  },
+                                  "podcastRssTitle": {
+                                    "type": "string"
+                                  },
+                                  "podcastSlug": {
+                                    "type": "string"
+                                  },
+                                  "podcastSocialMediaLinks": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "type": {
+                                          "type": "string"
+                                        },
+                                        "url": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "required": [
+                                        "type",
+                                        "url"
+                                      ],
+                                      "additionalProperties": false
+                                    }
+                                  },
+                                  "podcastWebsiteUrl": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "podcastRssFeedUrl": {
+                                    "type": "string"
+                                  },
+                                  "updatedAt": {
+                                    "type": "string",
+                                    "format": "date-time"
+                                  },
+                                  "updateFrequency": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "primaryContact": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "rssCategories": {
+                                    "type": [
+                                      "array",
+                                      "null"
+                                    ],
+                                    "items": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "rssLanguage": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "podchaserUrlSlug": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "podnewsUrlSlug": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "rephonicUrlSlug": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "similarPodcasts": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "podcast_id": {
+                                          "type": "string"
+                                        },
+                                        "title": {
+                                          "type": "string"
+                                        },
+                                        "image_url": {
+                                          "type": [
+                                            "string",
+                                            "null"
+                                          ]
+                                        },
+                                        "slug": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "required": [
+                                        "podcast_id",
+                                        "title",
+                                        "image_url",
+                                        "slug"
+                                      ],
+                                      "additionalProperties": false
+                                    }
+                                  },
+                                  "socialsFacebookTotalPagesCount": {
+                                    "type": "number"
+                                  },
+                                  "socialsFacebookTotalFollowersCount": {
+                                    "type": "number"
+                                  },
+                                  "socialsFacebookTotalLikesCount": {
+                                    "type": "number"
+                                  },
+                                  "socialsFacebookTotalFollowingCount": {
+                                    "type": "number"
+                                  },
+                                  "socialsFacebookTotalTalkingAboutCount": {
+                                    "type": "number"
+                                  },
+                                  "socialsFacebook": {
+                                    "type": [
+                                      "array",
+                                      "null"
+                                    ],
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "id": {
+                                          "type": "string",
+                                          "description": "The unique Facebook page ID."
+                                        },
+                                        "name": {
+                                          "type": "string",
+                                          "description": "The name of the Facebook page."
+                                        },
+                                        "followers_count": {
+                                          "type": "number",
+                                          "description": "The number of followers the Facebook page has."
+                                        },
+                                        "likes_count": {
+                                          "type": "number",
+                                          "description": "The number of likes the Facebook page has."
+                                        },
+                                        "following_count": {
+                                          "type": "number",
+                                          "description": "The number of pages this Facebook page is following."
+                                        },
+                                        "talking_about_count": {
+                                          "type": "number",
+                                          "description": "The number of people talking about this Facebook page."
+                                        },
+                                        "image_url": {
+                                          "description": "The URL of the Facebook page profile image.",
+                                          "type": [
+                                            "string",
+                                            "null"
+                                          ]
+                                        },
+                                        "url": {
+                                          "type": "string",
+                                          "description": "The URL of the Facebook page."
+                                        },
+                                        "data_last_updated": {
+                                          "type": "string",
+                                          "format": "date-time"
+                                        }
+                                      },
+                                      "required": [
+                                        "id",
+                                        "name",
+                                        "followers_count",
+                                        "likes_count",
+                                        "following_count",
+                                        "talking_about_count",
+                                        "image_url",
+                                        "url",
+                                        "data_last_updated"
+                                      ],
+                                      "additionalProperties": false
+                                    }
+                                  },
+                                  "socialsInstagramTotalFollowersCount": {
+                                    "type": "number"
+                                  },
+                                  "socialsInstagramTotalFollowingCount": {
+                                    "type": "number"
+                                  },
+                                  "socialsInstagramTotalPostsCount": {
+                                    "type": "number"
+                                  },
+                                  "socialsInstagramTotalProfilesCount": {
+                                    "type": "number"
+                                  },
+                                  "socialsInstagram": {
+                                    "type": [
+                                      "array",
+                                      "null"
+                                    ],
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "id": {
+                                          "type": "string",
+                                          "description": "The unique Instagram profile ID."
+                                        },
+                                        "username": {
+                                          "type": "string",
+                                          "description": "The Instagram username/handle."
+                                        },
+                                        "followers_count": {
+                                          "type": "number",
+                                          "description": "The number of followers the Instagram profile has."
+                                        },
+                                        "following_count": {
+                                          "type": "number",
+                                          "description": "The number of accounts this Instagram profile is following."
+                                        },
+                                        "posts_count": {
+                                          "type": "number",
+                                          "description": "The number of posts the Instagram profile has."
+                                        },
+                                        "image_url": {
+                                          "description": "The URL of the Instagram profile image.",
+                                          "type": [
+                                            "string",
+                                            "null"
+                                          ]
+                                        },
+                                        "data_last_updated": {
+                                          "type": "string",
+                                          "format": "date-time"
+                                        }
+                                      },
+                                      "required": [
+                                        "id",
+                                        "username",
+                                        "followers_count",
+                                        "following_count",
+                                        "posts_count",
+                                        "image_url",
+                                        "data_last_updated"
+                                      ],
+                                      "additionalProperties": false
+                                    }
+                                  },
+                                  "socialsLinkedinCompanyTotalFollowersCount": {
+                                    "type": "number"
+                                  },
+                                  "socialsLinkedinCompanyTotalEmployeesCount": {
+                                    "type": "number"
+                                  },
+                                  "socialsLinkedinCompanyTotalPagesCount": {
+                                    "type": "number"
+                                  },
+                                  "socialsLinkedinCompany": {
+                                    "type": [
+                                      "array",
+                                      "null"
+                                    ],
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "id": {
+                                          "type": "string",
+                                          "description": "The unique LinkedIn company ID."
+                                        },
+                                        "name": {
+                                          "type": "string",
+                                          "description": "The name of the LinkedIn company."
+                                        },
+                                        "about": {
+                                          "description": "The \"About\" section text of the LinkedIn company.",
+                                          "type": [
+                                            "string",
+                                            "null"
+                                          ]
+                                        },
+                                        "description": {
+                                          "description": "The description of the LinkedIn company.",
+                                          "type": [
+                                            "string",
+                                            "null"
+                                          ]
+                                        },
+                                        "company_size": {
+                                          "description": "The size of the company (e.g., \"11-50 employees\").",
+                                          "type": [
+                                            "string",
+                                            "null"
+                                          ]
+                                        },
+                                        "country_code": {
+                                          "description": "The ISO country code where the company is located.",
+                                          "type": [
+                                            "string",
+                                            "null"
+                                          ]
+                                        },
+                                        "industries": {
+                                          "description": "The industries the company operates in.",
+                                          "type": [
+                                            "string",
+                                            "null"
+                                          ]
+                                        },
+                                        "followers_count": {
+                                          "type": "number",
+                                          "description": "The number of followers the LinkedIn company has."
+                                        },
+                                        "employees_count": {
+                                          "type": "number",
+                                          "description": "The number of employees at the company."
+                                        },
+                                        "image_url": {
+                                          "description": "The URL of the LinkedIn company logo/image.",
+                                          "type": [
+                                            "string",
+                                            "null"
+                                          ]
+                                        },
+                                        "data_last_updated": {
+                                          "type": "string",
+                                          "format": "date-time"
+                                        }
+                                      },
+                                      "required": [
+                                        "id",
+                                        "name",
+                                        "about",
+                                        "description",
+                                        "company_size",
+                                        "country_code",
+                                        "industries",
+                                        "followers_count",
+                                        "employees_count",
+                                        "image_url",
+                                        "data_last_updated"
+                                      ],
+                                      "additionalProperties": false
+                                    }
+                                  },
+                                  "socialsLinkedinPersonTotalFollowersCount": {
+                                    "type": "number"
+                                  },
+                                  "socialsLinkedinPersonTotalConnectionsCount": {
+                                    "type": "number"
+                                  },
+                                  "socialsLinkedinPersonTotalProfilesCount": {
+                                    "type": "number"
+                                  },
+                                  "socialsLinkedinPerson": {
+                                    "type": [
+                                      "array",
+                                      "null"
+                                    ],
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "id": {
+                                          "type": "string",
+                                          "description": "The unique LinkedIn person ID."
+                                        },
+                                        "name": {
+                                          "type": "string",
+                                          "description": "The name of the LinkedIn person."
+                                        },
+                                        "about": {
+                                          "description": "The \"About\" section text of the LinkedIn person.",
+                                          "type": [
+                                            "string",
+                                            "null"
+                                          ]
+                                        },
+                                        "description": {
+                                          "description": "The description of the LinkedIn person.",
+                                          "type": [
+                                            "string",
+                                            "null"
+                                          ]
+                                        },
+                                        "followers_count": {
+                                          "type": "number",
+                                          "description": "The number of followers the LinkedIn person has."
+                                        },
+                                        "connections_count": {
+                                          "type": "number",
+                                          "description": "The number of connections the LinkedIn person has."
+                                        },
+                                        "country_code": {
+                                          "description": "The ISO country code where the person is located.",
+                                          "type": [
+                                            "string",
+                                            "null"
+                                          ]
+                                        },
+                                        "image_url": {
+                                          "description": "The URL of the LinkedIn person profile image.",
+                                          "type": [
+                                            "string",
+                                            "null"
+                                          ]
+                                        },
+                                        "data_last_updated": {
+                                          "type": "string",
+                                          "format": "date-time"
+                                        }
+                                      },
+                                      "required": [
+                                        "id",
+                                        "name",
+                                        "about",
+                                        "description",
+                                        "followers_count",
+                                        "connections_count",
+                                        "country_code",
+                                        "image_url",
+                                        "data_last_updated"
+                                      ],
+                                      "additionalProperties": false
+                                    }
+                                  },
+                                  "socialsTiktokTotalFollowersCount": {
+                                    "type": "number"
+                                  },
+                                  "socialsTiktokTotalFollowingCount": {
+                                    "type": "number"
+                                  },
+                                  "socialsTiktokTotalLikesCount": {
+                                    "type": "number"
+                                  },
+                                  "socialsTiktokTotalProfilesCount": {
+                                    "type": "number"
+                                  },
+                                  "socialsTiktok": {
+                                    "type": [
+                                      "array",
+                                      "null"
+                                    ],
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "id": {
+                                          "type": "string",
+                                          "description": "The unique TikTok profile ID."
+                                        },
+                                        "handle": {
+                                          "type": "string",
+                                          "description": "The TikTok handle/username."
+                                        },
+                                        "profile_name": {
+                                          "type": "string",
+                                          "description": "The display name of the TikTok profile."
+                                        },
+                                        "biography": {
+                                          "description": "The biography text of the TikTok profile.",
+                                          "type": [
+                                            "string",
+                                            "null"
+                                          ]
+                                        },
+                                        "followers_count": {
+                                          "type": "number",
+                                          "description": "The number of followers the TikTok profile has."
+                                        },
+                                        "following_count": {
+                                          "type": "number",
+                                          "description": "The number of accounts this TikTok profile is following."
+                                        },
+                                        "likes_count": {
+                                          "type": "number",
+                                          "description": "The number of likes the TikTok profile has received."
+                                        },
+                                        "image_url": {
+                                          "description": "The URL of the TikTok profile image.",
+                                          "type": [
+                                            "string",
+                                            "null"
+                                          ]
+                                        },
+                                        "data_last_updated": {
+                                          "type": "string",
+                                          "format": "date-time"
+                                        }
+                                      },
+                                      "required": [
+                                        "id",
+                                        "handle",
+                                        "profile_name",
+                                        "biography",
+                                        "followers_count",
+                                        "following_count",
+                                        "likes_count",
+                                        "image_url",
+                                        "data_last_updated"
+                                      ],
+                                      "additionalProperties": false
+                                    }
+                                  },
+                                  "socialsTwitterTotalFollowersCount": {
+                                    "type": "number"
+                                  },
+                                  "socialsTwitterTotalFollowingCount": {
+                                    "type": "number"
+                                  },
+                                  "socialsTwitterTotalPostsCount": {
+                                    "type": "number"
+                                  },
+                                  "socialsTwitterTotalProfilesCount": {
+                                    "type": "number"
+                                  },
+                                  "socialsTwitter": {
+                                    "type": [
+                                      "array",
+                                      "null"
+                                    ],
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "id": {
+                                          "type": "string",
+                                          "description": "The unique Twitter profile ID."
+                                        },
+                                        "date_joined": {
+                                          "type": [
+                                            "string",
+                                            "null"
+                                          ],
+                                          "format": "date-time"
+                                        },
+                                        "biography": {
+                                          "description": "The biography text of the Twitter profile.",
+                                          "type": [
+                                            "string",
+                                            "null"
+                                          ]
+                                        },
+                                        "handle": {
+                                          "type": "string",
+                                          "description": "The Twitter handle/username."
+                                        },
+                                        "followers_count": {
+                                          "type": "number",
+                                          "description": "The number of followers the Twitter profile has."
+                                        },
+                                        "following_count": {
+                                          "type": "number",
+                                          "description": "The number of accounts this Twitter profile is following."
+                                        },
+                                        "posts_count": {
+                                          "type": "number",
+                                          "description": "The number of posts/tweets the Twitter profile has."
+                                        },
+                                        "image_url": {
+                                          "description": "The URL of the Twitter profile image.",
+                                          "type": [
+                                            "string",
+                                            "null"
+                                          ]
+                                        },
+                                        "data_last_updated": {
+                                          "type": "string",
+                                          "format": "date-time"
+                                        }
+                                      },
+                                      "required": [
+                                        "id",
+                                        "date_joined",
+                                        "biography",
+                                        "handle",
+                                        "followers_count",
+                                        "following_count",
+                                        "posts_count",
+                                        "image_url",
+                                        "data_last_updated"
+                                      ],
+                                      "additionalProperties": false
+                                    }
+                                  },
+                                  "spotifyDataLastUpdated": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ],
+                                    "format": "date-time"
+                                  },
+                                  "spotifyId": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "spotifyRating": {
+                                    "type": [
+                                      "number",
+                                      "null"
+                                    ]
+                                  },
+                                  "spotifyRatingsCount": {
+                                    "type": [
+                                      "number",
+                                      "null"
+                                    ]
+                                  },
+                                  "spotifyRatingWilsonScore": {
+                                    "type": [
+                                      "number",
+                                      "null"
+                                    ]
+                                  },
+                                  "transcriptionMode": {
+                                    "type": "string",
+                                    "enum": [
+                                      "none",
+                                      "all",
+                                      "episodes-since"
+                                    ]
+                                  },
+                                  "totalEpisodes": {
+                                    "type": "number"
+                                  },
+                                  "totalTranscripts": {
+                                    "type": "number"
+                                  },
+                                  "youtubeAverageViewsPerVideo": {
+                                    "type": [
+                                      "number",
+                                      "null"
+                                    ]
+                                  },
+                                  "youtubeChannelCount": {
+                                    "type": [
+                                      "number",
+                                      "null"
+                                    ]
+                                  },
+                                  "youtubeDataLastUpdated": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ],
+                                    "format": "date-time"
+                                  },
+                                  "youtubeTotalSubscribers": {
+                                    "type": [
+                                      "number",
+                                      "null"
+                                    ]
+                                  },
+                                  "youtubeTotalVideos": {
+                                    "type": [
+                                      "number",
+                                      "null"
+                                    ]
+                                  },
+                                  "youtubeTotalViews": {
+                                    "type": [
+                                      "number",
+                                      "null"
+                                    ]
+                                  },
+                                  "youtubeChannels": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "average_views_per_video": {
+                                          "type": "number"
+                                        },
+                                        "channel_data_last_updated": {
+                                          "type": "string",
+                                          "format": "date-time"
+                                        },
+                                        "channel_description": {
+                                          "type": [
+                                            "string",
+                                            "null"
+                                          ]
+                                        },
+                                        "channel_handle": {
+                                          "type": [
+                                            "string",
+                                            "null"
+                                          ]
+                                        },
+                                        "channel_id": {
+                                          "type": "string"
+                                        },
+                                        "channel_title": {
+                                          "type": [
+                                            "string",
+                                            "null"
+                                          ]
+                                        },
+                                        "channel_published_date": {
+                                          "type": [
+                                            "string",
+                                            "null"
+                                          ],
+                                          "format": "date-time"
+                                        },
+                                        "total_subscribers": {
+                                          "type": "number"
+                                        },
+                                        "total_videos": {
+                                          "type": "number"
+                                        },
+                                        "total_views": {
+                                          "type": "number"
+                                        }
+                                      },
+                                      "required": [
+                                        "average_views_per_video",
+                                        "channel_data_last_updated",
+                                        "channel_description",
+                                        "channel_handle",
+                                        "channel_id",
+                                        "channel_title",
+                                        "channel_published_date",
+                                        "total_subscribers",
+                                        "total_videos",
+                                        "total_views"
+                                      ],
+                                      "additionalProperties": false
+                                    }
+                                  },
+                                  "youtubePrimaryChanelDataLastUpdated": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ],
+                                    "format": "date-time"
+                                  },
+                                  "youtubePrimaryChannelId": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "youtubePrimaryChannelName": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "youtubePrimaryChannelSubscribers": {
+                                    "type": [
+                                      "number",
+                                      "null"
+                                    ]
+                                  },
+                                  "youtubePrimaryChannelVideos": {
+                                    "type": [
+                                      "number",
+                                      "null"
+                                    ]
+                                  },
+                                  "youtubePrimaryChannelViews": {
+                                    "type": [
+                                      "number",
+                                      "null"
+                                    ]
+                                  },
+                                  "score": {
+                                    "type": "number",
+                                    "description": "Search relevance score; zero when Elasticsearch does not return a score."
+                                  },
+                                  "podcastDescriptionHighlights": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "podcastTitleHighlights": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string"
+                                    }
+                                  }
+                                },
+                                "required": [
+                                  "podcastAuthorityScoreEngagement",
+                                  "podcastAuthorityScoreQuality",
+                                  "podcastAuthorityScoreSocial",
+                                  "podcastAuthorityScoreTotal",
+                                  "podcastAuthorityScoreYoutube",
+                                  "foundedDate",
+                                  "lastEpisodeDate",
+                                  "podcastId",
+                                  "podcastImageUrl",
+                                  "podcastRssDescription",
+                                  "podcastRssTitleLatest",
+                                  "podcastRssTitle",
+                                  "podcastSlug",
+                                  "podcastWebsiteUrl",
+                                  "rssLanguage",
+                                  "transcriptionMode",
+                                  "youtubeChannelCount",
+                                  "youtubeTotalSubscribers",
+                                  "youtubeTotalVideos",
+                                  "youtubeTotalViews",
+                                  "score"
+                                ],
+                                "additionalProperties": false
+                              },
+                              "description": "Matching podcasts. Optional fields depend on the field selection used by the search service."
+                            }
+                          },
+                          "required": [
+                            "total",
+                            "maxScore",
+                            "hitsReturned",
+                            "hits"
+                          ],
+                          "additionalProperties": false
+                        },
                         "cursor": {
                           "type": [
                             "string",
@@ -26133,10 +27459,9 @@
                         "searchType": {
                           "type": "string",
                           "enum": [
-                            "text",
-                            "embeddings"
+                            "text"
                           ],
-                          "description": "How to match the term. 'text' runs keyword matching against each of the searchTargets. 'embeddings' is reserved for semantic search and is not accepted yet — a request using it is rejected."
+                          "description": "How to match the term. 'text' runs keyword matching against each of the searchTargets."
                         },
                         "searchTargets": {
                           "type": "array",
@@ -26792,10 +28117,9 @@
                                   "searchType": {
                                     "type": "string",
                                     "enum": [
-                                      "text",
-                                      "embeddings"
+                                      "text"
                                     ],
-                                    "description": "How to match the term. 'text' runs keyword matching against each of the searchTargets. 'embeddings' is reserved for semantic search and is not accepted yet — a request using it is rejected."
+                                    "description": "How to match the term. 'text' runs keyword matching against each of the searchTargets."
                                   },
                                   "searchTargets": {
                                     "type": "array",
@@ -27474,7 +28798,1474 @@
                           "additionalProperties": false
                         },
                         "result": {
-                          "description": "Search results. Each hit in result.hits combines episode and parent-podcast fields, including podcastId, episodeGuestsAndHosts (array of {name, type: guest|host|unknown|mentioned, roles[], organizations[], image_url}) and episodeSponsorsAndAdvertisers (array of {name, snippet, coupon_codes: string|null, urls[]}). The roles and organizations arrays are currently always empty. An empty array for either episodeGuestsAndHosts or episodeSponsorsAndAdvertisers can mean analysis is missing or completed analysis found no matching people or sponsors; these cases cannot be distinguished from the array alone. Responses with populated sponsor snippets can be large."
+                          "type": "object",
+                          "properties": {
+                            "total": {
+                              "type": "object",
+                              "properties": {
+                                "value": {
+                                  "type": "number",
+                                  "description": "Number of matching results, or a lower bound when relation is gte."
+                                },
+                                "relation": {
+                                  "description": "eq for an exact count; gte for a lower bound.",
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "value"
+                              ],
+                              "additionalProperties": false,
+                              "description": "Elasticsearch match count before application filtering."
+                            },
+                            "maxScore": {
+                              "description": "Highest relevance score in the result set, or null when unavailable.",
+                              "type": [
+                                "number",
+                                "null"
+                              ]
+                            },
+                            "hitsReturned": {
+                              "type": "number",
+                              "description": "Number of hits returned in this page."
+                            },
+                            "hits": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "episodeCreatedAt": {
+                                    "type": "string",
+                                    "format": "date-time"
+                                  },
+                                  "episodeUpdatedAt": {
+                                    "type": "string",
+                                    "format": "date-time"
+                                  },
+                                  "episodeRssDescriptionNoHtml": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "episodeRssDescriptionGeneratedShort": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "episodeRssDescriptionGeneratedLong": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "episodeRssItunesSubtitle": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "episodeDurationSeconds": {
+                                    "type": [
+                                      "number",
+                                      "null"
+                                    ]
+                                  },
+                                  "episodeEnclosureUrl": {
+                                    "type": "string"
+                                  },
+                                  "episodeGuid": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "episodeId": {
+                                    "type": "string"
+                                  },
+                                  "episodeImageUrl": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "episodePodcastTitleDenormalized": {
+                                    "type": "string"
+                                  },
+                                  "episodePodcastDescriptionDenormalized": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "episodeRssDescription": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "episodeRssTitle": {
+                                    "type": "string"
+                                  },
+                                  "episodeSlug": {
+                                    "type": "string"
+                                  },
+                                  "episodeHasTranscript": {
+                                    "type": "boolean",
+                                    "description": "Whether the hit has a transcript ID."
+                                  },
+                                  "episodeSponsorsAndAdvertisers": {
+                                    "type": [
+                                      "array",
+                                      "null"
+                                    ],
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "name": {
+                                          "type": "string",
+                                          "description": "The name of the sponsor."
+                                        },
+                                        "urls": {
+                                          "type": "array",
+                                          "items": {
+                                            "type": "string",
+                                            "format": "uri"
+                                          },
+                                          "description": "An array of URLs associated with the sponsor."
+                                        },
+                                        "snippet": {
+                                          "type": "string",
+                                          "description": "A brief snippet or description of the sponsor."
+                                        },
+                                        "coupon_codes": {
+                                          "description": "Any coupon codes provided by the sponsor, if applicable.",
+                                          "type": [
+                                            "string",
+                                            "null"
+                                          ]
+                                        }
+                                      },
+                                      "required": [
+                                        "name",
+                                        "urls",
+                                        "snippet",
+                                        "coupon_codes"
+                                      ],
+                                      "additionalProperties": false
+                                    },
+                                    "description": "Detected sponsors and advertisers with transcript snippets. An empty array can mean analysis is missing or found no sponsors."
+                                  },
+                                  "episodeGuestsAndHosts": {
+                                    "type": [
+                                      "array",
+                                      "null"
+                                    ],
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "name": {
+                                          "type": "string",
+                                          "description": "The name of the guest."
+                                        },
+                                        "type": {
+                                          "type": "string",
+                                          "enum": [
+                                            "host",
+                                            "guest",
+                                            "unknown",
+                                            "mentioned"
+                                          ],
+                                          "description": "How the person appears in the episode: guest, host, unknown, or mentioned."
+                                        },
+                                        "roles": {
+                                          "type": "array",
+                                          "items": {
+                                            "type": "string"
+                                          },
+                                          "description": "An array of possible job roles and titles"
+                                        },
+                                        "organizations": {
+                                          "type": "array",
+                                          "items": {
+                                            "type": "string"
+                                          },
+                                          "description": "An array of organizations the guest is affiliated with."
+                                        },
+                                        "image_url": {
+                                          "description": "The URL of the guest image, if available.",
+                                          "type": [
+                                            "string",
+                                            "null"
+                                          ],
+                                          "format": "uri"
+                                        }
+                                      },
+                                      "required": [
+                                        "name",
+                                        "type",
+                                        "roles",
+                                        "organizations",
+                                        "image_url"
+                                      ],
+                                      "additionalProperties": false
+                                    },
+                                    "description": "Detected episode guests, hosts, and mentions. Roles and organizations are currently empty. An empty array can mean analysis is missing or found no matching people."
+                                  },
+                                  "episodeWebUrl": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "episodeRssPublishedAt": {
+                                    "type": "string",
+                                    "format": "date-time"
+                                  },
+                                  "podcastId": {
+                                    "type": "string"
+                                  },
+                                  "podcastSlug": {
+                                    "type": "string"
+                                  },
+                                  "transcriptId": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "transcriptText": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "youtubeVideoDataDate": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ],
+                                    "format": "date-time"
+                                  },
+                                  "youtubeVideoUrl": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "youtubeVideoViewCount": {
+                                    "type": [
+                                      "number",
+                                      "null"
+                                    ]
+                                  },
+                                  "appleId": {
+                                    "type": "number"
+                                  },
+                                  "applePodcastsContentRating": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "applePodcastsRating": {
+                                    "type": [
+                                      "number",
+                                      "null"
+                                    ]
+                                  },
+                                  "applePodcastsRatingsCount": {
+                                    "type": [
+                                      "number",
+                                      "null"
+                                    ]
+                                  },
+                                  "applePodcastsRatingWilsonScore": {
+                                    "type": [
+                                      "number",
+                                      "null"
+                                    ]
+                                  },
+                                  "applePodcastsScrapedDate": {
+                                    "type": "string",
+                                    "format": "date-time"
+                                  },
+                                  "castboxPlays": {
+                                    "type": [
+                                      "number",
+                                      "null"
+                                    ]
+                                  },
+                                  "castboxSubscribers": {
+                                    "type": [
+                                      "number",
+                                      "null"
+                                    ]
+                                  },
+                                  "castboxDataLastUpdated": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ],
+                                    "format": "date-time"
+                                  },
+                                  "castboxId": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "chartPositions": {
+                                    "type": [
+                                      "array",
+                                      "null"
+                                    ],
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "date": {
+                                          "type": "string",
+                                          "description": "The date of the chart position in YYYY-MM-DD format."
+                                        },
+                                        "chart_type": {
+                                          "type": "string",
+                                          "description": "The type of chart (e.g., \"apple\", \"spotify\")."
+                                        },
+                                        "country_code": {
+                                          "type": "string",
+                                          "description": "The ISO country code where this chart position applies."
+                                        },
+                                        "category": {
+                                          "type": "string",
+                                          "description": "The main category of the chart (e.g., \"top podcasts\")."
+                                        },
+                                        "sub_category": {
+                                          "description": "The sub-category of the chart, if applicable.",
+                                          "type": [
+                                            "string",
+                                            "null"
+                                          ]
+                                        },
+                                        "position": {
+                                          "type": "number",
+                                          "description": "The current position of the podcast on the chart."
+                                        },
+                                        "previous_position": {
+                                          "description": "The previous position of the podcast on the chart.",
+                                          "type": [
+                                            "number",
+                                            "null"
+                                          ]
+                                        },
+                                        "position_change": {
+                                          "description": "The change in position from the previous chart (positive = moved up, negative = moved down).",
+                                          "type": [
+                                            "number",
+                                            "null"
+                                          ]
+                                        },
+                                        "total_days_in_chart": {
+                                          "type": "number",
+                                          "description": "The total number of days the podcast has been on this chart."
+                                        },
+                                        "days_streak_count": {
+                                          "type": "number",
+                                          "description": "The number of consecutive days the podcast has been on this chart."
+                                        }
+                                      },
+                                      "required": [
+                                        "date",
+                                        "chart_type",
+                                        "country_code",
+                                        "category",
+                                        "sub_category",
+                                        "position",
+                                        "previous_position",
+                                        "position_change",
+                                        "total_days_in_chart",
+                                        "days_streak_count"
+                                      ],
+                                      "additionalProperties": false
+                                    }
+                                  },
+                                  "ignore": {
+                                    "type": [
+                                      "boolean",
+                                      "null"
+                                    ]
+                                  },
+                                  "podcastAffiliationOrganizationName": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "podcastAffiliationType": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "podcastAuthorityScoreCalculatedDate": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ],
+                                    "format": "date-time"
+                                  },
+                                  "podcastAuthorityScoreEngagement": {
+                                    "type": [
+                                      "number",
+                                      "null"
+                                    ]
+                                  },
+                                  "podcastAuthorityScoreQuality": {
+                                    "type": [
+                                      "number",
+                                      "null"
+                                    ]
+                                  },
+                                  "podcastAuthorityScoreSocial": {
+                                    "type": [
+                                      "number",
+                                      "null"
+                                    ]
+                                  },
+                                  "podcastAuthorityScoreTotal": {
+                                    "type": [
+                                      "number",
+                                      "null"
+                                    ]
+                                  },
+                                  "podcastAuthorityScoreYoutube": {
+                                    "type": [
+                                      "number",
+                                      "null"
+                                    ]
+                                  },
+                                  "podcastEmails": {
+                                    "type": [
+                                      "array",
+                                      "null"
+                                    ],
+                                    "items": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "podcastWebsites": {
+                                    "type": [
+                                      "array",
+                                      "null"
+                                    ],
+                                    "items": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "podcastCountries": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "foundedDate": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ],
+                                    "format": "date-time"
+                                  },
+                                  "lastEpisodeDate": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ],
+                                    "format": "date-time"
+                                  },
+                                  "podcastEstimatedAudienceAge": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "podcastEstimatedAudienceEducation": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "podcastEstimatedAudienceGender": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "podcastEstimatedAudienceIncome": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "podcastEstimatedListeners": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "podcastAudienceEstimatedMonthlyListeners": {
+                                    "type": [
+                                      "number",
+                                      "null"
+                                    ]
+                                  },
+                                  "podcastAudienceConfidence": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "podcastAudienceIsDormant": {
+                                    "type": [
+                                      "boolean",
+                                      "null"
+                                    ]
+                                  },
+                                  "podcastEstimatedPoliticalBias": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "podcastHasSponsors": {
+                                    "type": [
+                                      "boolean",
+                                      "null"
+                                    ]
+                                  },
+                                  "podcastHasGuests": {
+                                    "type": [
+                                      "boolean",
+                                      "null"
+                                    ]
+                                  },
+                                  "podcastImageUrl": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "podcastGuid": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "podcastHostNames": {
+                                    "type": [
+                                      "array",
+                                      "null"
+                                    ],
+                                    "items": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "podcastRssAuthor": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "podcastRssDescription": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "podcastRssDescriptionNoHtml": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "podcastRssDescriptionGeneratedLong": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "podcastRssDescriptionGeneratedShort": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "podcastRssTitleLatestCleaned": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "podcastRssTitleLatest": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "podcastRssTitleOriginal": {
+                                    "type": "string"
+                                  },
+                                  "podcastRssTitle": {
+                                    "type": "string"
+                                  },
+                                  "podcastSocialMediaLinks": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "type": {
+                                          "type": "string"
+                                        },
+                                        "url": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "required": [
+                                        "type",
+                                        "url"
+                                      ],
+                                      "additionalProperties": false
+                                    }
+                                  },
+                                  "podcastWebsiteUrl": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "podcastRssFeedUrl": {
+                                    "type": "string"
+                                  },
+                                  "updatedAt": {
+                                    "type": "string",
+                                    "format": "date-time"
+                                  },
+                                  "updateFrequency": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "primaryContact": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "rssCategories": {
+                                    "type": [
+                                      "array",
+                                      "null"
+                                    ],
+                                    "items": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "rssLanguage": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "podchaserUrlSlug": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "podnewsUrlSlug": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "rephonicUrlSlug": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "similarPodcasts": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "podcast_id": {
+                                          "type": "string"
+                                        },
+                                        "title": {
+                                          "type": "string"
+                                        },
+                                        "image_url": {
+                                          "type": [
+                                            "string",
+                                            "null"
+                                          ]
+                                        },
+                                        "slug": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "required": [
+                                        "podcast_id",
+                                        "title",
+                                        "image_url",
+                                        "slug"
+                                      ],
+                                      "additionalProperties": false
+                                    }
+                                  },
+                                  "socialsFacebookTotalPagesCount": {
+                                    "type": "number"
+                                  },
+                                  "socialsFacebookTotalFollowersCount": {
+                                    "type": "number"
+                                  },
+                                  "socialsFacebookTotalLikesCount": {
+                                    "type": "number"
+                                  },
+                                  "socialsFacebookTotalFollowingCount": {
+                                    "type": "number"
+                                  },
+                                  "socialsFacebookTotalTalkingAboutCount": {
+                                    "type": "number"
+                                  },
+                                  "socialsFacebook": {
+                                    "type": [
+                                      "array",
+                                      "null"
+                                    ],
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "id": {
+                                          "type": "string",
+                                          "description": "The unique Facebook page ID."
+                                        },
+                                        "name": {
+                                          "type": "string",
+                                          "description": "The name of the Facebook page."
+                                        },
+                                        "followers_count": {
+                                          "type": "number",
+                                          "description": "The number of followers the Facebook page has."
+                                        },
+                                        "likes_count": {
+                                          "type": "number",
+                                          "description": "The number of likes the Facebook page has."
+                                        },
+                                        "following_count": {
+                                          "type": "number",
+                                          "description": "The number of pages this Facebook page is following."
+                                        },
+                                        "talking_about_count": {
+                                          "type": "number",
+                                          "description": "The number of people talking about this Facebook page."
+                                        },
+                                        "image_url": {
+                                          "description": "The URL of the Facebook page profile image.",
+                                          "type": [
+                                            "string",
+                                            "null"
+                                          ]
+                                        },
+                                        "url": {
+                                          "type": "string",
+                                          "description": "The URL of the Facebook page."
+                                        },
+                                        "data_last_updated": {
+                                          "type": "string",
+                                          "format": "date-time"
+                                        }
+                                      },
+                                      "required": [
+                                        "id",
+                                        "name",
+                                        "followers_count",
+                                        "likes_count",
+                                        "following_count",
+                                        "talking_about_count",
+                                        "image_url",
+                                        "url",
+                                        "data_last_updated"
+                                      ],
+                                      "additionalProperties": false
+                                    }
+                                  },
+                                  "socialsInstagramTotalFollowersCount": {
+                                    "type": "number"
+                                  },
+                                  "socialsInstagramTotalFollowingCount": {
+                                    "type": "number"
+                                  },
+                                  "socialsInstagramTotalPostsCount": {
+                                    "type": "number"
+                                  },
+                                  "socialsInstagramTotalProfilesCount": {
+                                    "type": "number"
+                                  },
+                                  "socialsInstagram": {
+                                    "type": [
+                                      "array",
+                                      "null"
+                                    ],
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "id": {
+                                          "type": "string",
+                                          "description": "The unique Instagram profile ID."
+                                        },
+                                        "username": {
+                                          "type": "string",
+                                          "description": "The Instagram username/handle."
+                                        },
+                                        "followers_count": {
+                                          "type": "number",
+                                          "description": "The number of followers the Instagram profile has."
+                                        },
+                                        "following_count": {
+                                          "type": "number",
+                                          "description": "The number of accounts this Instagram profile is following."
+                                        },
+                                        "posts_count": {
+                                          "type": "number",
+                                          "description": "The number of posts the Instagram profile has."
+                                        },
+                                        "image_url": {
+                                          "description": "The URL of the Instagram profile image.",
+                                          "type": [
+                                            "string",
+                                            "null"
+                                          ]
+                                        },
+                                        "data_last_updated": {
+                                          "type": "string",
+                                          "format": "date-time"
+                                        }
+                                      },
+                                      "required": [
+                                        "id",
+                                        "username",
+                                        "followers_count",
+                                        "following_count",
+                                        "posts_count",
+                                        "image_url",
+                                        "data_last_updated"
+                                      ],
+                                      "additionalProperties": false
+                                    }
+                                  },
+                                  "socialsLinkedinCompanyTotalFollowersCount": {
+                                    "type": "number"
+                                  },
+                                  "socialsLinkedinCompanyTotalEmployeesCount": {
+                                    "type": "number"
+                                  },
+                                  "socialsLinkedinCompanyTotalPagesCount": {
+                                    "type": "number"
+                                  },
+                                  "socialsLinkedinCompany": {
+                                    "type": [
+                                      "array",
+                                      "null"
+                                    ],
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "id": {
+                                          "type": "string",
+                                          "description": "The unique LinkedIn company ID."
+                                        },
+                                        "name": {
+                                          "type": "string",
+                                          "description": "The name of the LinkedIn company."
+                                        },
+                                        "about": {
+                                          "description": "The \"About\" section text of the LinkedIn company.",
+                                          "type": [
+                                            "string",
+                                            "null"
+                                          ]
+                                        },
+                                        "description": {
+                                          "description": "The description of the LinkedIn company.",
+                                          "type": [
+                                            "string",
+                                            "null"
+                                          ]
+                                        },
+                                        "company_size": {
+                                          "description": "The size of the company (e.g., \"11-50 employees\").",
+                                          "type": [
+                                            "string",
+                                            "null"
+                                          ]
+                                        },
+                                        "country_code": {
+                                          "description": "The ISO country code where the company is located.",
+                                          "type": [
+                                            "string",
+                                            "null"
+                                          ]
+                                        },
+                                        "industries": {
+                                          "description": "The industries the company operates in.",
+                                          "type": [
+                                            "string",
+                                            "null"
+                                          ]
+                                        },
+                                        "followers_count": {
+                                          "type": "number",
+                                          "description": "The number of followers the LinkedIn company has."
+                                        },
+                                        "employees_count": {
+                                          "type": "number",
+                                          "description": "The number of employees at the company."
+                                        },
+                                        "image_url": {
+                                          "description": "The URL of the LinkedIn company logo/image.",
+                                          "type": [
+                                            "string",
+                                            "null"
+                                          ]
+                                        },
+                                        "data_last_updated": {
+                                          "type": "string",
+                                          "format": "date-time"
+                                        }
+                                      },
+                                      "required": [
+                                        "id",
+                                        "name",
+                                        "about",
+                                        "description",
+                                        "company_size",
+                                        "country_code",
+                                        "industries",
+                                        "followers_count",
+                                        "employees_count",
+                                        "image_url",
+                                        "data_last_updated"
+                                      ],
+                                      "additionalProperties": false
+                                    }
+                                  },
+                                  "socialsLinkedinPersonTotalFollowersCount": {
+                                    "type": "number"
+                                  },
+                                  "socialsLinkedinPersonTotalConnectionsCount": {
+                                    "type": "number"
+                                  },
+                                  "socialsLinkedinPersonTotalProfilesCount": {
+                                    "type": "number"
+                                  },
+                                  "socialsLinkedinPerson": {
+                                    "type": [
+                                      "array",
+                                      "null"
+                                    ],
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "id": {
+                                          "type": "string",
+                                          "description": "The unique LinkedIn person ID."
+                                        },
+                                        "name": {
+                                          "type": "string",
+                                          "description": "The name of the LinkedIn person."
+                                        },
+                                        "about": {
+                                          "description": "The \"About\" section text of the LinkedIn person.",
+                                          "type": [
+                                            "string",
+                                            "null"
+                                          ]
+                                        },
+                                        "description": {
+                                          "description": "The description of the LinkedIn person.",
+                                          "type": [
+                                            "string",
+                                            "null"
+                                          ]
+                                        },
+                                        "followers_count": {
+                                          "type": "number",
+                                          "description": "The number of followers the LinkedIn person has."
+                                        },
+                                        "connections_count": {
+                                          "type": "number",
+                                          "description": "The number of connections the LinkedIn person has."
+                                        },
+                                        "country_code": {
+                                          "description": "The ISO country code where the person is located.",
+                                          "type": [
+                                            "string",
+                                            "null"
+                                          ]
+                                        },
+                                        "image_url": {
+                                          "description": "The URL of the LinkedIn person profile image.",
+                                          "type": [
+                                            "string",
+                                            "null"
+                                          ]
+                                        },
+                                        "data_last_updated": {
+                                          "type": "string",
+                                          "format": "date-time"
+                                        }
+                                      },
+                                      "required": [
+                                        "id",
+                                        "name",
+                                        "about",
+                                        "description",
+                                        "followers_count",
+                                        "connections_count",
+                                        "country_code",
+                                        "image_url",
+                                        "data_last_updated"
+                                      ],
+                                      "additionalProperties": false
+                                    }
+                                  },
+                                  "socialsTiktokTotalFollowersCount": {
+                                    "type": "number"
+                                  },
+                                  "socialsTiktokTotalFollowingCount": {
+                                    "type": "number"
+                                  },
+                                  "socialsTiktokTotalLikesCount": {
+                                    "type": "number"
+                                  },
+                                  "socialsTiktokTotalProfilesCount": {
+                                    "type": "number"
+                                  },
+                                  "socialsTiktok": {
+                                    "type": [
+                                      "array",
+                                      "null"
+                                    ],
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "id": {
+                                          "type": "string",
+                                          "description": "The unique TikTok profile ID."
+                                        },
+                                        "handle": {
+                                          "type": "string",
+                                          "description": "The TikTok handle/username."
+                                        },
+                                        "profile_name": {
+                                          "type": "string",
+                                          "description": "The display name of the TikTok profile."
+                                        },
+                                        "biography": {
+                                          "description": "The biography text of the TikTok profile.",
+                                          "type": [
+                                            "string",
+                                            "null"
+                                          ]
+                                        },
+                                        "followers_count": {
+                                          "type": "number",
+                                          "description": "The number of followers the TikTok profile has."
+                                        },
+                                        "following_count": {
+                                          "type": "number",
+                                          "description": "The number of accounts this TikTok profile is following."
+                                        },
+                                        "likes_count": {
+                                          "type": "number",
+                                          "description": "The number of likes the TikTok profile has received."
+                                        },
+                                        "image_url": {
+                                          "description": "The URL of the TikTok profile image.",
+                                          "type": [
+                                            "string",
+                                            "null"
+                                          ]
+                                        },
+                                        "data_last_updated": {
+                                          "type": "string",
+                                          "format": "date-time"
+                                        }
+                                      },
+                                      "required": [
+                                        "id",
+                                        "handle",
+                                        "profile_name",
+                                        "biography",
+                                        "followers_count",
+                                        "following_count",
+                                        "likes_count",
+                                        "image_url",
+                                        "data_last_updated"
+                                      ],
+                                      "additionalProperties": false
+                                    }
+                                  },
+                                  "socialsTwitterTotalFollowersCount": {
+                                    "type": "number"
+                                  },
+                                  "socialsTwitterTotalFollowingCount": {
+                                    "type": "number"
+                                  },
+                                  "socialsTwitterTotalPostsCount": {
+                                    "type": "number"
+                                  },
+                                  "socialsTwitterTotalProfilesCount": {
+                                    "type": "number"
+                                  },
+                                  "socialsTwitter": {
+                                    "type": [
+                                      "array",
+                                      "null"
+                                    ],
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "id": {
+                                          "type": "string",
+                                          "description": "The unique Twitter profile ID."
+                                        },
+                                        "date_joined": {
+                                          "type": [
+                                            "string",
+                                            "null"
+                                          ],
+                                          "format": "date-time"
+                                        },
+                                        "biography": {
+                                          "description": "The biography text of the Twitter profile.",
+                                          "type": [
+                                            "string",
+                                            "null"
+                                          ]
+                                        },
+                                        "handle": {
+                                          "type": "string",
+                                          "description": "The Twitter handle/username."
+                                        },
+                                        "followers_count": {
+                                          "type": "number",
+                                          "description": "The number of followers the Twitter profile has."
+                                        },
+                                        "following_count": {
+                                          "type": "number",
+                                          "description": "The number of accounts this Twitter profile is following."
+                                        },
+                                        "posts_count": {
+                                          "type": "number",
+                                          "description": "The number of posts/tweets the Twitter profile has."
+                                        },
+                                        "image_url": {
+                                          "description": "The URL of the Twitter profile image.",
+                                          "type": [
+                                            "string",
+                                            "null"
+                                          ]
+                                        },
+                                        "data_last_updated": {
+                                          "type": "string",
+                                          "format": "date-time"
+                                        }
+                                      },
+                                      "required": [
+                                        "id",
+                                        "date_joined",
+                                        "biography",
+                                        "handle",
+                                        "followers_count",
+                                        "following_count",
+                                        "posts_count",
+                                        "image_url",
+                                        "data_last_updated"
+                                      ],
+                                      "additionalProperties": false
+                                    }
+                                  },
+                                  "spotifyDataLastUpdated": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ],
+                                    "format": "date-time"
+                                  },
+                                  "spotifyId": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "spotifyRating": {
+                                    "type": [
+                                      "number",
+                                      "null"
+                                    ]
+                                  },
+                                  "spotifyRatingsCount": {
+                                    "type": [
+                                      "number",
+                                      "null"
+                                    ]
+                                  },
+                                  "spotifyRatingWilsonScore": {
+                                    "type": [
+                                      "number",
+                                      "null"
+                                    ]
+                                  },
+                                  "transcriptionMode": {
+                                    "type": "string",
+                                    "enum": [
+                                      "none",
+                                      "all",
+                                      "episodes-since"
+                                    ]
+                                  },
+                                  "totalEpisodes": {
+                                    "type": "number"
+                                  },
+                                  "totalTranscripts": {
+                                    "type": "number"
+                                  },
+                                  "youtubeAverageViewsPerVideo": {
+                                    "type": [
+                                      "number",
+                                      "null"
+                                    ]
+                                  },
+                                  "youtubeChannelCount": {
+                                    "type": [
+                                      "number",
+                                      "null"
+                                    ]
+                                  },
+                                  "youtubeDataLastUpdated": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ],
+                                    "format": "date-time"
+                                  },
+                                  "youtubeTotalSubscribers": {
+                                    "type": [
+                                      "number",
+                                      "null"
+                                    ]
+                                  },
+                                  "youtubeTotalVideos": {
+                                    "type": [
+                                      "number",
+                                      "null"
+                                    ]
+                                  },
+                                  "youtubeTotalViews": {
+                                    "type": [
+                                      "number",
+                                      "null"
+                                    ]
+                                  },
+                                  "youtubeChannels": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "average_views_per_video": {
+                                          "type": "number"
+                                        },
+                                        "channel_data_last_updated": {
+                                          "type": "string",
+                                          "format": "date-time"
+                                        },
+                                        "channel_description": {
+                                          "type": [
+                                            "string",
+                                            "null"
+                                          ]
+                                        },
+                                        "channel_handle": {
+                                          "type": [
+                                            "string",
+                                            "null"
+                                          ]
+                                        },
+                                        "channel_id": {
+                                          "type": "string"
+                                        },
+                                        "channel_title": {
+                                          "type": [
+                                            "string",
+                                            "null"
+                                          ]
+                                        },
+                                        "channel_published_date": {
+                                          "type": [
+                                            "string",
+                                            "null"
+                                          ],
+                                          "format": "date-time"
+                                        },
+                                        "total_subscribers": {
+                                          "type": "number"
+                                        },
+                                        "total_videos": {
+                                          "type": "number"
+                                        },
+                                        "total_views": {
+                                          "type": "number"
+                                        }
+                                      },
+                                      "required": [
+                                        "average_views_per_video",
+                                        "channel_data_last_updated",
+                                        "channel_description",
+                                        "channel_handle",
+                                        "channel_id",
+                                        "channel_title",
+                                        "channel_published_date",
+                                        "total_subscribers",
+                                        "total_videos",
+                                        "total_views"
+                                      ],
+                                      "additionalProperties": false
+                                    }
+                                  },
+                                  "youtubePrimaryChanelDataLastUpdated": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ],
+                                    "format": "date-time"
+                                  },
+                                  "youtubePrimaryChannelId": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "youtubePrimaryChannelName": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "youtubePrimaryChannelSubscribers": {
+                                    "type": [
+                                      "number",
+                                      "null"
+                                    ]
+                                  },
+                                  "youtubePrimaryChannelVideos": {
+                                    "type": [
+                                      "number",
+                                      "null"
+                                    ]
+                                  },
+                                  "youtubePrimaryChannelViews": {
+                                    "type": [
+                                      "number",
+                                      "null"
+                                    ]
+                                  },
+                                  "score": {
+                                    "type": "number",
+                                    "description": "Search relevance score; zero when Elasticsearch does not return a score."
+                                  },
+                                  "podcastDescriptionHighlights": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "podcastTitleHighlights": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "episodeDescriptionHighlights": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "episodeTitleHighlights": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "transcriptHighlights": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "transcriptTextSnippet": {
+                                    "description": "Opening transcript excerpt, when requested and available.",
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "episodeEnclosureUrl",
+                                  "episodeId",
+                                  "episodeImageUrl",
+                                  "episodeRssDescription",
+                                  "episodeRssTitle",
+                                  "episodeSlug",
+                                  "episodeHasTranscript",
+                                  "episodeWebUrl",
+                                  "episodeRssPublishedAt",
+                                  "podcastId",
+                                  "podcastSlug",
+                                  "transcriptId",
+                                  "podcastAuthorityScoreEngagement",
+                                  "podcastAuthorityScoreQuality",
+                                  "podcastAuthorityScoreSocial",
+                                  "podcastAuthorityScoreTotal",
+                                  "podcastAuthorityScoreYoutube",
+                                  "foundedDate",
+                                  "lastEpisodeDate",
+                                  "podcastImageUrl",
+                                  "podcastRssDescription",
+                                  "podcastRssTitleLatest",
+                                  "podcastRssTitle",
+                                  "podcastWebsiteUrl",
+                                  "rssLanguage",
+                                  "transcriptionMode",
+                                  "youtubeChannelCount",
+                                  "youtubeTotalSubscribers",
+                                  "youtubeTotalVideos",
+                                  "youtubeTotalViews",
+                                  "score"
+                                ],
+                                "additionalProperties": false
+                              },
+                              "description": "Matching episodes with parent podcast fields. Optional fields depend on the requested field selections."
+                            }
+                          },
+                          "required": [
+                            "total",
+                            "maxScore",
+                            "hitsReturned",
+                            "hits"
+                          ],
+                          "additionalProperties": false
                         },
                         "cursor": {
                           "type": [
@@ -27804,6 +30595,7 @@
             "in": "query",
             "required": false,
             "schema": {
+              "description": "Filter by whether the podcast is on the team blacklist.",
               "type": "boolean"
             }
           },
@@ -27812,6 +30604,7 @@
             "in": "query",
             "required": false,
             "schema": {
+              "description": "Filter by whether Airtable syncing is enabled for the podcast.",
               "type": "boolean"
             }
           },
@@ -27820,6 +30613,7 @@
             "in": "query",
             "required": false,
             "schema": {
+              "description": "When true, only include podcasts with a recorded Airtable sync error.",
               "type": "boolean"
             }
           },
@@ -27829,6 +30623,7 @@
             "required": true,
             "schema": {
               "default": 100,
+              "description": "Maximum number of team podcasts to return; defaults to 100.",
               "type": "number",
               "maximum": 100
             }
@@ -27839,6 +30634,7 @@
             "required": true,
             "schema": {
               "default": 0,
+              "description": "Number of matching team podcasts to skip; defaults to zero.",
               "type": "number"
             }
           },
@@ -27856,6 +30652,7 @@
             "in": "query",
             "required": false,
             "schema": {
+              "description": "Sort by podcast title ascending, date added descending, or last Airtable sync descending (the default).",
               "type": "string",
               "enum": [
                 "podcastTitle",
@@ -28133,12 +30930,14 @@
                 "type": "object",
                 "properties": {
                   "sync": {
+                    "description": "Whether to enable Airtable syncing. Null preserves the existing value, or defaults to false for a new entry.",
                     "type": [
                       "boolean",
                       "null"
                     ]
                   },
                   "blacklist": {
+                    "description": "Whether to blacklist the podcast for the team. Null preserves the existing value, or defaults to false for a new entry.",
                     "type": [
                       "boolean",
                       "null"
@@ -28476,12 +31275,14 @@
                 "type": "object",
                 "properties": {
                   "podcastIds": {
+                    "description": "Pod Engine IDs of podcasts to remove from the team list.",
                     "type": "array",
                     "items": {
                       "type": "string"
                     }
                   },
                   "appleIds": {
+                    "description": "Apple Podcasts IDs of podcasts to remove from the team list.",
                     "type": "array",
                     "items": {
                       "type": "integer",
@@ -28584,6 +31385,7 @@
             "in": "query",
             "required": true,
             "schema": {
+              "description": "Maximum number of requests to return; defaults to 50.",
               "type": "number",
               "maximum": 50
             }
@@ -28593,6 +31395,7 @@
             "in": "query",
             "required": false,
             "schema": {
+              "description": "Number of requests to skip before returning this page.",
               "type": "number"
             }
           },
@@ -28601,6 +31404,7 @@
             "in": "query",
             "required": false,
             "schema": {
+              "description": "When true, exclude completed requests and return only pending requests.",
               "type": "boolean"
             }
           },
@@ -28616,7 +31420,8 @@
                 "diarization",
                 "guestPrep",
                 "transcription"
-              ]
+              ],
+              "description": "Type of user request to include in the history."
             }
           }
         ],
