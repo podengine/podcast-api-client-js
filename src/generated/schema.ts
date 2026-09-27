@@ -1155,6 +1155,26 @@ export interface paths {
     patch: operations['updateProjectListedPodcast'];
     trace?: never;
   };
+  '/api/v1/search/episodes/{episodeId}/transcript': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    /**
+     * Search Episode Transcript
+     * @description Search within the transcript of the episode identified by episodeId in the URL. Send the original searchOptions, pageSize and optional cursor in the body; do not repeat episodeId in the body. Count and browse matching passages for that episode. The best passage is separate from paginated additional passages. Counts are exact (eq) or lower bounds (gte); at most 100 passages can be browsed. Initial episode totals still count episodes. Reuse nextCursor with the same episode and query; HTTP 409 means restart without the cursor. Passages use the same Elasticsearch analyzer and sentence boundaries as matchSnippet; nearby terms in one passage count once. Highlighting failures, including transcripts exceeding the index analysis limit, are errors, never zero matches or silently partial counts.
+     */
+    post: operations['getTranscriptPassages'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   '/api/v1/autocomplete/podcasts': {
     parameters: {
       query?: never;
@@ -1206,7 +1226,7 @@ export interface paths {
     put?: never;
     /**
      * Search Episodes
-     * @description Search for episodes by title, description, or transcript text, with optional filters on guest, host, and sponsor names
+     * @description Search for episodes by title, description, or transcript text, with optional filters on guest, host, and sponsor names. For matching transcript text, send includeMatchSnippet: true with a text search term targeting transcript, then read result.hits[].matchSnippet. It returns the best passage (about 400 characters), with matches marked by <em> tags. transcriptHighlights contains highlighted fragments; with includeMatchSnippet it contains the same single passage. The legacy includeTranscriptSnippet option returns transcriptTextSnippet from the start of the transcript, which may be an intro or advertisement, not the matching passage. matchSnippet is omitted for filter-only searches or when no transcript passage matches. Timestamps are not yet available.
      */
     post: operations['searchEpisodes'];
     delete?: never;
@@ -1824,9 +1844,11 @@ export interface operations {
                    */
                   nullOrder?: 'first' | 'last';
                 }[];
+                /** @description Return matchSnippet: the single best matching transcript passage, approximately 400 characters with <em> tags around matches. Requires a positive text term targeting transcript. Omitted when no transcript passage matches. When enabled, transcriptHighlights contains this same single passage; transcriptHighlightLength is ignored. */
+                includeMatchSnippet?: boolean;
                 /** @description Return the opening of each matching episode transcript alongside the result, as transcriptTextSnippet. Episodes with no transcript return null. */
                 includeTranscriptSnippet?: boolean;
-                /** @description How many characters of the transcript includeTranscriptSnippet returns. Defaults to 500. This is the start of the transcript, not the part that matched — for the matching text, search the transcript target and read the highlights. */
+                /** @description How many characters of the transcript includeTranscriptSnippet returns. Defaults to 500. This is the start of the transcript, not the part that matched — for the matching text, search the transcript target and set includeMatchSnippet to receive matchSnippet, or read transcriptHighlights. */
                 transcriptSnippetLength?: number;
                 /** @description How many characters each highlighted transcript fragment contains when a search term targets the transcript. Defaults to 300. */
                 transcriptHighlightLength?: number;
@@ -11015,6 +11037,369 @@ export interface operations {
       };
     };
   };
+  getTranscriptPassages: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        episodeId: string;
+      };
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': {
+          /** @description Original episode search options, including all positive and excluded terms. Episode pagination is ignored. */
+          searchOptions: {
+            /** @description Pagination cursor for fetching the next page of results. This cursor is stateless and does not expire. However, because it uses search_after pagination, results may be inconsistent if the underlying data changes between requests (e.g., you may see duplicate or missing results if documents are added/removed). */
+            cursor?: string | null;
+            /** @description Number of results to return per page */
+            pageSize?: number;
+            /** @description Details about any Project this search is associated with. If included will filter out podcasts related to the project. */
+            project?: {
+              /** @description The Pod Engine Project ID */
+              projectId: string;
+              /** @description If true, will not include any podcasts marked as ignored on this project in the results. */
+              excludeIgnoredPodcasts?: boolean;
+              /** @description If true, will not include any podcasts on the project list in the results. */
+              excludePodcastsOnList?: boolean;
+              /** @description If the podcast relevancy should be included with the search results. Note that including this will limit your search results to 20 total and also slow down the search results response */
+              includePodcastRelevancy?: boolean;
+              /** @description If provided, will exclude podcasts with these relevancy values. Valid values are 1-5. Note this is a server side filter and will only work if includePodcastRelevancy is set. */
+              excludeRelvancyValues?: number[];
+              /** @description If true, will force a recalculation of the podcast relevancy values for this search. Note this will slow down the search results response and should only be used if you believe the relevancy values are out of date. */
+              forceRecalculateRelevancy?: boolean;
+            };
+            /** @description [DEPRECATED] Project ID to associate the search with */
+            projectId?: string;
+            /** @description Terms to search for in the episode title, the episode description, the transcript, or the parent podcast's title and description. */
+            searchTerms?: {
+              /** @description The text to look for. Wrapping it in single or double quotes forces a phrase match, the same as setting searchTermOptions.phraseMatch. */
+              searchTerm: string;
+              /**
+               * @description How to match the term. 'text' runs keyword matching against each of the searchTargets.
+               * @enum {string}
+               */
+              searchType: 'text';
+              /** @description Which fields to match this term against. A result matches if the term hits any one of its targets, so listing several widens the search rather than narrowing it. */
+              searchTargets: (
+                | 'podcast-title'
+                | 'podcast-description'
+                | 'episode-title'
+                | 'episode-description'
+                | 'transcript'
+              )[];
+              /**
+               * @description How this term is matched: whether it is required, treated as a phrase, or matched loosely.
+               * @default {
+               *       "matchMode": "optional",
+               *       "phraseMatch": false,
+               *       "fuzzy": false
+               *     }
+               */
+              searchTermOptions: {
+                /**
+                 * @description How this term combines with the others. 'optional' (the default) lets the term raise a result's relevance without being required, though a result still has to match at least one term. 'must' requires it. 'not' excludes anything it matches.
+                 * @default optional
+                 * @enum {string}
+                 */
+                matchMode: 'must' | 'not' | 'optional';
+                /** @description Whether to match the search term as a phrase */
+                phraseMatch?: boolean;
+                /** @description How many words apart tokens can appear in a document to be considered a match */
+                slop?: number;
+                /** @description Whether to use fuzzy matching */
+                fuzzy?: boolean;
+              };
+            }[];
+            /** @description iTunes genres to exclude from results */
+            excludeItunesGenres?: string[];
+            /** @description Specific podcast IDs to exclude from results */
+            excludePodcastIds?: string[];
+            /** @description Specific episode IDs to exclude from results */
+            excludeEpisodeIds?: string[];
+            /**
+             * @description Filter by explicit content rating
+             * @enum {string}
+             */
+            explicit?: 'clean' | 'explicit';
+            /** @description Filter podcasts founded after this date */
+            foundedSince?: unknown;
+            /** @description Filter podcasts that have primary contact information */
+            hasPrimaryContact?: boolean;
+            /** @description Filter podcasts with specific social media presence from beehiiv, behance, bluesky, discord, facebook, github, instagram, linkedin, linktree, mastodon, medium, patreon, pinterest, reddit, snapchat, soundcloud, substack, threads, tiktok, tumblr, twitch, twitter, vimeo, whatsapp, youtube */
+            hasSocials?: (
+              | 'beehiiv'
+              | 'behance'
+              | 'bluesky'
+              | 'discord'
+              | 'facebook'
+              | 'github'
+              | 'instagram'
+              | 'linkedin'
+              | 'linktree'
+              | 'mastodon'
+              | 'medium'
+              | 'patreon'
+              | 'pinterest'
+              | 'reddit'
+              | 'snapchat'
+              | 'soundcloud'
+              | 'substack'
+              | 'threads'
+              | 'tiktok'
+              | 'tumblr'
+              | 'twitch'
+              | 'twitter'
+              | 'vimeo'
+              | 'whatsapp'
+              | 'youtube'
+            )[];
+            /** @description iTunes genres to include in results */
+            includeItunesGenres?: string[];
+            /** @description Specific podcast IDs to include in results */
+            includePodcastIds?: string[];
+            /** @description Filter podcasts by language */
+            languages?: string[];
+            /** @description Filter podcasts with episodes published after this date */
+            lastEpisodeDateSince?: unknown;
+            /** @description Maximum number of total episodes */
+            maxTotalEpisodes?: number;
+            /** @description Minimum number of Castbox plays */
+            minCastboxPlays?: number;
+            /** @description Minimum number of Castbox subscribers */
+            minCastboxSubscribers?: number;
+            /** @description Minimum iTunes rating score */
+            minItunesRating?: number;
+            /** @description Minimum number of iTunes ratings */
+            minItunesRatingCount?: number;
+            /** @description Minimum Spotify rating score */
+            minSpotifyRating?: number;
+            /** @description Minimum number of Spotify ratings */
+            minSpotifyRatingCount?: number;
+            /** @description Minimum number of total episodes */
+            minTotalEpisodes?: number;
+            /** @description Filter podcasts by country of origin using ISO 3166-1 alpha-2 codes, for example us */
+            podcastCountries?: string[];
+            /** @description Filter podcasts that feature guests */
+            podcastHasGuests?: boolean;
+            /** @description Filter podcasts by their Authority Score */
+            podcastAuthorityScore?: {
+              /** @description Restrict results to podcasts whose overall Authority Score falls in this range. The overall score combines the quality, engagement, social and YouTube components; podcasts we have not scored are excluded. See https://www.podengine.ai/podcast-authority-score. */
+              authorityScore?: {
+                /** @description Inclusive lower bound for the overall Authority Score. Null or omitted leaves the range open at the bottom. */
+                min: number | null;
+                /** @description Inclusive upper bound for the overall Authority Score. Null or omitted leaves the range open at the top. */
+                max: number | null;
+              };
+              /** @description Restrict results by the quality component of the Authority Score, which rates how well the show is produced and maintained: release consistency, episode length, artwork, show notes, transcript coverage, contact details and RSS completeness. Podcasts we have not scored are excluded. */
+              qualityScore?: {
+                /** @description Inclusive lower bound for the quality score. Null or omitted leaves the range open at the bottom. */
+                min: number | null;
+                /** @description Inclusive upper bound for the quality score. Null or omitted leaves the range open at the top. */
+                max: number | null;
+              };
+              /** @description Restrict results by the engagement component of the Authority Score, which rates how strongly listeners respond to the show: review counts and ratings, recent Apple US chart position, and Castbox plays and subscribers. Podcasts we have not scored are excluded. */
+              engagementScore?: {
+                /** @description Inclusive lower bound for the engagement score. Null or omitted leaves the range open at the bottom. */
+                min: number | null;
+                /** @description Inclusive upper bound for the engagement score. Null or omitted leaves the range open at the top. */
+                max: number | null;
+              };
+              /** @description Restrict results by the social component of the Authority Score, which rates follower counts across the show's linked Facebook, Instagram, LinkedIn, TikTok and Twitter accounts. Podcasts we have not scored are excluded. */
+              socialScore?: {
+                /** @description Inclusive lower bound for the social score. Null or omitted leaves the range open at the bottom. */
+                min: number | null;
+                /** @description Inclusive upper bound for the social score. Null or omitted leaves the range open at the top. */
+                max: number | null;
+              };
+              /** @description Restrict results by the YouTube component of the Authority Score, which rates the channel's subscribers, total views and most-viewed video. Podcasts we have not scored are excluded. */
+              youtubeScore?: {
+                /** @description Inclusive lower bound for the YouTube score. Null or omitted leaves the range open at the bottom. */
+                min: number | null;
+                /** @description Inclusive upper bound for the YouTube score. Null or omitted leaves the range open at the top. */
+                max: number | null;
+              };
+            };
+            /** @description Filter by the published estimated monthly listeners. Bounds are inclusive; omit min or max for an open-ended range. Podcasts without an estimate are excluded. Estimates under 1,000 (bucket 0-1K) match as 1 to 999 even though they read 1,000. Example: { "min": 10000, "max": 100000 }. */
+            podcastAudienceEstimatedMonthlyListeners?: {
+              /** @description Inclusive minimum monthly audience estimate */
+              min?: number;
+              /** @description Inclusive maximum monthly audience estimate */
+              max?: number;
+            };
+            /** @description Specify how episode results should be sorted */
+            sortOrder?: {
+              /**
+               * @description Episode sort: relevance, publication date (recentActivity), title, Apple rating or Spotify rating. Audience, YouTube, authority and Castbox sorts are only available for podcast searches.
+               * @enum {string}
+               */
+              field: 'relevance' | 'recentActivity' | 'title' | 'appleReviews' | 'spotifyReviews';
+              /**
+               * @description Sort direction. Defaults to 'asc' for 'title' and 'desc' for every other field.
+               * @enum {string}
+               */
+              direction?: 'asc' | 'desc';
+              /**
+               * @description Where results that have no value for this field go. Defaults to 'last'. Ignored for 'relevance' and the podcast-only metrics.
+               * @enum {string}
+               */
+              nullOrder?: 'first' | 'last';
+            }[];
+            /** @description Return matchSnippet: the single best matching transcript passage, approximately 400 characters with <em> tags around matches. Requires a positive text term targeting transcript. Omitted when no transcript passage matches. When enabled, transcriptHighlights contains this same single passage; transcriptHighlightLength is ignored. */
+            includeMatchSnippet?: boolean;
+            /** @description Return the opening of each matching episode transcript alongside the result, as transcriptTextSnippet. Episodes with no transcript return null. */
+            includeTranscriptSnippet?: boolean;
+            /** @description How many characters of the transcript includeTranscriptSnippet returns. Defaults to 500. This is the start of the transcript, not the part that matched — for the matching text, search the transcript target and set includeMatchSnippet to receive matchSnippet, or read transcriptHighlights. */
+            transcriptSnippetLength?: number;
+            /** @description How many characters each highlighted transcript fragment contains when a search term targets the transcript. Defaults to 300. */
+            transcriptHighlightLength?: number;
+            /** @description Restrict results to these specific episode IDs */
+            includeEpisodeIds?: string[];
+            /** @description Only episodes published on or after this date (inclusive) */
+            publishedSince?: unknown;
+            /** @description Only episodes published strictly before this date (exclusive). Combine with publishedSince for a bounded window, e.g. publishedSince=90 days ago + publishedBefore=30 days ago. */
+            publishedBefore?: unknown;
+            /** @description Filter to episodes that have a transcript (true) or that do not (false) */
+            hasTranscript?: boolean;
+            /** @description Only episodes whose Pod Engine record changed on or after this date. This tracks our record, not the show's own updates, so use it to pick up everything that has changed since your last sync. */
+            episodeUpdatedSince?: unknown;
+            /** @description Only episodes added to Pod Engine on or after this date. An episode is added when we first index it, which can be well after it was published — use publishedSince to filter on the publication date instead. */
+            episodeCreatedSince?: unknown;
+            /** @description Filter episodes by the people on them. Entries are ANDed together, e.g. [{ "name": "Elon Musk", "type": "guest" }, { "name": "Joe Rogan", "type": "host" }] returns only episodes where Elon Musk appeared as a guest and Joe Rogan was a host. An entry with matchMode "not" instead excludes episodes featuring that person. */
+            personFilters?: {
+              /** @description The name to match */
+              name: string;
+              /**
+               * @description 'must' (default) only returns episodes matching this entry; 'not' excludes episodes matching this entry
+               * @enum {string}
+               */
+              matchMode?: 'must' | 'not';
+              /** @description Whether to match the name as a phrase (all words, in order). Defaults to true; set false for a loose per-word match. */
+              phraseMatch?: boolean;
+              /** @description How many words apart tokens can appear in a name to still count as a phrase match */
+              slop?: number;
+              /** @description Whether to tolerate close spellings. Uses per-word fuzzy matching with all words required, so it ignores word order and cannot be combined with slop. */
+              fuzzy?: boolean;
+              /**
+               * @description Whether the person must appear on the episode as a 'guest' or a 'host'
+               * @enum {string}
+               */
+              type: 'guest' | 'host';
+            }[];
+            /** @description Filter episodes by sponsor / advertiser name. Entries are ANDed together; an entry with matchMode "not" instead excludes episodes with that sponsor. */
+            sponsorFilters?: {
+              /** @description The name to match */
+              name: string;
+              /**
+               * @description 'must' (default) only returns episodes matching this entry; 'not' excludes episodes matching this entry
+               * @enum {string}
+               */
+              matchMode?: 'must' | 'not';
+              /** @description Whether to match the name as a phrase (all words, in order). Defaults to true; set false for a loose per-word match. */
+              phraseMatch?: boolean;
+              /** @description How many words apart tokens can appear in a name to still count as a phrase match */
+              slop?: number;
+              /** @description Whether to tolerate close spellings. Uses per-word fuzzy matching with all words required, so it ignores word order and cannot be combined with slop. */
+              fuzzy?: boolean;
+            }[];
+          };
+          /**
+           * @description Number of additional passages per page, excluding the best passage. Defaults to 5; maximum 20.
+           * @default 5
+           */
+          pageSize: number;
+          /** @description Opaque passage cursor from the previous page. Restart without it after HTTP 409. */
+          cursor?: string;
+        };
+      };
+    };
+    responses: {
+      /** @description Success */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': {
+            /** @enum {string} */
+            status: 'OK';
+            data: {
+              /**
+               * Format: uuid
+               * @description Episode identifier from an episode or transcript search result.
+               */
+              episodeId: string;
+              /** @description The current best passage. Display separately from the additional passages. */
+              bestPassage: {
+                /** @description Stable within this query and transcript revision; not a timestamp. */
+                id: string;
+                /** @description A distinct sentence-based passage of approximately 400 characters with <em> highlights. */
+                text: string;
+              } | null;
+              /** @description Additional passages in relevance order, excluding bestPassage. */
+              passages: {
+                /** @description Stable within this query and transcript revision; not a timestamp. */
+                id: string;
+                /** @description A distinct sentence-based passage of approximately 400 characters with <em> highlights. */
+                text: string;
+              }[];
+              /** @description Distinct matching passages, including bestPassage. eq is exact; gte is a lower bound. */
+              total: {
+                value: number;
+                /** @enum {string} */
+                relation: 'eq' | 'gte';
+              };
+              /** @description Total minus the best passage; uses total.relation. */
+              additionalCount: number;
+              /** @description More pages within the browsable set; independent of count truncation. */
+              hasMore: boolean;
+              nextCursor: string | null;
+              /** @description The passage cap was exceeded. Only the best 100 passages can be browsed. */
+              truncated: boolean;
+              /** @enum {number} */
+              passageLimit: 100;
+            };
+          };
+        };
+      };
+      /** @description Bad request */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Authentication required */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Forbidden — plan does not include this endpoint */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Not found */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Rate limit exceeded */
+      429: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+    };
+  };
   searchAutocompletePodcasts: {
     parameters: {
       query: {
@@ -12121,9 +12506,11 @@ export interface operations {
              */
             nullOrder?: 'first' | 'last';
           }[];
+          /** @description Return matchSnippet: the single best matching transcript passage, approximately 400 characters with <em> tags around matches. Requires a positive text term targeting transcript. Omitted when no transcript passage matches. When enabled, transcriptHighlights contains this same single passage; transcriptHighlightLength is ignored. */
+          includeMatchSnippet?: boolean;
           /** @description Return the opening of each matching episode transcript alongside the result, as transcriptTextSnippet. Episodes with no transcript return null. */
           includeTranscriptSnippet?: boolean;
-          /** @description How many characters of the transcript includeTranscriptSnippet returns. Defaults to 500. This is the start of the transcript, not the part that matched — for the matching text, search the transcript target and read the highlights. */
+          /** @description How many characters of the transcript includeTranscriptSnippet returns. Defaults to 500. This is the start of the transcript, not the part that matched — for the matching text, search the transcript target and set includeMatchSnippet to receive matchSnippet, or read transcriptHighlights. */
           transcriptSnippetLength?: number;
           /** @description How many characters each highlighted transcript fragment contains when a search term targets the transcript. Defaults to 300. */
           transcriptHighlightLength?: number;
@@ -12389,9 +12776,11 @@ export interface operations {
                    */
                   nullOrder?: 'first' | 'last';
                 }[];
+                /** @description Return matchSnippet: the single best matching transcript passage, approximately 400 characters with <em> tags around matches. Requires a positive text term targeting transcript. Omitted when no transcript passage matches. When enabled, transcriptHighlights contains this same single passage; transcriptHighlightLength is ignored. */
+                includeMatchSnippet?: boolean;
                 /** @description Return the opening of each matching episode transcript alongside the result, as transcriptTextSnippet. Episodes with no transcript return null. */
                 includeTranscriptSnippet?: boolean;
-                /** @description How many characters of the transcript includeTranscriptSnippet returns. Defaults to 500. This is the start of the transcript, not the part that matched — for the matching text, search the transcript target and read the highlights. */
+                /** @description How many characters of the transcript includeTranscriptSnippet returns. Defaults to 500. This is the start of the transcript, not the part that matched — for the matching text, search the transcript target and set includeMatchSnippet to receive matchSnippet, or read transcriptHighlights. */
                 transcriptSnippetLength?: number;
                 /** @description How many characters each highlighted transcript fragment contains when a search term targets the transcript. Defaults to 300. */
                 transcriptHighlightLength?: number;
@@ -12851,7 +13240,10 @@ export interface operations {
                   podcastTitleHighlights?: string[];
                   episodeDescriptionHighlights?: string[];
                   episodeTitleHighlights?: string[];
+                  /** @description Transcript fragments with <em> tags around matching terms. With includeMatchSnippet, contains the single best passage. */
                   transcriptHighlights?: string[];
+                  /** @description Best matching transcript passage, approximately 400 characters with <em> tags. Only returned with includeMatchSnippet and a positive transcript text match. No timestamp is available yet. */
+                  matchSnippet?: string;
                   /** @description Opening transcript excerpt, when requested and available. */
                   transcriptTextSnippet?: string;
                 }[];

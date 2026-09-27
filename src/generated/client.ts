@@ -226,6 +226,10 @@ export type UpdateProjectListedPodcastParams = NonNullable<
   NonNullable<operations['updateProjectListedPodcast']['requestBody']>['content']['application/json'];
 export type UpdateProjectListedPodcastResponse =
   operations['updateProjectListedPodcast']['responses']['200']['content']['application/json']['data'];
+export type GetTranscriptPassagesParams = NonNullable<operations['getTranscriptPassages']['parameters']['path']> &
+  NonNullable<operations['getTranscriptPassages']['requestBody']>['content']['application/json'];
+export type GetTranscriptPassagesResponse =
+  operations['getTranscriptPassages']['responses']['200']['content']['application/json']['data'];
 export type SearchEpisodesParams = NonNullable<
   operations['searchEpisodes']['requestBody']
 >['content']['application/json'];
@@ -739,6 +743,14 @@ const descriptors = {
     method: 'PATCH',
     path: '/api/v1/projects/{projectSlug}/podcasts/{listedPodcastId}',
     pathParams: ['projectSlug', 'listedPodcastId'],
+    queryParams: [],
+    body: 'merge',
+    binary: false,
+  },
+  getTranscriptPassages: {
+    method: 'POST',
+    path: '/api/v1/search/episodes/{episodeId}/transcript',
+    pathParams: ['episodeId'],
     queryParams: [],
     body: 'merge',
     binary: false,
@@ -1473,8 +1485,19 @@ class SearchResource {
   constructor(private readonly core: PodEngineCore) {}
 
   /**
+   * Search Episode Transcript
+   * Search within the transcript of the episode identified by episodeId in the URL. Send the original searchOptions, pageSize and optional cursor in the body; do not repeat episodeId in the body. Count and browse matching passages for that episode. The best passage is separate from paginated additional passages. Counts are exact (eq) or lower bounds (gte); at most 100 passages can be browsed. Initial episode totals still count episodes. Reuse nextCursor with the same episode and query; HTTP 409 means restart without the cursor. Passages use the same Elasticsearch analyzer and sentence boundaries as matchSnippet; nearby terms in one passage count once. Highlighting failures, including transcripts exceeding the index analysis limit, are errors, never zero matches or silently partial counts.
+   */
+  getTranscriptPassages(
+    params: GetTranscriptPassagesParams,
+    options?: RequestOptions
+  ): Promise<GetTranscriptPassagesResponse> {
+    return this.core.request(descriptors.getTranscriptPassages, params as Record<string, unknown>, options);
+  }
+
+  /**
    * Search Episodes
-   * Search for episodes by title, description, or transcript text, with optional filters on guest, host, and sponsor names
+   * Search for episodes by title, description, or transcript text, with optional filters on guest, host, and sponsor names. For matching transcript text, send includeMatchSnippet: true with a text search term targeting transcript, then read result.hits[].matchSnippet. It returns the best passage (about 400 characters), with matches marked by <em> tags. transcriptHighlights contains highlighted fragments; with includeMatchSnippet it contains the same single passage. The legacy includeTranscriptSnippet option returns transcriptTextSnippet from the start of the transcript, which may be an intro or advertisement, not the matching passage. matchSnippet is omitted for filter-only searches or when no transcript passage matches. Timestamps are not yet available.
    */
   searchEpisodes(params?: SearchEpisodesParams, options?: RequestOptions): Promise<SearchEpisodesResponse> {
     return this.core.request(descriptors.searchEpisodes, params as Record<string, unknown>, options);

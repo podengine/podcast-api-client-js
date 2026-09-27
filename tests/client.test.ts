@@ -61,3 +61,42 @@ describe('PodEngine — generated resource client (end-to-end wiring)', () => {
     expect(await result.text()).toBe('transcript text');
   });
 });
+
+test('passage endpoint preserves nested query options, cursors and lower-bound counts', async () => {
+  const data = {
+    episodeId: 'ep',
+    bestPassage: { id: 'best', text: '<em>match</em>' },
+    passages: [],
+    total: { value: 101, relation: 'gte' as const },
+    additionalCount: 100,
+    truncated: true,
+    hasMore: false,
+    nextCursor: null,
+    passageLimit: 100 as const,
+  };
+  const { fetch, calls } = mockFetch([{ json: { status: 'OK', data } }]);
+  const pe = new PodEngine({ apiKey: 'k', baseUrl: BASE, fetch });
+  const result = await pe.search.getTranscriptPassages({
+    episodeId: 'ep',
+    searchOptions: {
+      searchTerms: [
+        {
+          searchType: 'text',
+          searchTerm: 'match',
+          searchTargets: ['transcript'],
+          searchTermOptions: { matchMode: 'must', phraseMatch: true },
+        },
+      ],
+    },
+    pageSize: 5,
+    cursor: 'opaque',
+  });
+  expect(new URL(calls[0]!.url).pathname).toBe('/api/v1/search/episodes/ep/transcript');
+  expect(calls[0]!.method).toBe('POST');
+  expect(JSON.parse(calls[0]!.body!)).not.toHaveProperty('episodeId');
+  expect(JSON.parse(calls[0]!.body!)).toMatchObject({
+    cursor: 'opaque',
+    searchOptions: { searchTerms: [{ searchTermOptions: { phraseMatch: true } }] },
+  });
+  expect(result).toEqual(data);
+});
