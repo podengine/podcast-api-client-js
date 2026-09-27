@@ -1592,7 +1592,7 @@ export interface operations {
                     max: number | null;
                   };
                 };
-                /** @description Filter by the published estimated monthly listeners. Bounds are inclusive; omit min or max for an open-ended range. Podcasts without an estimate are excluded. Example: { "min": 10000, "max": 100000 }. */
+                /** @description Filter by the published estimated monthly listeners. Bounds are inclusive; omit min or max for an open-ended range. Podcasts without an estimate are excluded. Estimates under 1,000 (bucket 0-1K) match as 1 to 999 even though they read 1,000. Example: { "min": 10000, "max": 100000 }. */
                 podcastAudienceEstimatedMonthlyListeners?: {
                   /** @description Inclusive minimum monthly audience estimate */
                   min?: number;
@@ -1789,7 +1789,7 @@ export interface operations {
                     max: number | null;
                   };
                 };
-                /** @description Filter by the published estimated monthly listeners. Bounds are inclusive; omit min or max for an open-ended range. Podcasts without an estimate are excluded. Example: { "min": 10000, "max": 100000 }. */
+                /** @description Filter by the published estimated monthly listeners. Bounds are inclusive; omit min or max for an open-ended range. Podcasts without an estimate are excluded. Estimates under 1,000 (bucket 0-1K) match as 1 to 999 even though they read 1,000. Example: { "min": 10000, "max": 100000 }. */
                 podcastAudienceEstimatedMonthlyListeners?: {
                   /** @description Inclusive minimum monthly audience estimate */
                   min?: number;
@@ -2962,6 +2962,11 @@ export interface operations {
                   position: number;
                   /** @description Latest published monthly audience estimate for the podcast, independent of the chart date and country. */
                   estimatedMonthlyListeners: number | null;
+                  /**
+                   * @description Bucket for the estimated monthly listeners: 0-1K, 1K-10K, 10K-100K, 100K-1M or 1M+. 0-1K means the estimate is under 1,000, even when the rounded figure reads 1,000. Null means no estimate is available.
+                   * @enum {string|null}
+                   */
+                  estimatedMonthlyListenersBucket: '0-1K' | '1K-10K' | '10K-100K' | '100K-1M' | '1M+' | null;
                   podcastOnChart: {
                     podcastOnChartId: string;
                     title: string;
@@ -3162,6 +3167,11 @@ export interface operations {
                   position: number;
                   /** @description Latest published monthly audience estimate for the podcast, independent of the chart date and country. */
                   estimatedMonthlyListeners: number | null;
+                  /**
+                   * @description Bucket for the estimated monthly listeners: 0-1K, 1K-10K, 10K-100K, 100K-1M or 1M+. 0-1K means the estimate is under 1,000, even when the rounded figure reads 1,000. Null means no estimate is available.
+                   * @enum {string|null}
+                   */
+                  estimatedMonthlyListenersBucket: '0-1K' | '1K-10K' | '10K-100K' | '100K-1M' | '1M+' | null;
                   podcastOnChart: {
                     podcastOnChartId: string;
                     title: string;
@@ -4611,6 +4621,11 @@ export interface operations {
                       exampleListenerProfile: string;
                     } | null;
                     estimatedMonthlyListeners: number | null;
+                    /**
+                     * @description Bucket for the estimated monthly listeners: 0-1K, 1K-10K, 10K-100K, 100K-1M or 1M+. 0-1K means the estimate is under 1,000, even when the rounded figure reads 1,000. Null means no estimate is available.
+                     * @enum {string|null}
+                     */
+                    estimatedMonthlyListenersBucket?: '0-1K' | '1K-10K' | '10K-100K' | '100K-1M' | '1M+' | null;
                     estimatedMonthyListenersCalculatedAt: unknown | null;
                     /** @enum {string|null} */
                     confidence?: 'high' | 'medium' | 'low' | null;
@@ -4771,6 +4786,11 @@ export interface operations {
                     exampleListenerProfile: string;
                   } | null;
                   estimatedMonthlyListeners: number | null;
+                  /**
+                   * @description Bucket for the estimated monthly listeners: 0-1K, 1K-10K, 10K-100K, 100K-1M or 1M+. 0-1K means the estimate is under 1,000, even when the rounded figure reads 1,000. Null means no estimate is available.
+                   * @enum {string|null}
+                   */
+                  estimatedMonthlyListenersBucket?: '0-1K' | '1K-10K' | '10K-100K' | '100K-1M' | '1M+' | null;
                   estimatedMonthyListenersCalculatedAt: unknown | null;
                   /** @enum {string|null} */
                   confidence?: 'high' | 'medium' | 'low' | null;
@@ -6585,6 +6605,11 @@ export interface operations {
                         exampleListenerProfile: string;
                       } | null;
                       estimatedMonthlyListeners: number | null;
+                      /**
+                       * @description Bucket for the estimated monthly listeners: 0-1K, 1K-10K, 10K-100K, 100K-1M or 1M+. 0-1K means the estimate is under 1,000, even when the rounded figure reads 1,000. Null means no estimate is available.
+                       * @enum {string|null}
+                       */
+                      estimatedMonthlyListenersBucket?: '0-1K' | '1K-10K' | '10K-100K' | '100K-1M' | '1M+' | null;
                       estimatedMonthyListenersCalculatedAt: unknown | null;
                       /** @enum {string|null} */
                       confidence?: 'high' | 'medium' | 'low' | null;
@@ -7228,6 +7253,11 @@ export interface operations {
                       exampleListenerProfile: string;
                     } | null;
                     estimatedMonthlyListeners: number | null;
+                    /**
+                     * @description Bucket for the estimated monthly listeners: 0-1K, 1K-10K, 10K-100K, 100K-1M or 1M+. 0-1K means the estimate is under 1,000, even when the rounded figure reads 1,000. Null means no estimate is available.
+                     * @enum {string|null}
+                     */
+                    estimatedMonthlyListenersBucket?: '0-1K' | '1K-10K' | '10K-100K' | '100K-1M' | '1M+' | null;
                     estimatedMonthyListenersCalculatedAt: unknown | null;
                     /** @enum {string|null} */
                     confidence?: 'high' | 'medium' | 'low' | null;
@@ -7369,6 +7399,11 @@ export interface operations {
                           exampleListenerProfile: string;
                         } | null;
                         estimatedMonthlyListeners: number | null;
+                        /**
+                         * @description Bucket for the estimated monthly listeners: 0-1K, 1K-10K, 10K-100K, 100K-1M or 1M+. 0-1K means the estimate is under 1,000, even when the rounded figure reads 1,000. Null means no estimate is available.
+                         * @enum {string|null}
+                         */
+                        estimatedMonthlyListenersBucket?: '0-1K' | '1K-10K' | '10K-100K' | '100K-1M' | '1M+' | null;
                         estimatedMonthyListenersCalculatedAt: unknown | null;
                         /** @enum {string|null} */
                         confidence?: 'high' | 'medium' | 'low' | null;
@@ -8092,6 +8127,11 @@ export interface operations {
                     exampleListenerProfile: string;
                   } | null;
                   estimatedMonthlyListeners: number | null;
+                  /**
+                   * @description Bucket for the estimated monthly listeners: 0-1K, 1K-10K, 10K-100K, 100K-1M or 1M+. 0-1K means the estimate is under 1,000, even when the rounded figure reads 1,000. Null means no estimate is available.
+                   * @enum {string|null}
+                   */
+                  estimatedMonthlyListenersBucket?: '0-1K' | '1K-10K' | '10K-100K' | '100K-1M' | '1M+' | null;
                   estimatedMonthyListenersCalculatedAt: unknown | null;
                   /** @enum {string|null} */
                   confidence?: 'high' | 'medium' | 'low' | null;
@@ -8333,6 +8373,11 @@ export interface operations {
                       exampleListenerProfile: string;
                     } | null;
                     estimatedMonthlyListeners: number | null;
+                    /**
+                     * @description Bucket for the estimated monthly listeners: 0-1K, 1K-10K, 10K-100K, 100K-1M or 1M+. 0-1K means the estimate is under 1,000, even when the rounded figure reads 1,000. Null means no estimate is available.
+                     * @enum {string|null}
+                     */
+                    estimatedMonthlyListenersBucket?: '0-1K' | '1K-10K' | '10K-100K' | '100K-1M' | '1M+' | null;
                     estimatedMonthyListenersCalculatedAt: unknown | null;
                     /** @enum {string|null} */
                     confidence?: 'high' | 'medium' | 'low' | null;
@@ -9856,6 +9901,11 @@ export interface operations {
                         exampleListenerProfile: string;
                       } | null;
                       estimatedMonthlyListeners: number | null;
+                      /**
+                       * @description Bucket for the estimated monthly listeners: 0-1K, 1K-10K, 10K-100K, 100K-1M or 1M+. 0-1K means the estimate is under 1,000, even when the rounded figure reads 1,000. Null means no estimate is available.
+                       * @enum {string|null}
+                       */
+                      estimatedMonthlyListenersBucket?: '0-1K' | '1K-10K' | '10K-100K' | '100K-1M' | '1M+' | null;
                       estimatedMonthyListenersCalculatedAt: unknown | null;
                       /** @enum {string|null} */
                       confidence?: 'high' | 'medium' | 'low' | null;
@@ -11218,7 +11268,7 @@ export interface operations {
               max: number | null;
             };
           };
-          /** @description Filter by the published estimated monthly listeners. Bounds are inclusive; omit min or max for an open-ended range. Podcasts without an estimate are excluded. Example: { "min": 10000, "max": 100000 }. */
+          /** @description Filter by the published estimated monthly listeners. Bounds are inclusive; omit min or max for an open-ended range. Podcasts without an estimate are excluded. Estimates under 1,000 (bucket 0-1K) match as 1 to 999 even though they read 1,000. Example: { "min": 10000, "max": 100000 }. */
           podcastAudienceEstimatedMonthlyListeners?: {
             /** @description Inclusive minimum monthly audience estimate */
             min?: number;
@@ -11425,7 +11475,7 @@ export interface operations {
                     max: number | null;
                   };
                 };
-                /** @description Filter by the published estimated monthly listeners. Bounds are inclusive; omit min or max for an open-ended range. Podcasts without an estimate are excluded. Example: { "min": 10000, "max": 100000 }. */
+                /** @description Filter by the published estimated monthly listeners. Bounds are inclusive; omit min or max for an open-ended range. Podcasts without an estimate are excluded. Estimates under 1,000 (bucket 0-1K) match as 1 to 999 even though they read 1,000. Example: { "min": 10000, "max": 100000 }. */
                 podcastAudienceEstimatedMonthlyListeners?: {
                   /** @description Inclusive minimum monthly audience estimate */
                   min?: number;
@@ -12016,7 +12066,7 @@ export interface operations {
               max: number | null;
             };
           };
-          /** @description Filter by the published estimated monthly listeners. Bounds are inclusive; omit min or max for an open-ended range. Podcasts without an estimate are excluded. Example: { "min": 10000, "max": 100000 }. */
+          /** @description Filter by the published estimated monthly listeners. Bounds are inclusive; omit min or max for an open-ended range. Podcasts without an estimate are excluded. Estimates under 1,000 (bucket 0-1K) match as 1 to 999 even though they read 1,000. Example: { "min": 10000, "max": 100000 }. */
           podcastAudienceEstimatedMonthlyListeners?: {
             /** @description Inclusive minimum monthly audience estimate */
             min?: number;
@@ -12284,7 +12334,7 @@ export interface operations {
                     max: number | null;
                   };
                 };
-                /** @description Filter by the published estimated monthly listeners. Bounds are inclusive; omit min or max for an open-ended range. Podcasts without an estimate are excluded. Example: { "min": 10000, "max": 100000 }. */
+                /** @description Filter by the published estimated monthly listeners. Bounds are inclusive; omit min or max for an open-ended range. Podcasts without an estimate are excluded. Estimates under 1,000 (bucket 0-1K) match as 1 to 999 even though they read 1,000. Example: { "min": 10000, "max": 100000 }. */
                 podcastAudienceEstimatedMonthlyListeners?: {
                   /** @description Inclusive minimum monthly audience estimate */
                   min?: number;

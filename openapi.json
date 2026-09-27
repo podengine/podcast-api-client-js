@@ -536,7 +536,7 @@
                             "additionalProperties": false
                           },
                           "podcastAudienceEstimatedMonthlyListeners": {
-                            "description": "Filter by the published estimated monthly listeners. Bounds are inclusive; omit min or max for an open-ended range. Podcasts without an estimate are excluded. Example: { \"min\": 10000, \"max\": 100000 }.",
+                            "description": "Filter by the published estimated monthly listeners. Bounds are inclusive; omit min or max for an open-ended range. Podcasts without an estimate are excluded. Estimates under 1,000 (bucket 0-1K) match as 1 to 999 even though they read 1,000. Example: { \"min\": 10000, \"max\": 100000 }.",
                             "type": "object",
                             "properties": {
                               "min": {
@@ -1041,7 +1041,7 @@
                             "additionalProperties": false
                           },
                           "podcastAudienceEstimatedMonthlyListeners": {
-                            "description": "Filter by the published estimated monthly listeners. Bounds are inclusive; omit min or max for an open-ended range. Podcasts without an estimate are excluded. Example: { \"min\": 10000, \"max\": 100000 }.",
+                            "description": "Filter by the published estimated monthly listeners. Bounds are inclusive; omit min or max for an open-ended range. Podcasts without an estimate are excluded. Estimates under 1,000 (bucket 0-1K) match as 1 to 999 even though they read 1,000. Example: { \"min\": 10000, \"max\": 100000 }.",
                             "type": "object",
                             "properties": {
                               "min": {
@@ -4022,6 +4022,20 @@
                                     "minimum": 0,
                                     "maximum": 9007199254740991
                                   },
+                                  "estimatedMonthlyListenersBucket": {
+                                    "description": "Bucket for the estimated monthly listeners: 0-1K, 1K-10K, 10K-100K, 100K-1M or 1M+. 0-1K means the estimate is under 1,000, even when the rounded figure reads 1,000. Null means no estimate is available.",
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ],
+                                    "enum": [
+                                      "0-1K",
+                                      "1K-10K",
+                                      "10K-100K",
+                                      "100K-1M",
+                                      "1M+"
+                                    ]
+                                  },
                                   "podcastOnChart": {
                                     "type": "object",
                                     "properties": {
@@ -4225,6 +4239,7 @@
                                 "required": [
                                   "position",
                                   "estimatedMonthlyListeners",
+                                  "estimatedMonthlyListenersBucket",
                                   "podcastOnChart",
                                   "podenginePodcast",
                                   "previousPosition",
@@ -4589,6 +4604,20 @@
                                     "minimum": 0,
                                     "maximum": 9007199254740991
                                   },
+                                  "estimatedMonthlyListenersBucket": {
+                                    "description": "Bucket for the estimated monthly listeners: 0-1K, 1K-10K, 10K-100K, 100K-1M or 1M+. 0-1K means the estimate is under 1,000, even when the rounded figure reads 1,000. Null means no estimate is available.",
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ],
+                                    "enum": [
+                                      "0-1K",
+                                      "1K-10K",
+                                      "10K-100K",
+                                      "100K-1M",
+                                      "1M+"
+                                    ]
+                                  },
                                   "podcastOnChart": {
                                     "type": "object",
                                     "properties": {
@@ -4792,6 +4821,7 @@
                                 "required": [
                                   "position",
                                   "estimatedMonthlyListeners",
+                                  "estimatedMonthlyListenersBucket",
                                   "podcastOnChart",
                                   "podenginePodcast",
                                   "previousPosition",
@@ -8601,6 +8631,20 @@
                                             "null"
                                           ]
                                         },
+                                        "estimatedMonthlyListenersBucket": {
+                                          "description": "Bucket for the estimated monthly listeners: 0-1K, 1K-10K, 10K-100K, 100K-1M or 1M+. 0-1K means the estimate is under 1,000, even when the rounded figure reads 1,000. Null means no estimate is available.",
+                                          "type": [
+                                            "string",
+                                            "null"
+                                          ],
+                                          "enum": [
+                                            "0-1K",
+                                            "1K-10K",
+                                            "10K-100K",
+                                            "100K-1M",
+                                            "1M+"
+                                          ]
+                                        },
                                         "estimatedMonthyListenersCalculatedAt": {
                                           "anyOf": [
                                             {},
@@ -9002,6 +9046,20 @@
                                   "type": [
                                     "number",
                                     "null"
+                                  ]
+                                },
+                                "estimatedMonthlyListenersBucket": {
+                                  "description": "Bucket for the estimated monthly listeners: 0-1K, 1K-10K, 10K-100K, 100K-1M or 1M+. 0-1K means the estimate is under 1,000, even when the rounded figure reads 1,000. Null means no estimate is available.",
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ],
+                                  "enum": [
+                                    "0-1K",
+                                    "1K-10K",
+                                    "10K-100K",
+                                    "100K-1M",
+                                    "1M+"
                                   ]
                                 },
                                 "estimatedMonthyListenersCalculatedAt": {
@@ -12483,6 +12541,20 @@
                                           "null"
                                         ]
                                       },
+                                      "estimatedMonthlyListenersBucket": {
+                                        "description": "Bucket for the estimated monthly listeners: 0-1K, 1K-10K, 10K-100K, 100K-1M or 1M+. 0-1K means the estimate is under 1,000, even when the rounded figure reads 1,000. Null means no estimate is available.",
+                                        "type": [
+                                          "string",
+                                          "null"
+                                        ],
+                                        "enum": [
+                                          "0-1K",
+                                          "1K-10K",
+                                          "10K-100K",
+                                          "100K-1M",
+                                          "1M+"
+                                        ]
+                                      },
                                       "estimatedMonthyListenersCalculatedAt": {
                                         "anyOf": [
                                           {},
@@ -14142,6 +14214,20 @@
                                         "null"
                                       ]
                                     },
+                                    "estimatedMonthlyListenersBucket": {
+                                      "description": "Bucket for the estimated monthly listeners: 0-1K, 1K-10K, 10K-100K, 100K-1M or 1M+. 0-1K means the estimate is under 1,000, even when the rounded figure reads 1,000. Null means no estimate is available.",
+                                      "type": [
+                                        "string",
+                                        "null"
+                                      ],
+                                      "enum": [
+                                        "0-1K",
+                                        "1K-10K",
+                                        "10K-100K",
+                                        "100K-1M",
+                                        "1M+"
+                                      ]
+                                    },
                                     "estimatedMonthyListenersCalculatedAt": {
                                       "anyOf": [
                                         {},
@@ -14645,6 +14731,20 @@
                                         "type": [
                                           "number",
                                           "null"
+                                        ]
+                                      },
+                                      "estimatedMonthlyListenersBucket": {
+                                        "description": "Bucket for the estimated monthly listeners: 0-1K, 1K-10K, 10K-100K, 100K-1M or 1M+. 0-1K means the estimate is under 1,000, even when the rounded figure reads 1,000. Null means no estimate is available.",
+                                        "type": [
+                                          "string",
+                                          "null"
+                                        ],
+                                        "enum": [
+                                          "0-1K",
+                                          "1K-10K",
+                                          "10K-100K",
+                                          "100K-1M",
+                                          "1M+"
                                         ]
                                       },
                                       "estimatedMonthyListenersCalculatedAt": {
@@ -17018,6 +17118,20 @@
                                     "null"
                                   ]
                                 },
+                                "estimatedMonthlyListenersBucket": {
+                                  "description": "Bucket for the estimated monthly listeners: 0-1K, 1K-10K, 10K-100K, 100K-1M or 1M+. 0-1K means the estimate is under 1,000, even when the rounded figure reads 1,000. Null means no estimate is available.",
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ],
+                                  "enum": [
+                                    "0-1K",
+                                    "1K-10K",
+                                    "10K-100K",
+                                    "100K-1M",
+                                    "1M+"
+                                  ]
+                                },
                                 "estimatedMonthyListenersCalculatedAt": {
                                   "anyOf": [
                                     {},
@@ -17745,6 +17859,20 @@
                                         "type": [
                                           "number",
                                           "null"
+                                        ]
+                                      },
+                                      "estimatedMonthlyListenersBucket": {
+                                        "description": "Bucket for the estimated monthly listeners: 0-1K, 1K-10K, 10K-100K, 100K-1M or 1M+. 0-1K means the estimate is under 1,000, even when the rounded figure reads 1,000. Null means no estimate is available.",
+                                        "type": [
+                                          "string",
+                                          "null"
+                                        ],
+                                        "enum": [
+                                          "0-1K",
+                                          "1K-10K",
+                                          "10K-100K",
+                                          "100K-1M",
+                                          "1M+"
                                         ]
                                       },
                                       "estimatedMonthyListenersCalculatedAt": {
@@ -21767,6 +21895,20 @@
                                         "null"
                                       ]
                                     },
+                                    "estimatedMonthlyListenersBucket": {
+                                      "description": "Bucket for the estimated monthly listeners: 0-1K, 1K-10K, 10K-100K, 100K-1M or 1M+. 0-1K means the estimate is under 1,000, even when the rounded figure reads 1,000. Null means no estimate is available.",
+                                      "type": [
+                                        "string",
+                                        "null"
+                                      ],
+                                      "enum": [
+                                        "0-1K",
+                                        "1K-10K",
+                                        "10K-100K",
+                                        "100K-1M",
+                                        "1M+"
+                                      ]
+                                    },
                                     "estimatedMonthyListenersCalculatedAt": {
                                       "anyOf": [
                                         {},
@@ -25390,7 +25532,7 @@
                     "additionalProperties": false
                   },
                   "podcastAudienceEstimatedMonthlyListeners": {
-                    "description": "Filter by the published estimated monthly listeners. Bounds are inclusive; omit min or max for an open-ended range. Podcasts without an estimate are excluded. Example: { \"min\": 10000, \"max\": 100000 }.",
+                    "description": "Filter by the published estimated monthly listeners. Bounds are inclusive; omit min or max for an open-ended range. Podcasts without an estimate are excluded. Estimates under 1,000 (bucket 0-1K) match as 1 to 999 even though they read 1,000. Example: { \"min\": 10000, \"max\": 100000 }.",
                     "type": "object",
                     "properties": {
                       "min": {
@@ -25921,7 +26063,7 @@
                               "additionalProperties": false
                             },
                             "podcastAudienceEstimatedMonthlyListeners": {
-                              "description": "Filter by the published estimated monthly listeners. Bounds are inclusive; omit min or max for an open-ended range. Podcasts without an estimate are excluded. Example: { \"min\": 10000, \"max\": 100000 }.",
+                              "description": "Filter by the published estimated monthly listeners. Bounds are inclusive; omit min or max for an open-ended range. Podcasts without an estimate are excluded. Estimates under 1,000 (bucket 0-1K) match as 1 to 999 even though they read 1,000. Example: { \"min\": 10000, \"max\": 100000 }.",
                               "type": "object",
                               "properties": {
                                 "min": {
@@ -27830,7 +27972,7 @@
                     "additionalProperties": false
                   },
                   "podcastAudienceEstimatedMonthlyListeners": {
-                    "description": "Filter by the published estimated monthly listeners. Bounds are inclusive; omit min or max for an open-ended range. Podcasts without an estimate are excluded. Example: { \"min\": 10000, \"max\": 100000 }.",
+                    "description": "Filter by the published estimated monthly listeners. Bounds are inclusive; omit min or max for an open-ended range. Podcasts without an estimate are excluded. Estimates under 1,000 (bucket 0-1K) match as 1 to 999 even though they read 1,000. Example: { \"min\": 10000, \"max\": 100000 }.",
                     "type": "object",
                     "properties": {
                       "min": {
@@ -28488,7 +28630,7 @@
                               "additionalProperties": false
                             },
                             "podcastAudienceEstimatedMonthlyListeners": {
-                              "description": "Filter by the published estimated monthly listeners. Bounds are inclusive; omit min or max for an open-ended range. Podcasts without an estimate are excluded. Example: { \"min\": 10000, \"max\": 100000 }.",
+                              "description": "Filter by the published estimated monthly listeners. Bounds are inclusive; omit min or max for an open-ended range. Podcasts without an estimate are excluded. Estimates under 1,000 (bucket 0-1K) match as 1 to 999 even though they read 1,000. Example: { \"min\": 10000, \"max\": 100000 }.",
                               "type": "object",
                               "properties": {
                                 "min": {
