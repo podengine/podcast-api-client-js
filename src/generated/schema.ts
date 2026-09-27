@@ -1602,17 +1602,27 @@ export interface operations {
                 /** @description Specify how results should be sorted */
                 sortOrder?: {
                   /**
-                   * @description What to order by. 'relevance' is the search score. 'recentActivity' is the episode's publication date when searching episodes, and the podcast's most recent episode date when searching podcasts. 'title' orders alphabetically. 'appleReviews' and 'spotifyReviews' order by a rating that weighs the number of reviews as well as the average, so a 5.0 from three listeners does not outrank a 4.7 from thousands.
+                   * @description What to order by. 'relevance' is the search score. 'recentActivity' is the episode's publication date when searching episodes, and the podcast's most recent episode date when searching podcasts. 'title' orders alphabetically. 'appleReviews' and 'spotifyReviews' order by a rating that weighs the number of reviews as well as the average, so a 5.0 from three listeners does not outrank a 4.7 from thousands. Podcast-only metrics: 'estimatedListeners' orders by estimated monthly listeners, 'youtubeSubscribers' by total YouTube subscribers, 'youtubeViews' by total YouTube views, 'authorityScore' by authority score, and 'castboxSubscribers' by Castbox subscribers. These metrics always put missing values last and use relevance to break ties.
                    * @enum {string}
                    */
-                  field: 'relevance' | 'recentActivity' | 'title' | 'appleReviews' | 'spotifyReviews';
+                  field:
+                    | 'relevance'
+                    | 'recentActivity'
+                    | 'title'
+                    | 'appleReviews'
+                    | 'spotifyReviews'
+                    | 'estimatedListeners'
+                    | 'youtubeSubscribers'
+                    | 'youtubeViews'
+                    | 'authorityScore'
+                    | 'castboxSubscribers';
                   /**
                    * @description Sort direction. Defaults to 'asc' for 'title' and 'desc' for every other field.
                    * @enum {string}
                    */
                   direction?: 'asc' | 'desc';
                   /**
-                   * @description Where results that have no value for this field go. Defaults to 'last'. Ignored for 'relevance', which every result has.
+                   * @description Where results that have no value for this field go. Defaults to 'last'. Ignored for 'relevance' and the podcast-only metrics.
                    * @enum {string}
                    */
                   nullOrder?: 'first' | 'last';
@@ -1796,10 +1806,10 @@ export interface operations {
                   /** @description Inclusive maximum monthly audience estimate */
                   max?: number;
                 };
-                /** @description Specify how results should be sorted */
+                /** @description Specify how episode results should be sorted */
                 sortOrder?: {
                   /**
-                   * @description What to order by. 'relevance' is the search score. 'recentActivity' is the episode's publication date when searching episodes, and the podcast's most recent episode date when searching podcasts. 'title' orders alphabetically. 'appleReviews' and 'spotifyReviews' order by a rating that weighs the number of reviews as well as the average, so a 5.0 from three listeners does not outrank a 4.7 from thousands.
+                   * @description Episode sort: relevance, publication date (recentActivity), title, Apple rating or Spotify rating. Audience, YouTube, authority and Castbox sorts are only available for podcast searches.
                    * @enum {string}
                    */
                   field: 'relevance' | 'recentActivity' | 'title' | 'appleReviews' | 'spotifyReviews';
@@ -1809,7 +1819,7 @@ export interface operations {
                    */
                   direction?: 'asc' | 'desc';
                   /**
-                   * @description Where results that have no value for this field go. Defaults to 'last'. Ignored for 'relevance', which every result has.
+                   * @description Where results that have no value for this field go. Defaults to 'last'. Ignored for 'relevance' and the podcast-only metrics.
                    * @enum {string}
                    */
                   nullOrder?: 'first' | 'last';
@@ -11278,17 +11288,27 @@ export interface operations {
           /** @description Specify how results should be sorted */
           sortOrder?: {
             /**
-             * @description What to order by. 'relevance' is the search score. 'recentActivity' is the episode's publication date when searching episodes, and the podcast's most recent episode date when searching podcasts. 'title' orders alphabetically. 'appleReviews' and 'spotifyReviews' order by a rating that weighs the number of reviews as well as the average, so a 5.0 from three listeners does not outrank a 4.7 from thousands.
+             * @description What to order by. 'relevance' is the search score. 'recentActivity' is the episode's publication date when searching episodes, and the podcast's most recent episode date when searching podcasts. 'title' orders alphabetically. 'appleReviews' and 'spotifyReviews' order by a rating that weighs the number of reviews as well as the average, so a 5.0 from three listeners does not outrank a 4.7 from thousands. Podcast-only metrics: 'estimatedListeners' orders by estimated monthly listeners, 'youtubeSubscribers' by total YouTube subscribers, 'youtubeViews' by total YouTube views, 'authorityScore' by authority score, and 'castboxSubscribers' by Castbox subscribers. These metrics always put missing values last and use relevance to break ties.
              * @enum {string}
              */
-            field: 'relevance' | 'recentActivity' | 'title' | 'appleReviews' | 'spotifyReviews';
+            field:
+              | 'relevance'
+              | 'recentActivity'
+              | 'title'
+              | 'appleReviews'
+              | 'spotifyReviews'
+              | 'estimatedListeners'
+              | 'youtubeSubscribers'
+              | 'youtubeViews'
+              | 'authorityScore'
+              | 'castboxSubscribers';
             /**
              * @description Sort direction. Defaults to 'asc' for 'title' and 'desc' for every other field.
              * @enum {string}
              */
             direction?: 'asc' | 'desc';
             /**
-             * @description Where results that have no value for this field go. Defaults to 'last'. Ignored for 'relevance', which every result has.
+             * @description Where results that have no value for this field go. Defaults to 'last'. Ignored for 'relevance' and the podcast-only metrics.
              * @enum {string}
              */
             nullOrder?: 'first' | 'last';
@@ -11485,17 +11505,27 @@ export interface operations {
                 /** @description Specify how results should be sorted */
                 sortOrder?: {
                   /**
-                   * @description What to order by. 'relevance' is the search score. 'recentActivity' is the episode's publication date when searching episodes, and the podcast's most recent episode date when searching podcasts. 'title' orders alphabetically. 'appleReviews' and 'spotifyReviews' order by a rating that weighs the number of reviews as well as the average, so a 5.0 from three listeners does not outrank a 4.7 from thousands.
+                   * @description What to order by. 'relevance' is the search score. 'recentActivity' is the episode's publication date when searching episodes, and the podcast's most recent episode date when searching podcasts. 'title' orders alphabetically. 'appleReviews' and 'spotifyReviews' order by a rating that weighs the number of reviews as well as the average, so a 5.0 from three listeners does not outrank a 4.7 from thousands. Podcast-only metrics: 'estimatedListeners' orders by estimated monthly listeners, 'youtubeSubscribers' by total YouTube subscribers, 'youtubeViews' by total YouTube views, 'authorityScore' by authority score, and 'castboxSubscribers' by Castbox subscribers. These metrics always put missing values last and use relevance to break ties.
                    * @enum {string}
                    */
-                  field: 'relevance' | 'recentActivity' | 'title' | 'appleReviews' | 'spotifyReviews';
+                  field:
+                    | 'relevance'
+                    | 'recentActivity'
+                    | 'title'
+                    | 'appleReviews'
+                    | 'spotifyReviews'
+                    | 'estimatedListeners'
+                    | 'youtubeSubscribers'
+                    | 'youtubeViews'
+                    | 'authorityScore'
+                    | 'castboxSubscribers';
                   /**
                    * @description Sort direction. Defaults to 'asc' for 'title' and 'desc' for every other field.
                    * @enum {string}
                    */
                   direction?: 'asc' | 'desc';
                   /**
-                   * @description Where results that have no value for this field go. Defaults to 'last'. Ignored for 'relevance', which every result has.
+                   * @description Where results that have no value for this field go. Defaults to 'last'. Ignored for 'relevance' and the podcast-only metrics.
                    * @enum {string}
                    */
                   nullOrder?: 'first' | 'last';
@@ -12073,10 +12103,10 @@ export interface operations {
             /** @description Inclusive maximum monthly audience estimate */
             max?: number;
           };
-          /** @description Specify how results should be sorted */
+          /** @description Specify how episode results should be sorted */
           sortOrder?: {
             /**
-             * @description What to order by. 'relevance' is the search score. 'recentActivity' is the episode's publication date when searching episodes, and the podcast's most recent episode date when searching podcasts. 'title' orders alphabetically. 'appleReviews' and 'spotifyReviews' order by a rating that weighs the number of reviews as well as the average, so a 5.0 from three listeners does not outrank a 4.7 from thousands.
+             * @description Episode sort: relevance, publication date (recentActivity), title, Apple rating or Spotify rating. Audience, YouTube, authority and Castbox sorts are only available for podcast searches.
              * @enum {string}
              */
             field: 'relevance' | 'recentActivity' | 'title' | 'appleReviews' | 'spotifyReviews';
@@ -12086,7 +12116,7 @@ export interface operations {
              */
             direction?: 'asc' | 'desc';
             /**
-             * @description Where results that have no value for this field go. Defaults to 'last'. Ignored for 'relevance', which every result has.
+             * @description Where results that have no value for this field go. Defaults to 'last'. Ignored for 'relevance' and the podcast-only metrics.
              * @enum {string}
              */
             nullOrder?: 'first' | 'last';
@@ -12341,10 +12371,10 @@ export interface operations {
                   /** @description Inclusive maximum monthly audience estimate */
                   max?: number;
                 };
-                /** @description Specify how results should be sorted */
+                /** @description Specify how episode results should be sorted */
                 sortOrder?: {
                   /**
-                   * @description What to order by. 'relevance' is the search score. 'recentActivity' is the episode's publication date when searching episodes, and the podcast's most recent episode date when searching podcasts. 'title' orders alphabetically. 'appleReviews' and 'spotifyReviews' order by a rating that weighs the number of reviews as well as the average, so a 5.0 from three listeners does not outrank a 4.7 from thousands.
+                   * @description Episode sort: relevance, publication date (recentActivity), title, Apple rating or Spotify rating. Audience, YouTube, authority and Castbox sorts are only available for podcast searches.
                    * @enum {string}
                    */
                   field: 'relevance' | 'recentActivity' | 'title' | 'appleReviews' | 'spotifyReviews';
@@ -12354,7 +12384,7 @@ export interface operations {
                    */
                   direction?: 'asc' | 'desc';
                   /**
-                   * @description Where results that have no value for this field go. Defaults to 'last'. Ignored for 'relevance', which every result has.
+                   * @description Where results that have no value for this field go. Defaults to 'last'. Ignored for 'relevance' and the podcast-only metrics.
                    * @enum {string}
                    */
                   nullOrder?: 'first' | 'last';

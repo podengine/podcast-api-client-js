@@ -567,9 +567,14 @@
                                     "recentActivity",
                                     "title",
                                     "appleReviews",
-                                    "spotifyReviews"
+                                    "spotifyReviews",
+                                    "estimatedListeners",
+                                    "youtubeSubscribers",
+                                    "youtubeViews",
+                                    "authorityScore",
+                                    "castboxSubscribers"
                                   ],
-                                  "description": "What to order by. 'relevance' is the search score. 'recentActivity' is the episode's publication date when searching episodes, and the podcast's most recent episode date when searching podcasts. 'title' orders alphabetically. 'appleReviews' and 'spotifyReviews' order by a rating that weighs the number of reviews as well as the average, so a 5.0 from three listeners does not outrank a 4.7 from thousands."
+                                  "description": "What to order by. 'relevance' is the search score. 'recentActivity' is the episode's publication date when searching episodes, and the podcast's most recent episode date when searching podcasts. 'title' orders alphabetically. 'appleReviews' and 'spotifyReviews' order by a rating that weighs the number of reviews as well as the average, so a 5.0 from three listeners does not outrank a 4.7 from thousands. Podcast-only metrics: 'estimatedListeners' orders by estimated monthly listeners, 'youtubeSubscribers' by total YouTube subscribers, 'youtubeViews' by total YouTube views, 'authorityScore' by authority score, and 'castboxSubscribers' by Castbox subscribers. These metrics always put missing values last and use relevance to break ties."
                                 },
                                 "direction": {
                                   "description": "Sort direction. Defaults to 'asc' for 'title' and 'desc' for every other field.",
@@ -580,7 +585,7 @@
                                   ]
                                 },
                                 "nullOrder": {
-                                  "description": "Where results that have no value for this field go. Defaults to 'last'. Ignored for 'relevance', which every result has.",
+                                  "description": "Where results that have no value for this field go. Defaults to 'last'. Ignored for 'relevance' and the podcast-only metrics.",
                                   "type": "string",
                                   "enum": [
                                     "first",
@@ -1060,7 +1065,7 @@
                             "additionalProperties": false
                           },
                           "sortOrder": {
-                            "description": "Specify how results should be sorted",
+                            "description": "Specify how episode results should be sorted",
                             "type": "array",
                             "items": {
                               "type": "object",
@@ -1074,7 +1079,7 @@
                                     "appleReviews",
                                     "spotifyReviews"
                                   ],
-                                  "description": "What to order by. 'relevance' is the search score. 'recentActivity' is the episode's publication date when searching episodes, and the podcast's most recent episode date when searching podcasts. 'title' orders alphabetically. 'appleReviews' and 'spotifyReviews' order by a rating that weighs the number of reviews as well as the average, so a 5.0 from three listeners does not outrank a 4.7 from thousands."
+                                  "description": "Episode sort: relevance, publication date (recentActivity), title, Apple rating or Spotify rating. Audience, YouTube, authority and Castbox sorts are only available for podcast searches."
                                 },
                                 "direction": {
                                   "description": "Sort direction. Defaults to 'asc' for 'title' and 'desc' for every other field.",
@@ -1085,7 +1090,7 @@
                                   ]
                                 },
                                 "nullOrder": {
-                                  "description": "Where results that have no value for this field go. Defaults to 'last'. Ignored for 'relevance', which every result has.",
+                                  "description": "Where results that have no value for this field go. Defaults to 'last'. Ignored for 'relevance' and the podcast-only metrics.",
                                   "type": "string",
                                   "enum": [
                                     "first",
@@ -25563,9 +25568,14 @@
                             "recentActivity",
                             "title",
                             "appleReviews",
-                            "spotifyReviews"
+                            "spotifyReviews",
+                            "estimatedListeners",
+                            "youtubeSubscribers",
+                            "youtubeViews",
+                            "authorityScore",
+                            "castboxSubscribers"
                           ],
-                          "description": "What to order by. 'relevance' is the search score. 'recentActivity' is the episode's publication date when searching episodes, and the podcast's most recent episode date when searching podcasts. 'title' orders alphabetically. 'appleReviews' and 'spotifyReviews' order by a rating that weighs the number of reviews as well as the average, so a 5.0 from three listeners does not outrank a 4.7 from thousands."
+                          "description": "What to order by. 'relevance' is the search score. 'recentActivity' is the episode's publication date when searching episodes, and the podcast's most recent episode date when searching podcasts. 'title' orders alphabetically. 'appleReviews' and 'spotifyReviews' order by a rating that weighs the number of reviews as well as the average, so a 5.0 from three listeners does not outrank a 4.7 from thousands. Podcast-only metrics: 'estimatedListeners' orders by estimated monthly listeners, 'youtubeSubscribers' by total YouTube subscribers, 'youtubeViews' by total YouTube views, 'authorityScore' by authority score, and 'castboxSubscribers' by Castbox subscribers. These metrics always put missing values last and use relevance to break ties."
                         },
                         "direction": {
                           "description": "Sort direction. Defaults to 'asc' for 'title' and 'desc' for every other field.",
@@ -25576,7 +25586,7 @@
                           ]
                         },
                         "nullOrder": {
-                          "description": "Where results that have no value for this field go. Defaults to 'last'. Ignored for 'relevance', which every result has.",
+                          "description": "Where results that have no value for this field go. Defaults to 'last'. Ignored for 'relevance' and the podcast-only metrics.",
                           "type": "string",
                           "enum": [
                             "first",
@@ -26094,9 +26104,14 @@
                                       "recentActivity",
                                       "title",
                                       "appleReviews",
-                                      "spotifyReviews"
+                                      "spotifyReviews",
+                                      "estimatedListeners",
+                                      "youtubeSubscribers",
+                                      "youtubeViews",
+                                      "authorityScore",
+                                      "castboxSubscribers"
                                     ],
-                                    "description": "What to order by. 'relevance' is the search score. 'recentActivity' is the episode's publication date when searching episodes, and the podcast's most recent episode date when searching podcasts. 'title' orders alphabetically. 'appleReviews' and 'spotifyReviews' order by a rating that weighs the number of reviews as well as the average, so a 5.0 from three listeners does not outrank a 4.7 from thousands."
+                                    "description": "What to order by. 'relevance' is the search score. 'recentActivity' is the episode's publication date when searching episodes, and the podcast's most recent episode date when searching podcasts. 'title' orders alphabetically. 'appleReviews' and 'spotifyReviews' order by a rating that weighs the number of reviews as well as the average, so a 5.0 from three listeners does not outrank a 4.7 from thousands. Podcast-only metrics: 'estimatedListeners' orders by estimated monthly listeners, 'youtubeSubscribers' by total YouTube subscribers, 'youtubeViews' by total YouTube views, 'authorityScore' by authority score, and 'castboxSubscribers' by Castbox subscribers. These metrics always put missing values last and use relevance to break ties."
                                   },
                                   "direction": {
                                     "description": "Sort direction. Defaults to 'asc' for 'title' and 'desc' for every other field.",
@@ -26107,7 +26122,7 @@
                                     ]
                                   },
                                   "nullOrder": {
-                                    "description": "Where results that have no value for this field go. Defaults to 'last'. Ignored for 'relevance', which every result has.",
+                                    "description": "Where results that have no value for this field go. Defaults to 'last'. Ignored for 'relevance' and the podcast-only metrics.",
                                     "type": "string",
                                     "enum": [
                                       "first",
@@ -27991,7 +28006,7 @@
                     "additionalProperties": false
                   },
                   "sortOrder": {
-                    "description": "Specify how results should be sorted",
+                    "description": "Specify how episode results should be sorted",
                     "type": "array",
                     "items": {
                       "type": "object",
@@ -28005,7 +28020,7 @@
                             "appleReviews",
                             "spotifyReviews"
                           ],
-                          "description": "What to order by. 'relevance' is the search score. 'recentActivity' is the episode's publication date when searching episodes, and the podcast's most recent episode date when searching podcasts. 'title' orders alphabetically. 'appleReviews' and 'spotifyReviews' order by a rating that weighs the number of reviews as well as the average, so a 5.0 from three listeners does not outrank a 4.7 from thousands."
+                          "description": "Episode sort: relevance, publication date (recentActivity), title, Apple rating or Spotify rating. Audience, YouTube, authority and Castbox sorts are only available for podcast searches."
                         },
                         "direction": {
                           "description": "Sort direction. Defaults to 'asc' for 'title' and 'desc' for every other field.",
@@ -28016,7 +28031,7 @@
                           ]
                         },
                         "nullOrder": {
-                          "description": "Where results that have no value for this field go. Defaults to 'last'. Ignored for 'relevance', which every result has.",
+                          "description": "Where results that have no value for this field go. Defaults to 'last'. Ignored for 'relevance' and the podcast-only metrics.",
                           "type": "string",
                           "enum": [
                             "first",
@@ -28649,7 +28664,7 @@
                               "additionalProperties": false
                             },
                             "sortOrder": {
-                              "description": "Specify how results should be sorted",
+                              "description": "Specify how episode results should be sorted",
                               "type": "array",
                               "items": {
                                 "type": "object",
@@ -28663,7 +28678,7 @@
                                       "appleReviews",
                                       "spotifyReviews"
                                     ],
-                                    "description": "What to order by. 'relevance' is the search score. 'recentActivity' is the episode's publication date when searching episodes, and the podcast's most recent episode date when searching podcasts. 'title' orders alphabetically. 'appleReviews' and 'spotifyReviews' order by a rating that weighs the number of reviews as well as the average, so a 5.0 from three listeners does not outrank a 4.7 from thousands."
+                                    "description": "Episode sort: relevance, publication date (recentActivity), title, Apple rating or Spotify rating. Audience, YouTube, authority and Castbox sorts are only available for podcast searches."
                                   },
                                   "direction": {
                                     "description": "Sort direction. Defaults to 'asc' for 'title' and 'desc' for every other field.",
@@ -28674,7 +28689,7 @@
                                     ]
                                   },
                                   "nullOrder": {
-                                    "description": "Where results that have no value for this field go. Defaults to 'last'. Ignored for 'relevance', which every result has.",
+                                    "description": "Where results that have no value for this field go. Defaults to 'last'. Ignored for 'relevance' and the podcast-only metrics.",
                                     "type": "string",
                                     "enum": [
                                       "first",
