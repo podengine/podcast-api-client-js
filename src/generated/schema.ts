@@ -7810,6 +7810,8 @@ export interface operations {
                     lastVideoUploadDateCheckedAt: unknown | null;
                     /** @enum {string|null} */
                     associationTier?: 'associated' | 'candidate' | 'unverified' | null;
+                    /** @enum {string|null} */
+                    associationRole?: 'primary' | 'valid_secondary' | null;
                     statsHistory?: {
                       recordedAt: unknown;
                       subscriberCount: number;
@@ -9515,6 +9517,8 @@ export interface operations {
                   lastVideoUploadDateCheckedAt: unknown | null;
                   /** @enum {string|null} */
                   associationTier?: 'associated' | 'candidate' | 'unverified' | null;
+                  /** @enum {string|null} */
+                  associationRole?: 'primary' | 'valid_secondary' | null;
                   statsHistory?: {
                     recordedAt: unknown;
                     subscriberCount: number;

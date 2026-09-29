@@ -16333,6 +16333,16 @@
                                           "unverified"
                                         ]
                                       },
+                                      "associationRole": {
+                                        "type": [
+                                          "string",
+                                          "null"
+                                        ],
+                                        "enum": [
+                                          "primary",
+                                          "valid_secondary"
+                                        ]
+                                      },
                                       "statsHistory": {
                                         "type": "array",
                                         "items": {
@@ -21023,6 +21033,16 @@
                                       "associated",
                                       "candidate",
                                       "unverified"
+                                    ]
+                                  },
+                                  "associationRole": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ],
+                                    "enum": [
+                                      "primary",
+                                      "valid_secondary"
                                     ]
                                   },
                                   "statsHistory": {
