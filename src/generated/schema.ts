@@ -11977,6 +11977,11 @@ export interface operations {
                     | {
                         /** @description The date of the chart position in YYYY-MM-DD format. */
                         date: string;
+                        /**
+                         * Format: date
+                         * @description Newest known edition of this platform/country/category chart when calculated (UTC YYYY-MM-DD). Equal to date means present on the latest known edition, which may itself be old. A later date means newer chart results exist without this podcast. Absent on documents awaiting freshness backfill.
+                         */
+                        chart_latest_date?: string;
                         /** @description The type of chart (e.g., "apple", "spotify"). */
                         chart_type: string;
                         /** @description The ISO country code where this chart position applies. */
@@ -11997,6 +12002,8 @@ export interface operations {
                         days_streak_count: number;
                       }[]
                     | null;
+                  /** Format: date-time */
+                  chartPositionsCalculatedAt?: Date | null;
                   ignore?: boolean | null;
                   podcastAffiliationOrganizationName?: string | null;
                   podcastAffiliationType?: string | null;
@@ -12960,6 +12967,11 @@ export interface operations {
                     | {
                         /** @description The date of the chart position in YYYY-MM-DD format. */
                         date: string;
+                        /**
+                         * Format: date
+                         * @description Newest known edition of this platform/country/category chart when calculated (UTC YYYY-MM-DD). Equal to date means present on the latest known edition, which may itself be old. A later date means newer chart results exist without this podcast. Absent on documents awaiting freshness backfill.
+                         */
+                        chart_latest_date?: string;
                         /** @description The type of chart (e.g., "apple", "spotify"). */
                         chart_type: string;
                         /** @description The ISO country code where this chart position applies. */
@@ -12980,6 +12992,8 @@ export interface operations {
                         days_streak_count: number;
                       }[]
                     | null;
+                  /** Format: date-time */
+                  chartPositionsCalculatedAt?: Date | null;
                   ignore?: boolean | null;
                   podcastAffiliationOrganizationName?: string | null;
                   podcastAffiliationType?: string | null;

@@ -27219,6 +27219,12 @@
                                           "type": "string",
                                           "description": "The date of the chart position in YYYY-MM-DD format."
                                         },
+                                        "chart_latest_date": {
+                                          "description": "Newest known edition of this platform/country/category chart when calculated (UTC YYYY-MM-DD). Equal to date means present on the latest known edition, which may itself be old. A later date means newer chart results exist without this podcast. Absent on documents awaiting freshness backfill.",
+                                          "type": "string",
+                                          "format": "date",
+                                          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))$"
+                                        },
                                         "chart_type": {
                                           "type": "string",
                                           "description": "The type of chart (e.g., \"apple\", \"spotify\")."
@@ -27279,6 +27285,13 @@
                                       ],
                                       "additionalProperties": false
                                     }
+                                  },
+                                  "chartPositionsCalculatedAt": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ],
+                                    "format": "date-time"
                                   },
                                   "ignore": {
                                     "type": [
@@ -30144,6 +30157,12 @@
                                           "type": "string",
                                           "description": "The date of the chart position in YYYY-MM-DD format."
                                         },
+                                        "chart_latest_date": {
+                                          "description": "Newest known edition of this platform/country/category chart when calculated (UTC YYYY-MM-DD). Equal to date means present on the latest known edition, which may itself be old. A later date means newer chart results exist without this podcast. Absent on documents awaiting freshness backfill.",
+                                          "type": "string",
+                                          "format": "date",
+                                          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))$"
+                                        },
                                         "chart_type": {
                                           "type": "string",
                                           "description": "The type of chart (e.g., \"apple\", \"spotify\")."
@@ -30204,6 +30223,13 @@
                                       ],
                                       "additionalProperties": false
                                     }
+                                  },
+                                  "chartPositionsCalculatedAt": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ],
+                                    "format": "date-time"
                                   },
                                   "ignore": {
                                     "type": [
