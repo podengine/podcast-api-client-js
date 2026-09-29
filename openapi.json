@@ -15248,7 +15248,13 @@
                                           "author": {
                                             "type": "string"
                                           },
-                                          "reviewedAt": {}
+                                          "reviewedAt": {},
+                                          "matchedWords": {
+                                            "type": "array",
+                                            "items": {
+                                              "type": "string"
+                                            }
+                                          }
                                         },
                                         "required": [
                                           "country",
@@ -18384,6 +18390,30 @@
               "minimum": 1,
               "maximum": 5
             }
+          },
+          {
+            "name": "q",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "description": "Full-text search over review titles and text (English stemming, so \"rerun\" matches \"reruns\"). Every word must match; use quotes for a phrase and a leading - to exclude a word. Matching words are returned in each review's matchedWords.",
+              "type": "string",
+              "maxLength": 200
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "description": "Order of the review text: newest (default), lowest rating first, or highest rating first. Ties go newest first.",
+              "type": "string",
+              "enum": [
+                "newest",
+                "lowest",
+                "highest"
+              ]
+            }
           }
         ],
         "responses": {
@@ -18653,7 +18683,13 @@
                                       "author": {
                                         "type": "string"
                                       },
-                                      "reviewedAt": {}
+                                      "reviewedAt": {},
+                                      "matchedWords": {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "string"
+                                        }
+                                      }
                                     },
                                     "required": [
                                       "country",

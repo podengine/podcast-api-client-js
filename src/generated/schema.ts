@@ -7546,6 +7546,7 @@ export interface operations {
                       body: string;
                       author: string;
                       reviewedAt: unknown;
+                      matchedWords?: string[];
                     }[];
                   } | null;
                   spotifyReview: {
@@ -8588,6 +8589,8 @@ export interface operations {
         offset?: number;
         minRating?: number;
         maxRating?: number;
+        q?: string;
+        sort?: 'newest' | 'lowest' | 'highest';
       };
       header?: never;
       path: {
@@ -8671,6 +8674,7 @@ export interface operations {
                     body: string;
                     author: string;
                     reviewedAt: unknown;
+                    matchedWords?: string[];
                   }[];
                 } | null;
                 spotifyReview: {

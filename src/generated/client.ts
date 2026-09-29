@@ -647,7 +647,7 @@ const descriptors = {
     method: 'GET',
     path: '/api/v1/podcasts/{podcastIdOrSlug}/reviews',
     pathParams: ['podcastIdOrSlug'],
-    queryParams: ['country', 'limit', 'offset', 'minRating', 'maxRating'],
+    queryParams: ['country', 'limit', 'offset', 'minRating', 'maxRating', 'q', 'sort'],
     body: 'none',
     binary: false,
   },
