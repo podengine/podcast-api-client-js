@@ -29863,6 +29863,27 @@
                               "items": {
                                 "type": "object",
                                 "properties": {
+                                  "episodeAudioKey": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "episodePodcastLanguageDenormalized": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "episodePodcastTopGenresDenormalized": {
+                                    "type": [
+                                      "array",
+                                      "null"
+                                    ],
+                                    "items": {
+                                      "type": "string"
+                                    }
+                                  },
                                   "episodeCreatedAt": {
                                     "type": "string",
                                     "format": "date-time"

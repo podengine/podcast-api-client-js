@@ -12886,6 +12886,9 @@ export interface operations {
                 hitsReturned: number;
                 /** @description Matching episodes with parent podcast fields. Optional fields depend on the requested field selections. */
                 hits: {
+                  episodeAudioKey?: string | null;
+                  episodePodcastLanguageDenormalized?: string | null;
+                  episodePodcastTopGenresDenormalized?: string[] | null;
                   /** Format: date-time */
                   episodeCreatedAt?: Date;
                   /** Format: date-time */
