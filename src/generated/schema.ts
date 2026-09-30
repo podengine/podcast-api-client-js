@@ -911,6 +911,26 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  '/api/v1/podcasts/{podcastIdOrSlug}/charts/presence': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /**
+     * Podcast Chart Presence
+     * @description Current and historical charts for a podcast, with 14 UTC weekly best-rank cells and capture-based coverage.
+     */
+    get: operations['getPodcastChartPresence'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   '/api/v1/podcasts/{podcastIdOrSlug}/charts': {
     parameters: {
       query?: never;
@@ -4040,7 +4060,7 @@ export interface operations {
         chartType?: 'apple' | 'spotify';
         category?: string;
         country?: string;
-        range?: '30d' | '90d' | '6m' | '1y' | 'all';
+        range?: '30d' | '90d' | '14w' | '6m' | '1y' | 'all';
         date?: string;
       };
       header?: never;
@@ -4126,10 +4146,10 @@ export interface operations {
                 };
                 range: {
                   /**
-                   * @description History range ending on date. 30d and 90d return daily points; 6m, 1y and all return Monday-Sunday UTC weekly buckets clipped to the range.
+                   * @description History range ending on date. 30d and 90d return daily points; 14w returns daily points for the current UTC week and 13 preceding Monday-Sunday weeks; 6m, 1y and all return Monday-Sunday UTC weekly buckets clipped to the range.
                    * @enum {string}
                    */
-                  range: '30d' | '90d' | '6m' | '1y' | 'all';
+                  range: '30d' | '90d' | '14w' | '6m' | '1y' | 'all';
                   /** @description The date of the chart in YYYY-MM-DD format */
                   startDate: string;
                   /** @description The date of the chart in YYYY-MM-DD format */
@@ -9019,6 +9039,148 @@ export interface operations {
                   appearancesCount: number;
                   mostRecentAppearanceDate: unknown;
                   oldestAppearanceDate: unknown;
+                }[];
+              };
+            };
+          };
+        };
+      };
+      /** @description Bad request */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Authentication required */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Forbidden — plan does not include this endpoint */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Not found */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Rate limit exceeded */
+      429: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+    };
+  };
+  getPodcastChartPresence: {
+    parameters: {
+      query?: {
+        endDate?: string;
+      };
+      header?: never;
+      path: {
+        podcastIdOrSlug: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Success */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': {
+            /** @enum {string} */
+            status: 'OK';
+            data: {
+              presence: {
+                window: {
+                  /** @description The date of the chart in YYYY-MM-DD format */
+                  startDate: string;
+                  /** @description The date of the chart in YYYY-MM-DD format */
+                  endDate: string;
+                  weeks: {
+                    /** @description The date of the chart in YYYY-MM-DD format */
+                    startDate: string;
+                    /** @description The date of the chart in YYYY-MM-DD format */
+                    endDate: string;
+                    isPartial: boolean;
+                  }[];
+                };
+                /** @description The date of the chart in YYYY-MM-DD format */
+                latestChartDate: string | null;
+                homeCountry: string | null;
+                summary: {
+                  onNow: number;
+                  markets: number;
+                  onNowByPlatform: {
+                    apple: number;
+                    spotify: number;
+                  };
+                  droppedOff30d: number;
+                  older: number;
+                  top10Now: number;
+                };
+                charts: {
+                  /**
+                   * @description The type of chart, one of apple, spotify
+                   * @enum {string}
+                   */
+                  chartType: 'apple' | 'spotify';
+                  /** @description The country of the chart in ISO 3166-1 alpha-2 format, for example "us". Defaults to us. */
+                  country: string;
+                  /** @description The chart category defaulting to 'top podcasts'. Apple podcasts supports the following: "top podcasts", "arts", "business", "comedy", "education", "fiction", "government", "health & fitness", "history", "kids & family", "leisure", "music", "news", "religion & spirituality", "science", "society & culture", "sports", "technology", "true crime", "tv & film" */
+                  category: string;
+                  /** @enum {string} */
+                  state: 'on_now' | 'dropped_30d' | 'older' | 'unknown';
+                  /** @description The date of the chart in YYYY-MM-DD format */
+                  latestCaptureDate: string;
+                  lastSeen: {
+                    /** @description The date of the chart in YYYY-MM-DD format */
+                    date: string;
+                    position: number;
+                  };
+                  previous: {
+                    /** @description The date of the chart in YYYY-MM-DD format */
+                    date: string;
+                    position: number;
+                  } | null;
+                  /** @enum {string} */
+                  changeKind: 'moved' | 'unchanged' | 'new' | 'back' | 'off' | 'unknown';
+                  change: number | null;
+                  weeks: {
+                    best: number | null;
+                    /**
+                     * @description observed: ranked that day. off_chart: a fully resolved chart exists and the show is not on it. no_chart: no chart was captured that day. unknown: a chart exists but its coverage cannot prove absence.
+                     * @enum {string}
+                     */
+                    status: 'observed' | 'off_chart' | 'no_chart' | 'unknown';
+                  }[];
+                  weeksOn: number;
+                  weeksCaptured: number;
+                  capturesInWindow: number;
+                  daysOnChartInWindow: number;
+                  bestInWindow: number | null;
+                  averageInWindow: number | null;
+                  bestAllTime: {
+                    /** @description The date of the chart in YYYY-MM-DD format */
+                    date: string;
+                    position: number;
+                  };
+                  /** @description The date of the chart in YYYY-MM-DD format */
+                  firstSeenDate: string;
                 }[];
               };
             };

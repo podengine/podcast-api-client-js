@@ -7091,11 +7091,12 @@
               "enum": [
                 "30d",
                 "90d",
+                "14w",
                 "6m",
                 "1y",
                 "all"
               ],
-              "description": "History range ending on date. 30d and 90d return daily points; 6m, 1y and all return Monday-Sunday UTC weekly buckets clipped to the range."
+              "description": "History range ending on date. 30d and 90d return daily points; 14w returns daily points for the current UTC week and 13 preceding Monday-Sunday weeks; 6m, 1y and all return Monday-Sunday UTC weekly buckets clipped to the range."
             }
           },
           {
@@ -7359,11 +7360,12 @@
                                   "enum": [
                                     "30d",
                                     "90d",
+                                    "14w",
                                     "6m",
                                     "1y",
                                     "all"
                                   ],
-                                  "description": "History range ending on date. 30d and 90d return daily points; 6m, 1y and all return Monday-Sunday UTC weekly buckets clipped to the range."
+                                  "description": "History range ending on date. 30d and 90d return daily points; 14w returns daily points for the current UTC week and 13 preceding Monday-Sunday weeks; 6m, 1y and all return Monday-Sunday UTC weekly buckets clipped to the range."
                                 },
                                 "startDate": {
                                   "type": "string",
@@ -19606,6 +19608,424 @@
                       "required": [
                         "podcast",
                         "sponsors"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "data"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Forbidden — plan does not include this endpoint"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/podcasts/{podcastIdOrSlug}/charts/presence": {
+      "get": {
+        "tags": [
+          "podcasts"
+        ],
+        "summary": "Podcast Chart Presence",
+        "description": "Current and historical charts for a podcast, with 14 UTC weekly best-rank cells and capture-based coverage.",
+        "operationId": "getPodcastChartPresence",
+        "parameters": [
+          {
+            "name": "podcastIdOrSlug",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "Podengine ID, Apple ID, or slug"
+            }
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+              "description": "The date of the chart in YYYY-MM-DD format"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "OK"
+                      ]
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "presence": {
+                          "type": "object",
+                          "properties": {
+                            "window": {
+                              "type": "object",
+                              "properties": {
+                                "startDate": {
+                                  "type": "string",
+                                  "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+                                  "description": "The date of the chart in YYYY-MM-DD format"
+                                },
+                                "endDate": {
+                                  "type": "string",
+                                  "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+                                  "description": "The date of the chart in YYYY-MM-DD format"
+                                },
+                                "weeks": {
+                                  "minItems": 14,
+                                  "maxItems": 14,
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "startDate": {
+                                        "type": "string",
+                                        "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+                                        "description": "The date of the chart in YYYY-MM-DD format"
+                                      },
+                                      "endDate": {
+                                        "type": "string",
+                                        "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+                                        "description": "The date of the chart in YYYY-MM-DD format"
+                                      },
+                                      "isPartial": {
+                                        "type": "boolean"
+                                      }
+                                    },
+                                    "required": [
+                                      "startDate",
+                                      "endDate",
+                                      "isPartial"
+                                    ],
+                                    "additionalProperties": false
+                                  }
+                                }
+                              },
+                              "required": [
+                                "startDate",
+                                "endDate",
+                                "weeks"
+                              ],
+                              "additionalProperties": false
+                            },
+                            "latestChartDate": {
+                              "type": [
+                                "string",
+                                "null"
+                              ],
+                              "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+                              "description": "The date of the chart in YYYY-MM-DD format"
+                            },
+                            "homeCountry": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "summary": {
+                              "type": "object",
+                              "properties": {
+                                "onNow": {
+                                  "type": "number"
+                                },
+                                "markets": {
+                                  "type": "number"
+                                },
+                                "onNowByPlatform": {
+                                  "type": "object",
+                                  "properties": {
+                                    "apple": {
+                                      "type": "number"
+                                    },
+                                    "spotify": {
+                                      "type": "number"
+                                    }
+                                  },
+                                  "required": [
+                                    "apple",
+                                    "spotify"
+                                  ],
+                                  "additionalProperties": false
+                                },
+                                "droppedOff30d": {
+                                  "type": "number"
+                                },
+                                "older": {
+                                  "type": "number"
+                                },
+                                "top10Now": {
+                                  "type": "number"
+                                }
+                              },
+                              "required": [
+                                "onNow",
+                                "markets",
+                                "onNowByPlatform",
+                                "droppedOff30d",
+                                "older",
+                                "top10Now"
+                              ],
+                              "additionalProperties": false
+                            },
+                            "charts": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "chartType": {
+                                    "type": "string",
+                                    "enum": [
+                                      "apple",
+                                      "spotify"
+                                    ],
+                                    "description": "The type of chart, one of apple, spotify"
+                                  },
+                                  "country": {
+                                    "type": "string",
+                                    "description": "The country of the chart in ISO 3166-1 alpha-2 format, for example \"us\". Defaults to us."
+                                  },
+                                  "category": {
+                                    "type": "string",
+                                    "description": "The chart category defaulting to 'top podcasts'. Apple podcasts supports the following: \"top podcasts\", \"arts\", \"business\", \"comedy\", \"education\", \"fiction\", \"government\", \"health & fitness\", \"history\", \"kids & family\", \"leisure\", \"music\", \"news\", \"religion & spirituality\", \"science\", \"society & culture\", \"sports\", \"technology\", \"true crime\", \"tv & film\""
+                                  },
+                                  "state": {
+                                    "type": "string",
+                                    "enum": [
+                                      "on_now",
+                                      "dropped_30d",
+                                      "older",
+                                      "unknown"
+                                    ]
+                                  },
+                                  "latestCaptureDate": {
+                                    "type": "string",
+                                    "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+                                    "description": "The date of the chart in YYYY-MM-DD format"
+                                  },
+                                  "lastSeen": {
+                                    "type": "object",
+                                    "properties": {
+                                      "date": {
+                                        "type": "string",
+                                        "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+                                        "description": "The date of the chart in YYYY-MM-DD format"
+                                      },
+                                      "position": {
+                                        "type": "integer",
+                                        "exclusiveMinimum": 0,
+                                        "maximum": 9007199254740991
+                                      }
+                                    },
+                                    "required": [
+                                      "date",
+                                      "position"
+                                    ],
+                                    "additionalProperties": false
+                                  },
+                                  "previous": {
+                                    "type": [
+                                      "object",
+                                      "null"
+                                    ],
+                                    "properties": {
+                                      "date": {
+                                        "type": "string",
+                                        "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+                                        "description": "The date of the chart in YYYY-MM-DD format"
+                                      },
+                                      "position": {
+                                        "type": "integer",
+                                        "exclusiveMinimum": 0,
+                                        "maximum": 9007199254740991
+                                      }
+                                    },
+                                    "required": [
+                                      "date",
+                                      "position"
+                                    ],
+                                    "additionalProperties": false
+                                  },
+                                  "changeKind": {
+                                    "type": "string",
+                                    "enum": [
+                                      "moved",
+                                      "unchanged",
+                                      "new",
+                                      "back",
+                                      "off",
+                                      "unknown"
+                                    ]
+                                  },
+                                  "change": {
+                                    "type": [
+                                      "integer",
+                                      "null"
+                                    ],
+                                    "minimum": -9007199254740991,
+                                    "maximum": 9007199254740991
+                                  },
+                                  "weeks": {
+                                    "minItems": 14,
+                                    "maxItems": 14,
+                                    "type": "array",
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "best": {
+                                          "type": [
+                                            "integer",
+                                            "null"
+                                          ],
+                                          "exclusiveMinimum": 0,
+                                          "maximum": 9007199254740991
+                                        },
+                                        "status": {
+                                          "type": "string",
+                                          "enum": [
+                                            "observed",
+                                            "off_chart",
+                                            "no_chart",
+                                            "unknown"
+                                          ],
+                                          "description": "observed: ranked that day. off_chart: a fully resolved chart exists and the show is not on it. no_chart: no chart was captured that day. unknown: a chart exists but its coverage cannot prove absence."
+                                        }
+                                      },
+                                      "required": [
+                                        "best",
+                                        "status"
+                                      ],
+                                      "additionalProperties": false
+                                    }
+                                  },
+                                  "weeksOn": {
+                                    "type": "integer",
+                                    "minimum": 0,
+                                    "maximum": 9007199254740991
+                                  },
+                                  "weeksCaptured": {
+                                    "type": "integer",
+                                    "minimum": 0,
+                                    "maximum": 9007199254740991
+                                  },
+                                  "capturesInWindow": {
+                                    "type": "integer",
+                                    "minimum": 0,
+                                    "maximum": 9007199254740991
+                                  },
+                                  "daysOnChartInWindow": {
+                                    "type": "integer",
+                                    "minimum": 0,
+                                    "maximum": 9007199254740991
+                                  },
+                                  "bestInWindow": {
+                                    "type": [
+                                      "number",
+                                      "null"
+                                    ]
+                                  },
+                                  "averageInWindow": {
+                                    "type": [
+                                      "number",
+                                      "null"
+                                    ]
+                                  },
+                                  "bestAllTime": {
+                                    "type": "object",
+                                    "properties": {
+                                      "date": {
+                                        "type": "string",
+                                        "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+                                        "description": "The date of the chart in YYYY-MM-DD format"
+                                      },
+                                      "position": {
+                                        "type": "integer",
+                                        "exclusiveMinimum": 0,
+                                        "maximum": 9007199254740991
+                                      }
+                                    },
+                                    "required": [
+                                      "date",
+                                      "position"
+                                    ],
+                                    "additionalProperties": false
+                                  },
+                                  "firstSeenDate": {
+                                    "type": "string",
+                                    "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+                                    "description": "The date of the chart in YYYY-MM-DD format"
+                                  }
+                                },
+                                "required": [
+                                  "chartType",
+                                  "country",
+                                  "category",
+                                  "state",
+                                  "latestCaptureDate",
+                                  "lastSeen",
+                                  "previous",
+                                  "changeKind",
+                                  "change",
+                                  "weeks",
+                                  "weeksOn",
+                                  "weeksCaptured",
+                                  "capturesInWindow",
+                                  "daysOnChartInWindow",
+                                  "bestInWindow",
+                                  "averageInWindow",
+                                  "bestAllTime",
+                                  "firstSeenDate"
+                                ],
+                                "additionalProperties": false
+                              }
+                            }
+                          },
+                          "required": [
+                            "window",
+                            "latestChartDate",
+                            "homeCountry",
+                            "summary",
+                            "charts"
+                          ],
+                          "additionalProperties": false
+                        }
+                      },
+                      "required": [
+                        "presence"
                       ],
                       "additionalProperties": false
                     }

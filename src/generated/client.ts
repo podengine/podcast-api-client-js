@@ -154,6 +154,10 @@ export type GetPodcastResponse = operations['getPodcast']['responses']['200']['c
 export type GetPodcastAllDetailsParams = NonNullable<operations['getPodcastAllDetails']['parameters']['path']>;
 export type GetPodcastAllDetailsResponse =
   operations['getPodcastAllDetails']['responses']['200']['content']['application/json']['data'];
+export type GetPodcastChartPresenceParams = NonNullable<operations['getPodcastChartPresence']['parameters']['path']> &
+  NonNullable<operations['getPodcastChartPresence']['parameters']['query']>;
+export type GetPodcastChartPresenceResponse =
+  operations['getPodcastChartPresence']['responses']['200']['content']['application/json']['data'];
 export type GetPodcastChartsParams = NonNullable<operations['getPodcastCharts']['parameters']['path']> &
   NonNullable<operations['getPodcastCharts']['parameters']['query']>;
 export type GetPodcastChartsResponse =
@@ -592,6 +596,14 @@ const descriptors = {
     path: '/api/v1/podcasts/{podcastIdOrSlug}/all-details',
     pathParams: ['podcastIdOrSlug'],
     queryParams: [],
+    body: 'none',
+    binary: false,
+  },
+  getPodcastChartPresence: {
+    method: 'GET',
+    path: '/api/v1/podcasts/{podcastIdOrSlug}/charts/presence',
+    pathParams: ['podcastIdOrSlug'],
+    queryParams: ['endDate'],
     body: 'none',
     binary: false,
   },
@@ -1297,6 +1309,17 @@ class PodcastsResource {
     options?: RequestOptions
   ): Promise<GetPodcastAllDetailsResponse> {
     return this.core.request(descriptors.getPodcastAllDetails, params as Record<string, unknown>, options);
+  }
+
+  /**
+   * Podcast Chart Presence
+   * Current and historical charts for a podcast, with 14 UTC weekly best-rank cells and capture-based coverage.
+   */
+  getPodcastChartPresence(
+    params: GetPodcastChartPresenceParams,
+    options?: RequestOptions
+  ): Promise<GetPodcastChartPresenceResponse> {
+    return this.core.request(descriptors.getPodcastChartPresence, params as Record<string, unknown>, options);
   }
 
   /**
