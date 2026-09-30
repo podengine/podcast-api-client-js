@@ -7821,6 +7821,12 @@ export interface operations {
                             slug: string;
                             title: string;
                           } | null;
+                          likeCount?: number | null;
+                          commentCount?: number | null;
+                          readings?: {
+                            recordedAt: unknown;
+                            viewCount: number;
+                          }[];
                         }[]
                       | null;
                     profileImageUrl: string | null;
@@ -7835,7 +7841,14 @@ export interface operations {
                     statsHistory?: {
                       recordedAt: unknown;
                       subscriberCount: number;
+                      viewCount?: number | null;
+                      videoCount?: number | null;
                     }[];
+                    recentEpisodeCoverage?: {
+                      windowDays: number;
+                      episodes: number;
+                      episodesWithVideo: number;
+                    };
                   }[];
                 } | null;
               };
@@ -9670,6 +9683,12 @@ export interface operations {
                           slug: string;
                           title: string;
                         } | null;
+                        likeCount?: number | null;
+                        commentCount?: number | null;
+                        readings?: {
+                          recordedAt: unknown;
+                          viewCount: number;
+                        }[];
                       }[]
                     | null;
                   profileImageUrl: string | null;
@@ -9684,7 +9703,14 @@ export interface operations {
                   statsHistory?: {
                     recordedAt: unknown;
                     subscriberCount: number;
+                    viewCount?: number | null;
+                    videoCount?: number | null;
                   }[];
+                  recentEpisodeCoverage?: {
+                    windowDays: number;
+                    episodes: number;
+                    episodesWithVideo: number;
+                  };
                 }[];
               };
             };

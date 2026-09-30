@@ -16280,6 +16280,35 @@
                                                 "title"
                                               ],
                                               "additionalProperties": false
+                                            },
+                                            "likeCount": {
+                                              "type": [
+                                                "number",
+                                                "null"
+                                              ]
+                                            },
+                                            "commentCount": {
+                                              "type": [
+                                                "number",
+                                                "null"
+                                              ]
+                                            },
+                                            "readings": {
+                                              "type": "array",
+                                              "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                  "recordedAt": {},
+                                                  "viewCount": {
+                                                    "type": "number"
+                                                  }
+                                                },
+                                                "required": [
+                                                  "recordedAt",
+                                                  "viewCount"
+                                                ],
+                                                "additionalProperties": false
+                                              }
                                             }
                                           },
                                           "required": [
@@ -16353,6 +16382,18 @@
                                             "recordedAt": {},
                                             "subscriberCount": {
                                               "type": "number"
+                                            },
+                                            "viewCount": {
+                                              "type": [
+                                                "number",
+                                                "null"
+                                              ]
+                                            },
+                                            "videoCount": {
+                                              "type": [
+                                                "number",
+                                                "null"
+                                              ]
                                             }
                                           },
                                           "required": [
@@ -16361,6 +16402,26 @@
                                           ],
                                           "additionalProperties": false
                                         }
+                                      },
+                                      "recentEpisodeCoverage": {
+                                        "type": "object",
+                                        "properties": {
+                                          "windowDays": {
+                                            "type": "number"
+                                          },
+                                          "episodes": {
+                                            "type": "number"
+                                          },
+                                          "episodesWithVideo": {
+                                            "type": "number"
+                                          }
+                                        },
+                                        "required": [
+                                          "windowDays",
+                                          "episodes",
+                                          "episodesWithVideo"
+                                        ],
+                                        "additionalProperties": false
                                       }
                                     },
                                     "required": [
@@ -21400,6 +21461,35 @@
                                             "title"
                                           ],
                                           "additionalProperties": false
+                                        },
+                                        "likeCount": {
+                                          "type": [
+                                            "number",
+                                            "null"
+                                          ]
+                                        },
+                                        "commentCount": {
+                                          "type": [
+                                            "number",
+                                            "null"
+                                          ]
+                                        },
+                                        "readings": {
+                                          "type": "array",
+                                          "items": {
+                                            "type": "object",
+                                            "properties": {
+                                              "recordedAt": {},
+                                              "viewCount": {
+                                                "type": "number"
+                                              }
+                                            },
+                                            "required": [
+                                              "recordedAt",
+                                              "viewCount"
+                                            ],
+                                            "additionalProperties": false
+                                          }
                                         }
                                       },
                                       "required": [
@@ -21473,6 +21563,18 @@
                                         "recordedAt": {},
                                         "subscriberCount": {
                                           "type": "number"
+                                        },
+                                        "viewCount": {
+                                          "type": [
+                                            "number",
+                                            "null"
+                                          ]
+                                        },
+                                        "videoCount": {
+                                          "type": [
+                                            "number",
+                                            "null"
+                                          ]
                                         }
                                       },
                                       "required": [
@@ -21481,6 +21583,26 @@
                                       ],
                                       "additionalProperties": false
                                     }
+                                  },
+                                  "recentEpisodeCoverage": {
+                                    "type": "object",
+                                    "properties": {
+                                      "windowDays": {
+                                        "type": "number"
+                                      },
+                                      "episodes": {
+                                        "type": "number"
+                                      },
+                                      "episodesWithVideo": {
+                                        "type": "number"
+                                      }
+                                    },
+                                    "required": [
+                                      "windowDays",
+                                      "episodes",
+                                      "episodesWithVideo"
+                                    ],
+                                    "additionalProperties": false
                                   }
                                 },
                                 "required": [
