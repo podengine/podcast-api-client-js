@@ -24882,6 +24882,28 @@
                                     "string",
                                     "null"
                                   ]
+                                },
+                                "estimatedMonthlyListeners": {
+                                  "type": [
+                                    "integer",
+                                    "null"
+                                  ],
+                                  "minimum": 0,
+                                  "maximum": 9007199254740991
+                                },
+                                "estimatedMonthlyListenersBucket": {
+                                  "description": "Bucket for the estimated monthly listeners: 0-1K, 1K-10K, 10K-100K, 100K-1M or 1M+. 0-1K means the estimate is under 1,000, even when the rounded figure reads 1,000. Null means no estimate is available.",
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ],
+                                  "enum": [
+                                    "0-1K",
+                                    "1K-10K",
+                                    "10K-100K",
+                                    "100K-1M",
+                                    "1M+"
+                                  ]
                                 }
                               },
                               "required": [
@@ -24889,7 +24911,9 @@
                                 "titleOriginal",
                                 "titleLatest",
                                 "slug",
-                                "imageUrl"
+                                "imageUrl",
+                                "estimatedMonthlyListeners",
+                                "estimatedMonthlyListenersBucket"
                               ],
                               "additionalProperties": false
                             },
@@ -25222,6 +25246,28 @@
                                     "string",
                                     "null"
                                   ]
+                                },
+                                "estimatedMonthlyListeners": {
+                                  "type": [
+                                    "integer",
+                                    "null"
+                                  ],
+                                  "minimum": 0,
+                                  "maximum": 9007199254740991
+                                },
+                                "estimatedMonthlyListenersBucket": {
+                                  "description": "Bucket for the estimated monthly listeners: 0-1K, 1K-10K, 10K-100K, 100K-1M or 1M+. 0-1K means the estimate is under 1,000, even when the rounded figure reads 1,000. Null means no estimate is available.",
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ],
+                                  "enum": [
+                                    "0-1K",
+                                    "1K-10K",
+                                    "10K-100K",
+                                    "100K-1M",
+                                    "1M+"
+                                  ]
                                 }
                               },
                               "required": [
@@ -25229,7 +25275,9 @@
                                 "titleOriginal",
                                 "titleLatest",
                                 "slug",
-                                "imageUrl"
+                                "imageUrl",
+                                "estimatedMonthlyListeners",
+                                "estimatedMonthlyListenersBucket"
                               ],
                               "additionalProperties": false
                             },

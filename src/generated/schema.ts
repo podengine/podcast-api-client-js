@@ -10966,6 +10966,12 @@ export interface operations {
                   titleLatest: string;
                   slug: string;
                   imageUrl: string | null;
+                  estimatedMonthlyListeners: number | null;
+                  /**
+                   * @description Bucket for the estimated monthly listeners: 0-1K, 1K-10K, 10K-100K, 100K-1M or 1M+. 0-1K means the estimate is under 1,000, even when the rounded figure reads 1,000. Null means no estimate is available.
+                   * @enum {string|null}
+                   */
+                  estimatedMonthlyListenersBucket: '0-1K' | '1K-10K' | '10K-100K' | '100K-1M' | '1M+' | null;
                 };
                 /** @enum {string} */
                 status: 'prospect' | 'qualified' | 'pitched' | 'lost' | 'booked' | 'ignored';
@@ -11164,6 +11170,12 @@ export interface operations {
                   titleLatest: string;
                   slug: string;
                   imageUrl: string | null;
+                  estimatedMonthlyListeners: number | null;
+                  /**
+                   * @description Bucket for the estimated monthly listeners: 0-1K, 1K-10K, 10K-100K, 100K-1M or 1M+. 0-1K means the estimate is under 1,000, even when the rounded figure reads 1,000. Null means no estimate is available.
+                   * @enum {string|null}
+                   */
+                  estimatedMonthlyListenersBucket: '0-1K' | '1K-10K' | '10K-100K' | '100K-1M' | '1M+' | null;
                 };
                 /** @enum {string} */
                 status: 'prospect' | 'qualified' | 'pitched' | 'lost' | 'booked' | 'ignored';
