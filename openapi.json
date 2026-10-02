@@ -540,13 +540,13 @@
                             "type": "object",
                             "properties": {
                               "min": {
-                                "description": "Inclusive minimum monthly audience estimate",
+                                "description": "Inclusive minimum estimated monthly listeners",
                                 "type": "integer",
                                 "minimum": 0,
                                 "maximum": 9007199254740991
                               },
                               "max": {
-                                "description": "Inclusive maximum monthly audience estimate",
+                                "description": "Inclusive maximum estimated monthly listeners",
                                 "type": "integer",
                                 "minimum": 0,
                                 "maximum": 9007199254740991
@@ -1050,13 +1050,13 @@
                             "type": "object",
                             "properties": {
                               "min": {
-                                "description": "Inclusive minimum monthly audience estimate",
+                                "description": "Inclusive minimum estimated monthly listeners",
                                 "type": "integer",
                                 "minimum": 0,
                                 "maximum": 9007199254740991
                               },
                               "max": {
-                                "description": "Inclusive maximum monthly audience estimate",
+                                "description": "Inclusive maximum estimated monthly listeners",
                                 "type": "integer",
                                 "minimum": 0,
                                 "maximum": 9007199254740991
@@ -4023,7 +4023,7 @@
                                     "type": "number"
                                   },
                                   "estimatedMonthlyListeners": {
-                                    "description": "Latest published monthly audience estimate for the podcast, independent of the chart date and country.",
+                                    "description": "Latest estimated monthly listeners for the podcast, independent of the chart date and country.",
                                     "type": [
                                       "integer",
                                       "null"
@@ -4605,7 +4605,7 @@
                                     "type": "number"
                                   },
                                   "estimatedMonthlyListeners": {
-                                    "description": "Latest published monthly audience estimate for the podcast, independent of the chart date and country.",
+                                    "description": "Latest estimated monthly listeners for the podcast, independent of the chart date and country.",
                                     "type": [
                                       "integer",
                                       "null"
@@ -26029,13 +26029,13 @@
                         "type": "object",
                         "properties": {
                           "min": {
-                            "description": "Inclusive minimum monthly audience estimate",
+                            "description": "Inclusive minimum estimated monthly listeners",
                             "type": "integer",
                             "minimum": 0,
                             "maximum": 9007199254740991
                           },
                           "max": {
-                            "description": "Inclusive maximum monthly audience estimate",
+                            "description": "Inclusive maximum estimated monthly listeners",
                             "type": "integer",
                             "minimum": 0,
                             "maximum": 9007199254740991
@@ -27038,13 +27038,13 @@
                     "type": "object",
                     "properties": {
                       "min": {
-                        "description": "Inclusive minimum monthly audience estimate",
+                        "description": "Inclusive minimum estimated monthly listeners",
                         "type": "integer",
                         "minimum": 0,
                         "maximum": 9007199254740991
                       },
                       "max": {
-                        "description": "Inclusive maximum monthly audience estimate",
+                        "description": "Inclusive maximum estimated monthly listeners",
                         "type": "integer",
                         "minimum": 0,
                         "maximum": 9007199254740991
@@ -27574,13 +27574,13 @@
                               "type": "object",
                               "properties": {
                                 "min": {
-                                  "description": "Inclusive minimum monthly audience estimate",
+                                  "description": "Inclusive minimum estimated monthly listeners",
                                   "type": "integer",
                                   "minimum": 0,
                                   "maximum": 9007199254740991
                                 },
                                 "max": {
-                                  "description": "Inclusive maximum monthly audience estimate",
+                                  "description": "Inclusive maximum estimated monthly listeners",
                                   "type": "integer",
                                   "minimum": 0,
                                   "maximum": 9007199254740991
@@ -29501,13 +29501,13 @@
                     "type": "object",
                     "properties": {
                       "min": {
-                        "description": "Inclusive minimum monthly audience estimate",
+                        "description": "Inclusive minimum estimated monthly listeners",
                         "type": "integer",
                         "minimum": 0,
                         "maximum": 9007199254740991
                       },
                       "max": {
-                        "description": "Inclusive maximum monthly audience estimate",
+                        "description": "Inclusive maximum estimated monthly listeners",
                         "type": "integer",
                         "minimum": 0,
                         "maximum": 9007199254740991
@@ -30163,13 +30163,13 @@
                               "type": "object",
                               "properties": {
                                 "min": {
-                                  "description": "Inclusive minimum monthly audience estimate",
+                                  "description": "Inclusive minimum estimated monthly listeners",
                                   "type": "integer",
                                   "minimum": 0,
                                   "maximum": 9007199254740991
                                 },
                                 "max": {
-                                  "description": "Inclusive maximum monthly audience estimate",
+                                  "description": "Inclusive maximum estimated monthly listeners",
                                   "type": "integer",
                                   "minimum": 0,
                                   "maximum": 9007199254740991
