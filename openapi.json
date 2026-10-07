@@ -12899,7 +12899,7 @@
           "podcasts"
         ],
         "summary": "Podcast ID Lookup",
-        "description": "Lookup a podcast by ID",
+        "description": "Find the Pod Engine podcast for an ID you already have: an Apple Podcasts ID, a Spotify show ID, an RSS feed URL, a podcast:guid, or a Pod Engine slug or ID. Pass exactly one. Returns basic details, or null when we do not track the podcast. Does not count towards your podcast lookups.",
         "operationId": "getPodcastIdLookup",
         "parameters": [
           {
@@ -12938,6 +12938,28 @@
               "type": "string",
               "format": "uuid",
               "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+            }
+          },
+          {
+            "name": "rssFeedUrl",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2048,
+              "description": "The podcast’s RSS feed URL. http and https, a trailing slash and the case of the host are ignored. Also matches the feed URL we first tracked the show under, for feeds that have since moved host."
+            }
+          },
+          {
+            "name": "podcastGuid",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "description": "The podcast:guid from the RSS feed (Podcasting 2.0)",
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 255
             }
           }
         ],
@@ -13090,442 +13112,6 @@
         ]
       }
     },
-    "/api/v1/podcasts/apple-id/lookup": {
-      "get": {
-        "tags": [
-          "podcasts"
-        ],
-        "summary": "Apple ID Comprehensive Lookup",
-        "description": "Comprehensive lookup by Apple ID - checks Podcast, PodcastAppleId, PodcastNewRequest, and scraper database",
-        "operationId": "getAppleIdComprehensiveLookup",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "exclusiveMinimum": 0,
-              "maximum": 9007199254740991,
-              "description": "Apple Podcasts ID"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string",
-                      "enum": [
-                        "OK"
-                      ]
-                    },
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "appleId": {
-                          "type": "number"
-                        },
-                        "status": {
-                          "type": "string",
-                          "enum": [
-                            "found",
-                            "linked",
-                            "apple_details_not_found",
-                            "apple_not_scraped",
-                            "create_podcast_failed",
-                            "duplicate_apple_id",
-                            "duplicate_podcast_guid",
-                            "duplicate_rss_url",
-                            "malformed_apple_url",
-                            "no_episodes_count",
-                            "no_podcast_image",
-                            "non_us_apple_url",
-                            "podcast_blocked",
-                            "not_active",
-                            "request_not_found",
-                            "rss_download_failed",
-                            "rss_parsing_failed",
-                            "rss_url_not_found",
-                            "import_error_unknown",
-                            "pending_import",
-                            "scraped_not_imported_non_english",
-                            "scraped_not_imported_no_rss_url",
-                            "scraped_not_imported_not_fully_scraped",
-                            "scraped_not_imported_too_few_episodes",
-                            "scraped_not_imported_inactive",
-                            "scraped_not_imported_low_engagement",
-                            "scraped_not_imported_unknown",
-                            "not_found"
-                          ]
-                        },
-                        "podcast": {
-                          "type": [
-                            "object",
-                            "null"
-                          ],
-                          "properties": {
-                            "id": {
-                              "type": "string",
-                              "format": "uuid",
-                              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
-                            },
-                            "slug": {
-                              "type": "string"
-                            },
-                            "title": {
-                              "type": "string"
-                            },
-                            "imageUrl": {
-                              "type": [
-                                "string",
-                                "null"
-                              ]
-                            },
-                            "isPrimaryAppleId": {
-                              "type": "boolean"
-                            },
-                            "primaryAppleId": {
-                              "type": "number"
-                            },
-                            "createdAt": {},
-                            "podEngineUrl": {
-                              "type": "string",
-                              "description": "Direct link to the podcast in the Pod Engine app"
-                            }
-                          },
-                          "required": [
-                            "id",
-                            "slug",
-                            "title",
-                            "imageUrl",
-                            "isPrimaryAppleId",
-                            "primaryAppleId",
-                            "createdAt",
-                            "podEngineUrl"
-                          ],
-                          "additionalProperties": false
-                        },
-                        "importRequest": {
-                          "type": [
-                            "object",
-                            "null"
-                          ],
-                          "properties": {
-                            "id": {
-                              "type": "number"
-                            },
-                            "appleTitle": {
-                              "type": "string"
-                            },
-                            "rssUrl": {
-                              "type": "string"
-                            },
-                            "creationSource": {
-                              "type": "string"
-                            },
-                            "createdAt": {},
-                            "importedAt": {
-                              "anyOf": [
-                                {},
-                                {
-                                  "type": "null"
-                                }
-                              ]
-                            },
-                            "podcastId": {
-                              "type": [
-                                "string",
-                                "null"
-                              ],
-                              "format": "uuid",
-                              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
-                            },
-                            "importErrorAt": {
-                              "anyOf": [
-                                {},
-                                {
-                                  "type": "null"
-                                }
-                              ]
-                            },
-                            "importError": {
-                              "type": [
-                                "string",
-                                "null"
-                              ]
-                            },
-                            "importErrorType": {
-                              "type": [
-                                "string",
-                                "null"
-                              ]
-                            }
-                          },
-                          "required": [
-                            "id",
-                            "appleTitle",
-                            "rssUrl",
-                            "creationSource",
-                            "createdAt",
-                            "importedAt",
-                            "podcastId",
-                            "importErrorAt",
-                            "importError",
-                            "importErrorType"
-                          ],
-                          "additionalProperties": false
-                        },
-                        "scraperData": {
-                          "type": [
-                            "object",
-                            "null"
-                          ],
-                          "properties": {
-                            "entries": {
-                              "type": "array",
-                              "items": {
-                                "type": "object",
-                                "properties": {
-                                  "id": {
-                                    "type": "number"
-                                  },
-                                  "country": {
-                                    "type": "string"
-                                  },
-                                  "podcastTitle": {
-                                    "type": "string"
-                                  },
-                                  "createdAt": {},
-                                  "lastScrapedAt": {
-                                    "anyOf": [
-                                      {},
-                                      {
-                                        "type": "null"
-                                      }
-                                    ]
-                                  },
-                                  "lastSuccessAt": {
-                                    "anyOf": [
-                                      {},
-                                      {
-                                        "type": "null"
-                                      }
-                                    ]
-                                  },
-                                  "lastErrorAt": {
-                                    "anyOf": [
-                                      {},
-                                      {
-                                        "type": "null"
-                                      }
-                                    ]
-                                  },
-                                  "rssUrl": {
-                                    "type": [
-                                      "string",
-                                      "null"
-                                    ]
-                                  },
-                                  "ratingsCount": {
-                                    "type": [
-                                      "number",
-                                      "null"
-                                    ]
-                                  },
-                                  "averageRating": {
-                                    "type": [
-                                      "number",
-                                      "null"
-                                    ]
-                                  },
-                                  "episodesCount": {
-                                    "type": [
-                                      "number",
-                                      "null"
-                                    ]
-                                  },
-                                  "lastEpisodeDate": {
-                                    "anyOf": [
-                                      {},
-                                      {
-                                        "type": "null"
-                                      }
-                                    ]
-                                  },
-                                  "isLikelyNonEnglishTitle": {
-                                    "type": "boolean"
-                                  },
-                                  "skippedPodcastImportReason": {
-                                    "type": [
-                                      "string",
-                                      "null"
-                                    ]
-                                  },
-                                  "skippedPodcastImportAt": {
-                                    "anyOf": [
-                                      {},
-                                      {
-                                        "type": "null"
-                                      }
-                                    ]
-                                  }
-                                },
-                                "required": [
-                                  "id",
-                                  "country",
-                                  "podcastTitle",
-                                  "createdAt",
-                                  "lastScrapedAt",
-                                  "lastSuccessAt",
-                                  "lastErrorAt",
-                                  "rssUrl",
-                                  "ratingsCount",
-                                  "averageRating",
-                                  "episodesCount",
-                                  "lastEpisodeDate",
-                                  "isLikelyNonEnglishTitle",
-                                  "skippedPodcastImportReason",
-                                  "skippedPodcastImportAt"
-                                ],
-                                "additionalProperties": false
-                              }
-                            },
-                            "countries": {
-                              "type": "array",
-                              "items": {
-                                "type": "string"
-                              }
-                            },
-                            "mostRecentScrape": {
-                              "anyOf": [
-                                {},
-                                {
-                                  "type": "null"
-                                }
-                              ]
-                            },
-                            "recentAttempts": {
-                              "type": "array",
-                              "items": {
-                                "type": "object",
-                                "properties": {
-                                  "id": {
-                                    "type": "number"
-                                  },
-                                  "createdAt": {},
-                                  "type": {
-                                    "type": "string"
-                                  },
-                                  "url": {
-                                    "type": "string"
-                                  },
-                                  "appleId": {
-                                    "type": [
-                                      "number",
-                                      "null"
-                                    ]
-                                  },
-                                  "spotifyId": {
-                                    "type": [
-                                      "string",
-                                      "null"
-                                    ]
-                                  },
-                                  "podcastId": {
-                                    "type": [
-                                      "string",
-                                      "null"
-                                    ]
-                                  },
-                                  "errorType": {
-                                    "type": [
-                                      "string",
-                                      "null"
-                                    ]
-                                  },
-                                  "errorDetails": {
-                                    "type": [
-                                      "string",
-                                      "null"
-                                    ]
-                                  },
-                                  "timeTakenMs": {
-                                    "type": "number"
-                                  }
-                                },
-                                "required": [
-                                  "id",
-                                  "createdAt",
-                                  "type",
-                                  "url",
-                                  "appleId",
-                                  "spotifyId",
-                                  "podcastId",
-                                  "errorType",
-                                  "errorDetails",
-                                  "timeTakenMs"
-                                ],
-                                "additionalProperties": false
-                              }
-                            }
-                          },
-                          "required": [
-                            "entries",
-                            "countries",
-                            "mostRecentScrape",
-                            "recentAttempts"
-                          ],
-                          "additionalProperties": false
-                        }
-                      },
-                      "required": [
-                        "appleId",
-                        "status",
-                        "podcast",
-                        "importRequest",
-                        "scraperData"
-                      ],
-                      "additionalProperties": false
-                    }
-                  },
-                  "required": [
-                    "status",
-                    "data"
-                  ],
-                  "additionalProperties": false
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad request"
-          },
-          "401": {
-            "description": "Authentication required"
-          },
-          "403": {
-            "description": "Forbidden — plan does not include this endpoint"
-          },
-          "404": {
-            "description": "Not found"
-          },
-          "429": {
-            "description": "Rate limit exceeded"
-          }
-        },
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ]
-      }
-    },
     "/api/v1/podcasts/{podcastIdOrSlug}/all-details": {
       "get": {
         "tags": [
@@ -13541,7 +13127,7 @@
             "required": true,
             "schema": {
               "type": "string",
-              "description": "Podengine ID, Apple ID, or slug"
+              "description": "Pod Engine ID or slug, Apple Podcasts ID, Spotify show ID, or podcast:guid"
             }
           }
         ],
@@ -16516,7 +16102,7 @@
           "podcasts"
         ],
         "summary": "Podcast Details",
-        "description": "Get a podcast by ID or slug",
+        "description": "Get a podcast by its Pod Engine ID or slug, Apple Podcasts ID, Spotify show ID or podcast:guid. The response includes `platforms`: where the show is listed on Apple Podcasts, Spotify and YouTube, plus Overcast, Pocket Casts and Castro links built from the Apple ID. To look a podcast up by its RSS feed URL, use Podcast Details by Feed URL.",
         "operationId": "getPodcast",
         "parameters": [
           {
@@ -16525,7 +16111,7 @@
             "required": true,
             "schema": {
               "type": "string",
-              "description": "Podengine ID, Apple ID, or slug"
+              "description": "Pod Engine ID or slug, Apple Podcasts ID, Spotify show ID, or podcast:guid"
             }
           }
         ],
@@ -17501,6 +17087,1263 @@
                             "websiteUrl"
                           ],
                           "additionalProperties": false
+                        },
+                        "platforms": {
+                          "type": "object",
+                          "properties": {
+                            "apple": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "number",
+                                  "description": "Apple Podcasts ID"
+                                },
+                                "url": {
+                                  "type": "string",
+                                  "format": "uri",
+                                  "description": "Apple Podcasts show page"
+                                }
+                              },
+                              "required": [
+                                "id",
+                                "url"
+                              ],
+                              "additionalProperties": false,
+                              "description": "Apple Podcasts. Every podcast we track has one."
+                            },
+                            "spotify": {
+                              "description": "Spotify, when we have matched the show. Spotify has no lookup by feed, so each match is inferred. Null means we have no match, not that the show is missing from Spotify.",
+                              "type": [
+                                "object",
+                                "null"
+                              ],
+                              "properties": {
+                                "id": {
+                                  "type": "string",
+                                  "description": "Spotify show ID"
+                                },
+                                "url": {
+                                  "type": "string",
+                                  "format": "uri",
+                                  "description": "Spotify show page, https://open.spotify.com/show/<id>"
+                                }
+                              },
+                              "required": [
+                                "id",
+                                "url"
+                              ],
+                              "additionalProperties": false
+                            },
+                            "youtube": {
+                              "description": "The show’s main YouTube channel, when we have one.",
+                              "type": [
+                                "object",
+                                "null"
+                              ],
+                              "properties": {
+                                "channelId": {
+                                  "type": "string",
+                                  "description": "YouTube channel ID"
+                                },
+                                "url": {
+                                  "type": "string",
+                                  "format": "uri",
+                                  "description": "YouTube channel page"
+                                },
+                                "tier": {
+                                  "type": "string",
+                                  "enum": [
+                                    "associated",
+                                    "candidate"
+                                  ],
+                                  "description": "`associated`: the channel passed our association checks and is the show’s own channel. `candidate`: the best match we have that has not passed them yet."
+                                }
+                              },
+                              "required": [
+                                "channelId",
+                                "url",
+                                "tier"
+                              ],
+                              "additionalProperties": false
+                            },
+                            "derived": {
+                              "type": "object",
+                              "properties": {
+                                "overcast": {
+                                  "type": "string",
+                                  "format": "uri"
+                                },
+                                "pocketCasts": {
+                                  "type": "string",
+                                  "format": "uri"
+                                },
+                                "castro": {
+                                  "type": "string",
+                                  "format": "uri"
+                                }
+                              },
+                              "required": [
+                                "overcast",
+                                "pocketCasts",
+                                "castro"
+                              ],
+                              "additionalProperties": false,
+                              "description": "Links built from the Apple ID using each app’s public URL pattern. We do not check them; these apps list shows from Apple Podcasts."
+                            }
+                          },
+                          "required": [
+                            "apple",
+                            "spotify",
+                            "youtube",
+                            "derived"
+                          ],
+                          "additionalProperties": false,
+                          "description": "Where the podcast is listed: Apple Podcasts, Spotify, YouTube and apps that list from Apple."
+                        }
+                      },
+                      "required": [
+                        "podcast"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "data"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Forbidden — plan does not include this endpoint"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/podcasts/by-feed-url": {
+      "get": {
+        "tags": [
+          "podcasts"
+        ],
+        "summary": "Podcast Details by Feed URL",
+        "description": "Get a podcast, and where it is listed, from its RSS feed URL. http and https, a trailing slash and the case of the host are ignored, and a feed that has moved host still matches the URL we first tracked it under. Returns the same response as Podcast Details, and counts as a podcast lookup in the same way. Returns 404 when we do not track the feed.",
+        "operationId": "getPodcastByFeedUrl",
+        "parameters": [
+          {
+            "name": "rssFeedUrl",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2048,
+              "description": "The podcast’s RSS feed URL. http and https, a trailing slash and the case of the host are ignored. Also matches the feed URL we first tracked the show under, for feeds that have since moved host."
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "OK"
+                      ]
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "podcast": {
+                          "type": "object",
+                          "properties": {
+                            "author": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "authorityScore": {
+                              "type": [
+                                "object",
+                                "null"
+                              ],
+                              "properties": {
+                                "calculatedAt": {},
+                                "authorityScore": {
+                                  "type": "number",
+                                  "description": "This is the weighted total authority score of the podcast, out of 100"
+                                },
+                                "qualityScore": {
+                                  "type": "number",
+                                  "description": "This is the quality score of the podcast, out of 100"
+                                },
+                                "youtubeScore": {
+                                  "type": "number",
+                                  "description": "This is the YouTube score of the podcast, out of 100"
+                                },
+                                "socialScore": {
+                                  "type": "number",
+                                  "description": "This is the social score of the podcast, out of 100"
+                                },
+                                "engagementScore": {
+                                  "type": "number",
+                                  "description": "This is the engagement score of the podcast, out of 100"
+                                }
+                              },
+                              "required": [
+                                "calculatedAt",
+                                "authorityScore",
+                                "qualityScore",
+                                "youtubeScore",
+                                "socialScore",
+                                "engagementScore"
+                              ],
+                              "additionalProperties": false
+                            },
+                            "genres": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              }
+                            },
+                            "id": {
+                              "type": "string"
+                            },
+                            "imageUrl": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "language": {
+                              "type": "string"
+                            },
+                            "lastEpisodePublishedAt": {},
+                            "slug": {
+                              "type": "string"
+                            },
+                            "title": {
+                              "type": "string"
+                            },
+                            "titleLatest": {
+                              "type": "string"
+                            },
+                            "appleId": {
+                              "type": "number"
+                            },
+                            "blocked": {
+                              "type": "object",
+                              "properties": {
+                                "blockedDate": {},
+                                "blockedReason": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "blockedDate"
+                              ],
+                              "additionalProperties": false
+                            },
+                            "description": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "emails": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              }
+                            },
+                            "explicitRss": {
+                              "type": [
+                                "boolean",
+                                "null"
+                              ]
+                            },
+                            "hostNames": {
+                              "type": [
+                                "array",
+                                "null"
+                              ],
+                              "items": {
+                                "type": "string"
+                              }
+                            },
+                            "ignore": {
+                              "type": "boolean"
+                            },
+                            "ignoreReason": {
+                              "type": "string"
+                            },
+                            "neverTranscribe": {
+                              "type": "boolean"
+                            },
+                            "neverTranscribeReason": {
+                              "type": "string"
+                            },
+                            "isClaimed": {
+                              "type": "boolean"
+                            },
+                            "podcastAffiliation": {
+                              "type": [
+                                "object",
+                                "null"
+                              ],
+                              "properties": {
+                                "affiliateOrganizationName": {
+                                  "description": "The name of the affiliate organization",
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ]
+                                },
+                                "affiliationType": {
+                                  "description": "The type of affiliation from the list: academic, branded, celebrity, government, independent, legacy media, podcast company, new media, not for profit, religious, other, unknown",
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ],
+                                  "enum": [
+                                    "academic",
+                                    "branded",
+                                    "celebrity",
+                                    "government",
+                                    "independent",
+                                    "legacy media",
+                                    "podcast company",
+                                    "new media",
+                                    "not for profit",
+                                    "religious",
+                                    "other",
+                                    "unknown"
+                                  ]
+                                }
+                              },
+                              "additionalProperties": false
+                            },
+                            "podcastDirectoryLinks": {
+                              "type": "object",
+                              "properties": {
+                                "amazonmusic": {
+                                  "type": "string",
+                                  "format": "uri"
+                                },
+                                "anchor": {
+                                  "type": "string",
+                                  "format": "uri"
+                                },
+                                "antennapod": {
+                                  "type": "string",
+                                  "format": "uri"
+                                },
+                                "anytimeplayer": {
+                                  "type": "string",
+                                  "format": "uri"
+                                },
+                                "apollo": {
+                                  "type": "string",
+                                  "format": "uri"
+                                },
+                                "apple": {
+                                  "type": "string",
+                                  "format": "uri"
+                                },
+                                "audible": {
+                                  "type": "string",
+                                  "format": "uri"
+                                },
+                                "breez": {
+                                  "type": "string",
+                                  "format": "uri"
+                                },
+                                "castamatic": {
+                                  "type": "string",
+                                  "format": "uri"
+                                },
+                                "castbox": {
+                                  "type": "string",
+                                  "format": "uri"
+                                },
+                                "castro": {
+                                  "type": "string",
+                                  "format": "uri"
+                                },
+                                "curiocaster": {
+                                  "type": "string",
+                                  "format": "uri"
+                                },
+                                "fountain": {
+                                  "type": "string",
+                                  "format": "uri"
+                                },
+                                "goodpods": {
+                                  "type": "string",
+                                  "format": "uri"
+                                },
+                                "google": {
+                                  "type": "string",
+                                  "format": "uri"
+                                },
+                                "gpodder": {
+                                  "type": "string",
+                                  "format": "uri"
+                                },
+                                "iheartradio": {
+                                  "type": "string",
+                                  "format": "uri"
+                                },
+                                "listennotes": {
+                                  "type": "string",
+                                  "format": "uri"
+                                },
+                                "lnbeats": {
+                                  "type": "string",
+                                  "format": "uri"
+                                },
+                                "moonfm": {
+                                  "type": "string",
+                                  "format": "uri"
+                                },
+                                "overcast": {
+                                  "type": "string",
+                                  "format": "uri"
+                                },
+                                "playerfm": {
+                                  "type": "string",
+                                  "format": "uri"
+                                },
+                                "pocketcasts": {
+                                  "type": "string",
+                                  "format": "uri"
+                                },
+                                "podbean": {
+                                  "type": "string",
+                                  "format": "uri"
+                                },
+                                "podcastaddict": {
+                                  "type": "string",
+                                  "format": "uri"
+                                },
+                                "podcastguru": {
+                                  "type": "string",
+                                  "format": "uri"
+                                },
+                                "podcastrepublic": {
+                                  "type": "string",
+                                  "format": "uri"
+                                },
+                                "podchaser": {
+                                  "type": "string",
+                                  "format": "uri"
+                                },
+                                "podfriend": {
+                                  "type": "string",
+                                  "format": "uri"
+                                },
+                                "podknife": {
+                                  "type": "string",
+                                  "format": "uri"
+                                },
+                                "podlp": {
+                                  "type": "string",
+                                  "format": "uri"
+                                },
+                                "podnews": {
+                                  "type": "string",
+                                  "format": "uri"
+                                },
+                                "podscan": {
+                                  "type": "string",
+                                  "format": "uri"
+                                },
+                                "podscribe": {
+                                  "type": "string",
+                                  "format": "uri"
+                                },
+                                "podstation": {
+                                  "type": "string",
+                                  "format": "uri"
+                                },
+                                "podurama": {
+                                  "type": "string",
+                                  "format": "uri"
+                                },
+                                "podverse": {
+                                  "type": "string",
+                                  "format": "uri"
+                                },
+                                "radiopublic": {
+                                  "type": "string",
+                                  "format": "uri"
+                                },
+                                "rephonic": {
+                                  "type": "string",
+                                  "format": "uri"
+                                },
+                                "sonnet": {
+                                  "type": "string",
+                                  "format": "uri"
+                                },
+                                "spotify": {
+                                  "type": "string",
+                                  "format": "uri"
+                                },
+                                "stenofm": {
+                                  "type": "string",
+                                  "format": "uri"
+                                },
+                                "truefans": {
+                                  "type": "string",
+                                  "format": "uri"
+                                },
+                                "tunein": {
+                                  "type": "string",
+                                  "format": "uri"
+                                },
+                                "youtubemusic": {
+                                  "type": "string",
+                                  "format": "uri"
+                                }
+                              },
+                              "additionalProperties": false
+                            },
+                            "podcastHasGuests": {
+                              "type": [
+                                "boolean",
+                                "null"
+                              ]
+                            },
+                            "podcastHasSponsors": {
+                              "type": [
+                                "boolean",
+                                "null"
+                              ]
+                            },
+                            "podcastLocations": {
+                              "type": [
+                                "array",
+                                "null"
+                              ],
+                              "items": {
+                                "type": "string"
+                              }
+                            },
+                            "primaryContactEmail": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "rssFeedUrl": {
+                              "type": "string"
+                            },
+                            "socialMediaLinks": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "socialMediaType": {
+                                    "type": "string",
+                                    "enum": [
+                                      "beehiiv",
+                                      "behance",
+                                      "bluesky",
+                                      "discord",
+                                      "facebook",
+                                      "github",
+                                      "instagram",
+                                      "linkedin",
+                                      "linktree",
+                                      "mastodon",
+                                      "medium",
+                                      "patreon",
+                                      "pinterest",
+                                      "reddit",
+                                      "snapchat",
+                                      "soundcloud",
+                                      "substack",
+                                      "threads",
+                                      "tiktok",
+                                      "tumblr",
+                                      "twitch",
+                                      "twitter",
+                                      "vimeo",
+                                      "whatsapp",
+                                      "youtube"
+                                    ],
+                                    "description": "Social platform associated with the profile URL."
+                                  },
+                                  "url": {
+                                    "type": "string",
+                                    "format": "uri",
+                                    "description": "Full URL of the social media profile."
+                                  },
+                                  "sources": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string",
+                                      "enum": [
+                                        "apple-podcasts",
+                                        "bright-data-dataset",
+                                        "google-search",
+                                        "linktree",
+                                        "podcast-website",
+                                        "podchaser",
+                                        "rephonic",
+                                        "rss",
+                                        "youtube-channel-links",
+                                        "youtube-episode-search",
+                                        "youtube-serp",
+                                        "youtube-api-search"
+                                      ]
+                                    }
+                                  }
+                                },
+                                "required": [
+                                  "socialMediaType",
+                                  "url",
+                                  "sources"
+                                ],
+                                "additionalProperties": false
+                              }
+                            },
+                            "spotifyId": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "stats": {
+                              "type": "object",
+                              "properties": {
+                                "downloadCount": {
+                                  "type": "number"
+                                },
+                                "episodeCount": {
+                                  "type": "number"
+                                },
+                                "latestPublishedAt": {
+                                  "anyOf": [
+                                    {},
+                                    {
+                                      "type": "null"
+                                    }
+                                  ]
+                                },
+                                "firstEpisodePublishedAt": {
+                                  "anyOf": [
+                                    {},
+                                    {
+                                      "type": "null"
+                                    }
+                                  ]
+                                },
+                                "transcriptsCount": {
+                                  "type": "number"
+                                },
+                                "updateFrequency": {
+                                  "type": "string",
+                                  "enum": [
+                                    "daily",
+                                    "weekly",
+                                    "bi-weekly",
+                                    "monthly",
+                                    "stale",
+                                    "very-stale"
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "downloadCount",
+                                "episodeCount",
+                                "latestPublishedAt",
+                                "firstEpisodePublishedAt",
+                                "transcriptsCount",
+                                "updateFrequency"
+                              ],
+                              "additionalProperties": false
+                            },
+                            "titleLatestCleaned": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "transcriptionMode": {
+                              "oneOf": [
+                                {
+                                  "type": "object",
+                                  "properties": {
+                                    "mode": {
+                                      "type": "string",
+                                      "enum": [
+                                        "none"
+                                      ]
+                                    },
+                                    "transcribeSince": {
+                                      "not": {}
+                                    }
+                                  },
+                                  "required": [
+                                    "mode"
+                                  ],
+                                  "additionalProperties": false
+                                },
+                                {
+                                  "type": "object",
+                                  "properties": {
+                                    "mode": {
+                                      "type": "string",
+                                      "enum": [
+                                        "all"
+                                      ]
+                                    },
+                                    "transcribeSince": {
+                                      "not": {}
+                                    }
+                                  },
+                                  "required": [
+                                    "mode"
+                                  ],
+                                  "additionalProperties": false
+                                },
+                                {
+                                  "type": "object",
+                                  "properties": {
+                                    "mode": {
+                                      "type": "string",
+                                      "enum": [
+                                        "episodes-since"
+                                      ]
+                                    },
+                                    "transcribeSince": {}
+                                  },
+                                  "required": [
+                                    "mode",
+                                    "transcribeSince"
+                                  ],
+                                  "additionalProperties": false
+                                }
+                              ]
+                            },
+                            "websiteUrl": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "audienceEstimate": {
+                              "type": "object",
+                              "properties": {
+                                "audienceDemographics": {
+                                  "type": [
+                                    "object",
+                                    "null"
+                                  ],
+                                  "properties": {
+                                    "ageRange": {
+                                      "type": "string",
+                                      "enum": [
+                                        "Under 18",
+                                        "18-24",
+                                        "25-34",
+                                        "35-44",
+                                        "45-54",
+                                        "55+"
+                                      ],
+                                      "description": "The age range of the audience as a string."
+                                    },
+                                    "genderSkew": {
+                                      "type": "string",
+                                      "enum": [
+                                        "Male 0% Female 100%",
+                                        "Male 20% Female 80%",
+                                        "Male 40% Female 60%",
+                                        "Male 50% Female 50%",
+                                        "Male 60% Female 40%",
+                                        "Male 80% Female 20%",
+                                        "Male 100% Female 0%"
+                                      ],
+                                      "description": "How the audience is skewed in terms of gender."
+                                    },
+                                    "educationLevel": {
+                                      "type": "string",
+                                      "enum": [
+                                        "No High School",
+                                        "High School",
+                                        "Some College",
+                                        "Bachelors Degree",
+                                        "Masters Degree",
+                                        "Doctorate"
+                                      ],
+                                      "description": "The probable education levels of the audience."
+                                    },
+                                    "incomeLevel": {
+                                      "type": "string",
+                                      "enum": [
+                                        "Under $25K",
+                                        "$25K-$50K",
+                                        "$50K-$75K",
+                                        "$75K-$100K",
+                                        "$100K-$150K",
+                                        "$150K-$200K",
+                                        "$200K+"
+                                      ],
+                                      "description": "The probable income levels of the audience."
+                                    },
+                                    "exampleListenerProfile": {
+                                      "type": "string",
+                                      "description": "An example profile of the audience. This is a description of the audience that you can use to describe the audience to an advertiser."
+                                    }
+                                  },
+                                  "required": [
+                                    "ageRange",
+                                    "genderSkew",
+                                    "educationLevel",
+                                    "incomeLevel",
+                                    "exampleListenerProfile"
+                                  ],
+                                  "additionalProperties": false
+                                },
+                                "estimatedMonthlyListeners": {
+                                  "type": [
+                                    "number",
+                                    "null"
+                                  ]
+                                },
+                                "estimatedMonthlyListenersBucket": {
+                                  "description": "Bucket for the estimated monthly listeners: 0-1K, 1K-10K, 10K-100K, 100K-1M or 1M+. 0-1K means the estimate is under 1,000, even when the rounded figure reads 1,000. Null means no estimate is available.",
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ],
+                                  "enum": [
+                                    "0-1K",
+                                    "1K-10K",
+                                    "10K-100K",
+                                    "100K-1M",
+                                    "1M+"
+                                  ]
+                                },
+                                "estimatedMonthyListenersCalculatedAt": {
+                                  "anyOf": [
+                                    {},
+                                    {
+                                      "type": "null"
+                                    }
+                                  ]
+                                },
+                                "confidence": {
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ],
+                                  "enum": [
+                                    "high",
+                                    "medium",
+                                    "low"
+                                  ]
+                                },
+                                "isDormant": {
+                                  "type": [
+                                    "boolean",
+                                    "null"
+                                  ]
+                                },
+                                "hasOp3Analytics": {
+                                  "type": "boolean"
+                                },
+                                "op3Downloads": {
+                                  "oneOf": [
+                                    {
+                                      "type": "object",
+                                      "properties": {
+                                        "unit": {
+                                          "type": "string",
+                                          "enum": [
+                                            "downloads"
+                                          ]
+                                        },
+                                        "source": {
+                                          "type": "string",
+                                          "enum": [
+                                            "op3"
+                                          ]
+                                        },
+                                        "basis": {
+                                          "type": "string",
+                                          "enum": [
+                                            "trailing_30_days"
+                                          ]
+                                        },
+                                        "last_synced_at": {
+                                          "type": [
+                                            "string",
+                                            "null"
+                                          ],
+                                          "format": "date-time",
+                                          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                                        },
+                                        "source_as_of": {
+                                          "type": [
+                                            "string",
+                                            "null"
+                                          ],
+                                          "format": "date-time",
+                                          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                                        },
+                                        "measurement_recorded_at": {
+                                          "type": [
+                                            "string",
+                                            "null"
+                                          ],
+                                          "format": "date-time",
+                                          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                                        },
+                                        "coverage": {
+                                          "type": "string",
+                                          "enum": [
+                                            "unknown"
+                                          ]
+                                        },
+                                        "freshness": {
+                                          "type": "string",
+                                          "enum": [
+                                            "fresh",
+                                            "stale",
+                                            "unknown"
+                                          ]
+                                        },
+                                        "status": {
+                                          "type": "string",
+                                          "enum": [
+                                            "available"
+                                          ]
+                                        },
+                                        "value": {
+                                          "type": "integer",
+                                          "minimum": 0,
+                                          "maximum": 9007199254740991
+                                        },
+                                        "reason": {
+                                          "type": [
+                                            "string",
+                                            "null"
+                                          ],
+                                          "enum": [
+                                            null
+                                          ]
+                                        }
+                                      },
+                                      "required": [
+                                        "unit",
+                                        "source",
+                                        "basis",
+                                        "last_synced_at",
+                                        "source_as_of",
+                                        "measurement_recorded_at",
+                                        "coverage",
+                                        "freshness",
+                                        "status",
+                                        "value",
+                                        "reason"
+                                      ],
+                                      "additionalProperties": false
+                                    },
+                                    {
+                                      "type": "object",
+                                      "properties": {
+                                        "unit": {
+                                          "type": "string",
+                                          "enum": [
+                                            "downloads"
+                                          ]
+                                        },
+                                        "source": {
+                                          "type": "string",
+                                          "enum": [
+                                            "op3"
+                                          ]
+                                        },
+                                        "basis": {
+                                          "type": "string",
+                                          "enum": [
+                                            "trailing_30_days"
+                                          ]
+                                        },
+                                        "last_synced_at": {
+                                          "type": [
+                                            "string",
+                                            "null"
+                                          ],
+                                          "format": "date-time",
+                                          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                                        },
+                                        "source_as_of": {
+                                          "type": [
+                                            "string",
+                                            "null"
+                                          ],
+                                          "format": "date-time",
+                                          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                                        },
+                                        "measurement_recorded_at": {
+                                          "type": [
+                                            "string",
+                                            "null"
+                                          ],
+                                          "format": "date-time",
+                                          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                                        },
+                                        "coverage": {
+                                          "type": "string",
+                                          "enum": [
+                                            "unknown"
+                                          ]
+                                        },
+                                        "freshness": {
+                                          "type": "string",
+                                          "enum": [
+                                            "fresh",
+                                            "stale",
+                                            "unknown"
+                                          ]
+                                        },
+                                        "status": {
+                                          "type": "string",
+                                          "enum": [
+                                            "unavailable"
+                                          ]
+                                        },
+                                        "value": {
+                                          "type": [
+                                            "string",
+                                            "null"
+                                          ],
+                                          "enum": [
+                                            null
+                                          ]
+                                        },
+                                        "reason": {
+                                          "type": "string",
+                                          "enum": [
+                                            "no_measurement",
+                                            "invalid_measurement",
+                                            "history_mismatch"
+                                          ]
+                                        }
+                                      },
+                                      "required": [
+                                        "unit",
+                                        "source",
+                                        "basis",
+                                        "last_synced_at",
+                                        "source_as_of",
+                                        "measurement_recorded_at",
+                                        "coverage",
+                                        "freshness",
+                                        "status",
+                                        "value",
+                                        "reason"
+                                      ],
+                                      "additionalProperties": false
+                                    }
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "audienceDemographics",
+                                "estimatedMonthlyListeners",
+                                "estimatedMonthyListenersCalculatedAt"
+                              ],
+                              "additionalProperties": false
+                            },
+                            "audioRetentionPolicy": {
+                              "type": "string",
+                              "enum": [
+                                "RETAIN_INDEFINITELY",
+                                "RETAIN_DAYS",
+                                "RETAIN_UNTIL_TRANSCRIBED"
+                              ]
+                            },
+                            "audioRetentionDays": {
+                              "type": [
+                                "number",
+                                "null"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "author",
+                            "authorityScore",
+                            "genres",
+                            "id",
+                            "imageUrl",
+                            "language",
+                            "lastEpisodePublishedAt",
+                            "slug",
+                            "title",
+                            "titleLatest",
+                            "appleId",
+                            "description",
+                            "emails",
+                            "explicitRss",
+                            "hostNames",
+                            "ignore",
+                            "isClaimed",
+                            "podcastAffiliation",
+                            "podcastDirectoryLinks",
+                            "podcastHasGuests",
+                            "podcastHasSponsors",
+                            "podcastLocations",
+                            "primaryContactEmail",
+                            "rssFeedUrl",
+                            "socialMediaLinks",
+                            "spotifyId",
+                            "stats",
+                            "titleLatestCleaned",
+                            "transcriptionMode",
+                            "websiteUrl"
+                          ],
+                          "additionalProperties": false
+                        },
+                        "platforms": {
+                          "type": "object",
+                          "properties": {
+                            "apple": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "number",
+                                  "description": "Apple Podcasts ID"
+                                },
+                                "url": {
+                                  "type": "string",
+                                  "format": "uri",
+                                  "description": "Apple Podcasts show page"
+                                }
+                              },
+                              "required": [
+                                "id",
+                                "url"
+                              ],
+                              "additionalProperties": false,
+                              "description": "Apple Podcasts. Every podcast we track has one."
+                            },
+                            "spotify": {
+                              "description": "Spotify, when we have matched the show. Spotify has no lookup by feed, so each match is inferred. Null means we have no match, not that the show is missing from Spotify.",
+                              "type": [
+                                "object",
+                                "null"
+                              ],
+                              "properties": {
+                                "id": {
+                                  "type": "string",
+                                  "description": "Spotify show ID"
+                                },
+                                "url": {
+                                  "type": "string",
+                                  "format": "uri",
+                                  "description": "Spotify show page, https://open.spotify.com/show/<id>"
+                                }
+                              },
+                              "required": [
+                                "id",
+                                "url"
+                              ],
+                              "additionalProperties": false
+                            },
+                            "youtube": {
+                              "description": "The show’s main YouTube channel, when we have one.",
+                              "type": [
+                                "object",
+                                "null"
+                              ],
+                              "properties": {
+                                "channelId": {
+                                  "type": "string",
+                                  "description": "YouTube channel ID"
+                                },
+                                "url": {
+                                  "type": "string",
+                                  "format": "uri",
+                                  "description": "YouTube channel page"
+                                },
+                                "tier": {
+                                  "type": "string",
+                                  "enum": [
+                                    "associated",
+                                    "candidate"
+                                  ],
+                                  "description": "`associated`: the channel passed our association checks and is the show’s own channel. `candidate`: the best match we have that has not passed them yet."
+                                }
+                              },
+                              "required": [
+                                "channelId",
+                                "url",
+                                "tier"
+                              ],
+                              "additionalProperties": false
+                            },
+                            "derived": {
+                              "type": "object",
+                              "properties": {
+                                "overcast": {
+                                  "type": "string",
+                                  "format": "uri"
+                                },
+                                "pocketCasts": {
+                                  "type": "string",
+                                  "format": "uri"
+                                },
+                                "castro": {
+                                  "type": "string",
+                                  "format": "uri"
+                                }
+                              },
+                              "required": [
+                                "overcast",
+                                "pocketCasts",
+                                "castro"
+                              ],
+                              "additionalProperties": false,
+                              "description": "Links built from the Apple ID using each app’s public URL pattern. We do not check them; these apps list shows from Apple Podcasts."
+                            }
+                          },
+                          "required": [
+                            "apple",
+                            "spotify",
+                            "youtube",
+                            "derived"
+                          ],
+                          "additionalProperties": false,
+                          "description": "Where the podcast is listed: Apple Podcasts, Spotify, YouTube and apps that list from Apple."
                         }
                       },
                       "required": [
@@ -17556,7 +18399,7 @@
             "required": true,
             "schema": {
               "type": "string",
-              "description": "Podengine ID, Apple ID, or slug"
+              "description": "Pod Engine ID or slug, Apple Podcasts ID, Spotify show ID, or podcast:guid"
             }
           },
           {
@@ -18131,7 +18974,7 @@
             "required": true,
             "schema": {
               "type": "string",
-              "description": "Podengine ID, Apple ID, or slug"
+              "description": "Pod Engine ID or slug, Apple Podcasts ID, Spotify show ID, or podcast:guid"
             }
           }
         ],
@@ -18403,7 +19246,7 @@
             "required": true,
             "schema": {
               "type": "string",
-              "description": "Podengine ID, Apple ID, or slug"
+              "description": "Pod Engine ID or slug, Apple Podcasts ID, Spotify show ID, or podcast:guid"
             }
           },
           {
@@ -18902,7 +19745,7 @@
             "required": true,
             "schema": {
               "type": "string",
-              "description": "Podengine ID, Apple ID, or slug"
+              "description": "Pod Engine ID or slug, Apple Podcasts ID, Spotify show ID, or podcast:guid"
             }
           }
         ],
@@ -19210,7 +20053,7 @@
             "required": true,
             "schema": {
               "type": "string",
-              "description": "Podengine ID, Apple ID, or slug"
+              "description": "Pod Engine ID or slug, Apple Podcasts ID, Spotify show ID, or podcast:guid"
             }
           },
           {
@@ -19477,7 +20320,7 @@
             "required": true,
             "schema": {
               "type": "string",
-              "description": "Podengine ID, Apple ID, or slug"
+              "description": "Pod Engine ID or slug, Apple Podcasts ID, Spotify show ID, or podcast:guid"
             }
           },
           {
@@ -19720,7 +20563,7 @@
             "required": true,
             "schema": {
               "type": "string",
-              "description": "Podengine ID, Apple ID, or slug"
+              "description": "Pod Engine ID or slug, Apple Podcasts ID, Spotify show ID, or podcast:guid"
             }
           },
           {
@@ -20138,7 +20981,7 @@
             "required": true,
             "schema": {
               "type": "string",
-              "description": "Podengine ID, Apple ID, or slug"
+              "description": "Pod Engine ID or slug, Apple Podcasts ID, Spotify show ID, or podcast:guid"
             }
           },
           {
@@ -20472,7 +21315,7 @@
             "required": true,
             "schema": {
               "type": "string",
-              "description": "Podengine ID, Apple ID, or slug"
+              "description": "Pod Engine ID or slug, Apple Podcasts ID, Spotify show ID, or podcast:guid"
             }
           }
         ],
@@ -21178,7 +22021,7 @@
             "required": true,
             "schema": {
               "type": "string",
-              "description": "Podengine ID, Apple ID, or slug"
+              "description": "Pod Engine ID or slug, Apple Podcasts ID, Spotify show ID, or podcast:guid"
             }
           }
         ],
@@ -21804,7 +22647,7 @@
             "required": true,
             "schema": {
               "type": "string",
-              "description": "Podengine ID, Apple ID, or slug"
+              "description": "Pod Engine ID or slug, Apple Podcasts ID, Spotify show ID, or podcast:guid"
             }
           },
           {

@@ -720,29 +720,9 @@ export interface paths {
     };
     /**
      * Podcast ID Lookup
-     * @description Lookup a podcast by ID
+     * @description Find the Pod Engine podcast for an ID you already have: an Apple Podcasts ID, a Spotify show ID, an RSS feed URL, a podcast:guid, or a Pod Engine slug or ID. Pass exactly one. Returns basic details, or null when we do not track the podcast. Does not count towards your podcast lookups.
      */
     get: operations['getPodcastIdLookup'];
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  '/api/v1/podcasts/apple-id/lookup': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    /**
-     * Apple ID Comprehensive Lookup
-     * @description Comprehensive lookup by Apple ID - checks Podcast, PodcastAppleId, PodcastNewRequest, and scraper database
-     */
-    get: operations['getAppleIdComprehensiveLookup'];
     put?: never;
     post?: never;
     delete?: never;
@@ -780,9 +760,29 @@ export interface paths {
     };
     /**
      * Podcast Details
-     * @description Get a podcast by ID or slug
+     * @description Get a podcast by its Pod Engine ID or slug, Apple Podcasts ID, Spotify show ID or podcast:guid. The response includes `platforms`: where the show is listed on Apple Podcasts, Spotify and YouTube, plus Overcast, Pocket Casts and Castro links built from the Apple ID. To look a podcast up by its RSS feed URL, use Podcast Details by Feed URL.
      */
     get: operations['getPodcast'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/api/v1/podcasts/by-feed-url': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /**
+     * Podcast Details by Feed URL
+     * @description Get a podcast, and where it is listed, from its RSS feed URL. http and https, a trailing slash and the case of the host are ignored, and a feed that has moved host still matches the URL we first tracked it under. Returns the same response as Podcast Details, and counts as a podcast lookup in the same way. Returns 404 when we do not track the feed.
+     */
+    get: operations['getPodcastByFeedUrl'];
     put?: never;
     post?: never;
     delete?: never;
@@ -6769,6 +6769,8 @@ export interface operations {
         spotifyId?: string;
         slug?: string;
         podEngineId?: string;
+        rssFeedUrl?: string;
+        podcastGuid?: string;
       };
       header?: never;
       path?: never;
@@ -6809,157 +6811,6 @@ export interface operations {
                 slug: string;
                 title: string;
                 titleLatest: string;
-              } | null;
-            };
-          };
-        };
-      };
-      /** @description Bad request */
-      400: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-      /** @description Authentication required */
-      401: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-      /** @description Forbidden — plan does not include this endpoint */
-      403: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-      /** @description Not found */
-      404: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-      /** @description Rate limit exceeded */
-      429: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-    };
-  };
-  getAppleIdComprehensiveLookup: {
-    parameters: {
-      query: {
-        id: number;
-      };
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Success */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': {
-            /** @enum {string} */
-            status: 'OK';
-            data: {
-              appleId: number;
-              /** @enum {string} */
-              status:
-                | 'found'
-                | 'linked'
-                | 'apple_details_not_found'
-                | 'apple_not_scraped'
-                | 'create_podcast_failed'
-                | 'duplicate_apple_id'
-                | 'duplicate_podcast_guid'
-                | 'duplicate_rss_url'
-                | 'malformed_apple_url'
-                | 'no_episodes_count'
-                | 'no_podcast_image'
-                | 'non_us_apple_url'
-                | 'podcast_blocked'
-                | 'not_active'
-                | 'request_not_found'
-                | 'rss_download_failed'
-                | 'rss_parsing_failed'
-                | 'rss_url_not_found'
-                | 'import_error_unknown'
-                | 'pending_import'
-                | 'scraped_not_imported_non_english'
-                | 'scraped_not_imported_no_rss_url'
-                | 'scraped_not_imported_not_fully_scraped'
-                | 'scraped_not_imported_too_few_episodes'
-                | 'scraped_not_imported_inactive'
-                | 'scraped_not_imported_low_engagement'
-                | 'scraped_not_imported_unknown'
-                | 'not_found';
-              podcast: {
-                /** Format: uuid */
-                id: string;
-                slug: string;
-                title: string;
-                imageUrl: string | null;
-                isPrimaryAppleId: boolean;
-                primaryAppleId: number;
-                createdAt: unknown;
-                /** @description Direct link to the podcast in the Pod Engine app */
-                podEngineUrl: string;
-              } | null;
-              importRequest: {
-                id: number;
-                appleTitle: string;
-                rssUrl: string;
-                creationSource: string;
-                createdAt: unknown;
-                importedAt: unknown | null;
-                /** Format: uuid */
-                podcastId: string | null;
-                importErrorAt: unknown | null;
-                importError: string | null;
-                importErrorType: string | null;
-              } | null;
-              scraperData: {
-                entries: {
-                  id: number;
-                  country: string;
-                  podcastTitle: string;
-                  createdAt: unknown;
-                  lastScrapedAt: unknown | null;
-                  lastSuccessAt: unknown | null;
-                  lastErrorAt: unknown | null;
-                  rssUrl: string | null;
-                  ratingsCount: number | null;
-                  averageRating: number | null;
-                  episodesCount: number | null;
-                  lastEpisodeDate: unknown | null;
-                  isLikelyNonEnglishTitle: boolean;
-                  skippedPodcastImportReason: string | null;
-                  skippedPodcastImportAt: unknown | null;
-                }[];
-                countries: string[];
-                mostRecentScrape: unknown | null;
-                recentAttempts: {
-                  id: number;
-                  createdAt: unknown;
-                  type: string;
-                  url: string;
-                  appleId: number | null;
-                  spotifyId: string | null;
-                  podcastId: string | null;
-                  errorType: string | null;
-                  errorDetails: string | null;
-                  timeTakenMs: number;
-                }[];
               } | null;
             };
           };
@@ -8257,6 +8108,506 @@ export interface operations {
                 /** @enum {string} */
                 audioRetentionPolicy?: 'RETAIN_INDEFINITELY' | 'RETAIN_DAYS' | 'RETAIN_UNTIL_TRANSCRIBED';
                 audioRetentionDays?: number | null;
+              };
+              /** @description Where the podcast is listed: Apple Podcasts, Spotify, YouTube and apps that list from Apple. */
+              platforms?: {
+                /** @description Apple Podcasts. Every podcast we track has one. */
+                apple: {
+                  /** @description Apple Podcasts ID */
+                  id: number;
+                  /**
+                   * Format: uri
+                   * @description Apple Podcasts show page
+                   */
+                  url: string;
+                };
+                /** @description Spotify, when we have matched the show. Spotify has no lookup by feed, so each match is inferred. Null means we have no match, not that the show is missing from Spotify. */
+                spotify: {
+                  /** @description Spotify show ID */
+                  id: string;
+                  /**
+                   * Format: uri
+                   * @description Spotify show page, https://open.spotify.com/show/<id>
+                   */
+                  url: string;
+                } | null;
+                /** @description The show’s main YouTube channel, when we have one. */
+                youtube: {
+                  /** @description YouTube channel ID */
+                  channelId: string;
+                  /**
+                   * Format: uri
+                   * @description YouTube channel page
+                   */
+                  url: string;
+                  /**
+                   * @description `associated`: the channel passed our association checks and is the show’s own channel. `candidate`: the best match we have that has not passed them yet.
+                   * @enum {string}
+                   */
+                  tier: 'associated' | 'candidate';
+                } | null;
+                /** @description Links built from the Apple ID using each app’s public URL pattern. We do not check them; these apps list shows from Apple Podcasts. */
+                derived: {
+                  /** Format: uri */
+                  overcast: string;
+                  /** Format: uri */
+                  pocketCasts: string;
+                  /** Format: uri */
+                  castro: string;
+                };
+              };
+            };
+          };
+        };
+      };
+      /** @description Bad request */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Authentication required */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Forbidden — plan does not include this endpoint */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Not found */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Rate limit exceeded */
+      429: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+    };
+  };
+  getPodcastByFeedUrl: {
+    parameters: {
+      query: {
+        rssFeedUrl: string;
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Success */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': {
+            /** @enum {string} */
+            status: 'OK';
+            data: {
+              podcast: {
+                author: string | null;
+                authorityScore: {
+                  calculatedAt: unknown;
+                  /** @description This is the weighted total authority score of the podcast, out of 100 */
+                  authorityScore: number;
+                  /** @description This is the quality score of the podcast, out of 100 */
+                  qualityScore: number;
+                  /** @description This is the YouTube score of the podcast, out of 100 */
+                  youtubeScore: number;
+                  /** @description This is the social score of the podcast, out of 100 */
+                  socialScore: number;
+                  /** @description This is the engagement score of the podcast, out of 100 */
+                  engagementScore: number;
+                } | null;
+                genres: string[];
+                id: string;
+                imageUrl: string | null;
+                language: string;
+                lastEpisodePublishedAt: unknown;
+                slug: string;
+                title: string;
+                titleLatest: string;
+                appleId: number;
+                blocked?: {
+                  blockedDate: unknown;
+                  blockedReason?: string;
+                };
+                description: string | null;
+                emails: string[];
+                explicitRss: boolean | null;
+                hostNames: string[] | null;
+                ignore: boolean;
+                ignoreReason?: string;
+                neverTranscribe?: boolean;
+                neverTranscribeReason?: string;
+                isClaimed: boolean;
+                podcastAffiliation: {
+                  /** @description The name of the affiliate organization */
+                  affiliateOrganizationName?: string | null;
+                  /**
+                   * @description The type of affiliation from the list: academic, branded, celebrity, government, independent, legacy media, podcast company, new media, not for profit, religious, other, unknown
+                   * @enum {string|null}
+                   */
+                  affiliationType?:
+                    | 'academic'
+                    | 'branded'
+                    | 'celebrity'
+                    | 'government'
+                    | 'independent'
+                    | 'legacy media'
+                    | 'podcast company'
+                    | 'new media'
+                    | 'not for profit'
+                    | 'religious'
+                    | 'other'
+                    | 'unknown'
+                    | null;
+                } | null;
+                podcastDirectoryLinks: {
+                  /** Format: uri */
+                  amazonmusic?: string;
+                  /** Format: uri */
+                  anchor?: string;
+                  /** Format: uri */
+                  antennapod?: string;
+                  /** Format: uri */
+                  anytimeplayer?: string;
+                  /** Format: uri */
+                  apollo?: string;
+                  /** Format: uri */
+                  apple?: string;
+                  /** Format: uri */
+                  audible?: string;
+                  /** Format: uri */
+                  breez?: string;
+                  /** Format: uri */
+                  castamatic?: string;
+                  /** Format: uri */
+                  castbox?: string;
+                  /** Format: uri */
+                  castro?: string;
+                  /** Format: uri */
+                  curiocaster?: string;
+                  /** Format: uri */
+                  fountain?: string;
+                  /** Format: uri */
+                  goodpods?: string;
+                  /** Format: uri */
+                  google?: string;
+                  /** Format: uri */
+                  gpodder?: string;
+                  /** Format: uri */
+                  iheartradio?: string;
+                  /** Format: uri */
+                  listennotes?: string;
+                  /** Format: uri */
+                  lnbeats?: string;
+                  /** Format: uri */
+                  moonfm?: string;
+                  /** Format: uri */
+                  overcast?: string;
+                  /** Format: uri */
+                  playerfm?: string;
+                  /** Format: uri */
+                  pocketcasts?: string;
+                  /** Format: uri */
+                  podbean?: string;
+                  /** Format: uri */
+                  podcastaddict?: string;
+                  /** Format: uri */
+                  podcastguru?: string;
+                  /** Format: uri */
+                  podcastrepublic?: string;
+                  /** Format: uri */
+                  podchaser?: string;
+                  /** Format: uri */
+                  podfriend?: string;
+                  /** Format: uri */
+                  podknife?: string;
+                  /** Format: uri */
+                  podlp?: string;
+                  /** Format: uri */
+                  podnews?: string;
+                  /** Format: uri */
+                  podscan?: string;
+                  /** Format: uri */
+                  podscribe?: string;
+                  /** Format: uri */
+                  podstation?: string;
+                  /** Format: uri */
+                  podurama?: string;
+                  /** Format: uri */
+                  podverse?: string;
+                  /** Format: uri */
+                  radiopublic?: string;
+                  /** Format: uri */
+                  rephonic?: string;
+                  /** Format: uri */
+                  sonnet?: string;
+                  /** Format: uri */
+                  spotify?: string;
+                  /** Format: uri */
+                  stenofm?: string;
+                  /** Format: uri */
+                  truefans?: string;
+                  /** Format: uri */
+                  tunein?: string;
+                  /** Format: uri */
+                  youtubemusic?: string;
+                };
+                podcastHasGuests: boolean | null;
+                podcastHasSponsors: boolean | null;
+                podcastLocations: string[] | null;
+                primaryContactEmail: string | null;
+                rssFeedUrl: string;
+                socialMediaLinks: {
+                  /**
+                   * @description Social platform associated with the profile URL.
+                   * @enum {string}
+                   */
+                  socialMediaType:
+                    | 'beehiiv'
+                    | 'behance'
+                    | 'bluesky'
+                    | 'discord'
+                    | 'facebook'
+                    | 'github'
+                    | 'instagram'
+                    | 'linkedin'
+                    | 'linktree'
+                    | 'mastodon'
+                    | 'medium'
+                    | 'patreon'
+                    | 'pinterest'
+                    | 'reddit'
+                    | 'snapchat'
+                    | 'soundcloud'
+                    | 'substack'
+                    | 'threads'
+                    | 'tiktok'
+                    | 'tumblr'
+                    | 'twitch'
+                    | 'twitter'
+                    | 'vimeo'
+                    | 'whatsapp'
+                    | 'youtube';
+                  /**
+                   * Format: uri
+                   * @description Full URL of the social media profile.
+                   */
+                  url: string;
+                  sources: (
+                    | 'apple-podcasts'
+                    | 'bright-data-dataset'
+                    | 'google-search'
+                    | 'linktree'
+                    | 'podcast-website'
+                    | 'podchaser'
+                    | 'rephonic'
+                    | 'rss'
+                    | 'youtube-channel-links'
+                    | 'youtube-episode-search'
+                    | 'youtube-serp'
+                    | 'youtube-api-search'
+                  )[];
+                }[];
+                spotifyId: string | null;
+                stats: {
+                  downloadCount: number;
+                  episodeCount: number;
+                  latestPublishedAt: unknown | null;
+                  firstEpisodePublishedAt: unknown | null;
+                  transcriptsCount: number;
+                  /** @enum {string} */
+                  updateFrequency: 'daily' | 'weekly' | 'bi-weekly' | 'monthly' | 'stale' | 'very-stale';
+                };
+                titleLatestCleaned: string | null;
+                transcriptionMode:
+                  | {
+                      /** @enum {string} */
+                      mode: 'none';
+                      transcribeSince?: unknown;
+                    }
+                  | {
+                      /** @enum {string} */
+                      mode: 'all';
+                      transcribeSince?: unknown;
+                    }
+                  | {
+                      /** @enum {string} */
+                      mode: 'episodes-since';
+                      transcribeSince: unknown;
+                    };
+                websiteUrl: string | null;
+                audienceEstimate?: {
+                  audienceDemographics: {
+                    /**
+                     * @description The age range of the audience as a string.
+                     * @enum {string}
+                     */
+                    ageRange: 'Under 18' | '18-24' | '25-34' | '35-44' | '45-54' | '55+';
+                    /**
+                     * @description How the audience is skewed in terms of gender.
+                     * @enum {string}
+                     */
+                    genderSkew:
+                      | 'Male 0% Female 100%'
+                      | 'Male 20% Female 80%'
+                      | 'Male 40% Female 60%'
+                      | 'Male 50% Female 50%'
+                      | 'Male 60% Female 40%'
+                      | 'Male 80% Female 20%'
+                      | 'Male 100% Female 0%';
+                    /**
+                     * @description The probable education levels of the audience.
+                     * @enum {string}
+                     */
+                    educationLevel:
+                      | 'No High School'
+                      | 'High School'
+                      | 'Some College'
+                      | 'Bachelors Degree'
+                      | 'Masters Degree'
+                      | 'Doctorate';
+                    /**
+                     * @description The probable income levels of the audience.
+                     * @enum {string}
+                     */
+                    incomeLevel:
+                      | 'Under $25K'
+                      | '$25K-$50K'
+                      | '$50K-$75K'
+                      | '$75K-$100K'
+                      | '$100K-$150K'
+                      | '$150K-$200K'
+                      | '$200K+';
+                    /** @description An example profile of the audience. This is a description of the audience that you can use to describe the audience to an advertiser. */
+                    exampleListenerProfile: string;
+                  } | null;
+                  estimatedMonthlyListeners: number | null;
+                  /**
+                   * @description Bucket for the estimated monthly listeners: 0-1K, 1K-10K, 10K-100K, 100K-1M or 1M+. 0-1K means the estimate is under 1,000, even when the rounded figure reads 1,000. Null means no estimate is available.
+                   * @enum {string|null}
+                   */
+                  estimatedMonthlyListenersBucket?: '0-1K' | '1K-10K' | '10K-100K' | '100K-1M' | '1M+' | null;
+                  estimatedMonthyListenersCalculatedAt: unknown | null;
+                  /** @enum {string|null} */
+                  confidence?: 'high' | 'medium' | 'low' | null;
+                  isDormant?: boolean | null;
+                  hasOp3Analytics?: boolean;
+                  op3Downloads?:
+                    | {
+                        /** @enum {string} */
+                        unit: 'downloads';
+                        /** @enum {string} */
+                        source: 'op3';
+                        /** @enum {string} */
+                        basis: 'trailing_30_days';
+                        /** Format: date-time */
+                        last_synced_at: Date | null;
+                        /** Format: date-time */
+                        source_as_of: Date | null;
+                        /** Format: date-time */
+                        measurement_recorded_at: Date | null;
+                        /** @enum {string} */
+                        coverage: 'unknown';
+                        /** @enum {string} */
+                        freshness: 'fresh' | 'stale' | 'unknown';
+                        /** @enum {string} */
+                        status: 'available';
+                        value: number;
+                        /** @enum {string|null} */
+                        reason: null;
+                      }
+                    | {
+                        /** @enum {string} */
+                        unit: 'downloads';
+                        /** @enum {string} */
+                        source: 'op3';
+                        /** @enum {string} */
+                        basis: 'trailing_30_days';
+                        /** Format: date-time */
+                        last_synced_at: Date | null;
+                        /** Format: date-time */
+                        source_as_of: Date | null;
+                        /** Format: date-time */
+                        measurement_recorded_at: Date | null;
+                        /** @enum {string} */
+                        coverage: 'unknown';
+                        /** @enum {string} */
+                        freshness: 'fresh' | 'stale' | 'unknown';
+                        /** @enum {string} */
+                        status: 'unavailable';
+                        /** @enum {string|null} */
+                        value: null;
+                        /** @enum {string} */
+                        reason: 'no_measurement' | 'invalid_measurement' | 'history_mismatch';
+                      };
+                };
+                /** @enum {string} */
+                audioRetentionPolicy?: 'RETAIN_INDEFINITELY' | 'RETAIN_DAYS' | 'RETAIN_UNTIL_TRANSCRIBED';
+                audioRetentionDays?: number | null;
+              };
+              /** @description Where the podcast is listed: Apple Podcasts, Spotify, YouTube and apps that list from Apple. */
+              platforms?: {
+                /** @description Apple Podcasts. Every podcast we track has one. */
+                apple: {
+                  /** @description Apple Podcasts ID */
+                  id: number;
+                  /**
+                   * Format: uri
+                   * @description Apple Podcasts show page
+                   */
+                  url: string;
+                };
+                /** @description Spotify, when we have matched the show. Spotify has no lookup by feed, so each match is inferred. Null means we have no match, not that the show is missing from Spotify. */
+                spotify: {
+                  /** @description Spotify show ID */
+                  id: string;
+                  /**
+                   * Format: uri
+                   * @description Spotify show page, https://open.spotify.com/show/<id>
+                   */
+                  url: string;
+                } | null;
+                /** @description The show’s main YouTube channel, when we have one. */
+                youtube: {
+                  /** @description YouTube channel ID */
+                  channelId: string;
+                  /**
+                   * Format: uri
+                   * @description YouTube channel page
+                   */
+                  url: string;
+                  /**
+                   * @description `associated`: the channel passed our association checks and is the show’s own channel. `candidate`: the best match we have that has not passed them yet.
+                   * @enum {string}
+                   */
+                  tier: 'associated' | 'candidate';
+                } | null;
+                /** @description Links built from the Apple ID using each app’s public URL pattern. We do not check them; these apps list shows from Apple Podcasts. */
+                derived: {
+                  /** Format: uri */
+                  overcast: string;
+                  /** Format: uri */
+                  pocketCasts: string;
+                  /** Format: uri */
+                  castro: string;
+                };
               };
             };
           };

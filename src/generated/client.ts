@@ -138,11 +138,6 @@ export type UpdateGuestProfileSocialMediaLinksResponse =
 export type UploadDocumentsParams = NonNullable<operations['uploadDocuments']['parameters']['path']>;
 export type UploadDocumentsResponse =
   operations['uploadDocuments']['responses']['200']['content']['application/json']['data'];
-export type GetAppleIdComprehensiveLookupParams = NonNullable<
-  operations['getAppleIdComprehensiveLookup']['parameters']['query']
->;
-export type GetAppleIdComprehensiveLookupResponse =
-  operations['getAppleIdComprehensiveLookup']['responses']['200']['content']['application/json']['data'];
 export type GetLatestPodcastsParams = NonNullable<operations['getLatestPodcasts']['parameters']['query']>;
 export type GetLatestPodcastsResponse =
   operations['getLatestPodcasts']['responses']['200']['content']['application/json']['data'];
@@ -154,6 +149,9 @@ export type GetPodcastResponse = operations['getPodcast']['responses']['200']['c
 export type GetPodcastAllDetailsParams = NonNullable<operations['getPodcastAllDetails']['parameters']['path']>;
 export type GetPodcastAllDetailsResponse =
   operations['getPodcastAllDetails']['responses']['200']['content']['application/json']['data'];
+export type GetPodcastByFeedUrlParams = NonNullable<operations['getPodcastByFeedUrl']['parameters']['query']>;
+export type GetPodcastByFeedUrlResponse =
+  operations['getPodcastByFeedUrl']['responses']['200']['content']['application/json']['data'];
 export type GetPodcastChartPresenceParams = NonNullable<operations['getPodcastChartPresence']['parameters']['path']> &
   NonNullable<operations['getPodcastChartPresence']['parameters']['query']>;
 export type GetPodcastChartPresenceResponse =
@@ -559,14 +557,6 @@ const descriptors = {
     body: 'none',
     binary: false,
   },
-  getAppleIdComprehensiveLookup: {
-    method: 'GET',
-    path: '/api/v1/podcasts/apple-id/lookup',
-    pathParams: [],
-    queryParams: ['id'],
-    body: 'none',
-    binary: false,
-  },
   getLatestPodcasts: {
     method: 'GET',
     path: '/api/v1/podcasts/latest',
@@ -596,6 +586,14 @@ const descriptors = {
     path: '/api/v1/podcasts/{podcastIdOrSlug}/all-details',
     pathParams: ['podcastIdOrSlug'],
     queryParams: [],
+    body: 'none',
+    binary: false,
+  },
+  getPodcastByFeedUrl: {
+    method: 'GET',
+    path: '/api/v1/podcasts/by-feed-url',
+    pathParams: [],
+    queryParams: ['rssFeedUrl'],
     body: 'none',
     binary: false,
   },
@@ -643,7 +641,7 @@ const descriptors = {
     method: 'GET',
     path: '/api/v1/podcasts/id/lookup',
     pathParams: [],
-    queryParams: ['appleId', 'spotifyId', 'slug', 'podEngineId'],
+    queryParams: ['appleId', 'spotifyId', 'slug', 'podEngineId', 'rssFeedUrl', 'podcastGuid'],
     body: 'none',
     binary: false,
   },
@@ -1263,17 +1261,6 @@ class PodcastsResource {
   constructor(private readonly core: PodEngineCore) {}
 
   /**
-   * Apple ID Comprehensive Lookup
-   * Comprehensive lookup by Apple ID - checks Podcast, PodcastAppleId, PodcastNewRequest, and scraper database
-   */
-  getAppleIdComprehensiveLookup(
-    params: GetAppleIdComprehensiveLookupParams,
-    options?: RequestOptions
-  ): Promise<GetAppleIdComprehensiveLookupResponse> {
-    return this.core.request(descriptors.getAppleIdComprehensiveLookup, params as Record<string, unknown>, options);
-  }
-
-  /**
    * Latest Podcasts
    * Get the latest podcasts
    */
@@ -1294,7 +1281,7 @@ class PodcastsResource {
 
   /**
    * Podcast Details
-   * Get a podcast by ID or slug
+   * Get a podcast by its Pod Engine ID or slug, Apple Podcasts ID, Spotify show ID or podcast:guid. The response includes `platforms`: where the show is listed on Apple Podcasts, Spotify and YouTube, plus Overcast, Pocket Casts and Castro links built from the Apple ID. To look a podcast up by its RSS feed URL, use Podcast Details by Feed URL.
    */
   getPodcast(params: GetPodcastParams, options?: RequestOptions): Promise<GetPodcastResponse> {
     return this.core.request(descriptors.getPodcast, params as Record<string, unknown>, options);
@@ -1309,6 +1296,17 @@ class PodcastsResource {
     options?: RequestOptions
   ): Promise<GetPodcastAllDetailsResponse> {
     return this.core.request(descriptors.getPodcastAllDetails, params as Record<string, unknown>, options);
+  }
+
+  /**
+   * Podcast Details by Feed URL
+   * Get a podcast, and where it is listed, from its RSS feed URL. http and https, a trailing slash and the case of the host are ignored, and a feed that has moved host still matches the URL we first tracked it under. Returns the same response as Podcast Details, and counts as a podcast lookup in the same way. Returns 404 when we do not track the feed.
+   */
+  getPodcastByFeedUrl(
+    params: GetPodcastByFeedUrlParams,
+    options?: RequestOptions
+  ): Promise<GetPodcastByFeedUrlResponse> {
+    return this.core.request(descriptors.getPodcastByFeedUrl, params as Record<string, unknown>, options);
   }
 
   /**
@@ -1356,7 +1354,7 @@ class PodcastsResource {
 
   /**
    * Podcast ID Lookup
-   * Lookup a podcast by ID
+   * Find the Pod Engine podcast for an ID you already have: an Apple Podcasts ID, a Spotify show ID, an RSS feed URL, a podcast:guid, or a Pod Engine slug or ID. Pass exactly one. Returns basic details, or null when we do not track the podcast. Does not count towards your podcast lookups.
    */
   getPodcastIdLookup(params?: GetPodcastIdLookupParams, options?: RequestOptions): Promise<GetPodcastIdLookupResponse> {
     return this.core.request(descriptors.getPodcastIdLookup, params as Record<string, unknown>, options);
