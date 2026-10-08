@@ -17165,40 +17165,15 @@
                                 "tier"
                               ],
                               "additionalProperties": false
-                            },
-                            "derived": {
-                              "type": "object",
-                              "properties": {
-                                "overcast": {
-                                  "type": "string",
-                                  "format": "uri"
-                                },
-                                "pocketCasts": {
-                                  "type": "string",
-                                  "format": "uri"
-                                },
-                                "castro": {
-                                  "type": "string",
-                                  "format": "uri"
-                                }
-                              },
-                              "required": [
-                                "overcast",
-                                "pocketCasts",
-                                "castro"
-                              ],
-                              "additionalProperties": false,
-                              "description": "Links built from the Apple ID using each app’s public URL pattern. We do not check them; these apps list shows from Apple Podcasts."
                             }
                           },
                           "required": [
                             "apple",
                             "spotify",
-                            "youtube",
-                            "derived"
+                            "youtube"
                           ],
                           "additionalProperties": false,
-                          "description": "Where the podcast is listed: Apple Podcasts, Spotify, YouTube and apps that list from Apple."
+                          "description": "Where the podcast is listed: Apple Podcasts, Spotify and YouTube."
                         }
                       },
                       "required": [
@@ -18310,40 +18285,15 @@
                                 "tier"
                               ],
                               "additionalProperties": false
-                            },
-                            "derived": {
-                              "type": "object",
-                              "properties": {
-                                "overcast": {
-                                  "type": "string",
-                                  "format": "uri"
-                                },
-                                "pocketCasts": {
-                                  "type": "string",
-                                  "format": "uri"
-                                },
-                                "castro": {
-                                  "type": "string",
-                                  "format": "uri"
-                                }
-                              },
-                              "required": [
-                                "overcast",
-                                "pocketCasts",
-                                "castro"
-                              ],
-                              "additionalProperties": false,
-                              "description": "Links built from the Apple ID using each app’s public URL pattern. We do not check them; these apps list shows from Apple Podcasts."
                             }
                           },
                           "required": [
                             "apple",
                             "spotify",
-                            "youtube",
-                            "derived"
+                            "youtube"
                           ],
                           "additionalProperties": false,
-                          "description": "Where the podcast is listed: Apple Podcasts, Spotify, YouTube and apps that list from Apple."
+                          "description": "Where the podcast is listed: Apple Podcasts, Spotify and YouTube."
                         }
                       },
                       "required": [

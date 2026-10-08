@@ -8109,7 +8109,7 @@ export interface operations {
                 audioRetentionPolicy?: 'RETAIN_INDEFINITELY' | 'RETAIN_DAYS' | 'RETAIN_UNTIL_TRANSCRIBED';
                 audioRetentionDays?: number | null;
               };
-              /** @description Where the podcast is listed: Apple Podcasts, Spotify, YouTube and apps that list from Apple. */
+              /** @description Where the podcast is listed: Apple Podcasts, Spotify and YouTube. */
               platforms?: {
                 /** @description Apple Podcasts. Every podcast we track has one. */
                 apple: {
@@ -8146,15 +8146,6 @@ export interface operations {
                    */
                   tier: 'associated' | 'candidate';
                 } | null;
-                /** @description Links built from the Apple ID using each app’s public URL pattern. We do not check them; these apps list shows from Apple Podcasts. */
-                derived: {
-                  /** Format: uri */
-                  overcast: string;
-                  /** Format: uri */
-                  pocketCasts: string;
-                  /** Format: uri */
-                  castro: string;
-                };
               };
             };
           };
@@ -8562,7 +8553,7 @@ export interface operations {
                 audioRetentionPolicy?: 'RETAIN_INDEFINITELY' | 'RETAIN_DAYS' | 'RETAIN_UNTIL_TRANSCRIBED';
                 audioRetentionDays?: number | null;
               };
-              /** @description Where the podcast is listed: Apple Podcasts, Spotify, YouTube and apps that list from Apple. */
+              /** @description Where the podcast is listed: Apple Podcasts, Spotify and YouTube. */
               platforms?: {
                 /** @description Apple Podcasts. Every podcast we track has one. */
                 apple: {
@@ -8599,15 +8590,6 @@ export interface operations {
                    */
                   tier: 'associated' | 'candidate';
                 } | null;
-                /** @description Links built from the Apple ID using each app’s public URL pattern. We do not check them; these apps list shows from Apple Podcasts. */
-                derived: {
-                  /** Format: uri */
-                  overcast: string;
-                  /** Format: uri */
-                  pocketCasts: string;
-                  /** Format: uri */
-                  castro: string;
-                };
               };
             };
           };
