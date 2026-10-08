@@ -1281,7 +1281,7 @@ class PodcastsResource {
 
   /**
    * Podcast Details
-   * Get a podcast by its Pod Engine ID or slug, Apple Podcasts ID, Spotify show ID or podcast:guid. The response includes `platforms`: where the show is listed on Apple Podcasts, Spotify and YouTube, plus Overcast, Pocket Casts and Castro links built from the Apple ID. To look a podcast up by its RSS feed URL, use Podcast Details by Feed URL.
+   * Get a podcast by its Pod Engine ID or slug, Apple Podcasts ID, Spotify show ID or podcast:guid. The response includes `platforms`: where the show is listed on Apple Podcasts, Spotify and YouTube. To look a podcast up by its RSS feed URL, use Podcast Details by Feed URL.
    */
   getPodcast(params: GetPodcastParams, options?: RequestOptions): Promise<GetPodcastResponse> {
     return this.core.request(descriptors.getPodcast, params as Record<string, unknown>, options);

@@ -760,7 +760,7 @@ export interface paths {
     };
     /**
      * Podcast Details
-     * @description Get a podcast by its Pod Engine ID or slug, Apple Podcasts ID, Spotify show ID or podcast:guid. The response includes `platforms`: where the show is listed on Apple Podcasts, Spotify and YouTube, plus Overcast, Pocket Casts and Castro links built from the Apple ID. To look a podcast up by its RSS feed URL, use Podcast Details by Feed URL.
+     * @description Get a podcast by its Pod Engine ID or slug, Apple Podcasts ID, Spotify show ID or podcast:guid. The response includes `platforms`: where the show is listed on Apple Podcasts, Spotify and YouTube. To look a podcast up by its RSS feed URL, use Podcast Details by Feed URL.
      */
     get: operations['getPodcast'];
     put?: never;
