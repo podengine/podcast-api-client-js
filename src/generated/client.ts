@@ -163,6 +163,12 @@ export type GetPodcastChartsResponse =
 export type GetPodcastContactsParams = NonNullable<operations['getPodcastContacts']['parameters']['path']>;
 export type GetPodcastContactsResponse =
   operations['getPodcastContacts']['responses']['200']['content']['application/json']['data'];
+export type GetPodcastEpisodeCatalogueParams = NonNullable<
+  operations['getPodcastEpisodeCatalogue']['parameters']['path']
+> &
+  NonNullable<operations['getPodcastEpisodeCatalogue']['parameters']['query']>;
+export type GetPodcastEpisodeCatalogueResponse =
+  operations['getPodcastEpisodeCatalogue']['responses']['200']['content']['application/json']['data'];
 export type GetPodcastEpisodesParams = NonNullable<operations['getPodcastEpisodes']['parameters']['path']> &
   NonNullable<operations['getPodcastEpisodes']['parameters']['query']>;
 export type GetPodcastEpisodesResponse =
@@ -618,6 +624,14 @@ const descriptors = {
     path: '/api/v1/podcasts/{podcastIdOrSlug}/contacts',
     pathParams: ['podcastIdOrSlug'],
     queryParams: [],
+    body: 'none',
+    binary: false,
+  },
+  getPodcastEpisodeCatalogue: {
+    method: 'GET',
+    path: '/api/v1/podcasts/{podcastIdOrSlug}/episode-catalogue',
+    pathParams: ['podcastIdOrSlug'],
+    queryParams: ['view'],
     body: 'none',
     binary: false,
   },
@@ -1334,6 +1348,17 @@ class PodcastsResource {
    */
   getPodcastContacts(params: GetPodcastContactsParams, options?: RequestOptions): Promise<GetPodcastContactsResponse> {
     return this.core.request(descriptors.getPodcastContacts, params as Record<string, unknown>, options);
+  }
+
+  /**
+   * Podcast Episode Catalogue
+   * See how often a show publishes and what it has released. Returns its publishing rhythm over the last 26 weeks (episodes per day, median runtime, median gap between episodes, missed weeks, a change of release day) and a compact list of its episodes with runtime, hosts and guests, sponsors, transcript availability, new or rerun, and Apple Podcasts and YouTube links. Does not count towards your podcast lookups.
+   */
+  getPodcastEpisodeCatalogue(
+    params: GetPodcastEpisodeCatalogueParams,
+    options?: RequestOptions
+  ): Promise<GetPodcastEpisodeCatalogueResponse> {
+    return this.core.request(descriptors.getPodcastEpisodeCatalogue, params as Record<string, unknown>, options);
   }
 
   /**

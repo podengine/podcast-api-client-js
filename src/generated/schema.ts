@@ -951,6 +951,26 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  '/api/v1/podcasts/{podcastIdOrSlug}/episode-catalogue': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /**
+     * Podcast Episode Catalogue
+     * @description See how often a show publishes and what it has released. Returns its publishing rhythm over the last 26 weeks (episodes per day, median runtime, median gap between episodes, missed weeks, a change of release day) and a compact list of its episodes with runtime, hosts and guests, sponsors, transcript availability, new or rerun, and Apple Podcasts and YouTube links. Does not count towards your podcast lookups.
+     */
+    get: operations['getPodcastEpisodeCatalogue'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   '/api/v1/podcasts/{podcastIdOrSlug}/social-media': {
     parameters: {
       query?: never;
@@ -9660,6 +9680,170 @@ export interface operations {
                 category: string;
                 position: number;
               }[];
+            };
+          };
+        };
+      };
+      /** @description Bad request */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Authentication required */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Forbidden — plan does not include this endpoint */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Not found */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Rate limit exceeded */
+      429: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+    };
+  };
+  getPodcastEpisodeCatalogue: {
+    parameters: {
+      query: {
+        view: 'summary' | 'full';
+      };
+      header?: never;
+      path: {
+        podcastIdOrSlug: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Success */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': {
+            /** @enum {string} */
+            status: 'OK';
+            data: {
+              catalogue: {
+                /** @description Episodes, newest first. */
+                episodes: {
+                  /**
+                   * Format: uuid
+                   * @description Pod Engine episode ID.
+                   */
+                  id: string;
+                  /** @description Episode slug. */
+                  slug: string;
+                  /** @description Episode title. */
+                  title: string;
+                  /**
+                   * Format: date-time
+                   * @description Publish time from the feed (UTC).
+                   */
+                  publishedAt: Date;
+                  /** @description Runtime in seconds; null when unknown. */
+                  durationSeconds: number | null;
+                  /** @description Episode artwork URL; null when there is none. */
+                  imageUrl: string | null;
+                  /** @description Hosts and guests identified in the episode; null when the episode has not been analysed. */
+                  people:
+                    | {
+                        name: string;
+                        /** @enum {string} */
+                        type: 'host' | 'guest' | 'unknown' | 'mentioned';
+                        imageUrl: string | null;
+                      }[]
+                    | null;
+                  /** @description Sponsor and advertiser names, sorted. Null when not analysed, and always null in the `summary` view. */
+                  sponsors: string[] | null;
+                  /** @description Whether a Pod Engine transcript is available for the episode. */
+                  hasTranscript: boolean;
+                  /**
+                   * @description Whether the episode is a new release or a rerun of an earlier episode, inferred from "123: Title" numbering. Null when it cannot be told (see `classificationAvailable`).
+                   * @enum {string|null}
+                   */
+                  releaseType: 'new' | 'rerun' | null;
+                  /** @description Episode link on Apple Podcasts; null when not matched. */
+                  applePodcastsUrl: string | null;
+                  /** @description Matching YouTube video URL; null when not matched. */
+                  youtubeUrl: string | null;
+                  /** @description Reserved for the episode link on Spotify. Currently always null. */
+                  spotifyUrl: string | null;
+                }[];
+                /** @description True when the show has more than the 5,000 episodes returned by the `full` view. */
+                truncated: boolean;
+                /** @description Whether new/rerun detection ran. False for shows without consistent episode numbering, seasonal shows, truncated catalogues and the `summary` view; `releaseType` is then null. */
+                classificationAvailable: boolean;
+                /** @description Publishing rhythm over the last 26 weeks, by UTC day. */
+                rhythm: {
+                  /**
+                   * Format: date-time
+                   * @description Start of the window: 00:00 UTC on the Sunday 25 weeks before the current week, so 26 weeks in all.
+                   */
+                  start: Date;
+                  /**
+                   * Format: date-time
+                   * @description End of the window: the time the rhythm was computed.
+                   */
+                  end: Date;
+                  /** @description One entry per UTC day in the window, oldest first (182 days). */
+                  days: {
+                    /**
+                     * Format: date
+                     * @description UTC calendar day.
+                     */
+                    date: string;
+                    /** @description Episodes published on this day. */
+                    count: number;
+                    /** @description Median runtime in seconds of the episodes published on this day; null when none has one. */
+                    runtimeSeconds: number | null;
+                    /** @description True for the days later in the current week that have not happened yet. */
+                    future: boolean;
+                  }[];
+                  /** @description Episodes published inside the window. */
+                  episodeCount: number;
+                  /** @description True when the show published more than 5,000 episodes in the window and only the latest were counted. */
+                  truncated: boolean;
+                  /** @description Median episode runtime in seconds across the window; null when no episode has a runtime. */
+                  medianRuntimeSeconds: number | null;
+                  /** @description Median gap in days between consecutive episodes in the window; null with fewer than two episodes. */
+                  medianIntervalDays: number | null;
+                  /** @description Roughly weekly shows only: the Sunday of each week with no episode, between the first and last release in the window. */
+                  emptyWeeks: string[];
+                  /** @description Set when a weekly show moved its usual release weekday within its last 12 episodes; otherwise null. */
+                  weekdayShift: {
+                    /** @description Usual release weekday before the change (0 = Sunday, UTC). */
+                    fromDay: number;
+                    /** @description Usual release weekday since the change (0 = Sunday, UTC). */
+                    toDay: number;
+                    /**
+                     * Format: date
+                     * @description Date of the first of the last six episodes, the ones on the new weekday.
+                     */
+                    since: string;
+                  } | null;
+                };
+              };
             };
           };
         };

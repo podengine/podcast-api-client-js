@@ -21250,6 +21250,392 @@
         ]
       }
     },
+    "/api/v1/podcasts/{podcastIdOrSlug}/episode-catalogue": {
+      "get": {
+        "tags": [
+          "podcasts"
+        ],
+        "summary": "Podcast Episode Catalogue",
+        "description": "See how often a show publishes and what it has released. Returns its publishing rhythm over the last 26 weeks (episodes per day, median runtime, median gap between episodes, missed weeks, a change of release day) and a compact list of its episodes with runtime, hosts and guests, sponsors, transcript availability, new or rerun, and Apple Podcasts and YouTube links. Does not count towards your podcast lookups.",
+        "operationId": "getPodcastEpisodeCatalogue",
+        "parameters": [
+          {
+            "name": "podcastIdOrSlug",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "Pod Engine ID or slug, Apple Podcasts ID, Spotify show ID, or podcast:guid"
+            }
+          },
+          {
+            "name": "view",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "default": "full",
+              "description": "`full` returns up to 5,000 of the latest episodes with sponsors and new/rerun detection. `summary` returns the latest 5 episodes without sponsors. Both include the publishing rhythm.",
+              "type": "string",
+              "enum": [
+                "summary",
+                "full"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "OK"
+                      ]
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "catalogue": {
+                          "type": "object",
+                          "properties": {
+                            "episodes": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "id": {
+                                    "type": "string",
+                                    "format": "uuid",
+                                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                                    "description": "Pod Engine episode ID."
+                                  },
+                                  "slug": {
+                                    "type": "string",
+                                    "description": "Episode slug."
+                                  },
+                                  "title": {
+                                    "type": "string",
+                                    "description": "Episode title."
+                                  },
+                                  "publishedAt": {
+                                    "type": "string",
+                                    "format": "date-time",
+                                    "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$",
+                                    "description": "Publish time from the feed (UTC)."
+                                  },
+                                  "durationSeconds": {
+                                    "description": "Runtime in seconds; null when unknown.",
+                                    "type": [
+                                      "number",
+                                      "null"
+                                    ],
+                                    "exclusiveMinimum": 0
+                                  },
+                                  "imageUrl": {
+                                    "description": "Episode artwork URL; null when there is none.",
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "people": {
+                                    "description": "Hosts and guests identified in the episode; null when the episode has not been analysed.",
+                                    "type": [
+                                      "array",
+                                      "null"
+                                    ],
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "name": {
+                                          "type": "string"
+                                        },
+                                        "type": {
+                                          "type": "string",
+                                          "enum": [
+                                            "host",
+                                            "guest",
+                                            "unknown",
+                                            "mentioned"
+                                          ]
+                                        },
+                                        "imageUrl": {
+                                          "type": [
+                                            "string",
+                                            "null"
+                                          ]
+                                        }
+                                      },
+                                      "required": [
+                                        "name",
+                                        "type",
+                                        "imageUrl"
+                                      ],
+                                      "additionalProperties": false
+                                    }
+                                  },
+                                  "sponsors": {
+                                    "description": "Sponsor and advertiser names, sorted. Null when not analysed, and always null in the `summary` view.",
+                                    "type": [
+                                      "array",
+                                      "null"
+                                    ],
+                                    "items": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "hasTranscript": {
+                                    "type": "boolean",
+                                    "description": "Whether a Pod Engine transcript is available for the episode."
+                                  },
+                                  "releaseType": {
+                                    "description": "Whether the episode is a new release or a rerun of an earlier episode, inferred from \"123: Title\" numbering. Null when it cannot be told (see `classificationAvailable`).",
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ],
+                                    "enum": [
+                                      "new",
+                                      "rerun"
+                                    ]
+                                  },
+                                  "applePodcastsUrl": {
+                                    "description": "Episode link on Apple Podcasts; null when not matched.",
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "youtubeUrl": {
+                                    "description": "Matching YouTube video URL; null when not matched.",
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "spotifyUrl": {
+                                    "description": "Reserved for the episode link on Spotify. Currently always null.",
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  }
+                                },
+                                "required": [
+                                  "id",
+                                  "slug",
+                                  "title",
+                                  "publishedAt",
+                                  "durationSeconds",
+                                  "imageUrl",
+                                  "people",
+                                  "sponsors",
+                                  "hasTranscript",
+                                  "releaseType",
+                                  "applePodcastsUrl",
+                                  "youtubeUrl",
+                                  "spotifyUrl"
+                                ],
+                                "additionalProperties": false
+                              },
+                              "description": "Episodes, newest first."
+                            },
+                            "truncated": {
+                              "type": "boolean",
+                              "description": "True when the show has more than the 5,000 episodes returned by the `full` view."
+                            },
+                            "classificationAvailable": {
+                              "type": "boolean",
+                              "description": "Whether new/rerun detection ran. False for shows without consistent episode numbering, seasonal shows, truncated catalogues and the `summary` view; `releaseType` is then null."
+                            },
+                            "rhythm": {
+                              "type": "object",
+                              "properties": {
+                                "start": {
+                                  "type": "string",
+                                  "format": "date-time",
+                                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$",
+                                  "description": "Start of the window: 00:00 UTC on the Sunday 25 weeks before the current week, so 26 weeks in all."
+                                },
+                                "end": {
+                                  "type": "string",
+                                  "format": "date-time",
+                                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$",
+                                  "description": "End of the window: the time the rhythm was computed."
+                                },
+                                "days": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "date": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))$",
+                                        "description": "UTC calendar day."
+                                      },
+                                      "count": {
+                                        "type": "integer",
+                                        "minimum": 0,
+                                        "maximum": 9007199254740991,
+                                        "description": "Episodes published on this day."
+                                      },
+                                      "runtimeSeconds": {
+                                        "description": "Median runtime in seconds of the episodes published on this day; null when none has one.",
+                                        "type": [
+                                          "number",
+                                          "null"
+                                        ]
+                                      },
+                                      "future": {
+                                        "type": "boolean",
+                                        "description": "True for the days later in the current week that have not happened yet."
+                                      }
+                                    },
+                                    "required": [
+                                      "date",
+                                      "count",
+                                      "runtimeSeconds",
+                                      "future"
+                                    ],
+                                    "additionalProperties": false
+                                  },
+                                  "description": "One entry per UTC day in the window, oldest first (182 days)."
+                                },
+                                "episodeCount": {
+                                  "type": "integer",
+                                  "minimum": 0,
+                                  "maximum": 9007199254740991,
+                                  "description": "Episodes published inside the window."
+                                },
+                                "truncated": {
+                                  "type": "boolean",
+                                  "description": "True when the show published more than 5,000 episodes in the window and only the latest were counted."
+                                },
+                                "medianRuntimeSeconds": {
+                                  "description": "Median episode runtime in seconds across the window; null when no episode has a runtime.",
+                                  "type": [
+                                    "number",
+                                    "null"
+                                  ]
+                                },
+                                "medianIntervalDays": {
+                                  "description": "Median gap in days between consecutive episodes in the window; null with fewer than two episodes.",
+                                  "type": [
+                                    "number",
+                                    "null"
+                                  ]
+                                },
+                                "emptyWeeks": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string",
+                                    "format": "date",
+                                    "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))$"
+                                  },
+                                  "description": "Roughly weekly shows only: the Sunday of each week with no episode, between the first and last release in the window."
+                                },
+                                "weekdayShift": {
+                                  "description": "Set when a weekly show moved its usual release weekday within its last 12 episodes; otherwise null.",
+                                  "type": [
+                                    "object",
+                                    "null"
+                                  ],
+                                  "properties": {
+                                    "fromDay": {
+                                      "type": "integer",
+                                      "minimum": 0,
+                                      "maximum": 6,
+                                      "description": "Usual release weekday before the change (0 = Sunday, UTC)."
+                                    },
+                                    "toDay": {
+                                      "type": "integer",
+                                      "minimum": 0,
+                                      "maximum": 6,
+                                      "description": "Usual release weekday since the change (0 = Sunday, UTC)."
+                                    },
+                                    "since": {
+                                      "type": "string",
+                                      "format": "date",
+                                      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))$",
+                                      "description": "Date of the first of the last six episodes, the ones on the new weekday."
+                                    }
+                                  },
+                                  "required": [
+                                    "fromDay",
+                                    "toDay",
+                                    "since"
+                                  ],
+                                  "additionalProperties": false
+                                }
+                              },
+                              "required": [
+                                "start",
+                                "end",
+                                "days",
+                                "episodeCount",
+                                "truncated",
+                                "medianRuntimeSeconds",
+                                "medianIntervalDays",
+                                "emptyWeeks",
+                                "weekdayShift"
+                              ],
+                              "additionalProperties": false,
+                              "description": "Publishing rhythm over the last 26 weeks, by UTC day."
+                            }
+                          },
+                          "required": [
+                            "episodes",
+                            "truncated",
+                            "classificationAvailable",
+                            "rhythm"
+                          ],
+                          "additionalProperties": false
+                        }
+                      },
+                      "required": [
+                        "catalogue"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "data"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Forbidden — plan does not include this endpoint"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
     "/api/v1/podcasts/{podcastIdOrSlug}/social-media": {
       "get": {
         "tags": [
