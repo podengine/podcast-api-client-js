@@ -1,0 +1,216 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.5.15/schema.json",
+  "files": {
+    "includes": [
+      "**",
+      "!node_modules",
+      "!dist",
+      "!openapi.json"
+    ]
+  },
+  "formatter": {
+    "enabled": true,
+    "formatWithErrors": false,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineEnding": "lf",
+    "lineWidth": 120,
+    "attributePosition": "auto",
+    "bracketSameLine": false,
+    "bracketSpacing": true,
+    "expand": "auto",
+    "useEditorconfig": true,
+    "includes": [
+      "**/*.{ts,tsx,js,mjs,css}",
+      "package.json",
+      "biome.json"
+    ]
+  },
+  "javascript": {
+    "formatter": {
+      "jsxQuoteStyle": "single",
+      "quoteProperties": "asNeeded",
+      "trailingCommas": "es5",
+      "semicolons": "always",
+      "arrowParentheses": "always",
+      "bracketSameLine": false,
+      "quoteStyle": "single",
+      "attributePosition": "auto",
+      "bracketSpacing": true
+    },
+    "experimentalEmbeddedSnippetsEnabled": true
+  },
+  "linter": {
+    "rules": {
+      "preset": "none",
+      "complexity": {
+        "noAdjacentSpacesInRegex": "warn",
+        "noBannedTypes": "warn",
+        "noExtraBooleanCast": "warn",
+        "noUselessCatch": "warn",
+        "noUselessEscapeInRegex": "warn",
+        "noUselessThisAlias": "warn",
+        "noUselessTypeConstraint": "warn"
+      },
+      "correctness": {
+        "noConstAssign": "warn",
+        "noConstantCondition": "warn",
+        "noEmptyCharacterClassInRegex": "warn",
+        "noEmptyPattern": "warn",
+        "noGlobalObjectCalls": "warn",
+        "noInvalidBuiltinInstantiation": "warn",
+        "noInvalidConstructorSuper": "warn",
+        "noNonoctalDecimalEscape": "warn",
+        "noPrecisionLoss": "warn",
+        "noSelfAssign": "warn",
+        "noSetterReturn": "warn",
+        "noSwitchDeclarations": "warn",
+        "noUndeclaredVariables": "warn",
+        "noUnreachable": "warn",
+        "noUnreachableSuper": "warn",
+        "noUnsafeFinally": "warn",
+        "noUnsafeOptionalChaining": "warn",
+        "noUnusedLabels": "warn",
+        "noUnusedPrivateClassMembers": "warn",
+        "noUnusedVariables": {
+          "level": "warn",
+          "options": {
+            "ignore": {
+              "variable": [
+                "Logger"
+              ]
+            }
+          }
+        },
+        "useIsNan": "warn",
+        "useValidForDirection": "warn",
+        "useValidTypeof": "warn",
+        "useYield": "warn"
+      },
+      "style": {
+        "noCommonJs": "warn",
+        "noNamespace": "warn",
+        "noNestedTernary": "off",
+        "noRestrictedImports": "off",
+        "useArrayLiterals": "warn",
+        "useAsConstAssertion": "warn",
+        "useBlockStatements": "off",
+        "useErrorCause": "warn"
+      },
+      "suspicious": {
+        "noAssignInExpressions": "warn",
+        "noAsyncPromiseExecutor": "warn",
+        "noCatchAssign": "warn",
+        "noClassAssign": "warn",
+        "noCompareNegZero": "warn",
+        "noConstantBinaryExpressions": "warn",
+        "noControlCharactersInRegex": "warn",
+        "noDebugger": "warn",
+        "noDuplicateCase": "warn",
+        "noDuplicateClassMembers": "warn",
+        "noDuplicateElseIf": "warn",
+        "noDuplicateEnumValues": "warn",
+        "noDuplicateObjectKeys": "warn",
+        "noDuplicateParameters": "warn",
+        "noEmptyBlockStatements": "warn",
+        "noExplicitAny": "warn",
+        "noExtraNonNullAssertion": "warn",
+        "noFallthroughSwitchClause": "warn",
+        "noFunctionAssign": "warn",
+        "noGlobalAssign": "warn",
+        "noImportAssign": "warn",
+        "noIrregularWhitespace": "warn",
+        "noMisleadingCharacterClass": "warn",
+        "noMisleadingInstantiator": "warn",
+        "noNonNullAssertedOptionalChain": "warn",
+        "noPrototypeBuiltins": "warn",
+        "noRedeclare": "warn",
+        "noShadowRestrictedNames": "warn",
+        "noSparseArray": "warn",
+        "noTsIgnore": "warn",
+        "noUnassignedVariables": "warn",
+        "noUndeclaredEnvVars": "off",
+        "noUnsafeDeclarationMerging": "warn",
+        "noUnsafeNegation": "warn",
+        "noUnusedExpressions": "off",
+        "noUselessRegexBackrefs": "warn",
+        "noWith": "warn",
+        "useGetterReturn": "warn",
+        "useNamespaceKeyword": "warn"
+      },
+      "nursery": {
+        "useSortedClasses": {
+          "level": "error",
+          "options": {
+            "functions": [
+              "cn",
+              "clsx",
+              "cva"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "assist": {
+    "actions": {
+      "source": {
+        "organizeImports": "off",
+        "useSortedProperties": "on",
+        "useSortedPackageJson": "on"
+      }
+    }
+  },
+  "overrides": [
+    {
+      "includes": [
+        "**/*.ts",
+        "**/*.tsx",
+        "**/*.mts",
+        "**/*.cts"
+      ],
+      "linter": {
+        "rules": {
+          "complexity": {
+            "noArguments": "warn"
+          },
+          "correctness": {
+            "noConstAssign": "off",
+            "noGlobalObjectCalls": "off",
+            "noInvalidBuiltinInstantiation": "off",
+            "noInvalidConstructorSuper": "off",
+            "noSetterReturn": "off",
+            "noUndeclaredVariables": "off",
+            "noUnreachable": "off",
+            "noUnreachableSuper": "off"
+          },
+          "style": {
+            "useConst": "warn",
+            "useSpreadOverApply": "warn"
+          },
+          "suspicious": {
+            "noClassAssign": "off",
+            "noDuplicateClassMembers": "off",
+            "noDuplicateObjectKeys": "off",
+            "noDuplicateParameters": "off",
+            "noFunctionAssign": "off",
+            "noImportAssign": "off",
+            "noRedeclare": "off",
+            "noUnsafeNegation": "off",
+            "noVar": "warn",
+            "noWith": "off",
+            "useGetterReturn": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": [
+        "src/generated/**"
+      ],
+      "linter": {
+        "enabled": false
+      }
+    }
+  ]
+}

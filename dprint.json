@@ -1,0 +1,20 @@
+{
+  "$schema": "https://dprint.dev/schemas/v0.json",
+  "lineWidth": 120,
+  "indentWidth": 2,
+  "newLineKind": "lf",
+  "markdown": {
+    "textWrap": "maintain"
+  },
+  "includes": ["**/*.md"],
+  "excludes": [
+    "**/node_modules",
+    "**/dist",
+    "**/build",
+    "**/.next",
+    "**/coverage",
+    "**/.astro",
+    "**/src/generated/prisma"
+  ],
+  "plugins": ["https://plugins.dprint.dev/markdown-0.26.0.wasm"]
+}

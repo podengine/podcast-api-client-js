@@ -44,25 +44,22 @@
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
-    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,md,css}\" \"**/package.json\" --ignore-unknown",
+    "format": "biome check --write --linter-enabled=false . && dprint fmt",
     "gen:client": "bun run scripts/generate-client.ts",
-    "generate": "bun run scripts/generate-client.ts && prettier --write \"src/generated/**/*.ts\"",
-    "lint": "eslint",
+    "generate": "bun run scripts/generate-client.ts && biome format --write src/generated",
+    "lint": "biome lint .",
     "prepublishOnly": "bun run build",
     "test": "bun test tests/",
     "type-check": "tsc --noEmit"
   },
   "devDependencies": {
-    "@eslint/js": "^10.0.1",
+    "@biomejs/biome": "2.5.15",
     "@types/bun": "^1.4.2",
     "@types/node": "^24.13.1",
-    "eslint": "^10.9.1",
-    "eslint-config-prettier": "10.1.8",
+    "dprint": "0.63.0",
     "openapi-typescript": "7.13.0",
-    "prettier": "3.8.4",
     "tsup": "8.5.1",
-    "typescript": "6.0.3",
-    "typescript-eslint": "^8.60.1"
+    "typescript": "6.0.3"
   },
   "engines": {
     "node": ">=18"
