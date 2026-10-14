@@ -740,7 +740,7 @@ export interface paths {
     };
     /**
      * Podcast All Details
-     * @description This wraps all the other endpoints for a podcast so you can get all the details in a single request.
+     * @description This wraps all the other endpoints for a podcast so you can get all the details in a single request. Set includePublishingHistory=true to include compact monthly counts for the last 24 UTC months, average per complete month, latest episode date, and truncation status. Existing episode and transcript counts are always available.
      */
     get: operations['getPodcastAllDetails'];
     put?: never;
@@ -6875,7 +6875,9 @@ export interface operations {
   };
   getPodcastAllDetails: {
     parameters: {
-      query?: never;
+      query?: {
+        includePublishingHistory?: boolean;
+      };
       header?: never;
       path: {
         podcastIdOrSlug: string;
@@ -7721,6 +7723,20 @@ export interface operations {
                       episodesWithVideo: number;
                     };
                   }[];
+                } | null;
+                /** @description How often the show publishes: episode counts per month for the last 24 months. */
+                publishingHistory?: {
+                  monthlyEpisodeCounts: {
+                    /** @description First UTC calendar month, YYYY-MM. */
+                    fromMonth: string;
+                    /** @description 24 monthly episode counts, oldest first; the current partial month is last. */
+                    counts: number[];
+                  };
+                  /** @description Average episodes per complete month in the window, counted from the month of the first episode when the show started inside it, rounded to one decimal. Null when there is no complete month to average. */
+                  averageEpisodesPerMonth: number | null;
+                  lastEpisodeAt: unknown | null;
+                  /** @description True when the show published more than 5,000 episodes in the window and only the latest were counted. */
+                  truncated: boolean;
                 } | null;
               };
             };

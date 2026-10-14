@@ -15,6 +15,20 @@ describe('PodEngine — generated resource client (end-to-end wiring)', () => {
     expect(typeof pe.search.searchPodcasts).toBe('function');
   });
 
+  test('all-details keeps publishing history optional and forwards explicit boolean choices', async () => {
+    for (const flag of [undefined, false, true]) {
+      const { fetch, calls } = mockFetch([{ json: { data: { podcast: {} } } }]);
+      const pe = new PodEngine({ apiKey: 'k', baseUrl: BASE, fetch });
+      await pe.podcasts.getPodcastAllDetails({
+        podcastIdOrSlug: 'test-show',
+        ...(flag === undefined ? {} : { includePublishingHistory: flag }),
+      });
+      const url = new URL(calls[0]!.url);
+      expect(url.pathname).toBe('/api/v1/podcasts/test-show/all-details');
+      expect(url.searchParams.get('includePublishingHistory')).toBe(flag === undefined ? null : String(flag));
+    }
+  });
+
   test('query endpoint (getLatestChart) hits the right URL with query params', async () => {
     const { fetch, calls } = mockFetch([{ json: { status: 'OK', data: { chart: [] } } }]);
     const pe = new PodEngine({ apiKey: 'k', baseUrl: BASE, fetch });

@@ -146,7 +146,8 @@ export type GetMultiplePodcastsResponse =
   operations['getMultiplePodcasts']['responses']['200']['content']['application/json']['data'];
 export type GetPodcastParams = NonNullable<operations['getPodcast']['parameters']['path']>;
 export type GetPodcastResponse = operations['getPodcast']['responses']['200']['content']['application/json']['data'];
-export type GetPodcastAllDetailsParams = NonNullable<operations['getPodcastAllDetails']['parameters']['path']>;
+export type GetPodcastAllDetailsParams = NonNullable<operations['getPodcastAllDetails']['parameters']['path']> &
+  NonNullable<operations['getPodcastAllDetails']['parameters']['query']>;
 export type GetPodcastAllDetailsResponse =
   operations['getPodcastAllDetails']['responses']['200']['content']['application/json']['data'];
 export type GetPodcastByFeedUrlParams = NonNullable<operations['getPodcastByFeedUrl']['parameters']['query']>;
@@ -591,7 +592,7 @@ const descriptors = {
     method: 'GET',
     path: '/api/v1/podcasts/{podcastIdOrSlug}/all-details',
     pathParams: ['podcastIdOrSlug'],
-    queryParams: [],
+    queryParams: ['includePublishingHistory'],
     body: 'none',
     binary: false,
   },
@@ -1303,7 +1304,7 @@ class PodcastsResource {
 
   /**
    * Podcast All Details
-   * This wraps all the other endpoints for a podcast so you can get all the details in a single request.
+   * This wraps all the other endpoints for a podcast so you can get all the details in a single request. Set includePublishingHistory=true to include compact monthly counts for the last 24 UTC months, average per complete month, latest episode date, and truncation status. Existing episode and transcript counts are always available.
    */
   getPodcastAllDetails(
     params: GetPodcastAllDetailsParams,
