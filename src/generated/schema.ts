@@ -6610,7 +6610,10 @@ export interface operations {
                       latestPublishedAt: unknown | null;
                       firstEpisodePublishedAt: unknown | null;
                       transcriptsCount: number;
-                      /** @enum {string} */
+                      /**
+                       * @description How often the show publishes new episodes, based on the typical gap between its recent episodes. daily: about every day. weekly: every 2–10 days. bi-weekly: every 10–20 days. monthly: less often than that. stale: no new episode for over 90 days, or for much longer than its usual gap. very-stale: no new episode for over a year.
+                       * @enum {string}
+                       */
                       updateFrequency: 'daily' | 'weekly' | 'bi-weekly' | 'monthly' | 'stale' | 'very-stale';
                     };
                     titleLatestCleaned: string | null;
@@ -7111,7 +7114,10 @@ export interface operations {
                     latestPublishedAt: unknown | null;
                     firstEpisodePublishedAt: unknown | null;
                     transcriptsCount: number;
-                    /** @enum {string} */
+                    /**
+                     * @description How often the show publishes new episodes, based on the typical gap between its recent episodes. daily: about every day. weekly: every 2–10 days. bi-weekly: every 10–20 days. monthly: less often than that. stale: no new episode for over 90 days, or for much longer than its usual gap. very-stale: no new episode for over a year.
+                     * @enum {string}
+                     */
                     updateFrequency: 'daily' | 'weekly' | 'bi-weekly' | 'monthly' | 'stale' | 'very-stale';
                   };
                   titleLatestCleaned: string | null;
@@ -8015,7 +8021,10 @@ export interface operations {
                   latestPublishedAt: unknown | null;
                   firstEpisodePublishedAt: unknown | null;
                   transcriptsCount: number;
-                  /** @enum {string} */
+                  /**
+                   * @description How often the show publishes new episodes, based on the typical gap between its recent episodes. daily: about every day. weekly: every 2–10 days. bi-weekly: every 10–20 days. monthly: less often than that. stale: no new episode for over 90 days, or for much longer than its usual gap. very-stale: no new episode for over a year.
+                   * @enum {string}
+                   */
                   updateFrequency: 'daily' | 'weekly' | 'bi-weekly' | 'monthly' | 'stale' | 'very-stale';
                 };
                 titleLatestCleaned: string | null;
@@ -8459,7 +8468,10 @@ export interface operations {
                   latestPublishedAt: unknown | null;
                   firstEpisodePublishedAt: unknown | null;
                   transcriptsCount: number;
-                  /** @enum {string} */
+                  /**
+                   * @description How often the show publishes new episodes, based on the typical gap between its recent episodes. daily: about every day. weekly: every 2–10 days. bi-weekly: every 10–20 days. monthly: less often than that. stale: no new episode for over 90 days, or for much longer than its usual gap. very-stale: no new episode for over a year.
+                   * @enum {string}
+                   */
                   updateFrequency: 'daily' | 'weekly' | 'bi-weekly' | 'monthly' | 'stale' | 'very-stale';
                 };
                 titleLatestCleaned: string | null;
@@ -10595,7 +10607,10 @@ export interface operations {
                       latestPublishedAt: unknown | null;
                       firstEpisodePublishedAt: unknown | null;
                       transcriptsCount: number;
-                      /** @enum {string} */
+                      /**
+                       * @description How often the show publishes new episodes, based on the typical gap between its recent episodes. daily: about every day. weekly: every 2–10 days. bi-weekly: every 10–20 days. monthly: less often than that. stale: no new episode for over 90 days, or for much longer than its usual gap. very-stale: no new episode for over a year.
+                       * @enum {string}
+                       */
                       updateFrequency: 'daily' | 'weekly' | 'bi-weekly' | 'monthly' | 'stale' | 'very-stale';
                     };
                     titleLatestCleaned: string | null;
