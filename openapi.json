@@ -25556,9 +25556,6 @@
                                   "high",
                                   "urgent"
                                 ]
-                              },
-                              "autoSearchEnabled": {
-                                "type": "boolean"
                               }
                             },
                             "required": [
@@ -25575,8 +25572,7 @@
                               "updatedAt",
                               "strategyApproach",
                               "strategyFocus",
-                              "priority",
-                              "autoSearchEnabled"
+                              "priority"
                             ],
                             "additionalProperties": false
                           }
@@ -34763,9 +34759,6 @@
                               "type": "boolean"
                             },
                             "airtableIntegration": {
-                              "type": "boolean"
-                            },
-                            "automatedSearch": {
                               "type": "boolean"
                             },
                             "applyPage": {

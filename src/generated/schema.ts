@@ -11267,7 +11267,6 @@ export interface operations {
                 strategyFocus: string | null;
                 /** @enum {string|null} */
                 priority: 'low' | 'medium' | 'high' | 'urgent' | null;
-                autoSearchEnabled: boolean;
               }[];
             };
           };
@@ -14680,7 +14679,6 @@ export interface operations {
               featureFlags: {
                 s3Integration?: boolean;
                 airtableIntegration?: boolean;
-                automatedSearch?: boolean;
                 applyPage?: boolean;
               };
               /** @description Usage breakdown per category */
