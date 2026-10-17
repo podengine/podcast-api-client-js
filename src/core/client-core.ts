@@ -30,8 +30,10 @@ export interface ClientOptions {
   fetch?: FetchLike;
   /** Max automatic retries for transient failures (429 / 5xx / network). Defaults to 2. */
   maxRetries?: number;
-  /** Per-request timeout in milliseconds. Unset means no client-side timeout. */
+  /** Per-attempt timeout in milliseconds, including response reads. Unset means no attempt timeout. */
   timeout?: number;
+  /** Overall deadline in milliseconds, including retries and response reads. Defaults to 60_000; null disables it. */
+  totalTimeout?: number | null;
 }
 
 /** Per-call overrides. */
@@ -42,6 +44,8 @@ export interface RequestOptions {
   headers?: Record<string, string>;
   /** Override the timeout (ms) for this request only. */
   timeout?: number;
+  /** Overall deadline in milliseconds, including retries and response reads. Defaults to 60_000; null disables it. */
+  totalTimeout?: number | null;
   /** Override automatic retries for this request only. */
   maxRetries?: number;
 }
@@ -77,15 +81,64 @@ const sleep = (ms: number, signal?: AbortSignal): Promise<void> =>
       reject(signal.reason ?? new DOMException('Aborted', 'AbortError'));
       return;
     }
-    const timer = setTimeout(() => {
-      signal?.removeEventListener('abort', onAbort);
-      resolve();
-    }, ms);
+    let timer: ReturnType<typeof setTimeout>;
+    const deadline = performance.now() + ms;
+    const tick = () => {
+      const remaining = deadline - performance.now();
+      if (remaining <= 0) {
+        signal?.removeEventListener('abort', onAbort);
+        resolve();
+      } else timer = setTimeout(tick, Math.min(remaining, 2_147_483_647));
+    };
     const onAbort = () => {
       clearTimeout(timer);
+      signal?.removeEventListener('abort', onAbort);
       reject(signal?.reason ?? new DOMException('Aborted', 'AbortError'));
     };
     signal?.addEventListener('abort', onAbort, { once: true });
+    tick();
+  });
+
+const validateTotalTimeout = (value: number | null): void => {
+  if (value !== null && (!Number.isFinite(value) || value <= 0)) {
+    throw new RangeError('totalTimeout must be a finite positive number or null.');
+  }
+};
+
+// Explicit cleanup also supports runtimes without AbortSignal.any.
+const abortScope = (parent?: AbortSignal, timeout?: number) => {
+  const controller = new AbortController();
+  const onAbort = () => controller.abort(parent?.reason);
+  if (parent?.aborted) onAbort();
+  else parent?.addEventListener('abort', onAbort, { once: true });
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  if (timeout && !controller.signal.aborted) {
+    const deadline = performance.now() + timeout;
+    const tick = () => {
+      const remaining = deadline - performance.now();
+      if (remaining <= 0) controller.abort(new DOMException('Timed out', 'TimeoutError'));
+      else timer = setTimeout(tick, Math.min(remaining, 2_147_483_647));
+    };
+    tick();
+  }
+  return {
+    signal: controller.signal,
+    dispose: () => {
+      clearTimeout(timer);
+      parent?.removeEventListener('abort', onAbort);
+    },
+  };
+};
+
+const withSignal = <T>(promise: Promise<T>, signal: AbortSignal): Promise<T> =>
+  new Promise((resolve, reject) => {
+    const onAbort = () => {
+      signal.removeEventListener('abort', onAbort);
+      reject(signal.reason ?? new DOMException('Aborted', 'AbortError'));
+    };
+    if (signal.aborted) onAbort();
+    else signal.addEventListener('abort', onAbort, { once: true });
+    promise.then(resolve, reject).finally(() => signal.removeEventListener('abort', onAbort));
   });
 
 const pick = (value: unknown, key: string): unknown =>
@@ -120,6 +173,7 @@ export class PodEngineCore {
   private readonly fetchImpl: FetchLike;
   private readonly maxRetries: number;
   private readonly timeout: number | undefined;
+  private readonly totalTimeout: number | null;
 
   constructor(options: ClientOptions) {
     if (!options?.apiKey) {
@@ -147,6 +201,8 @@ export class PodEngineCore {
     this.fetchImpl = resolvedFetch;
     this.maxRetries = options.maxRetries ?? DEFAULT_MAX_RETRIES;
     this.timeout = options.timeout;
+    this.totalTimeout = options.totalTimeout === undefined ? 60_000 : options.totalTimeout;
+    validateTotalTimeout(this.totalTimeout);
   }
 
   /** Execute an endpoint. Returns the unwrapped `data` payload (or a `Blob` for downloads). */
@@ -212,59 +268,102 @@ export class PodEngineCore {
     const maxRetries = options.maxRetries ?? this.maxRetries;
     const timeout = options.timeout ?? this.timeout;
 
-    let attempt = 0;
-    // Retry loop for transient failures. The terminal outcome either returns or throws.
-    for (;;) {
-      const signal = this.buildSignal(options.signal, timeout);
-      let response: Response;
-      try {
-        response = await this.fetchImpl(url, { ...init, signal });
-      } catch (err) {
-        // Network-level failure (no response). Retry unless the caller aborted.
-        const aborted = options.signal?.aborted ?? false;
-        if (!aborted && attempt < maxRetries) {
-          attempt++;
-          await sleep(this.backoffMs(attempt), options.signal);
-          continue;
-        }
-        if (isAbortError(err) && aborted) {
-          throw err;
-        }
+    const totalTimeout = options.totalTimeout === undefined ? this.totalTimeout : options.totalTimeout;
+    validateTotalTimeout(totalTimeout);
+    const deadline = totalTimeout === null ? Infinity : performance.now() + totalTimeout;
+    const overall = abortScope(options.signal, totalTimeout ?? undefined);
+    const deadlineError = () =>
+      new PodEngineConnectionError({
+        message: `Overall request deadline of ${totalTimeout}ms exceeded for ${url}.`,
+        url,
+        method: descriptor.method,
+      });
+    const waitToRetry = async (delay: number) => {
+      if (delay >= deadline - performance.now())
         throw new PodEngineConnectionError({
-          message:
-            isAbortError(err) && timeout
-              ? `Request to ${url} timed out after ${timeout}ms.`
-              : `Unable to reach the Pod Engine API at ${url}. ${err instanceof Error ? err.message : String(err)}`,
+          message: `Retry delay of ${delay}ms cannot fit within the remaining overall request deadline for ${url}.`,
           url,
           method: descriptor.method,
-          cause: err,
         });
-      }
-
-      if (!response.ok) {
-        if (isRetriableStatus(response.status) && attempt < maxRetries) {
-          attempt++;
-          await sleep(this.retryAfterMs(response) ?? this.backoffMs(attempt), options.signal);
-          continue;
+      await sleep(delay, overall.signal);
+    };
+    let attempt = 0;
+    try {
+      for (;;) {
+        if (options.signal?.aborted) throw options.signal.reason ?? new DOMException('Aborted', 'AbortError');
+        if (performance.now() >= deadline || overall.signal.aborted) throw deadlineError();
+        const scope = abortScope(overall.signal, timeout);
+        try {
+          const response = await withSignal(this.fetchImpl(url, { ...init, signal: scope.signal }), scope.signal);
+          if (!response.ok) {
+            if (isRetriableStatus(response.status) && attempt < maxRetries) {
+              attempt++;
+              const retryAfter = this.retryAfterMs(response);
+              const delay =
+                retryAfter === undefined ? this.backoffMs(attempt) : retryAfter + 1 + Math.floor(Math.random() * 250);
+              // Release the connection before waiting; the error body is not needed for a retry.
+              void response.body?.cancel().catch(() => {
+                /* Cancellation cleanup must not replace the request outcome. */
+              });
+              scope.dispose();
+              await waitToRetry(delay);
+              continue;
+            }
+            return await withSignal(this.throwApiError(response, url, descriptor.method, scope.signal), scope.signal);
+          }
+          const result = await withSignal(
+            this.parseSuccess<TResult>(response, descriptor, url, scope.signal),
+            scope.signal
+          );
+          // Parsing and date hydration can consume budget before the timer callback gets a turn.
+          if (performance.now() >= deadline || overall.signal.aborted) throw deadlineError();
+          if (scope.signal.aborted) throw scope.signal.reason;
+          return result;
+        } catch (err) {
+          if (options.signal?.aborted) throw options.signal.reason ?? err;
+          if (overall.signal.aborted || performance.now() >= deadline) throw deadlineError();
+          if (err instanceof PodEngineApiError || err instanceof PodEngineConnectionError) throw err;
+          scope.dispose();
+          if (attempt < maxRetries) {
+            attempt++;
+            await waitToRetry(this.backoffMs(attempt));
+            continue;
+          }
+          throw new PodEngineConnectionError({
+            message:
+              isAbortError(err) && timeout
+                ? `Request to ${url} timed out after ${timeout}ms.`
+                : `Unable to reach the Pod Engine API at ${url}. ${err instanceof Error ? err.message : String(err)}`,
+            url,
+            method: descriptor.method,
+            cause: err,
+          });
+        } finally {
+          scope.dispose();
         }
-        await this.throwApiError(response, url, descriptor.method);
       }
-
-      return this.parseSuccess<TResult>(response, descriptor, url);
+    } catch (err) {
+      if (options.signal?.aborted) throw options.signal.reason ?? err;
+      if (overall.signal.aborted || performance.now() >= deadline) throw deadlineError();
+      throw err;
+    } finally {
+      overall.dispose();
     }
   }
 
   private async parseSuccess<TResult>(
     response: Response,
     descriptor: EndpointDescriptor,
-    url: string
+    url: string,
+    signal: AbortSignal
   ): Promise<TResult> {
     if (descriptor.binary) {
-      return (await response.blob()) as TResult;
+      const bytes = await this.readBody(response, signal);
+      return new Blob([bytes], { type: response.headers.get('content-type') ?? '' }) as TResult;
     }
     if (response.status === 204) return undefined as TResult;
 
-    const text = await response.text();
+    const text = new TextDecoder().decode(await this.readBody(response, signal));
     if (!text) return undefined as TResult;
 
     let json: unknown;
@@ -292,9 +391,9 @@ export class PodEngineCore {
     return json as TResult;
   }
 
-  private async throwApiError(response: Response, url: string, method: string): Promise<never> {
+  private async throwApiError(response: Response, url: string, method: string, signal: AbortSignal): Promise<never> {
     let body: unknown;
-    const raw = await response.text().catch(() => '');
+    const raw = new TextDecoder().decode(await this.readBody(response, signal));
     if (raw) {
       try {
         body = JSON.parse(raw);
@@ -312,13 +411,32 @@ export class PodEngineCore {
     });
   }
 
-  private buildSignal(userSignal: AbortSignal | undefined, timeout: number | undefined): AbortSignal | undefined {
-    if (!timeout) return userSignal;
-    const timeoutSignal = AbortSignal.timeout(timeout);
-    if (!userSignal) return timeoutSignal;
-    // Combine the caller's signal with the timeout signal when the runtime supports it.
-    const anyFn = (AbortSignal as { any?: (signals: AbortSignal[]) => AbortSignal }).any;
-    return anyFn ? anyFn([userSignal, timeoutSignal]) : userSignal;
+  private async readBody(response: Response, signal: AbortSignal): Promise<Uint8Array<ArrayBuffer>> {
+    if (!response.body) return new Uint8Array();
+    const reader = response.body.getReader();
+    const chunks: Uint8Array[] = [];
+    let length = 0;
+    try {
+      for (;;) {
+        const { done, value } = await withSignal(reader.read(), signal);
+        if (done) break;
+        chunks.push(value);
+        length += value.length;
+      }
+      const bytes = new Uint8Array(length);
+      let offset = 0;
+      for (const chunk of chunks) {
+        bytes.set(chunk, offset);
+        offset += chunk.length;
+      }
+      return bytes;
+    } finally {
+      if (signal.aborted)
+        void reader.cancel(signal.reason).catch(() => {
+          /* Cancellation cleanup must not replace the request outcome. */
+        });
+      reader.releaseLock();
+    }
   }
 
   private backoffMs(attempt: number): number {
@@ -330,10 +448,14 @@ export class PodEngineCore {
   private retryAfterMs(response: Response): number | undefined {
     const header = response.headers.get('retry-after');
     if (!header) return undefined;
-    const seconds = Number(header);
-    if (!Number.isNaN(seconds)) return seconds * 1000;
-    const date = Date.parse(header);
-    if (!Number.isNaN(date)) return Math.max(0, date - Date.now());
-    return undefined;
+    const value = header.trim();
+    // Reject negative/nonfinite numbers before date parsing (Date.parse accepts some numbers).
+    if (/^[+]?(?:\d+\.?\d*|\.\d+)$/.test(value)) {
+      const ms = Number(value) * 1000;
+      return Number.isFinite(ms) ? ms : undefined;
+    }
+    if (!/^[A-Za-z]{3},?\s/.test(value)) return undefined;
+    const date = Date.parse(value);
+    return Number.isFinite(date) ? Math.max(0, date - Date.now()) : undefined;
   }
 }

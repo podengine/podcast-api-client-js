@@ -24,6 +24,11 @@
       "bun"
     ],
     "rootDir": "./",
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ]
+    },
     "module": "ESNext",
     "moduleResolution": "Bundler",
     "noEmit": true

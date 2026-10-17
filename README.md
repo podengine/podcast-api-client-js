@@ -72,7 +72,8 @@ const pe = new PodEngine({
   apiKey: process.env.PODENGINE_API_KEY!,
   baseUrl: 'https://api.podengine.ai', // override for staging/self-host
   source: 'my-app', // sent as the x-source header for attribution
-  timeout: 30_000, // per-request timeout in ms (default: none)
+  timeout: 30_000, // per-attempt timeout in ms (default: none)
+  totalTimeout: 60_000, // overall deadline in ms (default: 60 seconds)
   maxRetries: 2, // retries for 429/5xx/network (default: 2)
   headers: { 'x-team': 'growth' }, // extra headers on every request
   fetch: customFetch, // inject a custom fetch implementation
@@ -85,9 +86,13 @@ Every method also accepts per-call options as a final argument:
 const controller = new AbortController();
 const chart = await pe.charts.getLatestChart(
   { chartType: 'apple', country: 'us', category: 'top podcasts' },
-  { signal: controller.signal, timeout: 5_000, headers: { 'x-trace': '1' } }
+  { signal: controller.signal, timeout: 5_000, totalTimeout: 15_000, headers: { 'x-trace': '1' } }
 );
 ```
+
+For apps, agents and data pipelines, `totalTimeout` bounds the full call, including attempts, retry waits and response reads. It defaults to 60 seconds. Set a positive number on the client or a single call to change it, or `null` to disable it. `timeout` continues to limit each attempt separately.
+
+A valid `Retry-After` sets the minimum wait before a retry, with 1–250 ms of added jitter. If that wait cannot fit within the remaining deadline, the call raises `PodEngineConnectionError` immediately. It does not retry early. Expired deadlines also raise `PodEngineConnectionError`. Caller aborts interrupt attempts, waits and response reads, and preserve the caller's abort reason.
 
 ## Examples
 
