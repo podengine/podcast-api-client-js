@@ -1490,7 +1490,7 @@
                     "type": "boolean"
                   },
                   "additionalAlertSettings": {
-                    "description": "Additional recipients and spelling variants for this alert.",
+                    "description": "Additional recipients, spelling variants, filters and \"Who is this?\" note for this alert.",
                     "type": "object",
                     "properties": {
                       "otherEmails": {
@@ -1506,6 +1506,26 @@
                         "items": {
                           "type": "string"
                         }
+                      },
+                      "filters": {
+                        "description": "Which mentions this alert hides. Omit to use the defaults.",
+                        "type": "object",
+                        "properties": {
+                          "excludeAds": {
+                            "description": "Hide mentions inside ad reads (sponsor reads and promos for other shows). Defaults to true.",
+                            "type": "boolean"
+                          },
+                          "requireSubject": {
+                            "description": "Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert has a \"Who is this?\" note (subjectNote), and off when it does not.",
+                            "type": "boolean"
+                          }
+                        },
+                        "additionalProperties": false
+                      },
+                      "subjectNote": {
+                        "type": "string",
+                        "maxLength": 200,
+                        "description": "Person and company alerts only: who this is, e.g. \"CEO of Acme\". Helps tell them apart from others with the same name. Send an empty string to remove it."
                       }
                     },
                     "additionalProperties": false
@@ -1616,7 +1636,28 @@
                                       "additionalProperties": false
                                     },
                                     "filterAdvertisements": {
+                                      "description": "Deprecated: ignored. Use filters.excludeAds.",
                                       "type": "boolean"
+                                    },
+                                    "filters": {
+                                      "description": "Which mentions this alert hides. Omit to keep the current filters.",
+                                      "type": "object",
+                                      "properties": {
+                                        "excludeAds": {
+                                          "description": "Hide mentions inside ad reads (sponsor reads and promos for other shows). Defaults to true.",
+                                          "type": "boolean"
+                                        },
+                                        "requireSubject": {
+                                          "description": "Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert has a \"Who is this?\" note (subjectNote), and off when it does not.",
+                                          "type": "boolean"
+                                        }
+                                      },
+                                      "additionalProperties": false
+                                    },
+                                    "subjectNote": {
+                                      "type": "string",
+                                      "maxLength": 200,
+                                      "description": "Person and company alerts only: who this is, e.g. \"CEO of Acme\". Helps tell them apart from others with the same name. Send an empty string to remove it."
                                     },
                                     "type": {
                                       "type": "string",
@@ -1691,7 +1732,28 @@
                                       "additionalProperties": false
                                     },
                                     "filterAdvertisements": {
+                                      "description": "Deprecated: ignored. Use filters.excludeAds.",
                                       "type": "boolean"
+                                    },
+                                    "filters": {
+                                      "description": "Which mentions this alert hides. Omit to keep the current filters.",
+                                      "type": "object",
+                                      "properties": {
+                                        "excludeAds": {
+                                          "description": "Hide mentions inside ad reads (sponsor reads and promos for other shows). Defaults to true.",
+                                          "type": "boolean"
+                                        },
+                                        "requireSubject": {
+                                          "description": "Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert has a \"Who is this?\" note (subjectNote), and off when it does not.",
+                                          "type": "boolean"
+                                        }
+                                      },
+                                      "additionalProperties": false
+                                    },
+                                    "subjectNote": {
+                                      "type": "string",
+                                      "maxLength": 200,
+                                      "description": "Person and company alerts only: who this is, e.g. \"CEO of Acme\". Helps tell them apart from others with the same name. Send an empty string to remove it."
                                     },
                                     "type": {
                                       "type": "string",
@@ -1757,7 +1819,28 @@
                                       "additionalProperties": false
                                     },
                                     "filterAdvertisements": {
+                                      "description": "Deprecated: ignored. Use filters.excludeAds.",
                                       "type": "boolean"
+                                    },
+                                    "filters": {
+                                      "description": "Which mentions this alert hides. Omit to keep the current filters.",
+                                      "type": "object",
+                                      "properties": {
+                                        "excludeAds": {
+                                          "description": "Hide mentions inside ad reads (sponsor reads and promos for other shows). Defaults to true.",
+                                          "type": "boolean"
+                                        },
+                                        "requireSubject": {
+                                          "description": "Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert has a \"Who is this?\" note (subjectNote), and off when it does not.",
+                                          "type": "boolean"
+                                        }
+                                      },
+                                      "additionalProperties": false
+                                    },
+                                    "subjectNote": {
+                                      "type": "string",
+                                      "maxLength": 200,
+                                      "description": "Person and company alerts only: who this is, e.g. \"CEO of Acme\". Helps tell them apart from others with the same name. Send an empty string to remove it."
                                     },
                                     "type": {
                                       "type": "string",
@@ -2039,7 +2122,28 @@
                                         "additionalProperties": false
                                       },
                                       "filterAdvertisements": {
+                                        "description": "Deprecated: ignored. Use filters.excludeAds.",
                                         "type": "boolean"
+                                      },
+                                      "filters": {
+                                        "description": "Which mentions this alert hides. Omit to keep the current filters.",
+                                        "type": "object",
+                                        "properties": {
+                                          "excludeAds": {
+                                            "description": "Hide mentions inside ad reads (sponsor reads and promos for other shows). Defaults to true.",
+                                            "type": "boolean"
+                                          },
+                                          "requireSubject": {
+                                            "description": "Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert has a \"Who is this?\" note (subjectNote), and off when it does not.",
+                                            "type": "boolean"
+                                          }
+                                        },
+                                        "additionalProperties": false
+                                      },
+                                      "subjectNote": {
+                                        "type": "string",
+                                        "maxLength": 200,
+                                        "description": "Person and company alerts only: who this is, e.g. \"CEO of Acme\". Helps tell them apart from others with the same name. Send an empty string to remove it."
                                       },
                                       "type": {
                                         "type": "string",
@@ -2114,7 +2218,28 @@
                                         "additionalProperties": false
                                       },
                                       "filterAdvertisements": {
+                                        "description": "Deprecated: ignored. Use filters.excludeAds.",
                                         "type": "boolean"
+                                      },
+                                      "filters": {
+                                        "description": "Which mentions this alert hides. Omit to keep the current filters.",
+                                        "type": "object",
+                                        "properties": {
+                                          "excludeAds": {
+                                            "description": "Hide mentions inside ad reads (sponsor reads and promos for other shows). Defaults to true.",
+                                            "type": "boolean"
+                                          },
+                                          "requireSubject": {
+                                            "description": "Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert has a \"Who is this?\" note (subjectNote), and off when it does not.",
+                                            "type": "boolean"
+                                          }
+                                        },
+                                        "additionalProperties": false
+                                      },
+                                      "subjectNote": {
+                                        "type": "string",
+                                        "maxLength": 200,
+                                        "description": "Person and company alerts only: who this is, e.g. \"CEO of Acme\". Helps tell them apart from others with the same name. Send an empty string to remove it."
                                       },
                                       "type": {
                                         "type": "string",
@@ -2180,7 +2305,28 @@
                                         "additionalProperties": false
                                       },
                                       "filterAdvertisements": {
+                                        "description": "Deprecated: ignored. Use filters.excludeAds.",
                                         "type": "boolean"
+                                      },
+                                      "filters": {
+                                        "description": "Which mentions this alert hides. Omit to keep the current filters.",
+                                        "type": "object",
+                                        "properties": {
+                                          "excludeAds": {
+                                            "description": "Hide mentions inside ad reads (sponsor reads and promos for other shows). Defaults to true.",
+                                            "type": "boolean"
+                                          },
+                                          "requireSubject": {
+                                            "description": "Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert has a \"Who is this?\" note (subjectNote), and off when it does not.",
+                                            "type": "boolean"
+                                          }
+                                        },
+                                        "additionalProperties": false
+                                      },
+                                      "subjectNote": {
+                                        "type": "string",
+                                        "maxLength": 200,
+                                        "description": "Person and company alerts only: who this is, e.g. \"CEO of Acme\". Helps tell them apart from others with the same name. Send an empty string to remove it."
                                       },
                                       "type": {
                                         "type": "string",
@@ -2397,7 +2543,28 @@
                                       "additionalProperties": false
                                     },
                                     "filterAdvertisements": {
+                                      "description": "Deprecated: ignored. Use filters.excludeAds.",
                                       "type": "boolean"
+                                    },
+                                    "filters": {
+                                      "description": "Which mentions this alert hides. Omit to keep the current filters.",
+                                      "type": "object",
+                                      "properties": {
+                                        "excludeAds": {
+                                          "description": "Hide mentions inside ad reads (sponsor reads and promos for other shows). Defaults to true.",
+                                          "type": "boolean"
+                                        },
+                                        "requireSubject": {
+                                          "description": "Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert has a \"Who is this?\" note (subjectNote), and off when it does not.",
+                                          "type": "boolean"
+                                        }
+                                      },
+                                      "additionalProperties": false
+                                    },
+                                    "subjectNote": {
+                                      "type": "string",
+                                      "maxLength": 200,
+                                      "description": "Person and company alerts only: who this is, e.g. \"CEO of Acme\". Helps tell them apart from others with the same name. Send an empty string to remove it."
                                     },
                                     "type": {
                                       "type": "string",
@@ -2472,7 +2639,28 @@
                                       "additionalProperties": false
                                     },
                                     "filterAdvertisements": {
+                                      "description": "Deprecated: ignored. Use filters.excludeAds.",
                                       "type": "boolean"
+                                    },
+                                    "filters": {
+                                      "description": "Which mentions this alert hides. Omit to keep the current filters.",
+                                      "type": "object",
+                                      "properties": {
+                                        "excludeAds": {
+                                          "description": "Hide mentions inside ad reads (sponsor reads and promos for other shows). Defaults to true.",
+                                          "type": "boolean"
+                                        },
+                                        "requireSubject": {
+                                          "description": "Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert has a \"Who is this?\" note (subjectNote), and off when it does not.",
+                                          "type": "boolean"
+                                        }
+                                      },
+                                      "additionalProperties": false
+                                    },
+                                    "subjectNote": {
+                                      "type": "string",
+                                      "maxLength": 200,
+                                      "description": "Person and company alerts only: who this is, e.g. \"CEO of Acme\". Helps tell them apart from others with the same name. Send an empty string to remove it."
                                     },
                                     "type": {
                                       "type": "string",
@@ -2538,7 +2726,28 @@
                                       "additionalProperties": false
                                     },
                                     "filterAdvertisements": {
+                                      "description": "Deprecated: ignored. Use filters.excludeAds.",
                                       "type": "boolean"
+                                    },
+                                    "filters": {
+                                      "description": "Which mentions this alert hides. Omit to keep the current filters.",
+                                      "type": "object",
+                                      "properties": {
+                                        "excludeAds": {
+                                          "description": "Hide mentions inside ad reads (sponsor reads and promos for other shows). Defaults to true.",
+                                          "type": "boolean"
+                                        },
+                                        "requireSubject": {
+                                          "description": "Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert has a \"Who is this?\" note (subjectNote), and off when it does not.",
+                                          "type": "boolean"
+                                        }
+                                      },
+                                      "additionalProperties": false
+                                    },
+                                    "subjectNote": {
+                                      "type": "string",
+                                      "maxLength": 200,
+                                      "description": "Person and company alerts only: who this is, e.g. \"CEO of Acme\". Helps tell them apart from others with the same name. Send an empty string to remove it."
                                     },
                                     "type": {
                                       "type": "string",
@@ -2690,7 +2899,7 @@
                         "additionalProperties": false
                       },
                       "alertSettings": {
-                        "description": "Replacement matching settings for this alert.",
+                        "description": "Replacement matching settings for this alert. If you leave out filters or subjectNote, the alert keeps the ones it has.",
                         "oneOf": [
                           {
                             "type": "object",
@@ -2740,7 +2949,28 @@
                                 "additionalProperties": false
                               },
                               "filterAdvertisements": {
+                                "description": "Deprecated: ignored. Use filters.excludeAds.",
                                 "type": "boolean"
+                              },
+                              "filters": {
+                                "description": "Which mentions this alert hides. Omit to keep the current filters.",
+                                "type": "object",
+                                "properties": {
+                                  "excludeAds": {
+                                    "description": "Hide mentions inside ad reads (sponsor reads and promos for other shows). Defaults to true.",
+                                    "type": "boolean"
+                                  },
+                                  "requireSubject": {
+                                    "description": "Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert has a \"Who is this?\" note (subjectNote), and off when it does not.",
+                                    "type": "boolean"
+                                  }
+                                },
+                                "additionalProperties": false
+                              },
+                              "subjectNote": {
+                                "type": "string",
+                                "maxLength": 200,
+                                "description": "Person and company alerts only: who this is, e.g. \"CEO of Acme\". Helps tell them apart from others with the same name. Send an empty string to remove it."
                               },
                               "type": {
                                 "type": "string",
@@ -2815,7 +3045,28 @@
                                 "additionalProperties": false
                               },
                               "filterAdvertisements": {
+                                "description": "Deprecated: ignored. Use filters.excludeAds.",
                                 "type": "boolean"
+                              },
+                              "filters": {
+                                "description": "Which mentions this alert hides. Omit to keep the current filters.",
+                                "type": "object",
+                                "properties": {
+                                  "excludeAds": {
+                                    "description": "Hide mentions inside ad reads (sponsor reads and promos for other shows). Defaults to true.",
+                                    "type": "boolean"
+                                  },
+                                  "requireSubject": {
+                                    "description": "Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert has a \"Who is this?\" note (subjectNote), and off when it does not.",
+                                    "type": "boolean"
+                                  }
+                                },
+                                "additionalProperties": false
+                              },
+                              "subjectNote": {
+                                "type": "string",
+                                "maxLength": 200,
+                                "description": "Person and company alerts only: who this is, e.g. \"CEO of Acme\". Helps tell them apart from others with the same name. Send an empty string to remove it."
                               },
                               "type": {
                                 "type": "string",
@@ -2881,7 +3132,28 @@
                                 "additionalProperties": false
                               },
                               "filterAdvertisements": {
+                                "description": "Deprecated: ignored. Use filters.excludeAds.",
                                 "type": "boolean"
+                              },
+                              "filters": {
+                                "description": "Which mentions this alert hides. Omit to keep the current filters.",
+                                "type": "object",
+                                "properties": {
+                                  "excludeAds": {
+                                    "description": "Hide mentions inside ad reads (sponsor reads and promos for other shows). Defaults to true.",
+                                    "type": "boolean"
+                                  },
+                                  "requireSubject": {
+                                    "description": "Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert has a \"Who is this?\" note (subjectNote), and off when it does not.",
+                                    "type": "boolean"
+                                  }
+                                },
+                                "additionalProperties": false
+                              },
+                              "subjectNote": {
+                                "type": "string",
+                                "maxLength": 200,
+                                "description": "Person and company alerts only: who this is, e.g. \"CEO of Acme\". Helps tell them apart from others with the same name. Send an empty string to remove it."
                               },
                               "type": {
                                 "type": "string",
@@ -3013,7 +3285,28 @@
                                       "additionalProperties": false
                                     },
                                     "filterAdvertisements": {
+                                      "description": "Deprecated: ignored. Use filters.excludeAds.",
                                       "type": "boolean"
+                                    },
+                                    "filters": {
+                                      "description": "Which mentions this alert hides. Omit to keep the current filters.",
+                                      "type": "object",
+                                      "properties": {
+                                        "excludeAds": {
+                                          "description": "Hide mentions inside ad reads (sponsor reads and promos for other shows). Defaults to true.",
+                                          "type": "boolean"
+                                        },
+                                        "requireSubject": {
+                                          "description": "Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert has a \"Who is this?\" note (subjectNote), and off when it does not.",
+                                          "type": "boolean"
+                                        }
+                                      },
+                                      "additionalProperties": false
+                                    },
+                                    "subjectNote": {
+                                      "type": "string",
+                                      "maxLength": 200,
+                                      "description": "Person and company alerts only: who this is, e.g. \"CEO of Acme\". Helps tell them apart from others with the same name. Send an empty string to remove it."
                                     },
                                     "type": {
                                       "type": "string",
@@ -3088,7 +3381,28 @@
                                       "additionalProperties": false
                                     },
                                     "filterAdvertisements": {
+                                      "description": "Deprecated: ignored. Use filters.excludeAds.",
                                       "type": "boolean"
+                                    },
+                                    "filters": {
+                                      "description": "Which mentions this alert hides. Omit to keep the current filters.",
+                                      "type": "object",
+                                      "properties": {
+                                        "excludeAds": {
+                                          "description": "Hide mentions inside ad reads (sponsor reads and promos for other shows). Defaults to true.",
+                                          "type": "boolean"
+                                        },
+                                        "requireSubject": {
+                                          "description": "Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert has a \"Who is this?\" note (subjectNote), and off when it does not.",
+                                          "type": "boolean"
+                                        }
+                                      },
+                                      "additionalProperties": false
+                                    },
+                                    "subjectNote": {
+                                      "type": "string",
+                                      "maxLength": 200,
+                                      "description": "Person and company alerts only: who this is, e.g. \"CEO of Acme\". Helps tell them apart from others with the same name. Send an empty string to remove it."
                                     },
                                     "type": {
                                       "type": "string",
@@ -3154,7 +3468,28 @@
                                       "additionalProperties": false
                                     },
                                     "filterAdvertisements": {
+                                      "description": "Deprecated: ignored. Use filters.excludeAds.",
                                       "type": "boolean"
+                                    },
+                                    "filters": {
+                                      "description": "Which mentions this alert hides. Omit to keep the current filters.",
+                                      "type": "object",
+                                      "properties": {
+                                        "excludeAds": {
+                                          "description": "Hide mentions inside ad reads (sponsor reads and promos for other shows). Defaults to true.",
+                                          "type": "boolean"
+                                        },
+                                        "requireSubject": {
+                                          "description": "Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert has a \"Who is this?\" note (subjectNote), and off when it does not.",
+                                          "type": "boolean"
+                                        }
+                                      },
+                                      "additionalProperties": false
+                                    },
+                                    "subjectNote": {
+                                      "type": "string",
+                                      "maxLength": 200,
+                                      "description": "Person and company alerts only: who this is, e.g. \"CEO of Acme\". Helps tell them apart from others with the same name. Send an empty string to remove it."
                                     },
                                     "type": {
                                       "type": "string",

@@ -2106,12 +2106,21 @@ export interface operations {
           enabled?: boolean;
           /** @description Generate and add phonetic spelling variants to the terms monitored by this alert. */
           generateAlternativeSpellings?: boolean;
-          /** @description Additional recipients and spelling variants for this alert. */
+          /** @description Additional recipients, spelling variants, filters and "Who is this?" note for this alert. */
           additionalAlertSettings?: {
             /** @description Additional email addresses to receive alert notifications. */
             otherEmails?: string[];
             /** @description Additional spellings to match alongside the primary name or keyword. */
             otherSpellings?: string[];
+            /** @description Which mentions this alert hides. Omit to use the defaults. */
+            filters?: {
+              /** @description Hide mentions inside ad reads (sponsor reads and promos for other shows). Defaults to true. */
+              excludeAds?: boolean;
+              /** @description Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert has a "Who is this?" note (subjectNote), and off when it does not. */
+              requireSubject?: boolean;
+            };
+            /** @description Person and company alerts only: who this is, e.g. "CEO of Acme". Helps tell them apart from others with the same name. Send an empty string to remove it. */
+            subjectNote?: string;
           };
         };
       };
@@ -2149,7 +2158,17 @@ export interface operations {
                         relevantClues?: string;
                         commonFalsePositives?: string;
                       };
+                      /** @description Deprecated: ignored. Use filters.excludeAds. */
                       filterAdvertisements?: boolean;
+                      /** @description Which mentions this alert hides. Omit to keep the current filters. */
+                      filters?: {
+                        /** @description Hide mentions inside ad reads (sponsor reads and promos for other shows). Defaults to true. */
+                        excludeAds?: boolean;
+                        /** @description Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert has a "Who is this?" note (subjectNote), and off when it does not. */
+                        requireSubject?: boolean;
+                      };
+                      /** @description Person and company alerts only: who this is, e.g. "CEO of Acme". Helps tell them apart from others with the same name. Send an empty string to remove it. */
+                      subjectNote?: string;
                       /** @enum {string} */
                       type: 'person';
                       value: string;
@@ -2168,7 +2187,17 @@ export interface operations {
                         relevantClues?: string;
                         commonFalsePositives?: string;
                       };
+                      /** @description Deprecated: ignored. Use filters.excludeAds. */
                       filterAdvertisements?: boolean;
+                      /** @description Which mentions this alert hides. Omit to keep the current filters. */
+                      filters?: {
+                        /** @description Hide mentions inside ad reads (sponsor reads and promos for other shows). Defaults to true. */
+                        excludeAds?: boolean;
+                        /** @description Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert has a "Who is this?" note (subjectNote), and off when it does not. */
+                        requireSubject?: boolean;
+                      };
+                      /** @description Person and company alerts only: who this is, e.g. "CEO of Acme". Helps tell them apart from others with the same name. Send an empty string to remove it. */
+                      subjectNote?: string;
                       /** @enum {string} */
                       type: 'company';
                       value: string;
@@ -2184,7 +2213,17 @@ export interface operations {
                         relevantClues?: string;
                         commonFalsePositives?: string;
                       };
+                      /** @description Deprecated: ignored. Use filters.excludeAds. */
                       filterAdvertisements?: boolean;
+                      /** @description Which mentions this alert hides. Omit to keep the current filters. */
+                      filters?: {
+                        /** @description Hide mentions inside ad reads (sponsor reads and promos for other shows). Defaults to true. */
+                        excludeAds?: boolean;
+                        /** @description Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert has a "Who is this?" note (subjectNote), and off when it does not. */
+                        requireSubject?: boolean;
+                      };
+                      /** @description Person and company alerts only: who this is, e.g. "CEO of Acme". Helps tell them apart from others with the same name. Send an empty string to remove it. */
+                      subjectNote?: string;
                       /** @enum {string} */
                       type: 'custom-keyword';
                       value: string;
@@ -2301,7 +2340,17 @@ export interface operations {
                         relevantClues?: string;
                         commonFalsePositives?: string;
                       };
+                      /** @description Deprecated: ignored. Use filters.excludeAds. */
                       filterAdvertisements?: boolean;
+                      /** @description Which mentions this alert hides. Omit to keep the current filters. */
+                      filters?: {
+                        /** @description Hide mentions inside ad reads (sponsor reads and promos for other shows). Defaults to true. */
+                        excludeAds?: boolean;
+                        /** @description Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert has a "Who is this?" note (subjectNote), and off when it does not. */
+                        requireSubject?: boolean;
+                      };
+                      /** @description Person and company alerts only: who this is, e.g. "CEO of Acme". Helps tell them apart from others with the same name. Send an empty string to remove it. */
+                      subjectNote?: string;
                       /** @enum {string} */
                       type: 'person';
                       value: string;
@@ -2320,7 +2369,17 @@ export interface operations {
                         relevantClues?: string;
                         commonFalsePositives?: string;
                       };
+                      /** @description Deprecated: ignored. Use filters.excludeAds. */
                       filterAdvertisements?: boolean;
+                      /** @description Which mentions this alert hides. Omit to keep the current filters. */
+                      filters?: {
+                        /** @description Hide mentions inside ad reads (sponsor reads and promos for other shows). Defaults to true. */
+                        excludeAds?: boolean;
+                        /** @description Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert has a "Who is this?" note (subjectNote), and off when it does not. */
+                        requireSubject?: boolean;
+                      };
+                      /** @description Person and company alerts only: who this is, e.g. "CEO of Acme". Helps tell them apart from others with the same name. Send an empty string to remove it. */
+                      subjectNote?: string;
                       /** @enum {string} */
                       type: 'company';
                       value: string;
@@ -2336,7 +2395,17 @@ export interface operations {
                         relevantClues?: string;
                         commonFalsePositives?: string;
                       };
+                      /** @description Deprecated: ignored. Use filters.excludeAds. */
                       filterAdvertisements?: boolean;
+                      /** @description Which mentions this alert hides. Omit to keep the current filters. */
+                      filters?: {
+                        /** @description Hide mentions inside ad reads (sponsor reads and promos for other shows). Defaults to true. */
+                        excludeAds?: boolean;
+                        /** @description Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert has a "Who is this?" note (subjectNote), and off when it does not. */
+                        requireSubject?: boolean;
+                      };
+                      /** @description Person and company alerts only: who this is, e.g. "CEO of Acme". Helps tell them apart from others with the same name. Send an empty string to remove it. */
+                      subjectNote?: string;
                       /** @enum {string} */
                       type: 'custom-keyword';
                       value: string;
@@ -2434,7 +2503,17 @@ export interface operations {
                         relevantClues?: string;
                         commonFalsePositives?: string;
                       };
+                      /** @description Deprecated: ignored. Use filters.excludeAds. */
                       filterAdvertisements?: boolean;
+                      /** @description Which mentions this alert hides. Omit to keep the current filters. */
+                      filters?: {
+                        /** @description Hide mentions inside ad reads (sponsor reads and promos for other shows). Defaults to true. */
+                        excludeAds?: boolean;
+                        /** @description Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert has a "Who is this?" note (subjectNote), and off when it does not. */
+                        requireSubject?: boolean;
+                      };
+                      /** @description Person and company alerts only: who this is, e.g. "CEO of Acme". Helps tell them apart from others with the same name. Send an empty string to remove it. */
+                      subjectNote?: string;
                       /** @enum {string} */
                       type: 'person';
                       value: string;
@@ -2453,7 +2532,17 @@ export interface operations {
                         relevantClues?: string;
                         commonFalsePositives?: string;
                       };
+                      /** @description Deprecated: ignored. Use filters.excludeAds. */
                       filterAdvertisements?: boolean;
+                      /** @description Which mentions this alert hides. Omit to keep the current filters. */
+                      filters?: {
+                        /** @description Hide mentions inside ad reads (sponsor reads and promos for other shows). Defaults to true. */
+                        excludeAds?: boolean;
+                        /** @description Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert has a "Who is this?" note (subjectNote), and off when it does not. */
+                        requireSubject?: boolean;
+                      };
+                      /** @description Person and company alerts only: who this is, e.g. "CEO of Acme". Helps tell them apart from others with the same name. Send an empty string to remove it. */
+                      subjectNote?: string;
                       /** @enum {string} */
                       type: 'company';
                       value: string;
@@ -2469,7 +2558,17 @@ export interface operations {
                         relevantClues?: string;
                         commonFalsePositives?: string;
                       };
+                      /** @description Deprecated: ignored. Use filters.excludeAds. */
                       filterAdvertisements?: boolean;
+                      /** @description Which mentions this alert hides. Omit to keep the current filters. */
+                      filters?: {
+                        /** @description Hide mentions inside ad reads (sponsor reads and promos for other shows). Defaults to true. */
+                        excludeAds?: boolean;
+                        /** @description Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert has a "Who is this?" note (subjectNote), and off when it does not. */
+                        requireSubject?: boolean;
+                      };
+                      /** @description Person and company alerts only: who this is, e.g. "CEO of Acme". Helps tell them apart from others with the same name. Send an empty string to remove it. */
+                      subjectNote?: string;
                       /** @enum {string} */
                       type: 'custom-keyword';
                       value: string;
@@ -2611,7 +2710,7 @@ export interface operations {
                */
               frequency: 'hourly' | 'daily' | 'weekly';
             };
-            /** @description Replacement matching settings for this alert. */
+            /** @description Replacement matching settings for this alert. If you leave out filters or subjectNote, the alert keeps the ones it has. */
             alertSettings?:
               | {
                   genresToSkip?: string[];
@@ -2624,7 +2723,17 @@ export interface operations {
                     relevantClues?: string;
                     commonFalsePositives?: string;
                   };
+                  /** @description Deprecated: ignored. Use filters.excludeAds. */
                   filterAdvertisements?: boolean;
+                  /** @description Which mentions this alert hides. Omit to keep the current filters. */
+                  filters?: {
+                    /** @description Hide mentions inside ad reads (sponsor reads and promos for other shows). Defaults to true. */
+                    excludeAds?: boolean;
+                    /** @description Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert has a "Who is this?" note (subjectNote), and off when it does not. */
+                    requireSubject?: boolean;
+                  };
+                  /** @description Person and company alerts only: who this is, e.g. "CEO of Acme". Helps tell them apart from others with the same name. Send an empty string to remove it. */
+                  subjectNote?: string;
                   /** @enum {string} */
                   type: 'person';
                   value: string;
@@ -2643,7 +2752,17 @@ export interface operations {
                     relevantClues?: string;
                     commonFalsePositives?: string;
                   };
+                  /** @description Deprecated: ignored. Use filters.excludeAds. */
                   filterAdvertisements?: boolean;
+                  /** @description Which mentions this alert hides. Omit to keep the current filters. */
+                  filters?: {
+                    /** @description Hide mentions inside ad reads (sponsor reads and promos for other shows). Defaults to true. */
+                    excludeAds?: boolean;
+                    /** @description Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert has a "Who is this?" note (subjectNote), and off when it does not. */
+                    requireSubject?: boolean;
+                  };
+                  /** @description Person and company alerts only: who this is, e.g. "CEO of Acme". Helps tell them apart from others with the same name. Send an empty string to remove it. */
+                  subjectNote?: string;
                   /** @enum {string} */
                   type: 'company';
                   value: string;
@@ -2659,7 +2778,17 @@ export interface operations {
                     relevantClues?: string;
                     commonFalsePositives?: string;
                   };
+                  /** @description Deprecated: ignored. Use filters.excludeAds. */
                   filterAdvertisements?: boolean;
+                  /** @description Which mentions this alert hides. Omit to keep the current filters. */
+                  filters?: {
+                    /** @description Hide mentions inside ad reads (sponsor reads and promos for other shows). Defaults to true. */
+                    excludeAds?: boolean;
+                    /** @description Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert has a "Who is this?" note (subjectNote), and off when it does not. */
+                    requireSubject?: boolean;
+                  };
+                  /** @description Person and company alerts only: who this is, e.g. "CEO of Acme". Helps tell them apart from others with the same name. Send an empty string to remove it. */
+                  subjectNote?: string;
                   /** @enum {string} */
                   type: 'custom-keyword';
                   value: string;
@@ -2703,7 +2832,17 @@ export interface operations {
                         relevantClues?: string;
                         commonFalsePositives?: string;
                       };
+                      /** @description Deprecated: ignored. Use filters.excludeAds. */
                       filterAdvertisements?: boolean;
+                      /** @description Which mentions this alert hides. Omit to keep the current filters. */
+                      filters?: {
+                        /** @description Hide mentions inside ad reads (sponsor reads and promos for other shows). Defaults to true. */
+                        excludeAds?: boolean;
+                        /** @description Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert has a "Who is this?" note (subjectNote), and off when it does not. */
+                        requireSubject?: boolean;
+                      };
+                      /** @description Person and company alerts only: who this is, e.g. "CEO of Acme". Helps tell them apart from others with the same name. Send an empty string to remove it. */
+                      subjectNote?: string;
                       /** @enum {string} */
                       type: 'person';
                       value: string;
@@ -2722,7 +2861,17 @@ export interface operations {
                         relevantClues?: string;
                         commonFalsePositives?: string;
                       };
+                      /** @description Deprecated: ignored. Use filters.excludeAds. */
                       filterAdvertisements?: boolean;
+                      /** @description Which mentions this alert hides. Omit to keep the current filters. */
+                      filters?: {
+                        /** @description Hide mentions inside ad reads (sponsor reads and promos for other shows). Defaults to true. */
+                        excludeAds?: boolean;
+                        /** @description Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert has a "Who is this?" note (subjectNote), and off when it does not. */
+                        requireSubject?: boolean;
+                      };
+                      /** @description Person and company alerts only: who this is, e.g. "CEO of Acme". Helps tell them apart from others with the same name. Send an empty string to remove it. */
+                      subjectNote?: string;
                       /** @enum {string} */
                       type: 'company';
                       value: string;
@@ -2738,7 +2887,17 @@ export interface operations {
                         relevantClues?: string;
                         commonFalsePositives?: string;
                       };
+                      /** @description Deprecated: ignored. Use filters.excludeAds. */
                       filterAdvertisements?: boolean;
+                      /** @description Which mentions this alert hides. Omit to keep the current filters. */
+                      filters?: {
+                        /** @description Hide mentions inside ad reads (sponsor reads and promos for other shows). Defaults to true. */
+                        excludeAds?: boolean;
+                        /** @description Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert has a "Who is this?" note (subjectNote), and off when it does not. */
+                        requireSubject?: boolean;
+                      };
+                      /** @description Person and company alerts only: who this is, e.g. "CEO of Acme". Helps tell them apart from others with the same name. Send an empty string to remove it. */
+                      subjectNote?: string;
                       /** @enum {string} */
                       type: 'custom-keyword';
                       value: string;
