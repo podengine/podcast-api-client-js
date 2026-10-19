@@ -8325,7 +8325,7 @@ export interface operations {
                    */
                   url: string;
                 };
-                /** @description Spotify, when we have matched the show. Spotify has no lookup by feed, so each match is inferred. Null means we have no match, not that the show is missing from Spotify. */
+                /** @description Spotify, when we have matched the show. Spotify has no lookup by feed, so each match is inferred; branch on `verifiedAt` to decide whether to trust it. Null means we have no match, not that the show is missing from Spotify. */
                 spotify: {
                   /** @description Spotify show ID */
                   id: string;
@@ -8334,6 +8334,11 @@ export interface operations {
                    * @description Spotify show page, https://open.spotify.com/show/<id>
                    */
                   url: string;
+                  /**
+                   * Format: date-time
+                   * @description When the link passed our identity check (the Spotify show is this podcast). Null means it has not passed: confirm it with the publisher before relying on it.
+                   */
+                  verifiedAt: Date | null;
                 } | null;
                 /** @description The show’s main YouTube channel, when we have one. */
                 youtube: {
@@ -8349,6 +8354,16 @@ export interface operations {
                    * @enum {string}
                    */
                   tier: 'associated' | 'candidate';
+                  /**
+                   * @description `primary`: the channel’s main identity is the podcast. Null for a candidate, which has no role until it passes.
+                   * @enum {string|null}
+                   */
+                  role: 'primary' | 'valid_secondary' | null;
+                  /**
+                   * Format: date-time
+                   * @description When the channel last passed our association checks. Null for a candidate: confirm it with the publisher before relying on it.
+                   */
+                  associatedAt: Date | null;
                 } | null;
               };
             };
@@ -8772,7 +8787,7 @@ export interface operations {
                    */
                   url: string;
                 };
-                /** @description Spotify, when we have matched the show. Spotify has no lookup by feed, so each match is inferred. Null means we have no match, not that the show is missing from Spotify. */
+                /** @description Spotify, when we have matched the show. Spotify has no lookup by feed, so each match is inferred; branch on `verifiedAt` to decide whether to trust it. Null means we have no match, not that the show is missing from Spotify. */
                 spotify: {
                   /** @description Spotify show ID */
                   id: string;
@@ -8781,6 +8796,11 @@ export interface operations {
                    * @description Spotify show page, https://open.spotify.com/show/<id>
                    */
                   url: string;
+                  /**
+                   * Format: date-time
+                   * @description When the link passed our identity check (the Spotify show is this podcast). Null means it has not passed: confirm it with the publisher before relying on it.
+                   */
+                  verifiedAt: Date | null;
                 } | null;
                 /** @description The show’s main YouTube channel, when we have one. */
                 youtube: {
@@ -8796,6 +8816,16 @@ export interface operations {
                    * @enum {string}
                    */
                   tier: 'associated' | 'candidate';
+                  /**
+                   * @description `primary`: the channel’s main identity is the podcast. Null for a candidate, which has no role until it passes.
+                   * @enum {string|null}
+                   */
+                  role: 'primary' | 'valid_secondary' | null;
+                  /**
+                   * Format: date-time
+                   * @description When the channel last passed our association checks. Null for a candidate: confirm it with the publisher before relying on it.
+                   */
+                  associatedAt: Date | null;
                 } | null;
               };
             };

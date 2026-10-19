@@ -17523,7 +17523,7 @@
                               "description": "Apple Podcasts. Every podcast we track has one."
                             },
                             "spotify": {
-                              "description": "Spotify, when we have matched the show. Spotify has no lookup by feed, so each match is inferred. Null means we have no match, not that the show is missing from Spotify.",
+                              "description": "Spotify, when we have matched the show. Spotify has no lookup by feed, so each match is inferred; branch on `verifiedAt` to decide whether to trust it. Null means we have no match, not that the show is missing from Spotify.",
                               "type": [
                                 "object",
                                 "null"
@@ -17537,11 +17537,21 @@
                                   "type": "string",
                                   "format": "uri",
                                   "description": "Spotify show page, https://open.spotify.com/show/<id>"
+                                },
+                                "verifiedAt": {
+                                  "description": "When the link passed our identity check (the Spotify show is this podcast). Null means it has not passed: confirm it with the publisher before relying on it.",
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ],
+                                  "format": "date-time",
+                                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
                                 }
                               },
                               "required": [
                                 "id",
-                                "url"
+                                "url",
+                                "verifiedAt"
                               ],
                               "additionalProperties": false
                             },
@@ -17568,12 +17578,34 @@
                                     "candidate"
                                   ],
                                   "description": "`associated`: the channel passed our association checks and is the show’s own channel. `candidate`: the best match we have that has not passed them yet."
+                                },
+                                "role": {
+                                  "description": "`primary`: the channel’s main identity is the podcast. Null for a candidate, which has no role until it passes.",
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ],
+                                  "enum": [
+                                    "primary",
+                                    "valid_secondary"
+                                  ]
+                                },
+                                "associatedAt": {
+                                  "description": "When the channel last passed our association checks. Null for a candidate: confirm it with the publisher before relying on it.",
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ],
+                                  "format": "date-time",
+                                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
                                 }
                               },
                               "required": [
                                 "channelId",
                                 "url",
-                                "tier"
+                                "tier",
+                                "role",
+                                "associatedAt"
                               ],
                               "additionalProperties": false
                             }
@@ -18644,7 +18676,7 @@
                               "description": "Apple Podcasts. Every podcast we track has one."
                             },
                             "spotify": {
-                              "description": "Spotify, when we have matched the show. Spotify has no lookup by feed, so each match is inferred. Null means we have no match, not that the show is missing from Spotify.",
+                              "description": "Spotify, when we have matched the show. Spotify has no lookup by feed, so each match is inferred; branch on `verifiedAt` to decide whether to trust it. Null means we have no match, not that the show is missing from Spotify.",
                               "type": [
                                 "object",
                                 "null"
@@ -18658,11 +18690,21 @@
                                   "type": "string",
                                   "format": "uri",
                                   "description": "Spotify show page, https://open.spotify.com/show/<id>"
+                                },
+                                "verifiedAt": {
+                                  "description": "When the link passed our identity check (the Spotify show is this podcast). Null means it has not passed: confirm it with the publisher before relying on it.",
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ],
+                                  "format": "date-time",
+                                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
                                 }
                               },
                               "required": [
                                 "id",
-                                "url"
+                                "url",
+                                "verifiedAt"
                               ],
                               "additionalProperties": false
                             },
@@ -18689,12 +18731,34 @@
                                     "candidate"
                                   ],
                                   "description": "`associated`: the channel passed our association checks and is the show’s own channel. `candidate`: the best match we have that has not passed them yet."
+                                },
+                                "role": {
+                                  "description": "`primary`: the channel’s main identity is the podcast. Null for a candidate, which has no role until it passes.",
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ],
+                                  "enum": [
+                                    "primary",
+                                    "valid_secondary"
+                                  ]
+                                },
+                                "associatedAt": {
+                                  "description": "When the channel last passed our association checks. Null for a candidate: confirm it with the publisher before relying on it.",
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ],
+                                  "format": "date-time",
+                                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
                                 }
                               },
                               "required": [
                                 "channelId",
                                 "url",
-                                "tier"
+                                "tier",
+                                "role",
+                                "associatedAt"
                               ],
                               "additionalProperties": false
                             }
