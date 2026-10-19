@@ -3672,8 +3672,9 @@
           "alerts"
         ],
         "summary": "Alert Match History",
-        "description": "Get the paginated history of alert matches for the team, optionally scoped to a single alert config.",
+        "description": "Get the team's alert matches, one item per mention, 50 per page, optionally for a single alert config. Items found from the alerts switch onwards have no transcriptEmbeddingId.\n\n**Deprecated.** Use GET /api/v1/alerts/matches instead.",
         "operationId": "getAlertMatchHistory",
+        "deprecated": true,
         "parameters": [
           {
             "name": "alertConfigId",
@@ -3965,7 +3966,11 @@
                                     "type": "number"
                                   },
                                   "transcriptEmbeddingId": {
-                                    "type": "string"
+                                    "description": "Deprecated: null for matches found from the alerts switch onwards. Use GET /api/v1/alerts/matches.",
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
                                   },
                                   "transcriptId": {
                                     "type": "string"
@@ -4007,6 +4012,392 @@
                         "options",
                         "totalAlertMatches",
                         "alertMatches"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "data"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Forbidden — plan does not include this endpoint"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/alerts/matches": {
+      "get": {
+        "tags": [
+          "alerts"
+        ],
+        "summary": "Alert Matches",
+        "description": "Get your team's alert matches, one per episode, newest first. Each match lists its mentions with the time, a snippet, the ad and wrong-person check labels, and a link that plays from that moment. Set includeFiltered to also see the episodes and mentions your alert filters removed, and why.",
+        "operationId": "getAlertEpisodeMatches",
+        "parameters": [
+          {
+            "name": "alertConfigId",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "description": "Only matches for this alert configuration.",
+              "type": "string"
+            }
+          },
+          {
+            "name": "includeFiltered",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "description": "Include episodes and mentions the alert filters removed, with the labels that removed them. Defaults to false.",
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "description": "Page of episodes to return. Defaults to 1.",
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "description": "Episodes per page, up to 50. Defaults to 25.",
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 50
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "OK"
+                      ]
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "options": {
+                          "type": "object",
+                          "properties": {
+                            "alertConfigId": {
+                              "description": "Only matches for this alert configuration.",
+                              "type": "string"
+                            },
+                            "includeFiltered": {
+                              "description": "Include episodes and mentions the alert filters removed, with the labels that removed them. Defaults to false.",
+                              "type": "boolean"
+                            },
+                            "page": {
+                              "description": "Page of episodes to return. Defaults to 1.",
+                              "type": "integer",
+                              "minimum": 1,
+                              "maximum": 9007199254740991
+                            },
+                            "pageSize": {
+                              "description": "Episodes per page, up to 50. Defaults to 25.",
+                              "type": "integer",
+                              "minimum": 1,
+                              "maximum": 50
+                            }
+                          },
+                          "additionalProperties": false
+                        },
+                        "total": {
+                          "type": "number",
+                          "description": "Episodes matching the options, across all pages."
+                        },
+                        "matches": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "alertConfig": {
+                                "type": "object",
+                                "properties": {
+                                  "id": {
+                                    "type": "string"
+                                  },
+                                  "name": {
+                                    "type": "string"
+                                  },
+                                  "type": {
+                                    "type": "string",
+                                    "enum": [
+                                      "person",
+                                      "company",
+                                      "custom-keyword"
+                                    ]
+                                  }
+                                },
+                                "required": [
+                                  "id",
+                                  "name",
+                                  "type"
+                                ],
+                                "additionalProperties": false
+                              },
+                              "status": {
+                                "type": "string",
+                                "enum": [
+                                  "kept",
+                                  "filtered"
+                                ]
+                              },
+                              "filterReasons": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string",
+                                  "enum": [
+                                    "ad",
+                                    "not_subject",
+                                    "unchecked"
+                                  ]
+                                },
+                                "description": "Why the episode was filtered: the reasons of its mentions combined. Empty when kept."
+                              },
+                              "episode": {
+                                "type": "object",
+                                "properties": {
+                                  "id": {
+                                    "type": "string"
+                                  },
+                                  "slug": {
+                                    "type": "string"
+                                  },
+                                  "title": {
+                                    "type": "string"
+                                  },
+                                  "publishedAt": {},
+                                  "imageUrl": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  }
+                                },
+                                "required": [
+                                  "id",
+                                  "slug",
+                                  "title",
+                                  "publishedAt",
+                                  "imageUrl"
+                                ],
+                                "additionalProperties": false
+                              },
+                              "podcast": {
+                                "type": "object",
+                                "properties": {
+                                  "id": {
+                                    "type": "string"
+                                  },
+                                  "slug": {
+                                    "type": "string"
+                                  },
+                                  "title": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "id",
+                                  "slug",
+                                  "title"
+                                ],
+                                "additionalProperties": false
+                              },
+                              "appearance": {
+                                "type": [
+                                  "object",
+                                  "null"
+                                ],
+                                "properties": {
+                                  "role": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ],
+                                    "enum": [
+                                      "guest",
+                                      "host",
+                                      "mentioned",
+                                      "unknown"
+                                    ]
+                                  },
+                                  "source": {
+                                    "type": "string",
+                                    "enum": [
+                                      "people_data",
+                                      "title_description"
+                                    ]
+                                  }
+                                },
+                                "required": [
+                                  "role",
+                                  "source"
+                                ],
+                                "additionalProperties": false
+                              },
+                              "mentionCount": {
+                                "type": "number"
+                              },
+                              "keptMentionCount": {
+                                "type": "number"
+                              },
+                              "syndicatedEpisodeIds": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                }
+                              },
+                              "firstMatchedAt": {},
+                              "mentions": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "id": {
+                                      "type": "string"
+                                    },
+                                    "startSecond": {
+                                      "type": [
+                                        "number",
+                                        "null"
+                                      ]
+                                    },
+                                    "snippet": {
+                                      "type": "string"
+                                    },
+                                    "passesFilters": {
+                                      "type": "boolean"
+                                    },
+                                    "filterReasons": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "string",
+                                        "enum": [
+                                          "ad",
+                                          "not_subject",
+                                          "unchecked"
+                                        ]
+                                      }
+                                    },
+                                    "labels": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "object",
+                                        "properties": {
+                                          "classifier": {
+                                            "type": "string",
+                                            "enum": [
+                                              "isAd",
+                                              "isSubject"
+                                            ]
+                                          },
+                                          "label": {
+                                            "type": "string",
+                                            "description": "The classifier label, e.g. \"sponsor_read\" or \"not_about\"."
+                                          },
+                                          "probability": {
+                                            "type": "number",
+                                            "minimum": 0,
+                                            "maximum": 1
+                                          },
+                                          "filteredOut": {
+                                            "type": "boolean",
+                                            "description": "Whether this label removed the mention under the alert filters."
+                                          }
+                                        },
+                                        "required": [
+                                          "classifier",
+                                          "label",
+                                          "probability",
+                                          "filteredOut"
+                                        ],
+                                        "additionalProperties": false
+                                      }
+                                    },
+                                    "playUrl": {
+                                      "type": "string",
+                                      "format": "uri"
+                                    }
+                                  },
+                                  "required": [
+                                    "id",
+                                    "startSecond",
+                                    "snippet",
+                                    "passesFilters",
+                                    "filterReasons",
+                                    "labels",
+                                    "playUrl"
+                                  ],
+                                  "additionalProperties": false
+                                },
+                                "description": "Mentions that pass the alert filters, earliest first; filtered ones too when includeFiltered is set."
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "alertConfig",
+                              "status",
+                              "filterReasons",
+                              "episode",
+                              "podcast",
+                              "appearance",
+                              "mentionCount",
+                              "keptMentionCount",
+                              "syndicatedEpisodeIds",
+                              "firstMatchedAt",
+                              "mentions"
+                            ],
+                            "additionalProperties": false
+                          }
+                        }
+                      },
+                      "required": [
+                        "options",
+                        "total",
+                        "matches"
                       ],
                       "additionalProperties": false
                     }
