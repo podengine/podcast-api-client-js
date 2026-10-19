@@ -30,9 +30,6 @@ export type GetAlertConfigResponse =
 export type GetAlertConfigsParams = NonNullable<operations['getAlertConfigs']['parameters']['query']>;
 export type GetAlertConfigsResponse =
   operations['getAlertConfigs']['responses']['200']['content']['application/json']['data'];
-export type GetAlertEpisodeMatchesParams = NonNullable<operations['getAlertEpisodeMatches']['parameters']['query']>;
-export type GetAlertEpisodeMatchesResponse =
-  operations['getAlertEpisodeMatches']['responses']['200']['content']['application/json']['data'];
 export type GetAlertMatchHistoryParams = NonNullable<operations['getAlertMatchHistory']['parameters']['query']>;
 export type GetAlertMatchHistoryResponse =
   operations['getAlertMatchHistory']['responses']['200']['content']['application/json']['data'];
@@ -340,14 +337,6 @@ const descriptors = {
     path: '/api/v1/alerts/alert-configs',
     pathParams: [],
     queryParams: ['enabled', 'alertConfigId', 'sortBy', 'sortDirection'],
-    body: 'none',
-    binary: false,
-  },
-  getAlertEpisodeMatches: {
-    method: 'GET',
-    path: '/api/v1/alerts/matches',
-    pathParams: [],
-    queryParams: ['alertConfigId', 'includeFiltered', 'page', 'pageSize'],
     body: 'none',
     binary: false,
   },
@@ -975,21 +964,8 @@ class AlertsResource {
   }
 
   /**
-   * Alert Matches
-   * Get your team's alert matches, one per episode, newest first. Each match lists its mentions with the time, a snippet, the ad and wrong-person check labels, and a link that plays from that moment. Set includeFiltered to also see the episodes and mentions your alert filters removed, and why.
-   */
-  getAlertEpisodeMatches(
-    params?: GetAlertEpisodeMatchesParams,
-    options?: RequestOptions
-  ): Promise<GetAlertEpisodeMatchesResponse> {
-    return this.core.request(descriptors.getAlertEpisodeMatches, params as Record<string, unknown>, options);
-  }
-
-  /**
    * Alert Match History
-   * Get the team's alert matches, one item per mention, 50 per page, optionally for a single alert config. Items found from the alerts switch onwards have no transcriptEmbeddingId.
-
-**Deprecated.** Use GET /api/v1/alerts/matches instead.
+   * Get the paginated history of alert matches for the team, optionally scoped to a single alert config.
    */
   getAlertMatchHistory(
     params?: GetAlertMatchHistoryParams,
