@@ -8340,7 +8340,7 @@ export interface operations {
                    */
                   verifiedAt: Date | null;
                 } | null;
-                /** @description The show’s main YouTube channel, when we have one. */
+                /** @description The show’s YouTube channel, when we have one: its own channel first, then a channel that carries it, then our best unconfirmed match. Null means we have no channel match. */
                 youtube: {
                   /** @description YouTube channel ID */
                   channelId: string;
@@ -8350,12 +8350,12 @@ export interface operations {
                    */
                   url: string;
                   /**
-                   * @description `associated`: the channel passed our association checks and is the show’s own channel. `candidate`: the best match we have that has not passed them yet.
+                   * @description `associated`: the channel passed our association checks; `role` says whether it is the show’s own channel. `candidate`: the best match we have that has not passed them yet.
                    * @enum {string}
                    */
                   tier: 'associated' | 'candidate';
                   /**
-                   * @description `primary`: the channel’s main identity is the podcast. Null for a candidate, which has no role until it passes.
+                   * @description `primary`: the show’s own channel; its main identity is the podcast. `valid_secondary`: a host, network, clips or mixed channel that carries the show, returned only when the show has no primary channel. Null for a candidate, which has no role until it passes.
                    * @enum {string|null}
                    */
                   role: 'primary' | 'valid_secondary' | null;
@@ -8802,7 +8802,7 @@ export interface operations {
                    */
                   verifiedAt: Date | null;
                 } | null;
-                /** @description The show’s main YouTube channel, when we have one. */
+                /** @description The show’s YouTube channel, when we have one: its own channel first, then a channel that carries it, then our best unconfirmed match. Null means we have no channel match. */
                 youtube: {
                   /** @description YouTube channel ID */
                   channelId: string;
@@ -8812,12 +8812,12 @@ export interface operations {
                    */
                   url: string;
                   /**
-                   * @description `associated`: the channel passed our association checks and is the show’s own channel. `candidate`: the best match we have that has not passed them yet.
+                   * @description `associated`: the channel passed our association checks; `role` says whether it is the show’s own channel. `candidate`: the best match we have that has not passed them yet.
                    * @enum {string}
                    */
                   tier: 'associated' | 'candidate';
                   /**
-                   * @description `primary`: the channel’s main identity is the podcast. Null for a candidate, which has no role until it passes.
+                   * @description `primary`: the show’s own channel; its main identity is the podcast. `valid_secondary`: a host, network, clips or mixed channel that carries the show, returned only when the show has no primary channel. Null for a candidate, which has no role until it passes.
                    * @enum {string|null}
                    */
                   role: 'primary' | 'valid_secondary' | null;

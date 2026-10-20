@@ -17556,7 +17556,7 @@
                               "additionalProperties": false
                             },
                             "youtube": {
-                              "description": "The show’s main YouTube channel, when we have one.",
+                              "description": "The show’s YouTube channel, when we have one: its own channel first, then a channel that carries it, then our best unconfirmed match. Null means we have no channel match.",
                               "type": [
                                 "object",
                                 "null"
@@ -17577,10 +17577,10 @@
                                     "associated",
                                     "candidate"
                                   ],
-                                  "description": "`associated`: the channel passed our association checks and is the show’s own channel. `candidate`: the best match we have that has not passed them yet."
+                                  "description": "`associated`: the channel passed our association checks; `role` says whether it is the show’s own channel. `candidate`: the best match we have that has not passed them yet."
                                 },
                                 "role": {
-                                  "description": "`primary`: the channel’s main identity is the podcast. Null for a candidate, which has no role until it passes.",
+                                  "description": "`primary`: the show’s own channel; its main identity is the podcast. `valid_secondary`: a host, network, clips or mixed channel that carries the show, returned only when the show has no primary channel. Null for a candidate, which has no role until it passes.",
                                   "type": [
                                     "string",
                                     "null"
@@ -18709,7 +18709,7 @@
                               "additionalProperties": false
                             },
                             "youtube": {
-                              "description": "The show’s main YouTube channel, when we have one.",
+                              "description": "The show’s YouTube channel, when we have one: its own channel first, then a channel that carries it, then our best unconfirmed match. Null means we have no channel match.",
                               "type": [
                                 "object",
                                 "null"
@@ -18730,10 +18730,10 @@
                                     "associated",
                                     "candidate"
                                   ],
-                                  "description": "`associated`: the channel passed our association checks and is the show’s own channel. `candidate`: the best match we have that has not passed them yet."
+                                  "description": "`associated`: the channel passed our association checks; `role` says whether it is the show’s own channel. `candidate`: the best match we have that has not passed them yet."
                                 },
                                 "role": {
-                                  "description": "`primary`: the channel’s main identity is the podcast. Null for a candidate, which has no role until it passes.",
+                                  "description": "`primary`: the show’s own channel; its main identity is the podcast. `valid_secondary`: a host, network, clips or mixed channel that carries the show, returned only when the show has no primary channel. Null for a candidate, which has no role until it passes.",
                                   "type": [
                                     "string",
                                     "null"
