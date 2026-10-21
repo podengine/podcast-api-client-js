@@ -6956,6 +6956,12 @@ export interface operations {
                             /** @enum {string} */
                             reason: 'no_measurement' | 'invalid_measurement' | 'history_mismatch';
                           };
+                      hostReported?: {
+                        downloadsPerEpisode30d: number;
+                        source: string;
+                        sourceDetail: string | null;
+                        reportedAt: unknown;
+                      } | null;
                     };
                     /** @enum {string} */
                     audioRetentionPolicy?: 'RETAIN_INDEFINITELY' | 'RETAIN_DAYS' | 'RETAIN_UNTIL_TRANSCRIBED';
@@ -7460,6 +7466,12 @@ export interface operations {
                           /** @enum {string} */
                           reason: 'no_measurement' | 'invalid_measurement' | 'history_mismatch';
                         };
+                    hostReported?: {
+                      downloadsPerEpisode30d: number;
+                      source: string;
+                      sourceDetail: string | null;
+                      reportedAt: unknown;
+                    } | null;
                   };
                   /** @enum {string} */
                   audioRetentionPolicy?: 'RETAIN_INDEFINITELY' | 'RETAIN_DAYS' | 'RETAIN_UNTIL_TRANSCRIBED';
@@ -8367,6 +8379,12 @@ export interface operations {
                         /** @enum {string} */
                         reason: 'no_measurement' | 'invalid_measurement' | 'history_mismatch';
                       };
+                  hostReported?: {
+                    downloadsPerEpisode30d: number;
+                    source: string;
+                    sourceDetail: string | null;
+                    reportedAt: unknown;
+                  } | null;
                 };
                 /** @enum {string} */
                 audioRetentionPolicy?: 'RETAIN_INDEFINITELY' | 'RETAIN_DAYS' | 'RETAIN_UNTIL_TRANSCRIBED';
@@ -8829,6 +8847,12 @@ export interface operations {
                         /** @enum {string} */
                         reason: 'no_measurement' | 'invalid_measurement' | 'history_mismatch';
                       };
+                  hostReported?: {
+                    downloadsPerEpisode30d: number;
+                    source: string;
+                    sourceDetail: string | null;
+                    reportedAt: unknown;
+                  } | null;
                 };
                 /** @enum {string} */
                 audioRetentionPolicy?: 'RETAIN_INDEFINITELY' | 'RETAIN_DAYS' | 'RETAIN_UNTIL_TRANSCRIBED';
@@ -10983,6 +11007,12 @@ export interface operations {
                             /** @enum {string} */
                             reason: 'no_measurement' | 'invalid_measurement' | 'history_mismatch';
                           };
+                      hostReported?: {
+                        downloadsPerEpisode30d: number;
+                        source: string;
+                        sourceDetail: string | null;
+                        reportedAt: unknown;
+                      } | null;
                     };
                     /** @enum {string} */
                     audioRetentionPolicy?: 'RETAIN_INDEFINITELY' | 'RETAIN_DAYS' | 'RETAIN_UNTIL_TRANSCRIBED';

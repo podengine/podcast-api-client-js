@@ -13315,6 +13315,34 @@
                                             "additionalProperties": false
                                           }
                                         ]
+                                      },
+                                      "hostReported": {
+                                        "type": [
+                                          "object",
+                                          "null"
+                                        ],
+                                        "properties": {
+                                          "downloadsPerEpisode30d": {
+                                            "type": "number"
+                                          },
+                                          "source": {
+                                            "type": "string"
+                                          },
+                                          "sourceDetail": {
+                                            "type": [
+                                              "string",
+                                              "null"
+                                            ]
+                                          },
+                                          "reportedAt": {}
+                                        },
+                                        "required": [
+                                          "downloadsPerEpisode30d",
+                                          "source",
+                                          "sourceDetail",
+                                          "reportedAt"
+                                        ],
+                                        "additionalProperties": false
                                       }
                                     },
                                     "required": [
@@ -14585,6 +14613,34 @@
                                           "additionalProperties": false
                                         }
                                       ]
+                                    },
+                                    "hostReported": {
+                                      "type": [
+                                        "object",
+                                        "null"
+                                      ],
+                                      "properties": {
+                                        "downloadsPerEpisode30d": {
+                                          "type": "number"
+                                        },
+                                        "source": {
+                                          "type": "string"
+                                        },
+                                        "sourceDetail": {
+                                          "type": [
+                                            "string",
+                                            "null"
+                                          ]
+                                        },
+                                        "reportedAt": {}
+                                      },
+                                      "required": [
+                                        "downloadsPerEpisode30d",
+                                        "source",
+                                        "sourceDetail",
+                                        "reportedAt"
+                                      ],
+                                      "additionalProperties": false
                                     }
                                   },
                                   "required": [
@@ -17630,6 +17686,34 @@
                                       "additionalProperties": false
                                     }
                                   ]
+                                },
+                                "hostReported": {
+                                  "type": [
+                                    "object",
+                                    "null"
+                                  ],
+                                  "properties": {
+                                    "downloadsPerEpisode30d": {
+                                      "type": "number"
+                                    },
+                                    "source": {
+                                      "type": "string"
+                                    },
+                                    "sourceDetail": {
+                                      "type": [
+                                        "string",
+                                        "null"
+                                      ]
+                                    },
+                                    "reportedAt": {}
+                                  },
+                                  "required": [
+                                    "downloadsPerEpisode30d",
+                                    "source",
+                                    "sourceDetail",
+                                    "reportedAt"
+                                  ],
+                                  "additionalProperties": false
                                 }
                               },
                               "required": [
@@ -18783,6 +18867,34 @@
                                       "additionalProperties": false
                                     }
                                   ]
+                                },
+                                "hostReported": {
+                                  "type": [
+                                    "object",
+                                    "null"
+                                  ],
+                                  "properties": {
+                                    "downloadsPerEpisode30d": {
+                                      "type": "number"
+                                    },
+                                    "source": {
+                                      "type": "string"
+                                    },
+                                    "sourceDetail": {
+                                      "type": [
+                                        "string",
+                                        "null"
+                                      ]
+                                    },
+                                    "reportedAt": {}
+                                  },
+                                  "required": [
+                                    "downloadsPerEpisode30d",
+                                    "source",
+                                    "sourceDetail",
+                                    "reportedAt"
+                                  ],
+                                  "additionalProperties": false
                                 }
                               },
                               "required": [
@@ -24585,6 +24697,34 @@
                                           "additionalProperties": false
                                         }
                                       ]
+                                    },
+                                    "hostReported": {
+                                      "type": [
+                                        "object",
+                                        "null"
+                                      ],
+                                      "properties": {
+                                        "downloadsPerEpisode30d": {
+                                          "type": "number"
+                                        },
+                                        "source": {
+                                          "type": "string"
+                                        },
+                                        "sourceDetail": {
+                                          "type": [
+                                            "string",
+                                            "null"
+                                          ]
+                                        },
+                                        "reportedAt": {}
+                                      },
+                                      "required": [
+                                        "downloadsPerEpisode30d",
+                                        "source",
+                                        "sourceDetail",
+                                        "reportedAt"
+                                      ],
+                                      "additionalProperties": false
                                     }
                                   },
                                   "required": [
