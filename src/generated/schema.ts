@@ -320,7 +320,7 @@ export interface paths {
     };
     /**
      * Latest Episodes
-     * @description Get the latest 150 episodes
+     * @description Get the most recently published episodes, newest first: up to 150, or fewer with limit. Set excludeExplicit=true to leave out podcasts that are explicit or do not say.
      */
     get: operations['getLatestEpisodes'];
     put?: never;
@@ -4728,6 +4728,8 @@ export interface operations {
         podcastImageRequired?: boolean;
         hasTranscript?: boolean;
         language: string;
+        excludeExplicit?: boolean;
+        limit?: number;
       };
       header?: never;
       path?: never;

@@ -488,7 +488,7 @@ const descriptors = {
     method: 'GET',
     path: '/api/v1/episodes/latest',
     pathParams: [],
-    queryParams: ['categories', 'podcastImageRequired', 'hasTranscript', 'language'],
+    queryParams: ['categories', 'podcastImageRequired', 'hasTranscript', 'language', 'excludeExplicit', 'limit'],
     body: 'none',
     binary: false,
   },
@@ -1167,7 +1167,7 @@ class EpisodesResource {
 
   /**
    * Latest Episodes
-   * Get the latest 150 episodes
+   * Get the most recently published episodes, newest first: up to 150, or fewer with limit. Set excludeExplicit=true to leave out podcasts that are explicit or do not say.
    */
   getLatestEpisodes(params: GetLatestEpisodesParams, options?: RequestOptions): Promise<GetLatestEpisodesResponse> {
     return this.core.request(descriptors.getLatestEpisodes, params as Record<string, unknown>, options);
