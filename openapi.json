@@ -106,7 +106,7 @@
                             ]
                           },
                           "pageSize": {
-                            "description": "Number of results to return per page",
+                            "description": "Number of results to return per page (default 25). Your plan caps how many results one page can return: 10 on Free, 100 on Individual, 200 on Business and 250 on Agency, unless your team has a custom limit. A larger pageSize returns the capped number, and the cursor fetches the rest. Pages that include project relevancy scores return at most 100.",
                             "type": "integer",
                             "minimum": 1,
                             "maximum": 1000
@@ -687,7 +687,7 @@
                             ]
                           },
                           "pageSize": {
-                            "description": "Number of results to return per page",
+                            "description": "Number of results to return per page (default 25). Your plan caps how many results one page can return: 10 on Free, 100 on Individual, 200 on Business and 250 on Agency, unless your team has a custom limit. A larger pageSize returns the capped number, and the cursor fetches the rest. Pages that include project relevancy scores return at most 100.",
                             "type": "integer",
                             "minimum": 1,
                             "maximum": 1000
@@ -27573,7 +27573,7 @@
                         ]
                       },
                       "pageSize": {
-                        "description": "Number of results to return per page",
+                        "description": "Number of results to return per page (default 25). Your plan caps how many results one page can return: 10 on Free, 100 on Individual, 200 on Business and 250 on Agency, unless your team has a custom limit. A larger pageSize returns the capped number, and the cursor fetches the rest. Pages that include project relevancy scores return at most 100.",
                         "type": "integer",
                         "minimum": 1,
                         "maximum": 1000
@@ -28662,7 +28662,7 @@
                     ]
                   },
                   "pageSize": {
-                    "description": "Number of results to return per page",
+                    "description": "Number of results to return per page (default 25). Your plan caps how many results one page can return: 10 on Free, 100 on Individual, 200 on Business and 250 on Agency, unless your team has a custom limit. A larger pageSize returns the capped number, and the cursor fetches the rest. Pages that include project relevancy scores return at most 100.",
                     "type": "integer",
                     "minimum": 1,
                     "maximum": 1000
@@ -29272,7 +29272,7 @@
                               ]
                             },
                             "pageSize": {
-                              "description": "Number of results to return per page",
+                              "description": "Number of results to return per page (default 25). Your plan caps how many results one page can return: 10 on Free, 100 on Individual, 200 on Business and 250 on Agency, unless your team has a custom limit. A larger pageSize returns the capped number, and the cursor fetches the rest. Pages that include project relevancy scores return at most 100.",
                               "type": "integer",
                               "minimum": 1,
                               "maximum": 1000
@@ -31270,7 +31270,7 @@
                     ]
                   },
                   "pageSize": {
-                    "description": "Number of results to return per page",
+                    "description": "Number of results to return per page (default 25). Your plan caps how many results one page can return: 10 on Free, 100 on Individual, 200 on Business and 250 on Agency, unless your team has a custom limit. A larger pageSize returns the capped number, and the cursor fetches the rest. Pages that include project relevancy scores return at most 100.",
                     "type": "integer",
                     "minimum": 1,
                     "maximum": 1000
@@ -32009,7 +32009,7 @@
                               ]
                             },
                             "pageSize": {
-                              "description": "Number of results to return per page",
+                              "description": "Number of results to return per page (default 25). Your plan caps how many results one page can return: 10 on Free, 100 on Individual, 200 on Business and 250 on Agency, unless your team has a custom limit. A larger pageSize returns the capped number, and the cursor fetches the rest. Pages that include project relevancy scores return at most 100.",
                               "type": "integer",
                               "minimum": 1,
                               "maximum": 1000
