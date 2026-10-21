@@ -230,6 +230,80 @@
                               "additionalProperties": false
                             }
                           },
+                          "searchTermGroups": {
+                            "description": "Groups of alternative terms, for \"this OR that\" searches. Each group requires at least one of its terms to match; groups combine with each other and with the 'must' searchTerms using AND. For example, two groups, [\"GLP-1\", \"Ozempic\"] and [\"Noom\"], return results that mention Noom and either GLP-1 or Ozempic. Up to 10 groups of up to 10 terms.",
+                            "maxItems": 10,
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "searchTerms": {
+                                  "minItems": 1,
+                                  "maxItems": 10,
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "searchTerm": {
+                                        "type": "string",
+                                        "minLength": 2,
+                                        "description": "The text to look for. Wrapping it in single or double quotes forces a phrase match, the same as setting searchTermOptions.phraseMatch."
+                                      },
+                                      "searchType": {
+                                        "type": "string",
+                                        "enum": [
+                                          "text"
+                                        ],
+                                        "description": "How to match the term. 'text' runs keyword matching against each of the searchTargets."
+                                      },
+                                      "searchTargets": {
+                                        "minItems": 1,
+                                        "type": "array",
+                                        "items": {
+                                          "type": "string",
+                                          "enum": [
+                                            "podcast-title",
+                                            "podcast-description"
+                                          ]
+                                        },
+                                        "description": "Which fields to match this term against. A result matches if the term hits any one of its targets, so listing several widens the search rather than narrowing it."
+                                      },
+                                      "searchTermOptions": {
+                                        "description": "How this term is matched: as a phrase, or loosely. There is no matchMode here, because the group makes one of its terms required.",
+                                        "type": "object",
+                                        "properties": {
+                                          "phraseMatch": {
+                                            "description": "Whether to match the search term as a phrase",
+                                            "type": "boolean"
+                                          },
+                                          "slop": {
+                                            "description": "How many words apart tokens can appear in a document to be considered a match",
+                                            "type": "number"
+                                          },
+                                          "fuzzy": {
+                                            "description": "Whether to use fuzzy matching",
+                                            "type": "boolean"
+                                          }
+                                        },
+                                        "additionalProperties": false
+                                      }
+                                    },
+                                    "required": [
+                                      "searchTerm",
+                                      "searchType",
+                                      "searchTargets"
+                                    ],
+                                    "additionalProperties": false
+                                  },
+                                  "description": "The terms in this group. A result has to match at least one of them."
+                                }
+                              },
+                              "required": [
+                                "searchTerms"
+                              ],
+                              "additionalProperties": false
+                            }
+                          },
                           "excludeItunesGenres": {
                             "description": "iTunes genres to exclude from results",
                             "type": "array",
@@ -736,6 +810,83 @@
                                 "searchType",
                                 "searchTargets",
                                 "searchTermOptions"
+                              ],
+                              "additionalProperties": false
+                            }
+                          },
+                          "searchTermGroups": {
+                            "description": "Groups of alternative terms, for \"this OR that\" searches. Each group requires at least one of its terms to match; groups combine with each other and with the 'must' searchTerms using AND. For example, two groups, [\"GLP-1\", \"Ozempic\"] and [\"Noom\"], return results that mention Noom and either GLP-1 or Ozempic. Up to 10 groups of up to 10 terms.",
+                            "maxItems": 10,
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "searchTerms": {
+                                  "minItems": 1,
+                                  "maxItems": 10,
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "searchTerm": {
+                                        "type": "string",
+                                        "minLength": 2,
+                                        "description": "The text to look for. Wrapping it in single or double quotes forces a phrase match, the same as setting searchTermOptions.phraseMatch."
+                                      },
+                                      "searchType": {
+                                        "type": "string",
+                                        "enum": [
+                                          "text"
+                                        ],
+                                        "description": "How to match the term. 'text' runs keyword matching against each of the searchTargets."
+                                      },
+                                      "searchTargets": {
+                                        "minItems": 1,
+                                        "type": "array",
+                                        "items": {
+                                          "type": "string",
+                                          "enum": [
+                                            "podcast-title",
+                                            "podcast-description",
+                                            "episode-title",
+                                            "episode-description",
+                                            "transcript"
+                                          ]
+                                        },
+                                        "description": "Which fields to match this term against. A result matches if the term hits any one of its targets, so listing several widens the search rather than narrowing it."
+                                      },
+                                      "searchTermOptions": {
+                                        "description": "How this term is matched: as a phrase, or loosely. There is no matchMode here, because the group makes one of its terms required.",
+                                        "type": "object",
+                                        "properties": {
+                                          "phraseMatch": {
+                                            "description": "Whether to match the search term as a phrase",
+                                            "type": "boolean"
+                                          },
+                                          "slop": {
+                                            "description": "How many words apart tokens can appear in a document to be considered a match",
+                                            "type": "number"
+                                          },
+                                          "fuzzy": {
+                                            "description": "Whether to use fuzzy matching",
+                                            "type": "boolean"
+                                          }
+                                        },
+                                        "additionalProperties": false
+                                      }
+                                    },
+                                    "required": [
+                                      "searchTerm",
+                                      "searchType",
+                                      "searchTargets"
+                                    ],
+                                    "additionalProperties": false
+                                  },
+                                  "description": "The terms in this group. A result has to match at least one of them."
+                                }
+                              },
+                              "required": [
+                                "searchTerms"
                               ],
                               "additionalProperties": false
                             }
@@ -27409,6 +27560,83 @@
                           "additionalProperties": false
                         }
                       },
+                      "searchTermGroups": {
+                        "description": "Groups of alternative terms, for \"this OR that\" searches. Each group requires at least one of its terms to match; groups combine with each other and with the 'must' searchTerms using AND. For example, two groups, [\"GLP-1\", \"Ozempic\"] and [\"Noom\"], return results that mention Noom and either GLP-1 or Ozempic. Up to 10 groups of up to 10 terms.",
+                        "maxItems": 10,
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "searchTerms": {
+                              "minItems": 1,
+                              "maxItems": 10,
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "searchTerm": {
+                                    "type": "string",
+                                    "minLength": 2,
+                                    "description": "The text to look for. Wrapping it in single or double quotes forces a phrase match, the same as setting searchTermOptions.phraseMatch."
+                                  },
+                                  "searchType": {
+                                    "type": "string",
+                                    "enum": [
+                                      "text"
+                                    ],
+                                    "description": "How to match the term. 'text' runs keyword matching against each of the searchTargets."
+                                  },
+                                  "searchTargets": {
+                                    "minItems": 1,
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string",
+                                      "enum": [
+                                        "podcast-title",
+                                        "podcast-description",
+                                        "episode-title",
+                                        "episode-description",
+                                        "transcript"
+                                      ]
+                                    },
+                                    "description": "Which fields to match this term against. A result matches if the term hits any one of its targets, so listing several widens the search rather than narrowing it."
+                                  },
+                                  "searchTermOptions": {
+                                    "description": "How this term is matched: as a phrase, or loosely. There is no matchMode here, because the group makes one of its terms required.",
+                                    "type": "object",
+                                    "properties": {
+                                      "phraseMatch": {
+                                        "description": "Whether to match the search term as a phrase",
+                                        "type": "boolean"
+                                      },
+                                      "slop": {
+                                        "description": "How many words apart tokens can appear in a document to be considered a match",
+                                        "type": "number"
+                                      },
+                                      "fuzzy": {
+                                        "description": "Whether to use fuzzy matching",
+                                        "type": "boolean"
+                                      }
+                                    },
+                                    "additionalProperties": false
+                                  }
+                                },
+                                "required": [
+                                  "searchTerm",
+                                  "searchType",
+                                  "searchTargets"
+                                ],
+                                "additionalProperties": false
+                              },
+                              "description": "The terms in this group. A result has to match at least one of them."
+                            }
+                          },
+                          "required": [
+                            "searchTerms"
+                          ],
+                          "additionalProperties": false
+                        }
+                      },
                       "excludeItunesGenres": {
                         "description": "iTunes genres to exclude from results",
                         "type": "array",
@@ -28418,6 +28646,80 @@
                       "additionalProperties": false
                     }
                   },
+                  "searchTermGroups": {
+                    "description": "Groups of alternative terms, for \"this OR that\" searches. Each group requires at least one of its terms to match; groups combine with each other and with the 'must' searchTerms using AND. For example, two groups, [\"GLP-1\", \"Ozempic\"] and [\"Noom\"], return results that mention Noom and either GLP-1 or Ozempic. Up to 10 groups of up to 10 terms.",
+                    "maxItems": 10,
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "searchTerms": {
+                          "minItems": 1,
+                          "maxItems": 10,
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "searchTerm": {
+                                "type": "string",
+                                "minLength": 2,
+                                "description": "The text to look for. Wrapping it in single or double quotes forces a phrase match, the same as setting searchTermOptions.phraseMatch."
+                              },
+                              "searchType": {
+                                "type": "string",
+                                "enum": [
+                                  "text"
+                                ],
+                                "description": "How to match the term. 'text' runs keyword matching against each of the searchTargets."
+                              },
+                              "searchTargets": {
+                                "minItems": 1,
+                                "type": "array",
+                                "items": {
+                                  "type": "string",
+                                  "enum": [
+                                    "podcast-title",
+                                    "podcast-description"
+                                  ]
+                                },
+                                "description": "Which fields to match this term against. A result matches if the term hits any one of its targets, so listing several widens the search rather than narrowing it."
+                              },
+                              "searchTermOptions": {
+                                "description": "How this term is matched: as a phrase, or loosely. There is no matchMode here, because the group makes one of its terms required.",
+                                "type": "object",
+                                "properties": {
+                                  "phraseMatch": {
+                                    "description": "Whether to match the search term as a phrase",
+                                    "type": "boolean"
+                                  },
+                                  "slop": {
+                                    "description": "How many words apart tokens can appear in a document to be considered a match",
+                                    "type": "number"
+                                  },
+                                  "fuzzy": {
+                                    "description": "Whether to use fuzzy matching",
+                                    "type": "boolean"
+                                  }
+                                },
+                                "additionalProperties": false
+                              }
+                            },
+                            "required": [
+                              "searchTerm",
+                              "searchType",
+                              "searchTargets"
+                            ],
+                            "additionalProperties": false
+                          },
+                          "description": "The terms in this group. A result has to match at least one of them."
+                        }
+                      },
+                      "required": [
+                        "searchTerms"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
                   "excludeItunesGenres": {
                     "description": "iTunes genres to exclude from results",
                     "type": "array",
@@ -28950,6 +29252,80 @@
                                   "searchType",
                                   "searchTargets",
                                   "searchTermOptions"
+                                ],
+                                "additionalProperties": false
+                              }
+                            },
+                            "searchTermGroups": {
+                              "description": "Groups of alternative terms, for \"this OR that\" searches. Each group requires at least one of its terms to match; groups combine with each other and with the 'must' searchTerms using AND. For example, two groups, [\"GLP-1\", \"Ozempic\"] and [\"Noom\"], return results that mention Noom and either GLP-1 or Ozempic. Up to 10 groups of up to 10 terms.",
+                              "maxItems": 10,
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "searchTerms": {
+                                    "minItems": 1,
+                                    "maxItems": 10,
+                                    "type": "array",
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "searchTerm": {
+                                          "type": "string",
+                                          "minLength": 2,
+                                          "description": "The text to look for. Wrapping it in single or double quotes forces a phrase match, the same as setting searchTermOptions.phraseMatch."
+                                        },
+                                        "searchType": {
+                                          "type": "string",
+                                          "enum": [
+                                            "text"
+                                          ],
+                                          "description": "How to match the term. 'text' runs keyword matching against each of the searchTargets."
+                                        },
+                                        "searchTargets": {
+                                          "minItems": 1,
+                                          "type": "array",
+                                          "items": {
+                                            "type": "string",
+                                            "enum": [
+                                              "podcast-title",
+                                              "podcast-description"
+                                            ]
+                                          },
+                                          "description": "Which fields to match this term against. A result matches if the term hits any one of its targets, so listing several widens the search rather than narrowing it."
+                                        },
+                                        "searchTermOptions": {
+                                          "description": "How this term is matched: as a phrase, or loosely. There is no matchMode here, because the group makes one of its terms required.",
+                                          "type": "object",
+                                          "properties": {
+                                            "phraseMatch": {
+                                              "description": "Whether to match the search term as a phrase",
+                                              "type": "boolean"
+                                            },
+                                            "slop": {
+                                              "description": "How many words apart tokens can appear in a document to be considered a match",
+                                              "type": "number"
+                                            },
+                                            "fuzzy": {
+                                              "description": "Whether to use fuzzy matching",
+                                              "type": "boolean"
+                                            }
+                                          },
+                                          "additionalProperties": false
+                                        }
+                                      },
+                                      "required": [
+                                        "searchTerm",
+                                        "searchType",
+                                        "searchTargets"
+                                      ],
+                                      "additionalProperties": false
+                                    },
+                                    "description": "The terms in this group. A result has to match at least one of them."
+                                  }
+                                },
+                                "required": [
+                                  "searchTerms"
                                 ],
                                 "additionalProperties": false
                               }
@@ -30881,6 +31257,83 @@
                       "additionalProperties": false
                     }
                   },
+                  "searchTermGroups": {
+                    "description": "Groups of alternative terms, for \"this OR that\" searches. Each group requires at least one of its terms to match; groups combine with each other and with the 'must' searchTerms using AND. For example, two groups, [\"GLP-1\", \"Ozempic\"] and [\"Noom\"], return results that mention Noom and either GLP-1 or Ozempic. Up to 10 groups of up to 10 terms.",
+                    "maxItems": 10,
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "searchTerms": {
+                          "minItems": 1,
+                          "maxItems": 10,
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "searchTerm": {
+                                "type": "string",
+                                "minLength": 2,
+                                "description": "The text to look for. Wrapping it in single or double quotes forces a phrase match, the same as setting searchTermOptions.phraseMatch."
+                              },
+                              "searchType": {
+                                "type": "string",
+                                "enum": [
+                                  "text"
+                                ],
+                                "description": "How to match the term. 'text' runs keyword matching against each of the searchTargets."
+                              },
+                              "searchTargets": {
+                                "minItems": 1,
+                                "type": "array",
+                                "items": {
+                                  "type": "string",
+                                  "enum": [
+                                    "podcast-title",
+                                    "podcast-description",
+                                    "episode-title",
+                                    "episode-description",
+                                    "transcript"
+                                  ]
+                                },
+                                "description": "Which fields to match this term against. A result matches if the term hits any one of its targets, so listing several widens the search rather than narrowing it."
+                              },
+                              "searchTermOptions": {
+                                "description": "How this term is matched: as a phrase, or loosely. There is no matchMode here, because the group makes one of its terms required.",
+                                "type": "object",
+                                "properties": {
+                                  "phraseMatch": {
+                                    "description": "Whether to match the search term as a phrase",
+                                    "type": "boolean"
+                                  },
+                                  "slop": {
+                                    "description": "How many words apart tokens can appear in a document to be considered a match",
+                                    "type": "number"
+                                  },
+                                  "fuzzy": {
+                                    "description": "Whether to use fuzzy matching",
+                                    "type": "boolean"
+                                  }
+                                },
+                                "additionalProperties": false
+                              }
+                            },
+                            "required": [
+                              "searchTerm",
+                              "searchType",
+                              "searchTargets"
+                            ],
+                            "additionalProperties": false
+                          },
+                          "description": "The terms in this group. A result has to match at least one of them."
+                        }
+                      },
+                      "required": [
+                        "searchTerms"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
                   "excludeItunesGenres": {
                     "description": "iTunes genres to exclude from results",
                     "type": "array",
@@ -31539,6 +31992,83 @@
                                   "searchType",
                                   "searchTargets",
                                   "searchTermOptions"
+                                ],
+                                "additionalProperties": false
+                              }
+                            },
+                            "searchTermGroups": {
+                              "description": "Groups of alternative terms, for \"this OR that\" searches. Each group requires at least one of its terms to match; groups combine with each other and with the 'must' searchTerms using AND. For example, two groups, [\"GLP-1\", \"Ozempic\"] and [\"Noom\"], return results that mention Noom and either GLP-1 or Ozempic. Up to 10 groups of up to 10 terms.",
+                              "maxItems": 10,
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "searchTerms": {
+                                    "minItems": 1,
+                                    "maxItems": 10,
+                                    "type": "array",
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "searchTerm": {
+                                          "type": "string",
+                                          "minLength": 2,
+                                          "description": "The text to look for. Wrapping it in single or double quotes forces a phrase match, the same as setting searchTermOptions.phraseMatch."
+                                        },
+                                        "searchType": {
+                                          "type": "string",
+                                          "enum": [
+                                            "text"
+                                          ],
+                                          "description": "How to match the term. 'text' runs keyword matching against each of the searchTargets."
+                                        },
+                                        "searchTargets": {
+                                          "minItems": 1,
+                                          "type": "array",
+                                          "items": {
+                                            "type": "string",
+                                            "enum": [
+                                              "podcast-title",
+                                              "podcast-description",
+                                              "episode-title",
+                                              "episode-description",
+                                              "transcript"
+                                            ]
+                                          },
+                                          "description": "Which fields to match this term against. A result matches if the term hits any one of its targets, so listing several widens the search rather than narrowing it."
+                                        },
+                                        "searchTermOptions": {
+                                          "description": "How this term is matched: as a phrase, or loosely. There is no matchMode here, because the group makes one of its terms required.",
+                                          "type": "object",
+                                          "properties": {
+                                            "phraseMatch": {
+                                              "description": "Whether to match the search term as a phrase",
+                                              "type": "boolean"
+                                            },
+                                            "slop": {
+                                              "description": "How many words apart tokens can appear in a document to be considered a match",
+                                              "type": "number"
+                                            },
+                                            "fuzzy": {
+                                              "description": "Whether to use fuzzy matching",
+                                              "type": "boolean"
+                                            }
+                                          },
+                                          "additionalProperties": false
+                                        }
+                                      },
+                                      "required": [
+                                        "searchTerm",
+                                        "searchType",
+                                        "searchTargets"
+                                      ],
+                                      "additionalProperties": false
+                                    },
+                                    "description": "The terms in this group. A result has to match at least one of them."
+                                  }
+                                },
+                                "required": [
+                                  "searchTerms"
                                 ],
                                 "additionalProperties": false
                               }

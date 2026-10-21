@@ -1543,6 +1543,30 @@ export interface operations {
                     fuzzy?: boolean;
                   };
                 }[];
+                /** @description Groups of alternative terms, for "this OR that" searches. Each group requires at least one of its terms to match; groups combine with each other and with the 'must' searchTerms using AND. For example, two groups, ["GLP-1", "Ozempic"] and ["Noom"], return results that mention Noom and either GLP-1 or Ozempic. Up to 10 groups of up to 10 terms. */
+                searchTermGroups?: {
+                  /** @description The terms in this group. A result has to match at least one of them. */
+                  searchTerms: {
+                    /** @description The text to look for. Wrapping it in single or double quotes forces a phrase match, the same as setting searchTermOptions.phraseMatch. */
+                    searchTerm: string;
+                    /**
+                     * @description How to match the term. 'text' runs keyword matching against each of the searchTargets.
+                     * @enum {string}
+                     */
+                    searchType: 'text';
+                    /** @description Which fields to match this term against. A result matches if the term hits any one of its targets, so listing several widens the search rather than narrowing it. */
+                    searchTargets: ('podcast-title' | 'podcast-description')[];
+                    /** @description How this term is matched: as a phrase, or loosely. There is no matchMode here, because the group makes one of its terms required. */
+                    searchTermOptions?: {
+                      /** @description Whether to match the search term as a phrase */
+                      phraseMatch?: boolean;
+                      /** @description How many words apart tokens can appear in a document to be considered a match */
+                      slop?: number;
+                      /** @description Whether to use fuzzy matching */
+                      fuzzy?: boolean;
+                    };
+                  }[];
+                }[];
                 /** @description iTunes genres to exclude from results */
                 excludeItunesGenres?: string[];
                 /** @description Specific podcast IDs to exclude from results */
@@ -1749,6 +1773,36 @@ export interface operations {
                     /** @description Whether to use fuzzy matching */
                     fuzzy?: boolean;
                   };
+                }[];
+                /** @description Groups of alternative terms, for "this OR that" searches. Each group requires at least one of its terms to match; groups combine with each other and with the 'must' searchTerms using AND. For example, two groups, ["GLP-1", "Ozempic"] and ["Noom"], return results that mention Noom and either GLP-1 or Ozempic. Up to 10 groups of up to 10 terms. */
+                searchTermGroups?: {
+                  /** @description The terms in this group. A result has to match at least one of them. */
+                  searchTerms: {
+                    /** @description The text to look for. Wrapping it in single or double quotes forces a phrase match, the same as setting searchTermOptions.phraseMatch. */
+                    searchTerm: string;
+                    /**
+                     * @description How to match the term. 'text' runs keyword matching against each of the searchTargets.
+                     * @enum {string}
+                     */
+                    searchType: 'text';
+                    /** @description Which fields to match this term against. A result matches if the term hits any one of its targets, so listing several widens the search rather than narrowing it. */
+                    searchTargets: (
+                      | 'podcast-title'
+                      | 'podcast-description'
+                      | 'episode-title'
+                      | 'episode-description'
+                      | 'transcript'
+                    )[];
+                    /** @description How this term is matched: as a phrase, or loosely. There is no matchMode here, because the group makes one of its terms required. */
+                    searchTermOptions?: {
+                      /** @description Whether to match the search term as a phrase */
+                      phraseMatch?: boolean;
+                      /** @description How many words apart tokens can appear in a document to be considered a match */
+                      slop?: number;
+                      /** @description Whether to use fuzzy matching */
+                      fuzzy?: boolean;
+                    };
+                  }[];
                 }[];
                 /** @description iTunes genres to exclude from results */
                 excludeItunesGenres?: string[];
@@ -12061,6 +12115,36 @@ export interface operations {
                 fuzzy?: boolean;
               };
             }[];
+            /** @description Groups of alternative terms, for "this OR that" searches. Each group requires at least one of its terms to match; groups combine with each other and with the 'must' searchTerms using AND. For example, two groups, ["GLP-1", "Ozempic"] and ["Noom"], return results that mention Noom and either GLP-1 or Ozempic. Up to 10 groups of up to 10 terms. */
+            searchTermGroups?: {
+              /** @description The terms in this group. A result has to match at least one of them. */
+              searchTerms: {
+                /** @description The text to look for. Wrapping it in single or double quotes forces a phrase match, the same as setting searchTermOptions.phraseMatch. */
+                searchTerm: string;
+                /**
+                 * @description How to match the term. 'text' runs keyword matching against each of the searchTargets.
+                 * @enum {string}
+                 */
+                searchType: 'text';
+                /** @description Which fields to match this term against. A result matches if the term hits any one of its targets, so listing several widens the search rather than narrowing it. */
+                searchTargets: (
+                  | 'podcast-title'
+                  | 'podcast-description'
+                  | 'episode-title'
+                  | 'episode-description'
+                  | 'transcript'
+                )[];
+                /** @description How this term is matched: as a phrase, or loosely. There is no matchMode here, because the group makes one of its terms required. */
+                searchTermOptions?: {
+                  /** @description Whether to match the search term as a phrase */
+                  phraseMatch?: boolean;
+                  /** @description How many words apart tokens can appear in a document to be considered a match */
+                  slop?: number;
+                  /** @description Whether to use fuzzy matching */
+                  fuzzy?: boolean;
+                };
+              }[];
+            }[];
             /** @description iTunes genres to exclude from results */
             excludeItunesGenres?: string[];
             /** @description Specific podcast IDs to exclude from results */
@@ -12503,6 +12587,30 @@ export interface operations {
               fuzzy?: boolean;
             };
           }[];
+          /** @description Groups of alternative terms, for "this OR that" searches. Each group requires at least one of its terms to match; groups combine with each other and with the 'must' searchTerms using AND. For example, two groups, ["GLP-1", "Ozempic"] and ["Noom"], return results that mention Noom and either GLP-1 or Ozempic. Up to 10 groups of up to 10 terms. */
+          searchTermGroups?: {
+            /** @description The terms in this group. A result has to match at least one of them. */
+            searchTerms: {
+              /** @description The text to look for. Wrapping it in single or double quotes forces a phrase match, the same as setting searchTermOptions.phraseMatch. */
+              searchTerm: string;
+              /**
+               * @description How to match the term. 'text' runs keyword matching against each of the searchTargets.
+               * @enum {string}
+               */
+              searchType: 'text';
+              /** @description Which fields to match this term against. A result matches if the term hits any one of its targets, so listing several widens the search rather than narrowing it. */
+              searchTargets: ('podcast-title' | 'podcast-description')[];
+              /** @description How this term is matched: as a phrase, or loosely. There is no matchMode here, because the group makes one of its terms required. */
+              searchTermOptions?: {
+                /** @description Whether to match the search term as a phrase */
+                phraseMatch?: boolean;
+                /** @description How many words apart tokens can appear in a document to be considered a match */
+                slop?: number;
+                /** @description Whether to use fuzzy matching */
+                fuzzy?: boolean;
+              };
+            }[];
+          }[];
           /** @description iTunes genres to exclude from results */
           excludeItunesGenres?: string[];
           /** @description Specific podcast IDs to exclude from results */
@@ -12719,6 +12827,30 @@ export interface operations {
                     /** @description Whether to use fuzzy matching */
                     fuzzy?: boolean;
                   };
+                }[];
+                /** @description Groups of alternative terms, for "this OR that" searches. Each group requires at least one of its terms to match; groups combine with each other and with the 'must' searchTerms using AND. For example, two groups, ["GLP-1", "Ozempic"] and ["Noom"], return results that mention Noom and either GLP-1 or Ozempic. Up to 10 groups of up to 10 terms. */
+                searchTermGroups?: {
+                  /** @description The terms in this group. A result has to match at least one of them. */
+                  searchTerms: {
+                    /** @description The text to look for. Wrapping it in single or double quotes forces a phrase match, the same as setting searchTermOptions.phraseMatch. */
+                    searchTerm: string;
+                    /**
+                     * @description How to match the term. 'text' runs keyword matching against each of the searchTargets.
+                     * @enum {string}
+                     */
+                    searchType: 'text';
+                    /** @description Which fields to match this term against. A result matches if the term hits any one of its targets, so listing several widens the search rather than narrowing it. */
+                    searchTargets: ('podcast-title' | 'podcast-description')[];
+                    /** @description How this term is matched: as a phrase, or loosely. There is no matchMode here, because the group makes one of its terms required. */
+                    searchTermOptions?: {
+                      /** @description Whether to match the search term as a phrase */
+                      phraseMatch?: boolean;
+                      /** @description How many words apart tokens can appear in a document to be considered a match */
+                      slop?: number;
+                      /** @description Whether to use fuzzy matching */
+                      fuzzy?: boolean;
+                    };
+                  }[];
                 }[];
                 /** @description iTunes genres to exclude from results */
                 excludeItunesGenres?: string[];
@@ -13328,6 +13460,36 @@ export interface operations {
               fuzzy?: boolean;
             };
           }[];
+          /** @description Groups of alternative terms, for "this OR that" searches. Each group requires at least one of its terms to match; groups combine with each other and with the 'must' searchTerms using AND. For example, two groups, ["GLP-1", "Ozempic"] and ["Noom"], return results that mention Noom and either GLP-1 or Ozempic. Up to 10 groups of up to 10 terms. */
+          searchTermGroups?: {
+            /** @description The terms in this group. A result has to match at least one of them. */
+            searchTerms: {
+              /** @description The text to look for. Wrapping it in single or double quotes forces a phrase match, the same as setting searchTermOptions.phraseMatch. */
+              searchTerm: string;
+              /**
+               * @description How to match the term. 'text' runs keyword matching against each of the searchTargets.
+               * @enum {string}
+               */
+              searchType: 'text';
+              /** @description Which fields to match this term against. A result matches if the term hits any one of its targets, so listing several widens the search rather than narrowing it. */
+              searchTargets: (
+                | 'podcast-title'
+                | 'podcast-description'
+                | 'episode-title'
+                | 'episode-description'
+                | 'transcript'
+              )[];
+              /** @description How this term is matched: as a phrase, or loosely. There is no matchMode here, because the group makes one of its terms required. */
+              searchTermOptions?: {
+                /** @description Whether to match the search term as a phrase */
+                phraseMatch?: boolean;
+                /** @description How many words apart tokens can appear in a document to be considered a match */
+                slop?: number;
+                /** @description Whether to use fuzzy matching */
+                fuzzy?: boolean;
+              };
+            }[];
+          }[];
           /** @description iTunes genres to exclude from results */
           excludeItunesGenres?: string[];
           /** @description Specific podcast IDs to exclude from results */
@@ -13597,6 +13759,36 @@ export interface operations {
                     /** @description Whether to use fuzzy matching */
                     fuzzy?: boolean;
                   };
+                }[];
+                /** @description Groups of alternative terms, for "this OR that" searches. Each group requires at least one of its terms to match; groups combine with each other and with the 'must' searchTerms using AND. For example, two groups, ["GLP-1", "Ozempic"] and ["Noom"], return results that mention Noom and either GLP-1 or Ozempic. Up to 10 groups of up to 10 terms. */
+                searchTermGroups?: {
+                  /** @description The terms in this group. A result has to match at least one of them. */
+                  searchTerms: {
+                    /** @description The text to look for. Wrapping it in single or double quotes forces a phrase match, the same as setting searchTermOptions.phraseMatch. */
+                    searchTerm: string;
+                    /**
+                     * @description How to match the term. 'text' runs keyword matching against each of the searchTargets.
+                     * @enum {string}
+                     */
+                    searchType: 'text';
+                    /** @description Which fields to match this term against. A result matches if the term hits any one of its targets, so listing several widens the search rather than narrowing it. */
+                    searchTargets: (
+                      | 'podcast-title'
+                      | 'podcast-description'
+                      | 'episode-title'
+                      | 'episode-description'
+                      | 'transcript'
+                    )[];
+                    /** @description How this term is matched: as a phrase, or loosely. There is no matchMode here, because the group makes one of its terms required. */
+                    searchTermOptions?: {
+                      /** @description Whether to match the search term as a phrase */
+                      phraseMatch?: boolean;
+                      /** @description How many words apart tokens can appear in a document to be considered a match */
+                      slop?: number;
+                      /** @description Whether to use fuzzy matching */
+                      fuzzy?: boolean;
+                    };
+                  }[];
                 }[];
                 /** @description iTunes genres to exclude from results */
                 excludeItunesGenres?: string[];
