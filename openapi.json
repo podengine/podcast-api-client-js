@@ -10239,6 +10239,12 @@
                                       }
                                     ]
                                   },
+                                  "failureReason": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
                                   "requestType": {
                                     "type": "string",
                                     "enum": [
@@ -10313,6 +10319,12 @@
                                       {
                                         "type": "null"
                                       }
+                                    ]
+                                  },
+                                  "failureReason": {
+                                    "type": [
+                                      "string",
+                                      "null"
                                     ]
                                   },
                                   "requestType": {
@@ -10405,6 +10417,12 @@
                                       {
                                         "type": "null"
                                       }
+                                    ]
+                                  },
+                                  "failureReason": {
+                                    "type": [
+                                      "string",
+                                      "null"
                                     ]
                                   },
                                   "requestType": {
@@ -34845,6 +34863,12 @@
                                       }
                                     ]
                                   },
+                                  "failureReason": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
                                   "requestType": {
                                     "type": "string",
                                     "enum": [
@@ -34919,6 +34943,12 @@
                                       {
                                         "type": "null"
                                       }
+                                    ]
+                                  },
+                                  "failureReason": {
+                                    "type": [
+                                      "string",
+                                      "null"
                                     ]
                                   },
                                   "requestType": {
@@ -35011,6 +35041,12 @@
                                       {
                                         "type": "null"
                                       }
+                                    ]
+                                  },
+                                  "failureReason": {
+                                    "type": [
+                                      "string",
+                                      "null"
                                     ]
                                   },
                                   "requestType": {

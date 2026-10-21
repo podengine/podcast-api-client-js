@@ -5514,6 +5514,7 @@ export interface operations {
                     requestedAt: unknown;
                     requestedByUserId: string | null;
                     completedAt: unknown | null;
+                    failureReason?: string | null;
                     /** @enum {string} */
                     requestType: 'transcription' | 'deepAnalysis' | 'diarization';
                     episodeId: string;
@@ -5529,6 +5530,7 @@ export interface operations {
                     requestedAt: unknown;
                     requestedByUserId: string | null;
                     completedAt: unknown | null;
+                    failureReason?: string | null;
                     /** @enum {string} */
                     requestType: 'guestPrep';
                     /** @enum {string|null} */
@@ -5548,6 +5550,7 @@ export interface operations {
                     requestedAt: unknown;
                     requestedByUserId: string | null;
                     completedAt: unknown | null;
+                    failureReason?: string | null;
                     /** @enum {string} */
                     requestType: 'autoOutreach';
                     /** @enum {string|null} */
@@ -14761,6 +14764,7 @@ export interface operations {
                     requestedAt: unknown;
                     requestedByUserId: string | null;
                     completedAt: unknown | null;
+                    failureReason?: string | null;
                     /** @enum {string} */
                     requestType: 'transcription' | 'deepAnalysis' | 'diarization';
                     episodeId: string;
@@ -14776,6 +14780,7 @@ export interface operations {
                     requestedAt: unknown;
                     requestedByUserId: string | null;
                     completedAt: unknown | null;
+                    failureReason?: string | null;
                     /** @enum {string} */
                     requestType: 'guestPrep';
                     /** @enum {string|null} */
@@ -14795,6 +14800,7 @@ export interface operations {
                     requestedAt: unknown;
                     requestedByUserId: string | null;
                     completedAt: unknown | null;
+                    failureReason?: string | null;
                     /** @enum {string} */
                     requestType: 'autoOutreach';
                     /** @enum {string|null} */
