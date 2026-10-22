@@ -58,7 +58,7 @@
     "@types/node": "^24.13.1",
     "dprint": "0.63.0",
     "openapi-typescript": "7.13.0",
-    "tsup": "8.5.1",
+    "tsup": "9.0.0",
     "typescript": "6.0.3"
   },
   "engines": {
