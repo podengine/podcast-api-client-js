@@ -120,9 +120,32 @@ export interface paths {
     };
     /**
      * Alert Match History
-     * @description Get the paginated history of alert matches for the team, optionally scoped to a single alert config.
+     * @deprecated
+     * @description Get the team's alert matches, one item per mention, 50 per page, optionally for a single alert config. Items found from the alerts switch onwards have no transcriptEmbeddingId.
+     *
+     *     **Deprecated.** Use GET /api/v1/alerts/matches instead.
      */
     get: operations['getAlertMatchHistory'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/api/v1/alerts/matches': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /**
+     * Alert Matches
+     * @description Get your team's alert matches, one per episode, newest first. Each match lists its mentions with the time, a snippet, the ad and wrong-person check labels, and a link that plays from that moment. Set includeFiltered to also see the episodes and mentions your alert filters removed, and why.
+     */
+    get: operations['getAlertEpisodeMatches'];
     put?: never;
     post?: never;
     delete?: never;
@@ -3094,11 +3117,143 @@ export interface operations {
                     type: 'TRANSCRIPT';
                     endSecond: number;
                     startSecond: number;
-                    transcriptEmbeddingId: string;
+                    /** @description Deprecated: null for matches found from the alerts switch onwards. Use GET /api/v1/alerts/matches. */
+                    transcriptEmbeddingId: string | null;
                     transcriptId: string;
                     transcriptionDate: unknown;
                   }
               )[];
+            };
+          };
+        };
+      };
+      /** @description Bad request */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Authentication required */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Forbidden — plan does not include this endpoint */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Not found */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Rate limit exceeded */
+      429: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+    };
+  };
+  getAlertEpisodeMatches: {
+    parameters: {
+      query?: {
+        alertConfigId?: string;
+        includeFiltered?: boolean;
+        page?: number;
+        pageSize?: number;
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Success */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': {
+            /** @enum {string} */
+            status: 'OK';
+            data: {
+              options: {
+                /** @description Only matches for this alert configuration. */
+                alertConfigId?: string;
+                /** @description Include episodes and mentions the alert filters removed, with the labels that removed them. Defaults to false. */
+                includeFiltered?: boolean;
+                /** @description Page of episodes to return. Defaults to 1. */
+                page?: number;
+                /** @description Episodes per page, up to 50. Defaults to 25. */
+                pageSize?: number;
+              };
+              /** @description Episodes matching the options, across all pages. */
+              total: number;
+              matches: {
+                id: string;
+                alertConfig: {
+                  id: string;
+                  name: string;
+                  /** @enum {string} */
+                  type: 'person' | 'company' | 'custom-keyword';
+                };
+                /** @enum {string} */
+                status: 'kept' | 'filtered';
+                /** @description Why the episode was filtered: the reasons of its mentions combined. Empty when kept. */
+                filterReasons: ('ad' | 'not_subject' | 'unchecked' | 'legacy_context_check')[];
+                episode: {
+                  id: string;
+                  slug: string;
+                  title: string;
+                  publishedAt: unknown;
+                  imageUrl: string | null;
+                };
+                podcast: {
+                  id: string;
+                  slug: string;
+                  title: string;
+                };
+                appearance: {
+                  /** @enum {string|null} */
+                  role: 'guest' | 'host' | 'mentioned' | 'unknown' | null;
+                  /** @enum {string} */
+                  source: 'people_data' | 'title_description';
+                } | null;
+                mentionCount: number;
+                keptMentionCount: number;
+                syndicatedEpisodeIds: string[];
+                firstMatchedAt: unknown;
+                /** @description Mentions that pass the alert filters, earliest first; filtered ones too when includeFiltered is set. */
+                mentions: {
+                  id: string;
+                  startSecond: number | null;
+                  snippet: string;
+                  passesFilters: boolean;
+                  filterReasons: ('ad' | 'not_subject' | 'unchecked' | 'legacy_context_check')[];
+                  labels: {
+                    /** @enum {string} */
+                    classifier: 'isAd' | 'isSubject';
+                    /** @description The classifier label, e.g. "sponsor_read" or "not_about". */
+                    label: string;
+                    probability: number;
+                    /** @description Whether this label removed the mention under the alert filters. */
+                    filteredOut: boolean;
+                  }[];
+                  /** Format: uri */
+                  playUrl: string;
+                }[];
+              }[];
             };
           };
         };
