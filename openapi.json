@@ -12492,7 +12492,10 @@
                                     "type": "string"
                                   },
                                   "appleId": {
-                                    "type": "number"
+                                    "type": "integer",
+                                    "minimum": -9007199254740991,
+                                    "maximum": 9007199254740991,
+                                    "format": "int64"
                                   },
                                   "blocked": {
                                     "type": "object",
@@ -13461,7 +13464,10 @@
             "required": false,
             "schema": {
               "description": "Apple Podcasts ID",
-              "type": "number"
+              "type": "integer",
+              "exclusiveMinimum": 0,
+              "maximum": 9007199254740991,
+              "format": "int64"
             }
           },
           {
@@ -13790,7 +13796,10 @@
                                   "type": "string"
                                 },
                                 "appleId": {
-                                  "type": "number"
+                                  "type": "integer",
+                                  "minimum": -9007199254740991,
+                                  "maximum": 9007199254740991,
+                                  "format": "int64"
                                 },
                                 "blocked": {
                                   "type": "object",
@@ -15275,7 +15284,10 @@
                                   "type": "string"
                                 },
                                 "appleId": {
-                                  "type": "number"
+                                  "type": "integer",
+                                  "minimum": -9007199254740991,
+                                  "maximum": 9007199254740991,
+                                  "format": "int64"
                                 },
                                 "spotifyId": {
                                   "type": [
@@ -15290,7 +15302,10 @@
                                   ],
                                   "properties": {
                                     "appleId": {
-                                      "type": "number"
+                                      "type": "integer",
+                                      "minimum": -9007199254740991,
+                                      "maximum": 9007199254740991,
+                                      "format": "int64"
                                     },
                                     "scrapedAt": {},
                                     "country": {
@@ -15341,7 +15356,10 @@
                                     "type": "object",
                                     "properties": {
                                       "appleId": {
-                                        "type": "number"
+                                        "type": "integer",
+                                        "minimum": -9007199254740991,
+                                        "maximum": 9007199254740991,
+                                        "format": "int64"
                                       },
                                       "scrapedAt": {},
                                       "country": {
@@ -16863,7 +16881,10 @@
                               "type": "string"
                             },
                             "appleId": {
-                              "type": "number"
+                              "type": "integer",
+                              "minimum": -9007199254740991,
+                              "maximum": 9007199254740991,
+                              "format": "int64"
                             },
                             "blocked": {
                               "type": "object",
@@ -17779,7 +17800,10 @@
                               "type": "object",
                               "properties": {
                                 "id": {
-                                  "type": "number",
+                                  "type": "integer",
+                                  "minimum": -9007199254740991,
+                                  "maximum": 9007199254740991,
+                                  "format": "int64",
                                   "description": "Apple Podcasts ID"
                                 },
                                 "url": {
@@ -18044,7 +18068,10 @@
                               "type": "string"
                             },
                             "appleId": {
-                              "type": "number"
+                              "type": "integer",
+                              "minimum": -9007199254740991,
+                              "maximum": 9007199254740991,
+                              "format": "int64"
                             },
                             "blocked": {
                               "type": "object",
@@ -18960,7 +18987,10 @@
                               "type": "object",
                               "properties": {
                                 "id": {
-                                  "type": "number",
+                                  "type": "integer",
+                                  "minimum": -9007199254740991,
+                                  "maximum": 9007199254740991,
+                                  "format": "int64",
                                   "description": "Apple Podcasts ID"
                                 },
                                 "url": {
@@ -20173,7 +20203,10 @@
                               "type": "string"
                             },
                             "appleId": {
-                              "type": "number"
+                              "type": "integer",
+                              "minimum": -9007199254740991,
+                              "maximum": 9007199254740991,
+                              "format": "int64"
                             },
                             "spotifyId": {
                               "type": [
@@ -20188,7 +20221,10 @@
                               ],
                               "properties": {
                                 "appleId": {
-                                  "type": "number"
+                                  "type": "integer",
+                                  "minimum": -9007199254740991,
+                                  "maximum": 9007199254740991,
+                                  "format": "int64"
                                 },
                                 "scrapedAt": {},
                                 "country": {
@@ -20239,7 +20275,10 @@
                                 "type": "object",
                                 "properties": {
                                   "appleId": {
-                                    "type": "number"
+                                    "type": "integer",
+                                    "minimum": -9007199254740991,
+                                    "maximum": 9007199254740991,
+                                    "format": "int64"
                                   },
                                   "scrapedAt": {},
                                   "country": {
@@ -23874,7 +23913,10 @@
                                   "type": "string"
                                 },
                                 "appleId": {
-                                  "type": "number"
+                                  "type": "integer",
+                                  "minimum": -9007199254740991,
+                                  "maximum": 9007199254740991,
+                                  "format": "int64"
                                 },
                                 "blocked": {
                                   "type": "object",
@@ -30004,7 +30046,13 @@
                                 "type": "object",
                                 "properties": {
                                   "appleId": {
-                                    "type": "number"
+                                    "type": [
+                                      "integer",
+                                      "null"
+                                    ],
+                                    "minimum": -9007199254740991,
+                                    "maximum": 9007199254740991,
+                                    "format": "int64"
                                   },
                                   "applePodcastsContentRating": {
                                     "type": [
@@ -33117,7 +33165,13 @@
                                     ]
                                   },
                                   "appleId": {
-                                    "type": "number"
+                                    "type": [
+                                      "integer",
+                                      "null"
+                                    ],
+                                    "minimum": -9007199254740991,
+                                    "maximum": 9007199254740991,
+                                    "format": "int64"
                                   },
                                   "applePodcastsContentRating": {
                                     "type": [
@@ -35390,7 +35444,10 @@
                         "notFoundAppleIds": {
                           "type": "array",
                           "items": {
-                            "type": "number"
+                            "type": "integer",
+                            "minimum": -9007199254740991,
+                            "maximum": 9007199254740991,
+                            "format": "int64"
                           }
                         },
                         "errors": {

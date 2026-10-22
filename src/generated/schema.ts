@@ -6637,6 +6637,7 @@ export interface operations {
                     slug: string;
                     title: string;
                     titleLatest: string;
+                    /** Format: int64 */
                     appleId: number;
                     blocked?: {
                       blockedDate: unknown;
@@ -7147,6 +7148,7 @@ export interface operations {
                   slug: string;
                   title: string;
                   titleLatest: string;
+                  /** Format: int64 */
                   appleId: number;
                   blocked?: {
                     blockedDate: unknown;
@@ -7637,9 +7639,11 @@ export interface operations {
                 } | null;
                 reviews: {
                   podcastId: string;
+                  /** Format: int64 */
                   appleId: number;
                   spotifyId: string | null;
                   applePodcastsReview: {
+                    /** Format: int64 */
                     appleId: number;
                     scrapedAt: unknown;
                     country: string;
@@ -7652,6 +7656,7 @@ export interface operations {
                     fiveStarCount: number;
                   } | null;
                   applePodcastsReviewsByCountry: {
+                    /** Format: int64 */
                     appleId: number;
                     scrapedAt: unknown;
                     country: string;
@@ -8060,6 +8065,7 @@ export interface operations {
                 slug: string;
                 title: string;
                 titleLatest: string;
+                /** Format: int64 */
                 appleId: number;
                 blocked?: {
                   blockedDate: unknown;
@@ -8394,7 +8400,10 @@ export interface operations {
               platforms?: {
                 /** @description Apple Podcasts. Every podcast we track has one. */
                 apple: {
-                  /** @description Apple Podcasts ID */
+                  /**
+                   * Format: int64
+                   * @description Apple Podcasts ID
+                   */
                   id: number;
                   /**
                    * Format: uri
@@ -8528,6 +8537,7 @@ export interface operations {
                 slug: string;
                 title: string;
                 titleLatest: string;
+                /** Format: int64 */
                 appleId: number;
                 blocked?: {
                   blockedDate: unknown;
@@ -8862,7 +8872,10 @@ export interface operations {
               platforms?: {
                 /** @description Apple Podcasts. Every podcast we track has one. */
                 apple: {
-                  /** @description Apple Podcasts ID */
+                  /**
+                   * Format: int64
+                   * @description Apple Podcasts ID
+                   */
                   id: number;
                   /**
                    * Format: uri
@@ -9324,9 +9337,11 @@ export interface operations {
               };
               podcastReviews: {
                 podcastId: string;
+                /** Format: int64 */
                 appleId: number;
                 spotifyId: string | null;
                 applePodcastsReview: {
+                  /** Format: int64 */
                   appleId: number;
                   scrapedAt: unknown;
                   country: string;
@@ -9339,6 +9354,7 @@ export interface operations {
                   fiveStarCount: number;
                 } | null;
                 applePodcastsReviewsByCountry: {
+                  /** Format: int64 */
                   appleId: number;
                   scrapedAt: unknown;
                   country: string;
@@ -10688,6 +10704,7 @@ export interface operations {
                     slug: string;
                     title: string;
                     titleLatest: string;
+                    /** Format: int64 */
                     appleId: number;
                     blocked?: {
                       blockedDate: unknown;
@@ -13072,7 +13089,8 @@ export interface operations {
                 hitsReturned: number;
                 /** @description Matching podcasts. Optional fields depend on the field selection used by the search service. */
                 hits: {
-                  appleId?: number;
+                  /** Format: int64 */
+                  appleId?: number | null;
                   applePodcastsContentRating?: string | null;
                   applePodcastsRating?: number | null;
                   applePodcastsRatingsCount?: number | null;
@@ -14125,7 +14143,8 @@ export interface operations {
                   youtubeVideoDataDate?: Date | null;
                   youtubeVideoUrl?: string | null;
                   youtubeVideoViewCount?: number | null;
-                  appleId?: number;
+                  /** Format: int64 */
+                  appleId?: number | null;
                   applePodcastsContentRating?: string | null;
                   applePodcastsRating?: number | null;
                   applePodcastsRatingsCount?: number | null;
