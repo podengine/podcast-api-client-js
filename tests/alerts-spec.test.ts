@@ -20,4 +20,9 @@ describe('alerts endpoints in openapi.json', () => {
     expect(op?.deprecated).toBe(true);
     expect(op?.description).toContain('Use GET /api/v1/alerts/matches instead.');
   });
+
+  test('GET /api/v1/alerts/history states its sunset date', () => {
+    const op = spec.paths['/api/v1/alerts/history']?.get;
+    expect(op?.description).toContain('This endpoint stops working on 2027-01-04.');
+  });
 });

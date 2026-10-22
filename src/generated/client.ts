@@ -989,7 +989,7 @@ class AlertsResource {
    * Alert Match History
    * Get the team's alert matches, one item per mention, 50 per page, optionally for a single alert config. Items found from the alerts switch onwards have no transcriptEmbeddingId.
 
-**Deprecated.** Use GET /api/v1/alerts/matches instead.
+**Deprecated.** Use GET /api/v1/alerts/matches instead. This endpoint stops working on 2027-01-04.
    */
   getAlertMatchHistory(
     params?: GetAlertMatchHistoryParams,
