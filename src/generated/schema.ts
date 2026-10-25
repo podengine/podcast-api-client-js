@@ -1965,6 +1965,8 @@ export interface operations {
                 includeMatchSnippet?: boolean;
                 /** @description Return the opening of each matching episode transcript alongside the result, as transcriptTextSnippet. Episodes with no transcript return null. */
                 includeTranscriptSnippet?: boolean;
+                /** @description Return the full transcript of each episode as transcriptText. Off by default because transcripts are large; for a passage, use includeMatchSnippet or includeTranscriptSnippet instead. */
+                includeTranscriptText?: boolean;
                 /** @description How many characters of the transcript includeTranscriptSnippet returns. Defaults to 500. This is the start of the transcript, not the part that matched — for the matching text, search the transcript target and set includeMatchSnippet to receive matchSnippet, or read transcriptHighlights. */
                 transcriptSnippetLength?: number;
                 /** @description How many characters each highlighted transcript fragment contains when a search term targets the transcript. Defaults to 300. */
@@ -12485,6 +12487,8 @@ export interface operations {
             includeMatchSnippet?: boolean;
             /** @description Return the opening of each matching episode transcript alongside the result, as transcriptTextSnippet. Episodes with no transcript return null. */
             includeTranscriptSnippet?: boolean;
+            /** @description Return the full transcript of each episode as transcriptText. Off by default because transcripts are large; for a passage, use includeMatchSnippet or includeTranscriptSnippet instead. */
+            includeTranscriptText?: boolean;
             /** @description How many characters of the transcript includeTranscriptSnippet returns. Defaults to 500. This is the start of the transcript, not the part that matched — for the matching text, search the transcript target and set includeMatchSnippet to receive matchSnippet, or read transcriptHighlights. */
             transcriptSnippetLength?: number;
             /** @description How many characters each highlighted transcript fragment contains when a search term targets the transcript. Defaults to 300. */
@@ -13831,6 +13835,8 @@ export interface operations {
           includeMatchSnippet?: boolean;
           /** @description Return the opening of each matching episode transcript alongside the result, as transcriptTextSnippet. Episodes with no transcript return null. */
           includeTranscriptSnippet?: boolean;
+          /** @description Return the full transcript of each episode as transcriptText. Off by default because transcripts are large; for a passage, use includeMatchSnippet or includeTranscriptSnippet instead. */
+          includeTranscriptText?: boolean;
           /** @description How many characters of the transcript includeTranscriptSnippet returns. Defaults to 500. This is the start of the transcript, not the part that matched — for the matching text, search the transcript target and set includeMatchSnippet to receive matchSnippet, or read transcriptHighlights. */
           transcriptSnippetLength?: number;
           /** @description How many characters each highlighted transcript fragment contains when a search term targets the transcript. Defaults to 300. */
@@ -14131,6 +14137,8 @@ export interface operations {
                 includeMatchSnippet?: boolean;
                 /** @description Return the opening of each matching episode transcript alongside the result, as transcriptTextSnippet. Episodes with no transcript return null. */
                 includeTranscriptSnippet?: boolean;
+                /** @description Return the full transcript of each episode as transcriptText. Off by default because transcripts are large; for a passage, use includeMatchSnippet or includeTranscriptSnippet instead. */
+                includeTranscriptText?: boolean;
                 /** @description How many characters of the transcript includeTranscriptSnippet returns. Defaults to 500. This is the start of the transcript, not the part that matched — for the matching text, search the transcript target and set includeMatchSnippet to receive matchSnippet, or read transcriptHighlights. */
                 transcriptSnippetLength?: number;
                 /** @description How many characters each highlighted transcript fragment contains when a search term targets the transcript. Defaults to 300. */
@@ -14831,6 +14839,7 @@ export interface operations {
                 lastAirtableSync?: unknown;
                 lastAirtableErrorSyncDate?: unknown;
                 airtableRecordId?: string;
+                airtableRefreshQueuedAt?: unknown;
               }[];
             };
           };
@@ -14950,6 +14959,7 @@ export interface operations {
                 lastAirtableSync?: unknown;
                 lastAirtableErrorSyncDate?: unknown;
                 airtableRecordId?: string;
+                airtableRefreshQueuedAt?: unknown;
               };
             };
           };
