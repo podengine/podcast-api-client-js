@@ -1671,7 +1671,7 @@
                             "type": "boolean"
                           },
                           "requireSubject": {
-                            "description": "Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert has a \"Who is this?\" note (subjectNote), and off when it does not.",
+                            "description": "Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert's \"Who is this?\" note (subjectNote) has passed the note check (subjectNoteCheck), and off when it has not.",
                             "type": "boolean"
                           }
                         },
@@ -1803,7 +1803,7 @@
                                           "type": "boolean"
                                         },
                                         "requireSubject": {
-                                          "description": "Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert has a \"Who is this?\" note (subjectNote), and off when it does not.",
+                                          "description": "Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert's \"Who is this?\" note (subjectNote) has passed the note check (subjectNoteCheck), and off when it has not.",
                                           "type": "boolean"
                                         }
                                       },
@@ -1899,7 +1899,7 @@
                                           "type": "boolean"
                                         },
                                         "requireSubject": {
-                                          "description": "Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert has a \"Who is this?\" note (subjectNote), and off when it does not.",
+                                          "description": "Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert's \"Who is this?\" note (subjectNote) has passed the note check (subjectNoteCheck), and off when it has not.",
                                           "type": "boolean"
                                         }
                                       },
@@ -1986,7 +1986,7 @@
                                           "type": "boolean"
                                         },
                                         "requireSubject": {
-                                          "description": "Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert has a \"Who is this?\" note (subjectNote), and off when it does not.",
+                                          "description": "Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert's \"Who is this?\" note (subjectNote) has passed the note check (subjectNoteCheck), and off when it has not.",
                                           "type": "boolean"
                                         }
                                       },
@@ -2040,6 +2040,36 @@
                                   "type": "null"
                                 }
                               ]
+                            },
+                            "subjectNoteCheck": {
+                              "description": "Person and company alerts: the note check of the \"Who is this?\" note this alert uses. Null when there is no note.",
+                              "type": [
+                                "object",
+                                "null"
+                              ],
+                              "properties": {
+                                "status": {
+                                  "type": "string",
+                                  "enum": [
+                                    "passed",
+                                    "failed",
+                                    "pending"
+                                  ],
+                                  "description": "passed: matches are checked for the right person or company. failed: see missing. pending: not checked yet."
+                                },
+                                "missing": {
+                                  "description": "When the check failed, what the note needs to tell them apart, e.g. \"Add their role or company.\"",
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "status",
+                                "missing"
+                              ],
+                              "additionalProperties": false
                             }
                           },
                           "required": [
@@ -2289,7 +2319,7 @@
                                             "type": "boolean"
                                           },
                                           "requireSubject": {
-                                            "description": "Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert has a \"Who is this?\" note (subjectNote), and off when it does not.",
+                                            "description": "Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert's \"Who is this?\" note (subjectNote) has passed the note check (subjectNoteCheck), and off when it has not.",
                                             "type": "boolean"
                                           }
                                         },
@@ -2385,7 +2415,7 @@
                                             "type": "boolean"
                                           },
                                           "requireSubject": {
-                                            "description": "Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert has a \"Who is this?\" note (subjectNote), and off when it does not.",
+                                            "description": "Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert's \"Who is this?\" note (subjectNote) has passed the note check (subjectNoteCheck), and off when it has not.",
                                             "type": "boolean"
                                           }
                                         },
@@ -2472,7 +2502,7 @@
                                             "type": "boolean"
                                           },
                                           "requireSubject": {
-                                            "description": "Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert has a \"Who is this?\" note (subjectNote), and off when it does not.",
+                                            "description": "Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert's \"Who is this?\" note (subjectNote) has passed the note check (subjectNoteCheck), and off when it has not.",
                                             "type": "boolean"
                                           }
                                         },
@@ -2526,6 +2556,36 @@
                                     "type": "null"
                                   }
                                 ]
+                              },
+                              "subjectNoteCheck": {
+                                "description": "Person and company alerts: the note check of the \"Who is this?\" note this alert uses. Null when there is no note.",
+                                "type": [
+                                  "object",
+                                  "null"
+                                ],
+                                "properties": {
+                                  "status": {
+                                    "type": "string",
+                                    "enum": [
+                                      "passed",
+                                      "failed",
+                                      "pending"
+                                    ],
+                                    "description": "passed: matches are checked for the right person or company. failed: see missing. pending: not checked yet."
+                                  },
+                                  "missing": {
+                                    "description": "When the check failed, what the note needs to tell them apart, e.g. \"Add their role or company.\"",
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  }
+                                },
+                                "required": [
+                                  "status",
+                                  "missing"
+                                ],
+                                "additionalProperties": false
                               }
                             },
                             "required": [
@@ -2710,7 +2770,7 @@
                                           "type": "boolean"
                                         },
                                         "requireSubject": {
-                                          "description": "Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert has a \"Who is this?\" note (subjectNote), and off when it does not.",
+                                          "description": "Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert's \"Who is this?\" note (subjectNote) has passed the note check (subjectNoteCheck), and off when it has not.",
                                           "type": "boolean"
                                         }
                                       },
@@ -2806,7 +2866,7 @@
                                           "type": "boolean"
                                         },
                                         "requireSubject": {
-                                          "description": "Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert has a \"Who is this?\" note (subjectNote), and off when it does not.",
+                                          "description": "Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert's \"Who is this?\" note (subjectNote) has passed the note check (subjectNoteCheck), and off when it has not.",
                                           "type": "boolean"
                                         }
                                       },
@@ -2893,7 +2953,7 @@
                                           "type": "boolean"
                                         },
                                         "requireSubject": {
-                                          "description": "Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert has a \"Who is this?\" note (subjectNote), and off when it does not.",
+                                          "description": "Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert's \"Who is this?\" note (subjectNote) has passed the note check (subjectNoteCheck), and off when it has not.",
                                           "type": "boolean"
                                         }
                                       },
@@ -2947,6 +3007,36 @@
                                   "type": "null"
                                 }
                               ]
+                            },
+                            "subjectNoteCheck": {
+                              "description": "Person and company alerts: the note check of the \"Who is this?\" note this alert uses. Null when there is no note.",
+                              "type": [
+                                "object",
+                                "null"
+                              ],
+                              "properties": {
+                                "status": {
+                                  "type": "string",
+                                  "enum": [
+                                    "passed",
+                                    "failed",
+                                    "pending"
+                                  ],
+                                  "description": "passed: matches are checked for the right person or company. failed: see missing. pending: not checked yet."
+                                },
+                                "missing": {
+                                  "description": "When the check failed, what the note needs to tell them apart, e.g. \"Add their role or company.\"",
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "status",
+                                "missing"
+                              ],
+                              "additionalProperties": false
                             }
                           },
                           "required": [
@@ -3116,7 +3206,7 @@
                                     "type": "boolean"
                                   },
                                   "requireSubject": {
-                                    "description": "Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert has a \"Who is this?\" note (subjectNote), and off when it does not.",
+                                    "description": "Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert's \"Who is this?\" note (subjectNote) has passed the note check (subjectNoteCheck), and off when it has not.",
                                     "type": "boolean"
                                   }
                                 },
@@ -3212,7 +3302,7 @@
                                     "type": "boolean"
                                   },
                                   "requireSubject": {
-                                    "description": "Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert has a \"Who is this?\" note (subjectNote), and off when it does not.",
+                                    "description": "Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert's \"Who is this?\" note (subjectNote) has passed the note check (subjectNoteCheck), and off when it has not.",
                                     "type": "boolean"
                                   }
                                 },
@@ -3299,7 +3389,7 @@
                                     "type": "boolean"
                                   },
                                   "requireSubject": {
-                                    "description": "Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert has a \"Who is this?\" note (subjectNote), and off when it does not.",
+                                    "description": "Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert's \"Who is this?\" note (subjectNote) has passed the note check (subjectNoteCheck), and off when it has not.",
                                     "type": "boolean"
                                   }
                                 },
@@ -3452,7 +3542,7 @@
                                           "type": "boolean"
                                         },
                                         "requireSubject": {
-                                          "description": "Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert has a \"Who is this?\" note (subjectNote), and off when it does not.",
+                                          "description": "Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert's \"Who is this?\" note (subjectNote) has passed the note check (subjectNoteCheck), and off when it has not.",
                                           "type": "boolean"
                                         }
                                       },
@@ -3548,7 +3638,7 @@
                                           "type": "boolean"
                                         },
                                         "requireSubject": {
-                                          "description": "Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert has a \"Who is this?\" note (subjectNote), and off when it does not.",
+                                          "description": "Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert's \"Who is this?\" note (subjectNote) has passed the note check (subjectNoteCheck), and off when it has not.",
                                           "type": "boolean"
                                         }
                                       },
@@ -3635,7 +3725,7 @@
                                           "type": "boolean"
                                         },
                                         "requireSubject": {
-                                          "description": "Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert has a \"Who is this?\" note (subjectNote), and off when it does not.",
+                                          "description": "Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert's \"Who is this?\" note (subjectNote) has passed the note check (subjectNoteCheck), and off when it has not.",
                                           "type": "boolean"
                                         }
                                       },
@@ -3689,6 +3779,36 @@
                                   "type": "null"
                                 }
                               ]
+                            },
+                            "subjectNoteCheck": {
+                              "description": "Person and company alerts: the note check of the \"Who is this?\" note this alert uses. Null when there is no note.",
+                              "type": [
+                                "object",
+                                "null"
+                              ],
+                              "properties": {
+                                "status": {
+                                  "type": "string",
+                                  "enum": [
+                                    "passed",
+                                    "failed",
+                                    "pending"
+                                  ],
+                                  "description": "passed: matches are checked for the right person or company. failed: see missing. pending: not checked yet."
+                                },
+                                "missing": {
+                                  "description": "When the check failed, what the note needs to tell them apart, e.g. \"Add their role or company.\"",
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "status",
+                                "missing"
+                              ],
+                              "additionalProperties": false
                             }
                           },
                           "required": [
@@ -4434,6 +4554,17 @@
                                 ],
                                 "additionalProperties": false
                               },
+                              "subjectCheck": {
+                                "description": "Person and company alerts: \"checked\" when mentions about someone else with the same name are filtered out, \"unverified\" when they are not (the alert has no \"Who is this?\" note that passed the check). Null for keyword alerts.",
+                                "type": [
+                                  "string",
+                                  "null"
+                                ],
+                                "enum": [
+                                  "checked",
+                                  "unverified"
+                                ]
+                              },
                               "mentionCount": {
                                 "type": "number"
                               },
@@ -4541,6 +4672,7 @@
                               "episode",
                               "podcast",
                               "appearance",
+                              "subjectCheck",
                               "mentionCount",
                               "keptMentionCount",
                               "syndicatedEpisodeIds",

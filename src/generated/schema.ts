@@ -2195,7 +2195,7 @@ export interface operations {
             filters?: {
               /** @description Hide mentions inside ad reads (sponsor reads and promos for other shows). Defaults to true. */
               excludeAds?: boolean;
-              /** @description Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert has a "Who is this?" note (subjectNote), and off when it does not. */
+              /** @description Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert's "Who is this?" note (subjectNote) has passed the note check (subjectNoteCheck), and off when it has not. */
               requireSubject?: boolean;
             };
             /** @description Person and company alerts only: who this is, e.g. "CEO of Acme". Helps tell them apart from others with the same name. Send an empty string to remove it. */
@@ -2243,7 +2243,7 @@ export interface operations {
                       filters?: {
                         /** @description Hide mentions inside ad reads (sponsor reads and promos for other shows). Defaults to true. */
                         excludeAds?: boolean;
-                        /** @description Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert has a "Who is this?" note (subjectNote), and off when it does not. */
+                        /** @description Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert's "Who is this?" note (subjectNote) has passed the note check (subjectNoteCheck), and off when it has not. */
                         requireSubject?: boolean;
                       };
                       /** @description Person and company alerts only: who this is, e.g. "CEO of Acme". Helps tell them apart from others with the same name. Send an empty string to remove it. */
@@ -2272,7 +2272,7 @@ export interface operations {
                       filters?: {
                         /** @description Hide mentions inside ad reads (sponsor reads and promos for other shows). Defaults to true. */
                         excludeAds?: boolean;
-                        /** @description Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert has a "Who is this?" note (subjectNote), and off when it does not. */
+                        /** @description Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert's "Who is this?" note (subjectNote) has passed the note check (subjectNoteCheck), and off when it has not. */
                         requireSubject?: boolean;
                       };
                       /** @description Person and company alerts only: who this is, e.g. "CEO of Acme". Helps tell them apart from others with the same name. Send an empty string to remove it. */
@@ -2298,7 +2298,7 @@ export interface operations {
                       filters?: {
                         /** @description Hide mentions inside ad reads (sponsor reads and promos for other shows). Defaults to true. */
                         excludeAds?: boolean;
-                        /** @description Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert has a "Who is this?" note (subjectNote), and off when it does not. */
+                        /** @description Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert's "Who is this?" note (subjectNote) has passed the note check (subjectNoteCheck), and off when it has not. */
                         requireSubject?: boolean;
                       };
                       /** @description Person and company alerts only: who this is, e.g. "CEO of Acme". Helps tell them apart from others with the same name. Send an empty string to remove it. */
@@ -2315,6 +2315,16 @@ export interface operations {
                   frequency: 'hourly' | 'daily' | 'weekly';
                 };
                 lastRunDate: unknown | null;
+                /** @description Person and company alerts: the note check of the "Who is this?" note this alert uses. Null when there is no note. */
+                subjectNoteCheck?: {
+                  /**
+                   * @description passed: matches are checked for the right person or company. failed: see missing. pending: not checked yet.
+                   * @enum {string}
+                   */
+                  status: 'passed' | 'failed' | 'pending';
+                  /** @description When the check failed, what the note needs to tell them apart, e.g. "Add their role or company." */
+                  missing: string | null;
+                } | null;
               };
             };
           };
@@ -2425,7 +2435,7 @@ export interface operations {
                       filters?: {
                         /** @description Hide mentions inside ad reads (sponsor reads and promos for other shows). Defaults to true. */
                         excludeAds?: boolean;
-                        /** @description Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert has a "Who is this?" note (subjectNote), and off when it does not. */
+                        /** @description Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert's "Who is this?" note (subjectNote) has passed the note check (subjectNoteCheck), and off when it has not. */
                         requireSubject?: boolean;
                       };
                       /** @description Person and company alerts only: who this is, e.g. "CEO of Acme". Helps tell them apart from others with the same name. Send an empty string to remove it. */
@@ -2454,7 +2464,7 @@ export interface operations {
                       filters?: {
                         /** @description Hide mentions inside ad reads (sponsor reads and promos for other shows). Defaults to true. */
                         excludeAds?: boolean;
-                        /** @description Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert has a "Who is this?" note (subjectNote), and off when it does not. */
+                        /** @description Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert's "Who is this?" note (subjectNote) has passed the note check (subjectNoteCheck), and off when it has not. */
                         requireSubject?: boolean;
                       };
                       /** @description Person and company alerts only: who this is, e.g. "CEO of Acme". Helps tell them apart from others with the same name. Send an empty string to remove it. */
@@ -2480,7 +2490,7 @@ export interface operations {
                       filters?: {
                         /** @description Hide mentions inside ad reads (sponsor reads and promos for other shows). Defaults to true. */
                         excludeAds?: boolean;
-                        /** @description Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert has a "Who is this?" note (subjectNote), and off when it does not. */
+                        /** @description Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert's "Who is this?" note (subjectNote) has passed the note check (subjectNoteCheck), and off when it has not. */
                         requireSubject?: boolean;
                       };
                       /** @description Person and company alerts only: who this is, e.g. "CEO of Acme". Helps tell them apart from others with the same name. Send an empty string to remove it. */
@@ -2497,6 +2507,16 @@ export interface operations {
                   frequency: 'hourly' | 'daily' | 'weekly';
                 };
                 lastRunDate: unknown | null;
+                /** @description Person and company alerts: the note check of the "Who is this?" note this alert uses. Null when there is no note. */
+                subjectNoteCheck?: {
+                  /**
+                   * @description passed: matches are checked for the right person or company. failed: see missing. pending: not checked yet.
+                   * @enum {string}
+                   */
+                  status: 'passed' | 'failed' | 'pending';
+                  /** @description When the check failed, what the note needs to tell them apart, e.g. "Add their role or company." */
+                  missing: string | null;
+                } | null;
               }[];
             };
           };
@@ -2588,7 +2608,7 @@ export interface operations {
                       filters?: {
                         /** @description Hide mentions inside ad reads (sponsor reads and promos for other shows). Defaults to true. */
                         excludeAds?: boolean;
-                        /** @description Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert has a "Who is this?" note (subjectNote), and off when it does not. */
+                        /** @description Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert's "Who is this?" note (subjectNote) has passed the note check (subjectNoteCheck), and off when it has not. */
                         requireSubject?: boolean;
                       };
                       /** @description Person and company alerts only: who this is, e.g. "CEO of Acme". Helps tell them apart from others with the same name. Send an empty string to remove it. */
@@ -2617,7 +2637,7 @@ export interface operations {
                       filters?: {
                         /** @description Hide mentions inside ad reads (sponsor reads and promos for other shows). Defaults to true. */
                         excludeAds?: boolean;
-                        /** @description Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert has a "Who is this?" note (subjectNote), and off when it does not. */
+                        /** @description Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert's "Who is this?" note (subjectNote) has passed the note check (subjectNoteCheck), and off when it has not. */
                         requireSubject?: boolean;
                       };
                       /** @description Person and company alerts only: who this is, e.g. "CEO of Acme". Helps tell them apart from others with the same name. Send an empty string to remove it. */
@@ -2643,7 +2663,7 @@ export interface operations {
                       filters?: {
                         /** @description Hide mentions inside ad reads (sponsor reads and promos for other shows). Defaults to true. */
                         excludeAds?: boolean;
-                        /** @description Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert has a "Who is this?" note (subjectNote), and off when it does not. */
+                        /** @description Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert's "Who is this?" note (subjectNote) has passed the note check (subjectNoteCheck), and off when it has not. */
                         requireSubject?: boolean;
                       };
                       /** @description Person and company alerts only: who this is, e.g. "CEO of Acme". Helps tell them apart from others with the same name. Send an empty string to remove it. */
@@ -2660,6 +2680,16 @@ export interface operations {
                   frequency: 'hourly' | 'daily' | 'weekly';
                 };
                 lastRunDate: unknown | null;
+                /** @description Person and company alerts: the note check of the "Who is this?" note this alert uses. Null when there is no note. */
+                subjectNoteCheck?: {
+                  /**
+                   * @description passed: matches are checked for the right person or company. failed: see missing. pending: not checked yet.
+                   * @enum {string}
+                   */
+                  status: 'passed' | 'failed' | 'pending';
+                  /** @description When the check failed, what the note needs to tell them apart, e.g. "Add their role or company." */
+                  missing: string | null;
+                } | null;
               };
             };
           };
@@ -2808,7 +2838,7 @@ export interface operations {
                   filters?: {
                     /** @description Hide mentions inside ad reads (sponsor reads and promos for other shows). Defaults to true. */
                     excludeAds?: boolean;
-                    /** @description Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert has a "Who is this?" note (subjectNote), and off when it does not. */
+                    /** @description Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert's "Who is this?" note (subjectNote) has passed the note check (subjectNoteCheck), and off when it has not. */
                     requireSubject?: boolean;
                   };
                   /** @description Person and company alerts only: who this is, e.g. "CEO of Acme". Helps tell them apart from others with the same name. Send an empty string to remove it. */
@@ -2837,7 +2867,7 @@ export interface operations {
                   filters?: {
                     /** @description Hide mentions inside ad reads (sponsor reads and promos for other shows). Defaults to true. */
                     excludeAds?: boolean;
-                    /** @description Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert has a "Who is this?" note (subjectNote), and off when it does not. */
+                    /** @description Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert's "Who is this?" note (subjectNote) has passed the note check (subjectNoteCheck), and off when it has not. */
                     requireSubject?: boolean;
                   };
                   /** @description Person and company alerts only: who this is, e.g. "CEO of Acme". Helps tell them apart from others with the same name. Send an empty string to remove it. */
@@ -2863,7 +2893,7 @@ export interface operations {
                   filters?: {
                     /** @description Hide mentions inside ad reads (sponsor reads and promos for other shows). Defaults to true. */
                     excludeAds?: boolean;
-                    /** @description Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert has a "Who is this?" note (subjectNote), and off when it does not. */
+                    /** @description Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert's "Who is this?" note (subjectNote) has passed the note check (subjectNoteCheck), and off when it has not. */
                     requireSubject?: boolean;
                   };
                   /** @description Person and company alerts only: who this is, e.g. "CEO of Acme". Helps tell them apart from others with the same name. Send an empty string to remove it. */
@@ -2917,7 +2947,7 @@ export interface operations {
                       filters?: {
                         /** @description Hide mentions inside ad reads (sponsor reads and promos for other shows). Defaults to true. */
                         excludeAds?: boolean;
-                        /** @description Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert has a "Who is this?" note (subjectNote), and off when it does not. */
+                        /** @description Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert's "Who is this?" note (subjectNote) has passed the note check (subjectNoteCheck), and off when it has not. */
                         requireSubject?: boolean;
                       };
                       /** @description Person and company alerts only: who this is, e.g. "CEO of Acme". Helps tell them apart from others with the same name. Send an empty string to remove it. */
@@ -2946,7 +2976,7 @@ export interface operations {
                       filters?: {
                         /** @description Hide mentions inside ad reads (sponsor reads and promos for other shows). Defaults to true. */
                         excludeAds?: boolean;
-                        /** @description Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert has a "Who is this?" note (subjectNote), and off when it does not. */
+                        /** @description Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert's "Who is this?" note (subjectNote) has passed the note check (subjectNoteCheck), and off when it has not. */
                         requireSubject?: boolean;
                       };
                       /** @description Person and company alerts only: who this is, e.g. "CEO of Acme". Helps tell them apart from others with the same name. Send an empty string to remove it. */
@@ -2972,7 +3002,7 @@ export interface operations {
                       filters?: {
                         /** @description Hide mentions inside ad reads (sponsor reads and promos for other shows). Defaults to true. */
                         excludeAds?: boolean;
-                        /** @description Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert has a "Who is this?" note (subjectNote), and off when it does not. */
+                        /** @description Person and company alerts only: hide mentions that are about someone or something else with the same name. Defaults to on when the alert's "Who is this?" note (subjectNote) has passed the note check (subjectNoteCheck), and off when it has not. */
                         requireSubject?: boolean;
                       };
                       /** @description Person and company alerts only: who this is, e.g. "CEO of Acme". Helps tell them apart from others with the same name. Send an empty string to remove it. */
@@ -2989,6 +3019,16 @@ export interface operations {
                   frequency: 'hourly' | 'daily' | 'weekly';
                 };
                 lastRunDate: unknown | null;
+                /** @description Person and company alerts: the note check of the "Who is this?" note this alert uses. Null when there is no note. */
+                subjectNoteCheck?: {
+                  /**
+                   * @description passed: matches are checked for the right person or company. failed: see missing. pending: not checked yet.
+                   * @enum {string}
+                   */
+                  status: 'passed' | 'failed' | 'pending';
+                  /** @description When the check failed, what the note needs to tell them apart, e.g. "Add their role or company." */
+                  missing: string | null;
+                } | null;
               };
             };
           };
@@ -3232,6 +3272,11 @@ export interface operations {
                   /** @enum {string} */
                   source: 'people_data' | 'title_description';
                 } | null;
+                /**
+                 * @description Person and company alerts: "checked" when mentions about someone else with the same name are filtered out, "unverified" when they are not (the alert has no "Who is this?" note that passed the check). Null for keyword alerts.
+                 * @enum {string|null}
+                 */
+                subjectCheck: 'checked' | 'unverified' | null;
                 mentionCount: number;
                 keptMentionCount: number;
                 syndicatedEpisodeIds: string[];
