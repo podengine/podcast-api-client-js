@@ -13648,6 +13648,20 @@
                                           "null"
                                         ]
                                       },
+                                      "estimatedMonthlyAudioListeners": {
+                                        "description": "The podcast-app part of estimatedMonthlyListeners, unrounded. Null when not available.",
+                                        "type": [
+                                          "number",
+                                          "null"
+                                        ]
+                                      },
+                                      "estimatedMonthlyYoutubeViews": {
+                                        "description": "The YouTube part of estimatedMonthlyListeners (monthly views of the show on its matched YouTube channel), unrounded. Null when not available.",
+                                        "type": [
+                                          "number",
+                                          "null"
+                                        ]
+                                      },
                                       "hasOp3Analytics": {
                                         "type": "boolean"
                                       },
@@ -14949,6 +14963,20 @@
                                     "isDormant": {
                                       "type": [
                                         "boolean",
+                                        "null"
+                                      ]
+                                    },
+                                    "estimatedMonthlyAudioListeners": {
+                                      "description": "The podcast-app part of estimatedMonthlyListeners, unrounded. Null when not available.",
+                                      "type": [
+                                        "number",
+                                        "null"
+                                      ]
+                                    },
+                                    "estimatedMonthlyYoutubeViews": {
+                                      "description": "The YouTube part of estimatedMonthlyListeners (monthly views of the show on its matched YouTube channel), unrounded. Null when not available.",
+                                      "type": [
+                                        "number",
                                         "null"
                                       ]
                                     },
@@ -18037,6 +18065,20 @@
                                     "null"
                                   ]
                                 },
+                                "estimatedMonthlyAudioListeners": {
+                                  "description": "The podcast-app part of estimatedMonthlyListeners, unrounded. Null when not available.",
+                                  "type": [
+                                    "number",
+                                    "null"
+                                  ]
+                                },
+                                "estimatedMonthlyYoutubeViews": {
+                                  "description": "The YouTube part of estimatedMonthlyListeners (monthly views of the show on its matched YouTube channel), unrounded. Null when not available.",
+                                  "type": [
+                                    "number",
+                                    "null"
+                                  ]
+                                },
                                 "hasOp3Analytics": {
                                   "type": "boolean"
                                 },
@@ -19221,6 +19263,20 @@
                                 "isDormant": {
                                   "type": [
                                     "boolean",
+                                    "null"
+                                  ]
+                                },
+                                "estimatedMonthlyAudioListeners": {
+                                  "description": "The podcast-app part of estimatedMonthlyListeners, unrounded. Null when not available.",
+                                  "type": [
+                                    "number",
+                                    "null"
+                                  ]
+                                },
+                                "estimatedMonthlyYoutubeViews": {
+                                  "description": "The YouTube part of estimatedMonthlyListeners (monthly views of the show on its matched YouTube channel), unrounded. Null when not available.",
+                                  "type": [
+                                    "number",
                                     "null"
                                   ]
                                 },
@@ -25066,6 +25122,20 @@
                                     "isDormant": {
                                       "type": [
                                         "boolean",
+                                        "null"
+                                      ]
+                                    },
+                                    "estimatedMonthlyAudioListeners": {
+                                      "description": "The podcast-app part of estimatedMonthlyListeners, unrounded. Null when not available.",
+                                      "type": [
+                                        "number",
+                                        "null"
+                                      ]
+                                    },
+                                    "estimatedMonthlyYoutubeViews": {
+                                      "description": "The YouTube part of estimatedMonthlyListeners (monthly views of the show on its matched YouTube channel), unrounded. Null when not available.",
+                                      "type": [
+                                        "number",
                                         "null"
                                       ]
                                     },

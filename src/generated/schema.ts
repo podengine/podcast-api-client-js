@@ -7110,6 +7110,10 @@ export interface operations {
                       /** @enum {string|null} */
                       confidence?: 'high' | 'medium' | 'low' | null;
                       isDormant?: boolean | null;
+                      /** @description The podcast-app part of estimatedMonthlyListeners, unrounded. Null when not available. */
+                      estimatedMonthlyAudioListeners?: number | null;
+                      /** @description The YouTube part of estimatedMonthlyListeners (monthly views of the show on its matched YouTube channel), unrounded. Null when not available. */
+                      estimatedMonthlyYoutubeViews?: number | null;
                       hasOp3Analytics?: boolean;
                       op3Downloads?:
                         | {
@@ -7621,6 +7625,10 @@ export interface operations {
                     /** @enum {string|null} */
                     confidence?: 'high' | 'medium' | 'low' | null;
                     isDormant?: boolean | null;
+                    /** @description The podcast-app part of estimatedMonthlyListeners, unrounded. Null when not available. */
+                    estimatedMonthlyAudioListeners?: number | null;
+                    /** @description The YouTube part of estimatedMonthlyListeners (monthly views of the show on its matched YouTube channel), unrounded. Null when not available. */
+                    estimatedMonthlyYoutubeViews?: number | null;
                     hasOp3Analytics?: boolean;
                     op3Downloads?:
                       | {
@@ -8538,6 +8546,10 @@ export interface operations {
                   /** @enum {string|null} */
                   confidence?: 'high' | 'medium' | 'low' | null;
                   isDormant?: boolean | null;
+                  /** @description The podcast-app part of estimatedMonthlyListeners, unrounded. Null when not available. */
+                  estimatedMonthlyAudioListeners?: number | null;
+                  /** @description The YouTube part of estimatedMonthlyListeners (monthly views of the show on its matched YouTube channel), unrounded. Null when not available. */
+                  estimatedMonthlyYoutubeViews?: number | null;
                   hasOp3Analytics?: boolean;
                   op3Downloads?:
                     | {
@@ -9010,6 +9022,10 @@ export interface operations {
                   /** @enum {string|null} */
                   confidence?: 'high' | 'medium' | 'low' | null;
                   isDormant?: boolean | null;
+                  /** @description The podcast-app part of estimatedMonthlyListeners, unrounded. Null when not available. */
+                  estimatedMonthlyAudioListeners?: number | null;
+                  /** @description The YouTube part of estimatedMonthlyListeners (monthly views of the show on its matched YouTube channel), unrounded. Null when not available. */
+                  estimatedMonthlyYoutubeViews?: number | null;
                   hasOp3Analytics?: boolean;
                   op3Downloads?:
                     | {
@@ -11177,6 +11193,10 @@ export interface operations {
                       /** @enum {string|null} */
                       confidence?: 'high' | 'medium' | 'low' | null;
                       isDormant?: boolean | null;
+                      /** @description The podcast-app part of estimatedMonthlyListeners, unrounded. Null when not available. */
+                      estimatedMonthlyAudioListeners?: number | null;
+                      /** @description The YouTube part of estimatedMonthlyListeners (monthly views of the show on its matched YouTube channel), unrounded. Null when not available. */
+                      estimatedMonthlyYoutubeViews?: number | null;
                       hasOp3Analytics?: boolean;
                       op3Downloads?:
                         | {
