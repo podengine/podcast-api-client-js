@@ -3,7 +3,7 @@
   "info": {
     "title": "Pod Engine API",
     "version": "1.0.0",
-    "description": "Pod Engine podcast intelligence API. Search 4M+ podcasts, retrieve metadata, transcripts, charts, and more. See https://www.podengine.ai/api-docs for the full interactive documentation."
+    "description": "Pod Engine podcast intelligence API. Search 2.6M+ podcasts, retrieve metadata, transcripts, charts, and more. See https://www.podengine.ai/api-docs for the full interactive documentation."
   },
   "servers": [
     {

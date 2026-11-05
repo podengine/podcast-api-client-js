@@ -1,7 +1,7 @@
 {
   "name": "@podengine/sdk",
   "version": "0.3.2",
-  "description": "Official TypeScript SDK for the Pod Engine podcast intelligence API — search 4M+ podcasts, fetch metadata, transcripts, charts and more.",
+  "description": "Official TypeScript SDK for the Pod Engine podcast intelligence API — search 2.6M+ podcasts, fetch metadata, transcripts, charts and more.",
   "keywords": [
     "podcast",
     "podengine",
