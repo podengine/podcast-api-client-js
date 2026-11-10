@@ -7823,6 +7823,8 @@ export interface operations {
                     isFreeEmailProvider: boolean | null;
                     /** @description Suggested correction for likely typos, e.g. gmial.com -> gmail.com */
                     suggestedCorrection: string | null;
+                    /** @description Whether the address belongs to a podcast hosting platform (e.g. anchor.fm, libsyn.com) rather than the show itself, so it usually reaches the host only indirectly */
+                    isRelayAddress: boolean;
                   }[];
                   phoneNumbers: string[];
                   websites: {
@@ -9727,6 +9729,8 @@ export interface operations {
                   isFreeEmailProvider: boolean | null;
                   /** @description Suggested correction for likely typos, e.g. gmial.com -> gmail.com */
                   suggestedCorrection: string | null;
+                  /** @description Whether the address belongs to a podcast hosting platform (e.g. anchor.fm, libsyn.com) rather than the show itself, so it usually reaches the host only indirectly */
+                  isRelayAddress: boolean;
                 }[];
                 phoneNumbers: string[];
                 websites: {

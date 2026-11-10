@@ -15694,6 +15694,10 @@
                                           "string",
                                           "null"
                                         ]
+                                      },
+                                      "isRelayAddress": {
+                                        "type": "boolean",
+                                        "description": "Whether the address belongs to a podcast hosting platform (e.g. anchor.fm, libsyn.com) rather than the show itself, so it usually reaches the host only indirectly"
                                       }
                                     },
                                     "required": [
@@ -15705,7 +15709,8 @@
                                       "deliverabilityStatus",
                                       "deliverabilityReason",
                                       "isFreeEmailProvider",
-                                      "suggestedCorrection"
+                                      "suggestedCorrection",
+                                      "isRelayAddress"
                                     ],
                                     "additionalProperties": false
                                   }
@@ -21292,6 +21297,10 @@
                                       "string",
                                       "null"
                                     ]
+                                  },
+                                  "isRelayAddress": {
+                                    "type": "boolean",
+                                    "description": "Whether the address belongs to a podcast hosting platform (e.g. anchor.fm, libsyn.com) rather than the show itself, so it usually reaches the host only indirectly"
                                   }
                                 },
                                 "required": [
@@ -21303,7 +21312,8 @@
                                   "deliverabilityStatus",
                                   "deliverabilityReason",
                                   "isFreeEmailProvider",
-                                  "suggestedCorrection"
+                                  "suggestedCorrection",
+                                  "isRelayAddress"
                                 ],
                                 "additionalProperties": false
                               }
