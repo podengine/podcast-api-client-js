@@ -15385,6 +15385,10 @@ export interface operations {
                 used: number;
                 /** @description Limit per usage period (null = unlimited, 0 = disabled) */
                 limit: number | null;
+                /** @description The part of `limit` that comes from the plan or a negotiated limit, before usage packs (null = unlimited) */
+                baseLimit: number | null;
+                /** @description Units per usage period added by usage packs (0 when the team has none for this category) */
+                purchasedUnits: number;
               }[];
               /** @description Total requests used across all categories in the current usage period */
               totalUsed: number;

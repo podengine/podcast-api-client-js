@@ -36603,13 +36603,28 @@
                                   "null"
                                 ],
                                 "minimum": 0
+                              },
+                              "baseLimit": {
+                                "description": "The part of `limit` that comes from the plan or a negotiated limit, before usage packs (null = unlimited)",
+                                "type": [
+                                  "number",
+                                  "null"
+                                ],
+                                "minimum": 0
+                              },
+                              "purchasedUnits": {
+                                "type": "number",
+                                "minimum": 0,
+                                "description": "Units per usage period added by usage packs (0 when the team has none for this category)"
                               }
                             },
                             "required": [
                               "alias",
                               "label",
                               "used",
-                              "limit"
+                              "limit",
+                              "baseLimit",
+                              "purchasedUnits"
                             ],
                             "additionalProperties": false
                           },
