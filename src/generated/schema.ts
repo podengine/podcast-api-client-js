@@ -9505,7 +9505,23 @@ export interface operations {
   getPodcastReviews: {
     parameters: {
       query?: {
-        country?: 'us' | 'gb' | 'au' | 'ca';
+        country?:
+          | 'us'
+          | 'gb'
+          | 'ca'
+          | 'au'
+          | 'in'
+          | 'de'
+          | 'fr'
+          | 'ie'
+          | 'nz'
+          | 'nl'
+          | 'se'
+          | 'br'
+          | 'mx'
+          | 'es'
+          | 'it'
+          | 'jp';
         limit?: number;
         offset?: number;
         minRating?: number;

@@ -20601,13 +20601,25 @@
             "in": "query",
             "required": false,
             "schema": {
-              "description": "Apple storefront to scope the aggregate ratings and review text to (us, gb, au, ca). Omit for all storefronts.",
+              "description": "Apple storefront to scope the aggregate ratings and review text to (us, gb, ca, au, in, de, fr, ie, nz, nl, se, br, mx, es, it, jp). Omit for all storefronts.",
               "type": "string",
               "enum": [
                 "us",
                 "gb",
+                "ca",
                 "au",
-                "ca"
+                "in",
+                "de",
+                "fr",
+                "ie",
+                "nz",
+                "nl",
+                "se",
+                "br",
+                "mx",
+                "es",
+                "it",
+                "jp"
               ]
             }
           },
