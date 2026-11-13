@@ -7887,6 +7887,8 @@ export interface operations {
                     offset: number;
                     reviews: {
                       country: string;
+                      /** @description Language of the review's title and text, ISO 639-1 (for example de, ja), detected from the text rather than the storefront. Null when the review is too short or the language is unclear. */
+                      language: string | null;
                       rating: number;
                       title: string;
                       body: string;
@@ -9522,6 +9524,34 @@ export interface operations {
           | 'es'
           | 'it'
           | 'jp';
+        language?:
+          | 'en'
+          | 'de'
+          | 'fr'
+          | 'es'
+          | 'it'
+          | 'nl'
+          | 'sv'
+          | 'pt'
+          | 'ja'
+          | 'zh'
+          | 'ko'
+          | 'ru'
+          | 'uk'
+          | 'be'
+          | 'bg'
+          | 'sr'
+          | 'ar'
+          | 'fa'
+          | 'ur'
+          | 'el'
+          | 'he'
+          | 'th'
+          | 'hi'
+          | 'ta'
+          | 'bn'
+          | 'hy'
+          | 'ka';
         limit?: number;
         offset?: number;
         minRating?: number;
@@ -9609,6 +9639,8 @@ export interface operations {
                   offset: number;
                   reviews: {
                     country: string;
+                    /** @description Language of the review's title and text, ISO 639-1 (for example de, ja), detected from the text rather than the storefront. Null when the review is too short or the language is unclear. */
+                    language: string | null;
                     rating: number;
                     title: string;
                     body: string;

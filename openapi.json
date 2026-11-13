@@ -15996,6 +15996,13 @@
                                           "country": {
                                             "type": "string"
                                           },
+                                          "language": {
+                                            "description": "Language of the review's title and text, ISO 639-1 (for example de, ja), detected from the text rather than the storefront. Null when the review is too short or the language is unclear.",
+                                            "type": [
+                                              "string",
+                                              "null"
+                                            ]
+                                          },
                                           "rating": {
                                             "type": "number"
                                           },
@@ -16018,6 +16025,7 @@
                                         },
                                         "required": [
                                           "country",
+                                          "language",
                                           "rating",
                                           "title",
                                           "body",
@@ -20624,6 +20632,44 @@
             }
           },
           {
+            "name": "language",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "description": "Only return review text written in this language (ISO 639-1: en, de, fr, es, it, nl, sv, pt, ja, zh, ko, ru, uk, be, bg, sr, ar, fa, ur, el, he, th, hi, ta, bn, hy, ka). The language is detected from each review's text, not its storefront. Reviews too short to tell are never returned by this filter.",
+              "type": "string",
+              "enum": [
+                "en",
+                "de",
+                "fr",
+                "es",
+                "it",
+                "nl",
+                "sv",
+                "pt",
+                "ja",
+                "zh",
+                "ko",
+                "ru",
+                "uk",
+                "be",
+                "bg",
+                "sr",
+                "ar",
+                "fa",
+                "ur",
+                "el",
+                "he",
+                "th",
+                "hi",
+                "ta",
+                "bn",
+                "hy",
+                "ka"
+              ]
+            }
+          },
+          {
             "name": "limit",
             "in": "query",
             "required": false,
@@ -20671,7 +20717,7 @@
             "in": "query",
             "required": false,
             "schema": {
-              "description": "Full-text search over review titles and text (English stemming, so \"rerun\" matches \"reruns\"). Every word must match; use quotes for a phrase and a leading - to exclude a word. Matching words are returned in each review's matchedWords.",
+              "description": "Full-text search over review titles and text, stemmed in each review's own language (\"rerun\" matches \"reruns\"; \"Folgen\" matches \"Folge\" in German reviews). Reviews with no detected language use English stemming. Japanese and Chinese reviews also match on the exact text. Every word must match; use quotes for a phrase and a leading - to exclude a word. Matching words are returned in each review's matchedWords.",
               "type": "string",
               "maxLength": 200
             }
@@ -20955,6 +21001,13 @@
                                       "country": {
                                         "type": "string"
                                       },
+                                      "language": {
+                                        "description": "Language of the review's title and text, ISO 639-1 (for example de, ja), detected from the text rather than the storefront. Null when the review is too short or the language is unclear.",
+                                        "type": [
+                                          "string",
+                                          "null"
+                                        ]
+                                      },
                                       "rating": {
                                         "type": "number"
                                       },
@@ -20977,6 +21030,7 @@
                                     },
                                     "required": [
                                       "country",
+                                      "language",
                                       "rating",
                                       "title",
                                       "body",
