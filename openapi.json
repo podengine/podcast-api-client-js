@@ -106,7 +106,7 @@
                             ]
                           },
                           "pageSize": {
-                            "description": "Number of results to return per page (default 25). Your plan caps how many results one page can return: 10 on Free, 100 on Individual, 200 on Business and 250 on Agency, unless your team has a custom limit. A larger pageSize returns the capped number, and the cursor fetches the rest. Pages that include project relevancy scores return at most 100.",
+                            "description": "Number of results to return per page (default 25). Your plan caps how many results one page can return: 10 on Free, 100 on Individual, 200 on Business and 250 on Agency, unless your team has a custom limit. A larger pageSize returns the capped number, and the cursor fetches the rest. Pages that include project relevancy scores return at most 100. Each page counts as one search for every 100 results it returns, rounded up: a page of 250 counts as 3 searches, and a page with no results counts as 1. When your team has fewer searches left than a page would use, the page is shortened to what you have left.",
                             "type": "integer",
                             "minimum": 1,
                             "maximum": 1000
@@ -687,7 +687,7 @@
                             ]
                           },
                           "pageSize": {
-                            "description": "Number of results to return per page (default 25). Your plan caps how many results one page can return: 10 on Free, 100 on Individual, 200 on Business and 250 on Agency, unless your team has a custom limit. A larger pageSize returns the capped number, and the cursor fetches the rest. Pages that include project relevancy scores return at most 100.",
+                            "description": "Number of results to return per page (default 25). Your plan caps how many results one page can return: 10 on Free, 100 on Individual, 200 on Business and 250 on Agency, unless your team has a custom limit. A larger pageSize returns the capped number, and the cursor fetches the rest. Pages that include project relevancy scores return at most 100. Each page counts as one search for every 100 results it returns, rounded up: a page of 250 counts as 3 searches, and a page with no results counts as 1. When your team has fewer searches left than a page would use, the page is shortened to what you have left.",
                             "type": "integer",
                             "minimum": 1,
                             "maximum": 1000
@@ -28290,7 +28290,7 @@
                         ]
                       },
                       "pageSize": {
-                        "description": "Number of results to return per page (default 25). Your plan caps how many results one page can return: 10 on Free, 100 on Individual, 200 on Business and 250 on Agency, unless your team has a custom limit. A larger pageSize returns the capped number, and the cursor fetches the rest. Pages that include project relevancy scores return at most 100.",
+                        "description": "Number of results to return per page (default 25). Your plan caps how many results one page can return: 10 on Free, 100 on Individual, 200 on Business and 250 on Agency, unless your team has a custom limit. A larger pageSize returns the capped number, and the cursor fetches the rest. Pages that include project relevancy scores return at most 100. Each page counts as one search for every 100 results it returns, rounded up: a page of 250 counts as 3 searches, and a page with no results counts as 1. When your team has fewer searches left than a page would use, the page is shortened to what you have left.",
                         "type": "integer",
                         "minimum": 1,
                         "maximum": 1000
@@ -29383,7 +29383,7 @@
                     ]
                   },
                   "pageSize": {
-                    "description": "Number of results to return per page (default 25). Your plan caps how many results one page can return: 10 on Free, 100 on Individual, 200 on Business and 250 on Agency, unless your team has a custom limit. A larger pageSize returns the capped number, and the cursor fetches the rest. Pages that include project relevancy scores return at most 100.",
+                    "description": "Number of results to return per page (default 25). Your plan caps how many results one page can return: 10 on Free, 100 on Individual, 200 on Business and 250 on Agency, unless your team has a custom limit. A larger pageSize returns the capped number, and the cursor fetches the rest. Pages that include project relevancy scores return at most 100. Each page counts as one search for every 100 results it returns, rounded up: a page of 250 counts as 3 searches, and a page with no results counts as 1. When your team has fewer searches left than a page would use, the page is shortened to what you have left.",
                     "type": "integer",
                     "minimum": 1,
                     "maximum": 1000
@@ -29993,7 +29993,7 @@
                               ]
                             },
                             "pageSize": {
-                              "description": "Number of results to return per page (default 25). Your plan caps how many results one page can return: 10 on Free, 100 on Individual, 200 on Business and 250 on Agency, unless your team has a custom limit. A larger pageSize returns the capped number, and the cursor fetches the rest. Pages that include project relevancy scores return at most 100.",
+                              "description": "Number of results to return per page (default 25). Your plan caps how many results one page can return: 10 on Free, 100 on Individual, 200 on Business and 250 on Agency, unless your team has a custom limit. A larger pageSize returns the capped number, and the cursor fetches the rest. Pages that include project relevancy scores return at most 100. Each page counts as one search for every 100 results it returns, rounded up: a page of 250 counts as 3 searches, and a page with no results counts as 1. When your team has fewer searches left than a page would use, the page is shortened to what you have left.",
                               "type": "integer",
                               "minimum": 1,
                               "maximum": 1000
@@ -31997,7 +31997,7 @@
                     ]
                   },
                   "pageSize": {
-                    "description": "Number of results to return per page (default 25). Your plan caps how many results one page can return: 10 on Free, 100 on Individual, 200 on Business and 250 on Agency, unless your team has a custom limit. A larger pageSize returns the capped number, and the cursor fetches the rest. Pages that include project relevancy scores return at most 100.",
+                    "description": "Number of results to return per page (default 25). Your plan caps how many results one page can return: 10 on Free, 100 on Individual, 200 on Business and 250 on Agency, unless your team has a custom limit. A larger pageSize returns the capped number, and the cursor fetches the rest. Pages that include project relevancy scores return at most 100. Each page counts as one search for every 100 results it returns, rounded up: a page of 250 counts as 3 searches, and a page with no results counts as 1. When your team has fewer searches left than a page would use, the page is shortened to what you have left.",
                     "type": "integer",
                     "minimum": 1,
                     "maximum": 1000
@@ -32740,7 +32740,7 @@
                               ]
                             },
                             "pageSize": {
-                              "description": "Number of results to return per page (default 25). Your plan caps how many results one page can return: 10 on Free, 100 on Individual, 200 on Business and 250 on Agency, unless your team has a custom limit. A larger pageSize returns the capped number, and the cursor fetches the rest. Pages that include project relevancy scores return at most 100.",
+                              "description": "Number of results to return per page (default 25). Your plan caps how many results one page can return: 10 on Free, 100 on Individual, 200 on Business and 250 on Agency, unless your team has a custom limit. A larger pageSize returns the capped number, and the cursor fetches the rest. Pages that include project relevancy scores return at most 100. Each page counts as one search for every 100 results it returns, rounded up: a page of 250 counts as 3 searches, and a page with no results counts as 1. When your team has fewer searches left than a page would use, the page is shortened to what you have left.",
                               "type": "integer",
                               "minimum": 1,
                               "maximum": 1000

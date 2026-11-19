@@ -1513,7 +1513,7 @@ export interface operations {
             | {
                 /** @description Pagination cursor for fetching the next page of results. This cursor is stateless and does not expire. However, because it uses search_after pagination, results may be inconsistent if the underlying data changes between requests (e.g., you may see duplicate or missing results if documents are added/removed). */
                 cursor?: string | null;
-                /** @description Number of results to return per page (default 25). Your plan caps how many results one page can return: 10 on Free, 100 on Individual, 200 on Business and 250 on Agency, unless your team has a custom limit. A larger pageSize returns the capped number, and the cursor fetches the rest. Pages that include project relevancy scores return at most 100. */
+                /** @description Number of results to return per page (default 25). Your plan caps how many results one page can return: 10 on Free, 100 on Individual, 200 on Business and 250 on Agency, unless your team has a custom limit. A larger pageSize returns the capped number, and the cursor fetches the rest. Pages that include project relevancy scores return at most 100. Each page counts as one search for every 100 results it returns, rounded up: a page of 250 counts as 3 searches, and a page with no results counts as 1. When your team has fewer searches left than a page would use, the page is shortened to what you have left. */
                 pageSize?: number;
                 /** @description Details about any Project this search is associated with. If included will filter out podcasts related to the project. */
                 project?: {
@@ -1738,7 +1738,7 @@ export interface operations {
             | {
                 /** @description Pagination cursor for fetching the next page of results. This cursor is stateless and does not expire. However, because it uses search_after pagination, results may be inconsistent if the underlying data changes between requests (e.g., you may see duplicate or missing results if documents are added/removed). */
                 cursor?: string | null;
-                /** @description Number of results to return per page (default 25). Your plan caps how many results one page can return: 10 on Free, 100 on Individual, 200 on Business and 250 on Agency, unless your team has a custom limit. A larger pageSize returns the capped number, and the cursor fetches the rest. Pages that include project relevancy scores return at most 100. */
+                /** @description Number of results to return per page (default 25). Your plan caps how many results one page can return: 10 on Free, 100 on Individual, 200 on Business and 250 on Agency, unless your team has a custom limit. A larger pageSize returns the capped number, and the cursor fetches the rest. Pages that include project relevancy scores return at most 100. Each page counts as one search for every 100 results it returns, rounded up: a page of 250 counts as 3 searches, and a page with no results counts as 1. When your team has fewer searches left than a page would use, the page is shortened to what you have left. */
                 pageSize?: number;
                 /** @description Details about any Project this search is associated with. If included will filter out podcasts related to the project. */
                 project?: {
@@ -12377,7 +12377,7 @@ export interface operations {
           searchOptions: {
             /** @description Pagination cursor for fetching the next page of results. This cursor is stateless and does not expire. However, because it uses search_after pagination, results may be inconsistent if the underlying data changes between requests (e.g., you may see duplicate or missing results if documents are added/removed). */
             cursor?: string | null;
-            /** @description Number of results to return per page (default 25). Your plan caps how many results one page can return: 10 on Free, 100 on Individual, 200 on Business and 250 on Agency, unless your team has a custom limit. A larger pageSize returns the capped number, and the cursor fetches the rest. Pages that include project relevancy scores return at most 100. */
+            /** @description Number of results to return per page (default 25). Your plan caps how many results one page can return: 10 on Free, 100 on Individual, 200 on Business and 250 on Agency, unless your team has a custom limit. A larger pageSize returns the capped number, and the cursor fetches the rest. Pages that include project relevancy scores return at most 100. Each page counts as one search for every 100 results it returns, rounded up: a page of 250 counts as 3 searches, and a page with no results counts as 1. When your team has fewer searches left than a page would use, the page is shortened to what you have left. */
             pageSize?: number;
             /** @description Details about any Project this search is associated with. If included will filter out podcasts related to the project. */
             project?: {
@@ -12857,7 +12857,7 @@ export interface operations {
         'application/json': {
           /** @description Pagination cursor for fetching the next page of results. This cursor is stateless and does not expire. However, because it uses search_after pagination, results may be inconsistent if the underlying data changes between requests (e.g., you may see duplicate or missing results if documents are added/removed). */
           cursor?: string | null;
-          /** @description Number of results to return per page (default 25). Your plan caps how many results one page can return: 10 on Free, 100 on Individual, 200 on Business and 250 on Agency, unless your team has a custom limit. A larger pageSize returns the capped number, and the cursor fetches the rest. Pages that include project relevancy scores return at most 100. */
+          /** @description Number of results to return per page (default 25). Your plan caps how many results one page can return: 10 on Free, 100 on Individual, 200 on Business and 250 on Agency, unless your team has a custom limit. A larger pageSize returns the capped number, and the cursor fetches the rest. Pages that include project relevancy scores return at most 100. Each page counts as one search for every 100 results it returns, rounded up: a page of 250 counts as 3 searches, and a page with no results counts as 1. When your team has fewer searches left than a page would use, the page is shortened to what you have left. */
           pageSize?: number;
           /** @description Details about any Project this search is associated with. If included will filter out podcasts related to the project. */
           project?: {
@@ -13098,7 +13098,7 @@ export interface operations {
               searchOptions: {
                 /** @description Pagination cursor for fetching the next page of results. This cursor is stateless and does not expire. However, because it uses search_after pagination, results may be inconsistent if the underlying data changes between requests (e.g., you may see duplicate or missing results if documents are added/removed). */
                 cursor?: string | null;
-                /** @description Number of results to return per page (default 25). Your plan caps how many results one page can return: 10 on Free, 100 on Individual, 200 on Business and 250 on Agency, unless your team has a custom limit. A larger pageSize returns the capped number, and the cursor fetches the rest. Pages that include project relevancy scores return at most 100. */
+                /** @description Number of results to return per page (default 25). Your plan caps how many results one page can return: 10 on Free, 100 on Individual, 200 on Business and 250 on Agency, unless your team has a custom limit. A larger pageSize returns the capped number, and the cursor fetches the rest. Pages that include project relevancy scores return at most 100. Each page counts as one search for every 100 results it returns, rounded up: a page of 250 counts as 3 searches, and a page with no results counts as 1. When your team has fewer searches left than a page would use, the page is shortened to what you have left. */
                 pageSize?: number;
                 /** @description Details about any Project this search is associated with. If included will filter out podcasts related to the project. */
                 project?: {
@@ -13725,7 +13725,7 @@ export interface operations {
         'application/json': {
           /** @description Pagination cursor for fetching the next page of results. This cursor is stateless and does not expire. However, because it uses search_after pagination, results may be inconsistent if the underlying data changes between requests (e.g., you may see duplicate or missing results if documents are added/removed). */
           cursor?: string | null;
-          /** @description Number of results to return per page (default 25). Your plan caps how many results one page can return: 10 on Free, 100 on Individual, 200 on Business and 250 on Agency, unless your team has a custom limit. A larger pageSize returns the capped number, and the cursor fetches the rest. Pages that include project relevancy scores return at most 100. */
+          /** @description Number of results to return per page (default 25). Your plan caps how many results one page can return: 10 on Free, 100 on Individual, 200 on Business and 250 on Agency, unless your team has a custom limit. A larger pageSize returns the capped number, and the cursor fetches the rest. Pages that include project relevancy scores return at most 100. Each page counts as one search for every 100 results it returns, rounded up: a page of 250 counts as 3 searches, and a page with no results counts as 1. When your team has fewer searches left than a page would use, the page is shortened to what you have left. */
           pageSize?: number;
           /** @description Details about any Project this search is associated with. If included will filter out podcasts related to the project. */
           project?: {
@@ -14027,7 +14027,7 @@ export interface operations {
               searchOptions: {
                 /** @description Pagination cursor for fetching the next page of results. This cursor is stateless and does not expire. However, because it uses search_after pagination, results may be inconsistent if the underlying data changes between requests (e.g., you may see duplicate or missing results if documents are added/removed). */
                 cursor?: string | null;
-                /** @description Number of results to return per page (default 25). Your plan caps how many results one page can return: 10 on Free, 100 on Individual, 200 on Business and 250 on Agency, unless your team has a custom limit. A larger pageSize returns the capped number, and the cursor fetches the rest. Pages that include project relevancy scores return at most 100. */
+                /** @description Number of results to return per page (default 25). Your plan caps how many results one page can return: 10 on Free, 100 on Individual, 200 on Business and 250 on Agency, unless your team has a custom limit. A larger pageSize returns the capped number, and the cursor fetches the rest. Pages that include project relevancy scores return at most 100. Each page counts as one search for every 100 results it returns, rounded up: a page of 250 counts as 3 searches, and a page with no results counts as 1. When your team has fewer searches left than a page would use, the page is shortened to what you have left. */
                 pageSize?: number;
                 /** @description Details about any Project this search is associated with. If included will filter out podcasts related to the project. */
                 project?: {
