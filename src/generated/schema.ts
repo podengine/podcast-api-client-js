@@ -3480,7 +3480,7 @@ export interface operations {
                     id: string;
                     imageUrl: string | null;
                     language: string;
-                    lastEpisodePublishedAt: unknown;
+                    lastEpisodePublishedAt: unknown | null;
                     slug: string;
                     title: string;
                     titleLatest: string;
@@ -3685,7 +3685,7 @@ export interface operations {
                     id: string;
                     imageUrl: string | null;
                     language: string;
-                    lastEpisodePublishedAt: unknown;
+                    lastEpisodePublishedAt: unknown | null;
                     slug: string;
                     title: string;
                     titleLatest: string;
@@ -3980,7 +3980,7 @@ export interface operations {
                       id: string;
                       imageUrl: string | null;
                       language: string;
-                      lastEpisodePublishedAt: unknown;
+                      lastEpisodePublishedAt: unknown | null;
                       slug: string;
                       title: string;
                       titleLatest: string;
@@ -4048,7 +4048,7 @@ export interface operations {
                       id: string;
                       imageUrl: string | null;
                       language: string;
-                      lastEpisodePublishedAt: unknown;
+                      lastEpisodePublishedAt: unknown | null;
                       slug: string;
                       title: string;
                       titleLatest: string;
@@ -4116,7 +4116,7 @@ export interface operations {
                       id: string;
                       imageUrl: string | null;
                       language: string;
-                      lastEpisodePublishedAt: unknown;
+                      lastEpisodePublishedAt: unknown | null;
                       slug: string;
                       title: string;
                       titleLatest: string;
@@ -4184,7 +4184,7 @@ export interface operations {
                       id: string;
                       imageUrl: string | null;
                       language: string;
-                      lastEpisodePublishedAt: unknown;
+                      lastEpisodePublishedAt: unknown | null;
                       slug: string;
                       title: string;
                       titleLatest: string;
@@ -4397,7 +4397,7 @@ export interface operations {
                     id: string;
                     imageUrl: string | null;
                     language: string;
-                    lastEpisodePublishedAt: unknown;
+                    lastEpisodePublishedAt: unknown | null;
                     slug: string;
                     title: string;
                     titleLatest: string;
@@ -4534,7 +4534,7 @@ export interface operations {
                   id: string;
                   imageUrl: string | null;
                   language: string;
-                  lastEpisodePublishedAt: unknown;
+                  lastEpisodePublishedAt: unknown | null;
                   slug: string;
                   title: string;
                   titleLatest: string;
@@ -4755,7 +4755,7 @@ export interface operations {
                   id: string;
                   imageUrl: string | null;
                   language: string;
-                  lastEpisodePublishedAt: unknown;
+                  lastEpisodePublishedAt: unknown | null;
                   slug: string;
                   title: string;
                   titleLatest: string;
@@ -5023,7 +5023,7 @@ export interface operations {
                   id: string;
                   imageUrl: string | null;
                   language: string;
-                  lastEpisodePublishedAt: unknown;
+                  lastEpisodePublishedAt: unknown | null;
                   slug: string;
                   title: string;
                   titleLatest: string;
@@ -6711,7 +6711,7 @@ export interface operations {
                 id: string;
                 imageUrl: string | null;
                 language: string;
-                lastEpisodePublishedAt: unknown;
+                lastEpisodePublishedAt: unknown | null;
                 slug: string;
                 title: string;
                 titleLatest: string;
@@ -6811,7 +6811,7 @@ export interface operations {
                     id: string;
                     imageUrl: string | null;
                     language: string;
-                    lastEpisodePublishedAt: unknown;
+                    lastEpisodePublishedAt: unknown | null;
                     slug: string;
                     title: string;
                     titleLatest: string;
@@ -6835,7 +6835,7 @@ export interface operations {
                     id: string;
                     imageUrl: string | null;
                     language: string;
-                    lastEpisodePublishedAt: unknown;
+                    lastEpisodePublishedAt: unknown | null;
                     slug: string;
                     title: string;
                     titleLatest: string;
@@ -7261,7 +7261,7 @@ export interface operations {
                 id: string;
                 imageUrl: string | null;
                 language: string;
-                lastEpisodePublishedAt: unknown;
+                lastEpisodePublishedAt: unknown | null;
                 slug: string;
                 title: string;
                 titleLatest: string;
@@ -7350,7 +7350,7 @@ export interface operations {
                   id: string;
                   imageUrl: string | null;
                   language: string;
-                  lastEpisodePublishedAt: unknown;
+                  lastEpisodePublishedAt: unknown | null;
                   slug: string;
                   title: string;
                   titleLatest: string;
@@ -8089,7 +8089,7 @@ export interface operations {
                     id: string;
                     imageUrl: string | null;
                     language: string;
-                    lastEpisodePublishedAt: unknown;
+                    lastEpisodePublishedAt: unknown | null;
                     slug: string;
                     title: string;
                     titleLatest: string;
@@ -8275,7 +8275,7 @@ export interface operations {
                 id: string;
                 imageUrl: string | null;
                 language: string;
-                lastEpisodePublishedAt: unknown;
+                lastEpisodePublishedAt: unknown | null;
                 slug: string;
                 title: string;
                 titleLatest: string;
@@ -8751,7 +8751,7 @@ export interface operations {
                 id: string;
                 imageUrl: string | null;
                 language: string;
-                lastEpisodePublishedAt: unknown;
+                lastEpisodePublishedAt: unknown | null;
                 slug: string;
                 title: string;
                 titleLatest: string;
@@ -9242,7 +9242,7 @@ export interface operations {
                   id: string;
                   imageUrl: string | null;
                   language: string;
-                  lastEpisodePublishedAt: unknown;
+                  lastEpisodePublishedAt: unknown | null;
                   slug: string;
                   title: string;
                   titleLatest: string;
@@ -9431,7 +9431,7 @@ export interface operations {
                 id: string;
                 imageUrl: string | null;
                 language: string;
-                lastEpisodePublishedAt: unknown;
+                lastEpisodePublishedAt: unknown | null;
                 slug: string;
                 title: string;
                 titleLatest: string;
@@ -9457,7 +9457,7 @@ export interface operations {
                   id: string;
                   imageUrl: string | null;
                   language: string;
-                  lastEpisodePublishedAt: unknown;
+                  lastEpisodePublishedAt: unknown | null;
                   slug: string;
                   title: string;
                   titleLatest: string;
@@ -9596,7 +9596,7 @@ export interface operations {
                 id: string;
                 imageUrl: string | null;
                 language: string;
-                lastEpisodePublishedAt: unknown;
+                lastEpisodePublishedAt: unknown | null;
                 slug: string;
                 title: string;
                 titleLatest: string;
@@ -9742,7 +9742,7 @@ export interface operations {
                 id: string;
                 imageUrl: string | null;
                 language: string;
-                lastEpisodePublishedAt: unknown;
+                lastEpisodePublishedAt: unknown | null;
                 slug: string;
                 title: string;
                 titleLatest: string;
@@ -9871,7 +9871,7 @@ export interface operations {
                 id: string;
                 imageUrl: string | null;
                 language: string;
-                lastEpisodePublishedAt: unknown;
+                lastEpisodePublishedAt: unknown | null;
                 slug: string;
                 title: string;
                 titleLatest: string;
@@ -9975,7 +9975,7 @@ export interface operations {
                 id: string;
                 imageUrl: string | null;
                 language: string;
-                lastEpisodePublishedAt: unknown;
+                lastEpisodePublishedAt: unknown | null;
                 slug: string;
                 title: string;
                 titleLatest: string;
@@ -10224,7 +10224,7 @@ export interface operations {
                 id: string;
                 imageUrl: string | null;
                 language: string;
-                lastEpisodePublishedAt: unknown;
+                lastEpisodePublishedAt: unknown | null;
                 slug: string;
                 title: string;
                 titleLatest: string;
@@ -10511,7 +10511,7 @@ export interface operations {
                 id: string;
                 imageUrl: string | null;
                 language: string;
-                lastEpisodePublishedAt: unknown;
+                lastEpisodePublishedAt: unknown | null;
                 slug: string;
                 title: string;
                 titleLatest: string;
@@ -10743,7 +10743,7 @@ export interface operations {
                 id: string;
                 imageUrl: string | null;
                 language: string;
-                lastEpisodePublishedAt: unknown;
+                lastEpisodePublishedAt: unknown | null;
                 slug: string;
                 title: string;
                 titleLatest: string;
@@ -10970,7 +10970,7 @@ export interface operations {
                     id: string;
                     imageUrl: string | null;
                     language: string;
-                    lastEpisodePublishedAt: unknown;
+                    lastEpisodePublishedAt: unknown | null;
                     slug: string;
                     title: string;
                     titleLatest: string;
@@ -12796,7 +12796,7 @@ export interface operations {
                 id: string;
                 imageUrl: string | null;
                 language: string;
-                lastEpisodePublishedAt: unknown;
+                lastEpisodePublishedAt: unknown | null;
                 slug: string;
                 title: string;
                 titleLatest: string;
@@ -14945,7 +14945,7 @@ export interface operations {
                   id: string;
                   imageUrl: string | null;
                   language: string;
-                  lastEpisodePublishedAt: unknown;
+                  lastEpisodePublishedAt: unknown | null;
                   slug: string;
                   title: string;
                   titleLatest: string;
@@ -15065,7 +15065,7 @@ export interface operations {
                   id: string;
                   imageUrl: string | null;
                   language: string;
-                  lastEpisodePublishedAt: unknown;
+                  lastEpisodePublishedAt: unknown | null;
                   slug: string;
                   title: string;
                   titleLatest: string;

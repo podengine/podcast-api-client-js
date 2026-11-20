@@ -5159,7 +5159,14 @@
                                       "language": {
                                         "type": "string"
                                       },
-                                      "lastEpisodePublishedAt": {},
+                                      "lastEpisodePublishedAt": {
+                                        "anyOf": [
+                                          {},
+                                          {
+                                            "type": "null"
+                                          }
+                                        ]
+                                      },
                                       "slug": {
                                         "type": "string"
                                       },
@@ -5741,7 +5748,14 @@
                                       "language": {
                                         "type": "string"
                                       },
-                                      "lastEpisodePublishedAt": {},
+                                      "lastEpisodePublishedAt": {
+                                        "anyOf": [
+                                          {},
+                                          {
+                                            "type": "null"
+                                          }
+                                        ]
+                                      },
                                       "slug": {
                                         "type": "string"
                                       },
@@ -6472,7 +6486,14 @@
                                           "language": {
                                             "type": "string"
                                           },
-                                          "lastEpisodePublishedAt": {},
+                                          "lastEpisodePublishedAt": {
+                                            "anyOf": [
+                                              {},
+                                              {
+                                                "type": "null"
+                                              }
+                                            ]
+                                          },
                                           "slug": {
                                             "type": "string"
                                           },
@@ -6713,7 +6734,14 @@
                                           "language": {
                                             "type": "string"
                                           },
-                                          "lastEpisodePublishedAt": {},
+                                          "lastEpisodePublishedAt": {
+                                            "anyOf": [
+                                              {},
+                                              {
+                                                "type": "null"
+                                              }
+                                            ]
+                                          },
                                           "slug": {
                                             "type": "string"
                                           },
@@ -6954,7 +6982,14 @@
                                           "language": {
                                             "type": "string"
                                           },
-                                          "lastEpisodePublishedAt": {},
+                                          "lastEpisodePublishedAt": {
+                                            "anyOf": [
+                                              {},
+                                              {
+                                                "type": "null"
+                                              }
+                                            ]
+                                          },
                                           "slug": {
                                             "type": "string"
                                           },
@@ -7195,7 +7230,14 @@
                                           "language": {
                                             "type": "string"
                                           },
-                                          "lastEpisodePublishedAt": {},
+                                          "lastEpisodePublishedAt": {
+                                            "anyOf": [
+                                              {},
+                                              {
+                                                "type": "null"
+                                              }
+                                            ]
+                                          },
                                           "slug": {
                                             "type": "string"
                                           },
@@ -7804,7 +7846,14 @@
                                       "language": {
                                         "type": "string"
                                       },
-                                      "lastEpisodePublishedAt": {},
+                                      "lastEpisodePublishedAt": {
+                                        "anyOf": [
+                                          {},
+                                          {
+                                            "type": "null"
+                                          }
+                                        ]
+                                      },
                                       "slug": {
                                         "type": "string"
                                       },
@@ -8213,7 +8262,14 @@
                                 "language": {
                                   "type": "string"
                                 },
-                                "lastEpisodePublishedAt": {},
+                                "lastEpisodePublishedAt": {
+                                  "anyOf": [
+                                    {},
+                                    {
+                                      "type": "null"
+                                    }
+                                  ]
+                                },
                                 "slug": {
                                   "type": "string"
                                 },
@@ -8889,7 +8945,14 @@
                                 "language": {
                                   "type": "string"
                                 },
-                                "lastEpisodePublishedAt": {},
+                                "lastEpisodePublishedAt": {
+                                  "anyOf": [
+                                    {},
+                                    {
+                                      "type": "null"
+                                    }
+                                  ]
+                                },
                                 "slug": {
                                   "type": "string"
                                 },
@@ -9432,7 +9495,14 @@
                                   "language": {
                                     "type": "string"
                                   },
-                                  "lastEpisodePublishedAt": {},
+                                  "lastEpisodePublishedAt": {
+                                    "anyOf": [
+                                      {},
+                                      {
+                                        "type": "null"
+                                      }
+                                    ]
+                                  },
                                   "slug": {
                                     "type": "string"
                                   },
@@ -12697,7 +12767,14 @@
                               "language": {
                                 "type": "string"
                               },
-                              "lastEpisodePublishedAt": {},
+                              "lastEpisodePublishedAt": {
+                                "anyOf": [
+                                  {},
+                                  {
+                                    "type": "null"
+                                  }
+                                ]
+                              },
                               "slug": {
                                 "type": "string"
                               },
@@ -12920,7 +12997,14 @@
                                   "language": {
                                     "type": "string"
                                   },
-                                  "lastEpisodePublishedAt": {},
+                                  "lastEpisodePublishedAt": {
+                                    "anyOf": [
+                                      {},
+                                      {
+                                        "type": "null"
+                                      }
+                                    ]
+                                  },
                                   "slug": {
                                     "type": "string"
                                   },
@@ -13010,7 +13094,14 @@
                                   "language": {
                                     "type": "string"
                                   },
-                                  "lastEpisodePublishedAt": {},
+                                  "lastEpisodePublishedAt": {
+                                    "anyOf": [
+                                      {},
+                                      {
+                                        "type": "null"
+                                      }
+                                    ]
+                                  },
                                   "slug": {
                                     "type": "string"
                                   },
@@ -14150,7 +14241,14 @@
                             "language": {
                               "type": "string"
                             },
-                            "lastEpisodePublishedAt": {},
+                            "lastEpisodePublishedAt": {
+                              "anyOf": [
+                                {},
+                                {
+                                  "type": "null"
+                                }
+                              ]
+                            },
                             "slug": {
                               "type": "string"
                             },
@@ -14328,7 +14426,14 @@
                                 "language": {
                                   "type": "string"
                                 },
-                                "lastEpisodePublishedAt": {},
+                                "lastEpisodePublishedAt": {
+                                  "anyOf": [
+                                    {},
+                                    {
+                                      "type": "null"
+                                    }
+                                  ]
+                                },
                                 "slug": {
                                   "type": "string"
                                 },
@@ -16795,7 +16900,14 @@
                                       "language": {
                                         "type": "string"
                                       },
-                                      "lastEpisodePublishedAt": {},
+                                      "lastEpisodePublishedAt": {
+                                        "anyOf": [
+                                          {},
+                                          {
+                                            "type": "null"
+                                          }
+                                        ]
+                                      },
                                       "slug": {
                                         "type": "string"
                                       },
@@ -17440,7 +17552,14 @@
                             "language": {
                               "type": "string"
                             },
-                            "lastEpisodePublishedAt": {},
+                            "lastEpisodePublishedAt": {
+                              "anyOf": [
+                                {},
+                                {
+                                  "type": "null"
+                                }
+                              ]
+                            },
                             "slug": {
                               "type": "string"
                             },
@@ -18641,7 +18760,14 @@
                             "language": {
                               "type": "string"
                             },
-                            "lastEpisodePublishedAt": {},
+                            "lastEpisodePublishedAt": {
+                              "anyOf": [
+                                {},
+                                {
+                                  "type": "null"
+                                }
+                              ]
+                            },
                             "slug": {
                               "type": "string"
                             },
@@ -19902,7 +20028,14 @@
                                 "language": {
                                   "type": "string"
                                 },
-                                "lastEpisodePublishedAt": {},
+                                "lastEpisodePublishedAt": {
+                                  "anyOf": [
+                                    {},
+                                    {
+                                      "type": "null"
+                                    }
+                                  ]
+                                },
                                 "slug": {
                                   "type": "string"
                                 },
@@ -20415,7 +20548,14 @@
                             "language": {
                               "type": "string"
                             },
-                            "lastEpisodePublishedAt": {},
+                            "lastEpisodePublishedAt": {
+                              "anyOf": [
+                                {},
+                                {
+                                  "type": "null"
+                                }
+                              ]
+                            },
                             "slug": {
                               "type": "string"
                             },
@@ -20513,7 +20653,14 @@
                                   "language": {
                                     "type": "string"
                                   },
-                                  "lastEpisodePublishedAt": {},
+                                  "lastEpisodePublishedAt": {
+                                    "anyOf": [
+                                      {},
+                                      {
+                                        "type": "null"
+                                      }
+                                    ]
+                                  },
                                   "slug": {
                                     "type": "string"
                                   },
@@ -20819,7 +20966,14 @@
                             "language": {
                               "type": "string"
                             },
-                            "lastEpisodePublishedAt": {},
+                            "lastEpisodePublishedAt": {
+                              "anyOf": [
+                                {},
+                                {
+                                  "type": "null"
+                                }
+                              ]
+                            },
                             "slug": {
                               "type": "string"
                             },
@@ -21253,7 +21407,14 @@
                             "language": {
                               "type": "string"
                             },
-                            "lastEpisodePublishedAt": {},
+                            "lastEpisodePublishedAt": {
+                              "anyOf": [
+                                {},
+                                {
+                                  "type": "null"
+                                }
+                              ]
+                            },
                             "slug": {
                               "type": "string"
                             },
@@ -21590,7 +21751,14 @@
                             "language": {
                               "type": "string"
                             },
-                            "lastEpisodePublishedAt": {},
+                            "lastEpisodePublishedAt": {
+                              "anyOf": [
+                                {},
+                                {
+                                  "type": "null"
+                                }
+                              ]
+                            },
                             "slug": {
                               "type": "string"
                             },
@@ -21844,7 +22012,14 @@
                             "language": {
                               "type": "string"
                             },
-                            "lastEpisodePublishedAt": {},
+                            "lastEpisodePublishedAt": {
+                              "anyOf": [
+                                {},
+                                {
+                                  "type": "null"
+                                }
+                              ]
+                            },
                             "slug": {
                               "type": "string"
                             },
@@ -22570,7 +22745,14 @@
                             "language": {
                               "type": "string"
                             },
-                            "lastEpisodePublishedAt": {},
+                            "lastEpisodePublishedAt": {
+                              "anyOf": [
+                                {},
+                                {
+                                  "type": "null"
+                                }
+                              ]
+                            },
                             "slug": {
                               "type": "string"
                             },
@@ -23214,7 +23396,14 @@
                             "language": {
                               "type": "string"
                             },
-                            "lastEpisodePublishedAt": {},
+                            "lastEpisodePublishedAt": {
+                              "anyOf": [
+                                {},
+                                {
+                                  "type": "null"
+                                }
+                              ]
+                            },
                             "slug": {
                               "type": "string"
                             },
@@ -23920,7 +24109,14 @@
                             "language": {
                               "type": "string"
                             },
-                            "lastEpisodePublishedAt": {},
+                            "lastEpisodePublishedAt": {
+                              "anyOf": [
+                                {},
+                                {
+                                  "type": "null"
+                                }
+                              ]
+                            },
                             "slug": {
                               "type": "string"
                             },
@@ -24563,7 +24759,14 @@
                                 "language": {
                                   "type": "string"
                                 },
-                                "lastEpisodePublishedAt": {},
+                                "lastEpisodePublishedAt": {
+                                  "anyOf": [
+                                    {},
+                                    {
+                                      "type": "null"
+                                    }
+                                  ]
+                                },
                                 "slug": {
                                   "type": "string"
                                 },
@@ -29282,7 +29485,14 @@
                               "language": {
                                 "type": "string"
                               },
-                              "lastEpisodePublishedAt": {},
+                              "lastEpisodePublishedAt": {
+                                "anyOf": [
+                                  {},
+                                  {
+                                    "type": "null"
+                                  }
+                                ]
+                              },
                               "slug": {
                                 "type": "string"
                               },
@@ -35602,7 +35812,14 @@
                                   "language": {
                                     "type": "string"
                                   },
-                                  "lastEpisodePublishedAt": {},
+                                  "lastEpisodePublishedAt": {
+                                    "anyOf": [
+                                      {},
+                                      {
+                                        "type": "null"
+                                      }
+                                    ]
+                                  },
                                   "slug": {
                                     "type": "string"
                                   },
@@ -35886,7 +36103,14 @@
                                 "language": {
                                   "type": "string"
                                 },
-                                "lastEpisodePublishedAt": {},
+                                "lastEpisodePublishedAt": {
+                                  "anyOf": [
+                                    {},
+                                    {
+                                      "type": "null"
+                                    }
+                                  ]
+                                },
                                 "slug": {
                                   "type": "string"
                                 },
