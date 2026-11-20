@@ -1568,7 +1568,7 @@ class SearchResource {
 
   /**
    * Search Episodes
-   * Search for episodes by title, description, or transcript text, with optional filters on guest, host, and sponsor names. For matching transcript text, send includeMatchSnippet: true with a text search term targeting transcript, then read result.hits[].matchSnippet. It returns the best passage (about 400 characters), with matches marked by <em> tags. transcriptHighlights contains highlighted fragments; with includeMatchSnippet it contains the same single passage. The legacy includeTranscriptSnippet option returns transcriptTextSnippet from the start of the transcript, which may be an intro or advertisement, not the matching passage. matchSnippet is omitted for filter-only searches or when no transcript passage matches. Timestamps are not yet available.
+   * Search for episodes by title, description, or transcript text, with optional filters on guest, host, and sponsor names. For matching transcript text, send includeMatchSnippet: true with a text search term targeting transcript, then read result.hits[].matchSnippet. It returns the best passage (about 400 characters), with matches marked by <em> tags. transcriptHighlights contains highlighted fragments; with includeMatchSnippet it contains the same single passage. The legacy includeTranscriptSnippet option returns transcriptTextSnippet from the start of the transcript, which may be an intro or advertisement, not the matching passage. matchSnippet is omitted for filter-only searches or when no transcript passage matches. Timestamps are not yet available. One search returns up to 10,000 results across all its pages, unless your team has a custom limit. Page with `cursor`; when the limit is reached, `cursor` is null and `resultLimitReached` is true. A cursor past the limit, or one that isn't from this search, gets a 400 with `data.code` set to `search_depth_limit` or `invalid_cursor`.
    */
   searchEpisodes(params?: SearchEpisodesParams, options?: RequestOptions): Promise<SearchEpisodesResponse> {
     return this.core.request(descriptors.searchEpisodes, params as Record<string, unknown>, options);
@@ -1576,7 +1576,7 @@ class SearchResource {
 
   /**
    * Search Podcasts
-   * Search for podcasts by title, description, or RSS feed URL
+   * Search for podcasts by title, description, or RSS feed URL. One search returns up to 10,000 results across all its pages, unless your team has a custom limit. Page with `cursor`; when the limit is reached, `cursor` is null and `resultLimitReached` is true. A cursor past the limit, or one that isn't from this search, gets a 400 with `data.code` set to `search_depth_limit` or `invalid_cursor`.
    */
   searchPodcasts(params?: SearchPodcastsParams, options?: RequestOptions): Promise<SearchPodcastsResponse> {
     return this.core.request(descriptors.searchPodcasts, params as Record<string, unknown>, options);

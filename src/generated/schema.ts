@@ -1269,7 +1269,7 @@ export interface paths {
     put?: never;
     /**
      * Search Podcasts
-     * @description Search for podcasts by title, description, or RSS feed URL
+     * @description Search for podcasts by title, description, or RSS feed URL. One search returns up to 10,000 results across all its pages, unless your team has a custom limit. Page with `cursor`; when the limit is reached, `cursor` is null and `resultLimitReached` is true. A cursor past the limit, or one that isn't from this search, gets a 400 with `data.code` set to `search_depth_limit` or `invalid_cursor`.
      */
     post: operations['searchPodcasts'];
     delete?: never;
@@ -1289,7 +1289,7 @@ export interface paths {
     put?: never;
     /**
      * Search Episodes
-     * @description Search for episodes by title, description, or transcript text, with optional filters on guest, host, and sponsor names. For matching transcript text, send includeMatchSnippet: true with a text search term targeting transcript, then read result.hits[].matchSnippet. It returns the best passage (about 400 characters), with matches marked by <em> tags. transcriptHighlights contains highlighted fragments; with includeMatchSnippet it contains the same single passage. The legacy includeTranscriptSnippet option returns transcriptTextSnippet from the start of the transcript, which may be an intro or advertisement, not the matching passage. matchSnippet is omitted for filter-only searches or when no transcript passage matches. Timestamps are not yet available.
+     * @description Search for episodes by title, description, or transcript text, with optional filters on guest, host, and sponsor names. For matching transcript text, send includeMatchSnippet: true with a text search term targeting transcript, then read result.hits[].matchSnippet. It returns the best passage (about 400 characters), with matches marked by <em> tags. transcriptHighlights contains highlighted fragments; with includeMatchSnippet it contains the same single passage. The legacy includeTranscriptSnippet option returns transcriptTextSnippet from the start of the transcript, which may be an intro or advertisement, not the matching passage. matchSnippet is omitted for filter-only searches or when no transcript passage matches. Timestamps are not yet available. One search returns up to 10,000 results across all its pages, unless your team has a custom limit. Page with `cursor`; when the limit is reached, `cursor` is null and `resultLimitReached` is true. A cursor past the limit, or one that isn't from this search, gets a 400 with `data.code` set to `search_depth_limit` or `invalid_cursor`.
      */
     post: operations['searchEpisodes'];
     delete?: never;
@@ -1511,7 +1511,7 @@ export interface operations {
           /** @description Optional search context to include when assessing podcast relevance. */
           searchOptions?:
             | {
-                /** @description Pagination cursor for fetching the next page of results. This cursor is stateless and does not expire. However, because it uses search_after pagination, results may be inconsistent if the underlying data changes between requests (e.g., you may see duplicate or missing results if documents are added/removed). */
+                /** @description The `cursor` from the previous page, to get the next page. Cursors don't expire. One search returns at most 10,000 results across all its pages, unless your team has a custom limit. After that, `cursor` is null and `resultLimitReached` is true; add filters that narrow the search to see more. A cursor only works for the team and search type that received it, and cursors from before December 2026 must be started again. Results can shift if data changes between pages, so you may see a result twice or miss one. */
                 cursor?: string | null;
                 /** @description Number of results to return per page (default 25). Your plan caps how many results one page can return: 10 on Free, 100 on Individual, 200 on Business and 250 on Agency, unless your team has a custom limit. A larger pageSize returns the capped number, and the cursor fetches the rest. Pages that include project relevancy scores return at most 100. Each page counts as one search for every 100 results it returns, rounded up: a page of 250 counts as 3 searches, and a page with no results counts as 1. When your team has fewer searches left than a page would use, the page is shortened to what you have left. */
                 pageSize?: number;
@@ -1736,7 +1736,7 @@ export interface operations {
                 }[];
               }
             | {
-                /** @description Pagination cursor for fetching the next page of results. This cursor is stateless and does not expire. However, because it uses search_after pagination, results may be inconsistent if the underlying data changes between requests (e.g., you may see duplicate or missing results if documents are added/removed). */
+                /** @description The `cursor` from the previous page, to get the next page. Cursors don't expire. One search returns at most 10,000 results across all its pages, unless your team has a custom limit. After that, `cursor` is null and `resultLimitReached` is true; add filters that narrow the search to see more. A cursor only works for the team and search type that received it, and cursors from before December 2026 must be started again. Results can shift if data changes between pages, so you may see a result twice or miss one. */
                 cursor?: string | null;
                 /** @description Number of results to return per page (default 25). Your plan caps how many results one page can return: 10 on Free, 100 on Individual, 200 on Business and 250 on Agency, unless your team has a custom limit. A larger pageSize returns the capped number, and the cursor fetches the rest. Pages that include project relevancy scores return at most 100. Each page counts as one search for every 100 results it returns, rounded up: a page of 250 counts as 3 searches, and a page with no results counts as 1. When your team has fewer searches left than a page would use, the page is shortened to what you have left. */
                 pageSize?: number;
@@ -12375,7 +12375,7 @@ export interface operations {
         'application/json': {
           /** @description Original episode search options, including all positive and excluded terms. Episode pagination is ignored. */
           searchOptions: {
-            /** @description Pagination cursor for fetching the next page of results. This cursor is stateless and does not expire. However, because it uses search_after pagination, results may be inconsistent if the underlying data changes between requests (e.g., you may see duplicate or missing results if documents are added/removed). */
+            /** @description The `cursor` from the previous page, to get the next page. Cursors don't expire. One search returns at most 10,000 results across all its pages, unless your team has a custom limit. After that, `cursor` is null and `resultLimitReached` is true; add filters that narrow the search to see more. A cursor only works for the team and search type that received it, and cursors from before December 2026 must be started again. Results can shift if data changes between pages, so you may see a result twice or miss one. */
             cursor?: string | null;
             /** @description Number of results to return per page (default 25). Your plan caps how many results one page can return: 10 on Free, 100 on Individual, 200 on Business and 250 on Agency, unless your team has a custom limit. A larger pageSize returns the capped number, and the cursor fetches the rest. Pages that include project relevancy scores return at most 100. Each page counts as one search for every 100 results it returns, rounded up: a page of 250 counts as 3 searches, and a page with no results counts as 1. When your team has fewer searches left than a page would use, the page is shortened to what you have left. */
             pageSize?: number;
@@ -12855,7 +12855,7 @@ export interface operations {
     requestBody: {
       content: {
         'application/json': {
-          /** @description Pagination cursor for fetching the next page of results. This cursor is stateless and does not expire. However, because it uses search_after pagination, results may be inconsistent if the underlying data changes between requests (e.g., you may see duplicate or missing results if documents are added/removed). */
+          /** @description The `cursor` from the previous page, to get the next page. Cursors don't expire. One search returns at most 10,000 results across all its pages, unless your team has a custom limit. After that, `cursor` is null and `resultLimitReached` is true; add filters that narrow the search to see more. A cursor only works for the team and search type that received it, and cursors from before December 2026 must be started again. Results can shift if data changes between pages, so you may see a result twice or miss one. */
           cursor?: string | null;
           /** @description Number of results to return per page (default 25). Your plan caps how many results one page can return: 10 on Free, 100 on Individual, 200 on Business and 250 on Agency, unless your team has a custom limit. A larger pageSize returns the capped number, and the cursor fetches the rest. Pages that include project relevancy scores return at most 100. Each page counts as one search for every 100 results it returns, rounded up: a page of 250 counts as 3 searches, and a page with no results counts as 1. When your team has fewer searches left than a page would use, the page is shortened to what you have left. */
           pageSize?: number;
@@ -13096,7 +13096,7 @@ export interface operations {
               searchMode: 'podcasts';
               searchId: string;
               searchOptions: {
-                /** @description Pagination cursor for fetching the next page of results. This cursor is stateless and does not expire. However, because it uses search_after pagination, results may be inconsistent if the underlying data changes between requests (e.g., you may see duplicate or missing results if documents are added/removed). */
+                /** @description The `cursor` from the previous page, to get the next page. Cursors don't expire. One search returns at most 10,000 results across all its pages, unless your team has a custom limit. After that, `cursor` is null and `resultLimitReached` is true; add filters that narrow the search to see more. A cursor only works for the team and search type that received it, and cursors from before December 2026 must be started again. Results can shift if data changes between pages, so you may see a result twice or miss one. */
                 cursor?: string | null;
                 /** @description Number of results to return per page (default 25). Your plan caps how many results one page can return: 10 on Free, 100 on Individual, 200 on Business and 250 on Agency, unless your team has a custom limit. A larger pageSize returns the capped number, and the cursor fetches the rest. Pages that include project relevancy scores return at most 100. Each page counts as one search for every 100 results it returns, rounded up: a page of 250 counts as 3 searches, and a page with no results counts as 1. When your team has fewer searches left than a page would use, the page is shortened to what you have left. */
                 pageSize?: number;
@@ -13671,7 +13671,10 @@ export interface operations {
                   podcastTitleHighlights?: string[];
                 }[];
               };
+              /** @description Send this as `cursor` to get the next page. Null when there are no more results to return. */
               cursor: string | null;
+              /** @description True when this search has returned as many results as one search can, across all its pages (10,000 unless your team has a custom limit). `cursor` is then null. To see more, add filters that narrow the search and search again. */
+              resultLimitReached: boolean;
             };
           };
         };
@@ -13723,7 +13726,7 @@ export interface operations {
     requestBody: {
       content: {
         'application/json': {
-          /** @description Pagination cursor for fetching the next page of results. This cursor is stateless and does not expire. However, because it uses search_after pagination, results may be inconsistent if the underlying data changes between requests (e.g., you may see duplicate or missing results if documents are added/removed). */
+          /** @description The `cursor` from the previous page, to get the next page. Cursors don't expire. One search returns at most 10,000 results across all its pages, unless your team has a custom limit. After that, `cursor` is null and `resultLimitReached` is true; add filters that narrow the search to see more. A cursor only works for the team and search type that received it, and cursors from before December 2026 must be started again. Results can shift if data changes between pages, so you may see a result twice or miss one. */
           cursor?: string | null;
           /** @description Number of results to return per page (default 25). Your plan caps how many results one page can return: 10 on Free, 100 on Individual, 200 on Business and 250 on Agency, unless your team has a custom limit. A larger pageSize returns the capped number, and the cursor fetches the rest. Pages that include project relevancy scores return at most 100. Each page counts as one search for every 100 results it returns, rounded up: a page of 250 counts as 3 searches, and a page with no results counts as 1. When your team has fewer searches left than a page would use, the page is shortened to what you have left. */
           pageSize?: number;
@@ -14025,7 +14028,7 @@ export interface operations {
               searchMode: 'episodes';
               searchId: string;
               searchOptions: {
-                /** @description Pagination cursor for fetching the next page of results. This cursor is stateless and does not expire. However, because it uses search_after pagination, results may be inconsistent if the underlying data changes between requests (e.g., you may see duplicate or missing results if documents are added/removed). */
+                /** @description The `cursor` from the previous page, to get the next page. Cursors don't expire. One search returns at most 10,000 results across all its pages, unless your team has a custom limit. After that, `cursor` is null and `resultLimitReached` is true; add filters that narrow the search to see more. A cursor only works for the team and search type that received it, and cursors from before December 2026 must be started again. Results can shift if data changes between pages, so you may see a result twice or miss one. */
                 cursor?: string | null;
                 /** @description Number of results to return per page (default 25). Your plan caps how many results one page can return: 10 on Free, 100 on Individual, 200 on Business and 250 on Agency, unless your team has a custom limit. A larger pageSize returns the capped number, and the cursor fetches the rest. Pages that include project relevancy scores return at most 100. Each page counts as one search for every 100 results it returns, rounded up: a page of 250 counts as 3 searches, and a page with no results counts as 1. When your team has fewer searches left than a page would use, the page is shortened to what you have left. */
                 pageSize?: number;
@@ -14735,7 +14738,10 @@ export interface operations {
                   transcriptTextSnippet?: string;
                 }[];
               };
+              /** @description Send this as `cursor` to get the next page. Null when there are no more results to return. */
               cursor: string | null;
+              /** @description True when this search has returned as many results as one search can, across all its pages (10,000 unless your team has a custom limit). `cursor` is then null. To see more, add filters that narrow the search and search again. */
+              resultLimitReached: boolean;
             };
           };
         };
